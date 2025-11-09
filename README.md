@@ -31,7 +31,7 @@ SafeNet — это веб-приложение-тренажёр, созданн�
 
 ### Frontend
 
-- **Next.js 15** — React-фреймворк для SSR и статической генерации
+- **Next.js 16** — React-фреймворк для SSR и статической генерации
 - **React 18** — библиотека для построения UI
 - **TypeScript** — типизированный JavaScript
 - **Tailwind CSS** — utility-first CSS фреймворк
