@@ -1,0 +1,25 @@
+import Navigation from '@/components/Navigation'
+import CTA from '@/components/sections/CTA'
+import Features from '@/components/sections/Features'
+import Footer from '@/components/sections/Footer'
+import Hero from '@/components/sections/Hero'
+import HowItWorks from '@/components/sections/HowItWorks'
+import Stats from '@/components/sections/Stats'
+import Testimonials from '@/components/sections/Testimonials'
+import Topics from '@/components/sections/Topics'
+
+export default function Landing() {
+	return (
+		<div className='min-h-screen bg-slate-900 text-slate-100'>
+			<Navigation />
+			<Hero />
+			<Stats />
+			<Features />
+			<Topics />
+			<HowItWorks />
+			<Testimonials />
+			<CTA />
+			<Footer />
+		</div>
+	)
+}
