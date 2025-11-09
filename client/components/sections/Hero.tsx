@@ -1,5 +1,5 @@
 import { ArrowRight, Play, Sparkles } from 'lucide-react'
-import Link from 'next/link'
+import { AuthDialog } from '../Auth/AuthDialog'
 import DemoCard from '../DemoCard'
 
 export default function Hero() {
@@ -37,13 +37,17 @@ export default function Hero() {
 						</p>
 
 						<div className='flex flex-wrap gap-4 mb-8'>
-							<Link
-								href='/onboarding'
-								className='bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-xl shadow-indigo-500/30 flex items-center gap-2 group'
-							>
-								<Play className='w-5 h-5 group-hover:scale-110 transition-transform' />
-								Начать обучение
-							</Link>
+							<AuthDialog
+								triggerButton={{
+									text: 'Начать обучение',
+									className:
+										'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-xl shadow-indigo-500/30 flex items-center gap-2 group text-normal',
+									icon: (
+										<Play className='w-5 h-5 group-hover:scale-110 transition-transform' />
+									),
+									position: 'start',
+								}}
+							/>
 							<a
 								href='#features'
 								className='bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-xl font-semibold transition-all border border-slate-700 flex items-center gap-2'
@@ -56,10 +60,10 @@ export default function Hero() {
 						<div className='grid grid-cols-3 gap-4'>
 							<div className='bg-slate-800/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700'>
 								<div className='text-3xl font-bold text-white mb-1'>8</div>
-								<div className='text-sm text-slate-400'>Уровней</div>
+								<div className='text-sm text-slate-400'>Этапов</div>
 							</div>
 							<div className='bg-slate-800/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700'>
-								<div className='text-3xl font-bold text-white mb-1'>120+</div>
+								<div className='text-3xl font-bold text-white mb-1'>300+</div>
 								<div className='text-sm text-slate-400'>Заданий</div>
 							</div>
 							<div className='bg-slate-800/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700'>

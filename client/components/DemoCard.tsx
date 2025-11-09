@@ -25,7 +25,7 @@ export default function DemoCard() {
 						support@bank-pay.com
 					</p>
 					<p className='text-sm text-slate-400'>
-						"Ваш счет будет закрыт. Подтвердите личность немедленно."
+						&quat;Ваш счет будет закрыт. Подтвердите личность немедленно.&quat;
 					</p>
 				</div>
 

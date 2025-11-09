@@ -4,7 +4,7 @@ const stats = [
 	{ label: 'Активных пользователей', value: '1,240+', icon: Users },
 	{ label: 'Пройдено заданий', value: '15,000+', icon: CheckCircle },
 	{ label: 'Средняя точность', value: '82%', icon: Target },
-	{ label: 'Уроков доступно', value: '120+', icon: BookOpen },
+	{ label: 'Уроков доступно', value: '300+', icon: BookOpen },
 ]
 
 export default function Stats() {

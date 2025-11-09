@@ -6,10 +6,15 @@ import { useEffect, useState } from 'react'
 
 export default function Testimonials() {
 	const [activeTestimonial, setActiveTestimonial] = useState(0)
+	const [isTransitioning, setIsTransitioning] = useState(false)
 
 	useEffect(() => {
 		const timer = setInterval(() => {
-			setActiveTestimonial(prev => (prev + 1) % testimonials.length)
+			setIsTransitioning(true)
+			setTimeout(() => {
+				setActiveTestimonial(prev => (prev + 1) % testimonials.length)
+				setIsTransitioning(false)
+			}, 300) // Duration of the transition
 		}, 5000)
 		return () => clearInterval(timer)
 	}, [])
@@ -27,7 +32,7 @@ export default function Testimonials() {
 				</div>
 
 				<div className='relative max-w-4xl mx-auto'>
-					<div className='bg-slate-800 rounded-2xl p-8 md:p-12 border border-slate-700 shadow-xl'>
+					<div className='bg-slate-800 rounded-2xl p-8 md:p-12 border border-slate-700 shadow-xl min-h-64 overflow-hidden'>
 						<div className='flex gap-1 mb-6 justify-center'>
 							{[...Array(testimonials[activeTestimonial].rating)].map(
 								(_, i) => (
@@ -38,19 +43,31 @@ export default function Testimonials() {
 								)
 							)}
 						</div>
-						<p className='text-xl text-slate-200 text-center mb-6 leading-relaxed italic'>
-							&quot;{testimonials[activeTestimonial].text}&quot;
-						</p>
-						<p className='text-center text-slate-400 font-medium'>
-							— {testimonials[activeTestimonial].author}
-						</p>
+						<div
+							className={`transition-opacity duration-300 ${
+								isTransitioning ? 'opacity-0' : 'opacity-100'
+							}`}
+						>
+							<p className='text-xl text-slate-200 text-center mb-6 leading-relaxed italic'>
+								&quot;{testimonials[activeTestimonial].text}&quot;
+							</p>
+							<p className='text-center text-slate-400 font-medium'>
+								— {testimonials[activeTestimonial].author}
+							</p>
+						</div>
 					</div>
 
 					<div className='flex items-center justify-center gap-2 mt-6'>
 						{testimonials.map((_, index) => (
 							<button
 								key={index}
-								onClick={() => setActiveTestimonial(index)}
+								onClick={() => {
+									setIsTransitioning(true)
+									setTimeout(() => {
+										setActiveTestimonial(index)
+										setIsTransitioning(false)
+									}, 50)
+								}}
 								className={`h-2 rounded-full transition-all ${
 									index === activeTestimonial
 										? 'w-8 bg-indigo-500'

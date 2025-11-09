@@ -1,11 +1,32 @@
 'use client'
 
-import { Menu, Shield, X } from 'lucide-react'
-import Link from 'next/link'
-import { useState } from 'react'
+import { useAuth } from '@/hooks/useAuth' // путь поправь под себя
+import { LogOut, Menu, Settings, Shield, User, X } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function Navigation() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+	const [userMenuOpen, setUserMenuOpen] = useState(false)
+	const { user, isAuthenticated, logout } = useAuth()
+
+	const userMenuRef = useRef<HTMLDivElement>(null)
+
+	// Закрываем меню при клике вне его области
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				userMenuRef.current &&
+				!userMenuRef.current.contains(event.target as Node)
+			) {
+				setUserMenuOpen(false)
+			}
+		}
+
+		document.addEventListener('mousedown', handleClickOutside)
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside)
+		}
+	}, [])
 
 	return (
 		<nav className='sticky top-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800'>
@@ -23,6 +44,7 @@ export default function Navigation() {
 						</div>
 					</div>
 
+					{/* Desktop Menu */}
 					<div className='hidden md:flex items-center gap-6'>
 						<a
 							href='#features'
@@ -42,14 +64,68 @@ export default function Navigation() {
 						>
 							Статистика
 						</a>
-						<Link
-							href='/onboarding'
-							className='bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-5 py-2 rounded-lg font-medium transition-all shadow-lg shadow-indigo-500/20'
-						>
-							Начать
-						</Link>
+
+						{/* Auth section */}
+						{isAuthenticated ? (
+							<div className='relative' ref={userMenuRef}>
+								<div
+									className='w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white font-semibold text-lg cursor-pointer hover:opacity-80 transition-opacity'
+									onClick={() => setUserMenuOpen(!userMenuOpen)}
+								>
+									{user!.name?.charAt(0).toUpperCase() ||
+										user!.email?.charAt(0).toUpperCase()}
+								</div>
+
+								{/* Выпадающее меню */}
+								{userMenuOpen && (
+									<div className='absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-lg shadow-lg py-2 z-20'>
+										<div className='px-4 py-2 border-b border-slate-700'>
+											<p className='text-sm text-slate-300 truncate'>
+												{user?.name || user?.email}
+											</p>
+											<p className='text-xs text-slate-500 truncate'>
+												{user?.email}
+											</p>
+										</div>
+
+										<button
+											onClick={() => {
+												// Добавь сюда навигацию в профиль, если нужно
+												setUserMenuOpen(false)
+											}}
+											className='w-full text-left px-4 py-2 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors flex items-center gap-2'
+										>
+											<User className='w-4 h-4' />
+											Профиль
+										</button>
+
+										<button
+											onClick={() => {
+												// Добавь сюда навигацию в настройки, если нужно
+												setUserMenuOpen(false)
+											}}
+											className='w-full text-left px-4 py-2 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors flex items-center gap-2'
+										>
+											<Settings className='w-4 h-4' />
+											Настройки
+										</button>
+
+										<button
+											onClick={logout}
+											className='w-full text-left px-4 py-2 text-red-400 hover:bg-red-900/30 hover:text-red-300 transition-colors flex items-center gap-2'
+										>
+											<LogOut className='w-4 h-4' />
+											Выйти
+										</button>
+									</div>
+								)}
+							</div>
+						) : (
+							<></>
+						)}
 					</div>
 
+					{/* Mobile menu button */}
 					<button
 						className='md:hidden text-slate-300'
 						onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -62,6 +138,7 @@ export default function Navigation() {
 					</button>
 				</div>
 
+				{/* Mobile Menu */}
 				{mobileMenuOpen && (
 					<div className='md:hidden py-4 space-y-3 border-t border-slate-800'>
 						<a
@@ -82,12 +159,24 @@ export default function Navigation() {
 						>
 							Статистика
 						</a>
-						<Link
-							href='/onboarding'
-							className='block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2 rounded-lg font-medium text-center'
-						>
-							Начать
-						</Link>
+
+						{/* Auth in Mobile */}
+						{isAuthenticated ? (
+							<>
+								<div className='text-sm text-slate-300 p-2 bg-slate-800/50 rounded'>
+									{user?.name || user?.email}
+								</div>
+								<button
+									onClick={logout}
+									className='block text-left w-full text-red-400 hover:text-red-300 transition-colors flex items-center gap-2'
+								>
+									<LogOut className='w-4 h-4' />
+									Выйти
+								</button>
+							</>
+						) : (
+							<></>
+						)}
 					</div>
 				)}
 			</div>

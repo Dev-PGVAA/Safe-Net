@@ -21,7 +21,7 @@ export default function Features() {
 						return (
 							<div
 								key={index}
-								className='group relative bg-slate-800 hover:bg-slate-750 rounded-2xl p-6 border border-slate-700 hover:border-slate-600 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 overflow-hidden'
+								className='group relative bg-slate-800 hover:bg-slate-750 rounded-2xl p-6 border border-slate-700 hover:border-slate-600 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 overflow-hidden flex flex-col'
 							>
 								<div
 									className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
@@ -35,7 +35,7 @@ export default function Features() {
 									</span>
 								</div>
 
-								<div className='relative z-10'>
+								<div className='relative z-10 flex-1 flex flex-col'>
 									<div
 										className={`w-14 h-14 bg-gradient-to-br ${feature.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}
 									>
@@ -46,11 +46,11 @@ export default function Features() {
 										{feature.title}
 									</h4>
 
-									<p className='text-slate-400 text-sm leading-relaxed mb-4'>
+									<p className='text-slate-400 text-sm leading-relaxed mb-4 flex-1'>
 										{feature.description}
 									</p>
 
-									<div className='flex items-center gap-2 pt-3 border-t border-slate-700 group-hover:border-slate-600 transition-colors'>
+									<div className='flex items-center gap-2 pt-3 border-t border-slate-700 group-hover:border-slate-600 transition-colors mt-auto'>
 										<Sparkles className='w-4 h-4 text-indigo-400' />
 										<span className='text-xs font-medium text-slate-500 group-hover:text-slate-400 transition-colors'>
 											{feature.stats}
@@ -62,7 +62,7 @@ export default function Features() {
 					})}
 				</div>
 
-				<div className='mt-16 grid md:grid-cols-3 gap-6'>
+				<div className='mt-16 grid md:grid-cols-2 gap-6'>
 					<div className='bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-2xl p-6 text-center'>
 						<div className='text-4xl mb-3'>🎯</div>
 						<h5 className='text-lg font-bold text-white mb-2'>Адаптивность</h5>
@@ -76,16 +76,6 @@ export default function Features() {
 						<h5 className='text-lg font-bold text-white mb-2'>Везде с тобой</h5>
 						<p className='text-sm text-slate-400'>
 							Учись с любого устройства: телефон, планшет или компьютер
-						</p>
-					</div>
-
-					<div className='bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-2xl p-6 text-center'>
-						<div className='text-4xl mb-3'>⚡</div>
-						<h5 className='text-lg font-bold text-white mb-2'>
-							Регулярные обновления
-						</h5>
-						<p className='text-sm text-slate-400'>
-							Новые уровни и задания каждый месяц на основе актуальных угроз
 						</p>
 					</div>
 				</div>
