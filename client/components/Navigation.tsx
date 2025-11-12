@@ -1,8 +1,9 @@
 'use client'
 
-import { useAuth } from '@/hooks/useAuth' // путь поправь под себя
+import { useAuth } from '@/hooks/useAuth'
 import { LogOut, Menu, Settings, Shield, User, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 export default function Navigation() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -27,6 +28,17 @@ export default function Navigation() {
 			document.removeEventListener('mousedown', handleClickOutside)
 		}
 	}, [])
+
+	const handleLogout = async () => {
+		try {
+			await logout()
+			toast.success('Вы успешно вышли из системы')
+			// Перезагружаем страницу после выхода
+			window.location.reload()
+		} catch (error) {
+			toast.error('Ошибка при выходе из системы')
+		}
+	}
 
 	return (
 		<nav className='sticky top-0 z-50 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800'>
@@ -111,7 +123,7 @@ export default function Navigation() {
 										</button>
 
 										<button
-											onClick={logout}
+											onClick={handleLogout}
 											className='w-full text-left px-4 py-2 text-red-400 hover:bg-red-900/30 hover:text-red-300 transition-colors flex items-center gap-2'
 										>
 											<LogOut className='w-4 h-4' />
@@ -167,7 +179,7 @@ export default function Navigation() {
 									{user?.name || user?.email}
 								</div>
 								<button
-									onClick={logout}
+									onClick={handleLogout}
 									className='block text-left w-full text-red-400 hover:text-red-300 transition-colors flex items-center gap-2'
 								>
 									<LogOut className='w-4 h-4' />
