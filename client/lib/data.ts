@@ -1,4 +1,18 @@
-import { BookOpen, Eye, Gamepad2, Lock, TrendingUp, Trophy } from 'lucide-react'
+import {
+	BookOpen,
+	Eye,
+	Fish,
+	Flag,
+	Gamepad2,
+	Globe,
+	Lock,
+	MessageCircle,
+	Shield,
+	ShoppingCart,
+	TrendingUp,
+	Trophy,
+	Users,
+} from 'lucide-react'
 
 export const features = [
 	{
@@ -58,14 +72,54 @@ export const features = [
 ]
 
 export const topics = [
-	{ name: 'Основы безопасности', icon: '🛡️', tasks: 24 },
-	{ name: 'Фишинг', icon: '🎣', tasks: 48 },
-	{ name: 'Опасные ссылки и сайты', icon: '🌐', tasks: 40 },
-	{ name: 'Пароли', icon: '🔐', tasks: 36 },
-	{ name: 'Соцсети', icon: '💬', tasks: 40 },
-	{ name: 'Покупки', icon: '🛍️', tasks: 32 },
-	{ name: 'Социальная инженерия', icon: '🧠', tasks: 44 },
-	{ name: 'Итоговая миссия', icon: '🏁', tasks: 28 },
+	{
+		name: 'Основы безопасности',
+		icon: Shield,
+		tasks: 24,
+		strokeColor: '#10B981',
+	},
+	{
+		name: 'Фишинг',
+		icon: Fish,
+		tasks: 48,
+		strokeColor: '#F59E0B',
+	},
+	{
+		name: 'Опасные ссылки и сайты',
+		icon: Globe,
+		tasks: 40,
+		strokeColor: '#3B82F6',
+	},
+	{
+		name: 'Пароли',
+		icon: Lock,
+		tasks: 36,
+		strokeColor: '#8B5CF6',
+	},
+	{
+		name: 'Соцсети',
+		icon: MessageCircle,
+		tasks: 40,
+		strokeColor: '#EC4899',
+	},
+	{
+		name: 'Покупки',
+		icon: ShoppingCart,
+		tasks: 32,
+		strokeColor: '#F97316',
+	},
+	{
+		name: 'Социальная инженерия',
+		icon: Users,
+		tasks: 44,
+		strokeColor: '#06B6D4',
+	},
+	{
+		name: 'Итоговая миссия',
+		icon: Flag,
+		tasks: 28,
+		strokeColor: '#EF4444',
+	},
 ]
 
 export const testimonials = [

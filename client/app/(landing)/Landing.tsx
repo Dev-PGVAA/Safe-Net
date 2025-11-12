@@ -4,7 +4,7 @@ import Features from '@/components/sections/Features'
 import Footer from '@/components/sections/Footer'
 import Hero from '@/components/sections/Hero'
 import HowItWorks from '@/components/sections/HowItWorks'
-import Stats from '@/components/sections/Stats'
+import Stats from '@/components/sections/Stats/Stats'
 import Testimonials from '@/components/sections/Testimonials'
 import Topics from '@/components/sections/Topics'
 

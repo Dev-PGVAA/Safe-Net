@@ -13,7 +13,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useAuth } from '@/hooks/useAuth'
-import { Eye, EyeOff } from 'lucide-react' // Импортируем иконки
+import { Eye, EyeOff } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { IAuthDialog } from './AuthDialog.interface'
@@ -40,15 +40,15 @@ export function AuthDialog({
 		email: '',
 		password: '',
 	})
-	const [showPassword, setShowPassword] = useState(false) // Состояние для отображения пароля
+	const [showPassword, setShowPassword] = useState(false)
 
-	const { login, register, error: authError } = useAuth()
+	const { login, register, error: authError, user } = useAuth()
 
 	useEffect(() => {
 		// Очищаем форму и ошибки при переключении между логином и регистрацией
 		setFormData({ name: '', email: '', password: '' })
 		setAgreedToPrivacy(false)
-		setShowPassword(false) // Также сбрасываем показ пароля
+		setShowPassword(false)
 	}, [isLogin])
 
 	const sizeClasses = {
@@ -79,6 +79,8 @@ export function AuthDialog({
 				if (result.success) {
 					toast.success('Успешный вход в систему!')
 					setOpen(false)
+					// Перезагружаем страницу после успешного входа
+					window.location.reload()
 				} else {
 					toast.error(result.error || 'Ошибка входа')
 				}
@@ -91,6 +93,8 @@ export function AuthDialog({
 				if (result.success) {
 					toast.success('Аккаунт успешно создан!')
 					setOpen(false)
+					// Перезагружаем страницу после успешной регистрации
+					window.location.reload()
 				} else {
 					toast.error(result.error || 'Ошибка регистрации')
 				}
@@ -109,12 +113,22 @@ export function AuthDialog({
 		setFormData(prev => ({ ...prev, [name]: value }))
 	}
 
+	const handleTriggerClick = () => {
+		if (user) {
+			// Если пользователь авторизован, перенаправляем на платформу
+			window.location.href = '/platform'
+		} else {
+			// Иначе открываем диалог
+			setOpen(true)
+		}
+	}
+
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<button
 				type='button'
 				className={triggerButton.className}
-				onClick={() => setOpen(true)}
+				onClick={handleTriggerClick}
 			>
 				{triggerButton.position === 'start' && triggerButton.icon && (
 					<span className='mr-2'>{triggerButton.icon}</span>
@@ -225,7 +239,6 @@ export function AuthDialog({
 
 					{children}
 
-					{/* Ошибка теперь под формой, но над кнопкой */}
 					{authError && <div className='text-sm text-red-400'>{authError}</div>}
 
 					<DialogFooter className='flex flex-col gap-4 mt-2'>
