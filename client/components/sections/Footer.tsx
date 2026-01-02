@@ -7,7 +7,7 @@ export default function Footer() {
 				<div className='grid md:grid-cols-3 gap-8 mb-8'>
 					<div>
 						<div className='flex items-center gap-3 mb-4'>
-							<div className='w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center'>
+							<div className='w-10 h-10 bg-linear-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center'>
 								<Shield className='w-6 h-6 text-white' />
 							</div>
 							<div>
@@ -21,7 +21,6 @@ export default function Footer() {
 							Образовательная платформа по кибербезопасности для школьников
 						</p>
 					</div>
-
 					<div>
 						<h5 className='text-white font-semibold mb-4'>Навигация</h5>
 						<div className='space-y-2'>
@@ -45,7 +44,6 @@ export default function Footer() {
 							</a>
 						</div>
 					</div>
-
 					<div>
 						<h5 className='text-white font-semibold mb-4'>Контакты</h5>
 						<div className='space-y-2'>
@@ -56,7 +54,6 @@ export default function Footer() {
 						</div>
 					</div>
 				</div>
-
 				<div className='pt-8 border-t border-slate-700 text-center'>
 					<p className='text-sm text-slate-500'>
 						© 2025 SafeNet — проект учеников 10-2 класса ГБОУ Школа № 1560

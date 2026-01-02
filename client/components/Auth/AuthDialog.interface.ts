@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+
 export interface IAuthDialog {
 	triggerButton?: {
 		text: string

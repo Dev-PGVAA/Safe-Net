@@ -1,11 +1,12 @@
 import { ArrowRight, Play, Sparkles } from 'lucide-react'
+
 import { AuthDialog } from '../Auth/AuthDialog'
-import DemoCard from '../DemoCard'
+import DemoCard from './DemoCard'
 
 export default function Hero() {
 	return (
 		<section className='relative overflow-hidden'>
-			<div className='absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10'></div>
+			<div className='absolute inset-0 bg-linear-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10'></div>
 			<div className='absolute inset-0'>
 				<div className='absolute top-20 left-20 w-72 h-72 bg-indigo-500/20 rounded-full blur-3xl animate-pulse'></div>
 				<div
@@ -13,7 +14,6 @@ export default function Hero() {
 					style={{ animationDelay: '1s' }}
 				></div>
 			</div>
-
 			<div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32'>
 				<div className='grid lg:grid-cols-2 gap-12 items-center'>
 					<div>
@@ -23,25 +23,22 @@ export default function Hero() {
 								Проект учеников ГБОУ Школа № 1560 «Лидер»
 							</span>
 						</div>
-
 						<h2 className='text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6'>
-							<span className='bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent'>
+							<span className='bg-linear-to-r from-white to-slate-300 bg-clip-text text-transparent'>
 								Тренажёр по кибербезопасности
 							</span>
 						</h2>
-
 						<p className='text-lg sm:text-xl text-slate-300 mb-8 leading-relaxed'>
 							Учись отличать фишинг, вредоносные сайты и опасные ссылки в
 							интерактивной игре. Пройди уровни, заработай очки и стань
 							защитником своих данных.
 						</p>
-
 						<div className='flex flex-wrap gap-4 mb-8'>
 							<AuthDialog
 								triggerButton={{
 									text: 'Начать обучение',
 									className:
-										'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-xl shadow-indigo-500/30 flex items-center gap-2 group text-normal',
+										'bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-xl shadow-indigo-500/30 flex items-center gap-2 group text-normal',
 									icon: (
 										<Play className='w-5 h-5 group-hover:scale-110 transition-transform' />
 									),
@@ -56,23 +53,7 @@ export default function Hero() {
 								<ArrowRight className='w-5 h-5' />
 							</a>
 						</div>
-
-						<div className='grid grid-cols-3 gap-4'>
-							<div className='bg-slate-800/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700'>
-								<div className='text-3xl font-bold text-white mb-1'>8</div>
-								<div className='text-sm text-slate-400'>Этапов</div>
-							</div>
-							<div className='bg-slate-800/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700'>
-								<div className='text-3xl font-bold text-white mb-1'>300+</div>
-								<div className='text-sm text-slate-400'>Заданий</div>
-							</div>
-							<div className='bg-slate-800/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700'>
-								<div className='text-3xl font-bold text-white mb-1'>1.2K+</div>
-								<div className='text-sm text-slate-400'>Учеников</div>
-							</div>
-						</div>
 					</div>
-
 					<DemoCard />
 				</div>
 			</div>

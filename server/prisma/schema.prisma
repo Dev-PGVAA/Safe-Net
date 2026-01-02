@@ -1,0 +1,358 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Роли и статусы
+enum Role {
+  USER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+}
+
+enum TaskType {
+  SINGLE_CHOICE
+  MULTI_CHOICE
+  SHORT_ANSWER
+  PHISHING_EMAIL
+  PHISHING_SITE
+  TEXT_INPUT
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum BlockType {
+  THEORY // Теоретический блок (текст/параграф)
+}
+
+/// Пользователи и аутентификация
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  email    String     @unique
+  name     String
+  password String?
+  rights   Role[]     @default([USER])
+  status   UserStatus @default(ACTIVE)
+
+  courseProgress   CourseProgress[]
+  taskAttempts     TaskAttempt[]
+  achievements     UserAchievement[]
+  certificates     Certificate[]
+  testResults      TestResult[]
+  completedLessons CompletedLesson[]
+
+  @@map("users")
+}
+
+/// Учебная структура: этапы → курсы → уроки → задания
+model Stage {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order    Int
+  slug     String  @unique
+  title    String
+  subtitle String?
+  icon     String? // Lucide icon slug
+
+  courses Course[]
+
+  @@map("stages")
+}
+
+model Course {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  stageId String? @map("stage_id")
+  stage   Stage?  @relation(fields: [stageId], references: [id])
+
+  slug        String     @unique
+  title       String
+  description String
+  difficulty  Difficulty @default(MEDIUM)
+
+  lessons      Lesson[]
+  tests        Test[]
+  progress     CourseProgress[]
+  certificates Certificate[]
+
+  @@map("courses")
+}
+
+model Lesson {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  courseId String @map("course_id")
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  order             Int
+  title             String
+  estimatedDuration Int
+
+  blocks    LessonBlock[]
+  tasks     Task[]
+  completed CompletedLesson[]
+
+  @@index([courseId])
+  @@map("lessons")
+}
+
+model LessonBlock {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  lessonId String @map("lesson_id")
+  lesson   Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  order Int
+  type  BlockType @default(THEORY)
+
+  // Контент блока
+  title   String?
+  content String // Markdown текст
+
+  @@index([lessonId])
+  @@index([lessonId, order])
+  @@map("lesson_blocks")
+}
+
+model Task {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lessonId String @map("lesson_id")
+  lesson   Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  order       Int
+  type        TaskType
+  title       String
+  question    String?
+  meta        Json? // Доп. данные для PHISHING_EMAIL/SITE
+  explanation String?
+  points      Int        @default(10)
+  difficulty  Difficulty @default(MEDIUM)
+
+  // Правильные ответы
+  correctAnswerIndex Int? // Для SINGLE/MULTI_CHOICE
+  correctAnswer      String? // Для SHORT_ANSWER/TEXT_INPUT
+
+  options  TaskOption[]
+  attempts TaskAttempt[]
+
+  @@index([lessonId])
+  @@map("tasks")
+}
+
+model TaskOption {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  taskId String @map("task_id")
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  order     Int
+  text      String
+  isCorrect Boolean @default(false)
+
+  @@unique([taskId, order])
+  @@index([taskId])
+  @@map("task_options")
+}
+
+/// Прогресс и попытки
+model TaskAttempt {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  taskId String @map("task_id")
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  selectedOptionIds String[] @map("selected_option_ids")
+  textAnswer        String?  @map("text_answer")
+
+  isCorrect Boolean
+  awardedXp Int     @default(0)
+
+  @@index([userId])
+  @@index([taskId])
+  @@map("task_attempts")
+}
+
+model CompletedLesson {
+  id          String   @id @default(uuid())
+  completedAt DateTime @default(now()) @map("completed_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  lessonId String @map("lesson_id")
+  lesson   Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@index([userId])
+  @@index([lessonId])
+  @@map("completed_lessons")
+}
+
+model CourseProgress {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  courseId String @map("course_id")
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  progress Int @default(0) // 0-100
+  totalXp  Int @default(0)
+
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@index([courseId])
+  @@map("course_progress")
+}
+
+/// Тесты
+model Test {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  courseId String? @map("course_id")
+  course   Course? @relation(fields: [courseId], references: [id])
+
+  title        String
+  description  String?
+  passingScore Int     @default(80)
+
+  questions TestQuestion[]
+  results   TestResult[]
+
+  @@map("tests")
+}
+
+model TestQuestion {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  testId String @map("test_id")
+  test   Test   @relation(fields: [testId], references: [id], onDelete: Cascade)
+
+  order              Int
+  text               String
+  type               TaskType
+  correctAnswerIndex Int?
+
+  options TestQuestionOption[]
+
+  @@index([testId])
+  @@map("test_questions")
+}
+
+model TestQuestionOption {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  testQuestionId String       @map("test_question_id")
+  testQuestion   TestQuestion @relation(fields: [testQuestionId], references: [id], onDelete: Cascade)
+
+  order     Int
+  text      String
+  isCorrect Boolean @default(false)
+
+  @@unique([testQuestionId, order])
+  @@index([testQuestionId])
+  @@map("test_question_options")
+}
+
+model TestResult {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("completed_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  testId String @map("test_id")
+  test   Test   @relation(fields: [testId], references: [id], onDelete: Cascade)
+
+  score          Int
+  time           Int
+  totalQuestions Int     @map("total_questions")
+  correctAnswers Int     @map("correct_answers")
+  passed         Boolean
+
+  @@index([userId])
+  @@index([testId])
+  @@map("test_results")
+}
+
+model Achievement {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  code        String @unique
+  title       String
+  description String
+  icon        String
+
+  users UserAchievement[]
+
+  @@map("achievements")
+}
+
+model UserAchievement {
+  id       String   @id @default(uuid())
+  earnedAt DateTime @default(now()) @map("earned_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  achievementId String      @map("achievement_id")
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+  @@index([userId])
+  @@map("user_achievements")
+}
+
+model Certificate {
+  id       String   @id @default(uuid())
+  issuedAt DateTime @default(now()) @map("issued_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  courseId String @map("course_id")
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  certificateNumber String @unique @map("certificate_number")
+
+  @@index([userId, courseId])
+  @@map("certificates")
+}

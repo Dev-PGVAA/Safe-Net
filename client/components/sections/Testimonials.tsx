@@ -1,24 +1,22 @@
 'use client'
+import { Star } from 'lucide-react'
 
 import { testimonials } from '@/lib/data'
-import { Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 export default function Testimonials() {
 	const [activeTestimonial, setActiveTestimonial] = useState(0)
 	const [isTransitioning, setIsTransitioning] = useState(false)
-
 	useEffect(() => {
 		const timer = setInterval(() => {
 			setIsTransitioning(true)
 			setTimeout(() => {
 				setActiveTestimonial(prev => (prev + 1) % testimonials.length)
 				setIsTransitioning(false)
-			}, 300) // Duration of the transition
+			}, 300)
 		}, 5000)
 		return () => clearInterval(timer)
 	}, [])
-
 	return (
 		<section className='py-20 bg-slate-800/30'>
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -30,7 +28,6 @@ export default function Testimonials() {
 						Что говорят те, кто уже прошёл обучение
 					</p>
 				</div>
-
 				<div className='relative max-w-4xl mx-auto'>
 					<div className='bg-slate-800 rounded-2xl p-8 md:p-12 border border-slate-700 shadow-xl min-h-64 overflow-hidden'>
 						<div className='flex gap-1 mb-6 justify-center'>
@@ -56,7 +53,6 @@ export default function Testimonials() {
 							</p>
 						</div>
 					</div>
-
 					<div className='flex items-center justify-center gap-2 mt-6'>
 						{testimonials.map((_, index) => (
 							<button

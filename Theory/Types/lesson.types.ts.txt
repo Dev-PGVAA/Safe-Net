@@ -1,0 +1,188 @@
+// theory/types/lesson.types.ts
+
+/**
+ * Доступные категории уроков.
+ * Используйте ТОЛЬКО эти значения в поле `category`.
+ */
+export type CategoryId =
+  | 'basics'
+  | 'phishing'
+  | 'websites'
+  | 'passwords'
+  | 'social-networks'
+  | 'shopping'
+  | 'social-engineering'
+  | 'final-mission';
+
+/**
+ * Уровень сложности урока.
+ */
+export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
+
+/**
+ * Типы заданий.
+ */
+export type TaskType =
+  | 'email-analysis'
+  | 'url-analysis'
+  | 'multiple-choice'
+  | 'single-choice'
+  | 'password-strength'
+  | 'scenario'
+  | 'true-false';
+
+/**
+ * Теоретическая часть урока.
+ */
+export interface LessonTheory {
+  introduction: string;
+  keyPoints: string[];
+  warningSigns?: string[];
+  examples?: {
+    good: string[];
+    bad: string[];
+  };
+  tips?: string[];
+  commonMistakes?: string[];
+}
+
+/**
+ * Базовый интерфейс для задания.
+ */
+export interface BaseTask {
+  id: number;
+  type: TaskType;
+  question: string;
+  explanation: string;
+  points: number;
+  hints?: string[];
+}
+
+/**
+ * Email Analysis
+ */
+export interface EmailAnalysisTask extends BaseTask {
+  type: 'email-analysis';
+  email: {
+    from: string;
+    subject: string;
+    body: string;
+    attachments?: string[];
+  };
+  options: { id: string; text: string; isCorrect: boolean }[];
+  correctAnswer: string;
+}
+
+/**
+ * URL Analysis
+ */
+export interface UrlAnalysisTask extends BaseTask {
+  type: 'url-analysis';
+  urls: { id: string; url: string; isCorrect: boolean }[];
+  correctAnswer: string;
+}
+
+/**
+ * Multiple Choice (несколько правильных ответов)
+ */
+export interface MultipleChoiceTask extends BaseTask {
+  type: 'multiple-choice';
+  options: { id: string; text: string; isCorrect: boolean }[];
+  correctAnswers: string[];
+}
+
+/**
+ * Single Choice (один правильный ответ)
+ */
+export interface SingleChoiceTask extends BaseTask {
+  type: 'single-choice';
+  options: { id: string; text: string; isCorrect: boolean }[];
+  correctAnswer: string;
+}
+
+/**
+ * Password Strength
+ */
+export interface PasswordStrengthTask extends BaseTask {
+  type: 'password-strength';
+  passwords: {
+    id: string;
+    password: string;
+    strength: 'weak' | 'medium' | 'strong';
+    issues?: string[];
+  }[];
+  correctAnswer: string;
+}
+
+/**
+ * Scenario-based task
+ */
+export interface ScenarioTask extends BaseTask {
+  type: 'scenario';
+  scenario: string;
+  actions: { id: string; text: string; isCorrect: boolean }[];
+  correctAnswer: string;
+}
+
+/**
+ * True/False
+ */
+export interface TrueFalseTask extends BaseTask {
+  type: 'true-false';
+  statement: string;
+  correctAnswer: 'true' | 'false';
+}
+
+/**
+ * Объединённый тип для всех заданий.
+ */
+export type LessonTask =
+  | EmailAnalysisTask
+  | UrlAnalysisTask
+  | MultipleChoiceTask
+  | SingleChoiceTask
+  | PasswordStrengthTask
+  | ScenarioTask
+  | TrueFalseTask;
+
+/**
+ * Тест в конце урока.
+ */
+export interface LessonQuiz {
+  passingScore: number; // 0–100
+  questions: {
+    id: number;
+    question: string;
+    options: string[];
+    correctAnswer: number; // индекс в массиве options (0 = A, 1 = B и т.д.)
+    points: number;
+    explanation?: string;
+  }[];
+}
+
+/**
+ * Дополнительный ресурс.
+ */
+export interface Resource {
+  title: string;
+  url: string;
+  type: 'article' | 'video' | 'interactive' | 'pdf' | 'external';
+  description?: string;
+}
+
+/**
+ * Полная структура урока.
+ */
+export interface Lesson {
+  id: number;
+  title: string;
+  category: CategoryId;
+  difficulty: Difficulty;
+  points: number;
+  estimatedTime: string;
+  description: string;
+  theory: LessonTheory;
+  tasks: LessonTask[];
+  quiz: LessonQuiz;
+  resources?: Resource[];
+}

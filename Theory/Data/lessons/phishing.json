@@ -1,0 +1,667 @@
+[
+	{
+		"id": 1,
+		"type": "email-analysis",
+		"question": "Это письмо — фишинг?",
+		"email": {
+			"from": "noreply@paypal-security.net",
+			"subject": "Внимание! Подозрительная активность в аккаунте",
+			"body": "Чтобы защитить ваш счёт, немедленно подтвердите данные: email, пароль и номер карты.",
+			"attachments": []
+		},
+		"options": [
+			{ "id": "A", "text": "Да, это фишинг", "isCorrect": true },
+			{ "id": "B", "text": "Нет, это официальное письмо PayPal", "isCorrect": false }
+		],
+		"correctAnswer": "A",
+		"explanation": "PayPal никогда не запрашивает пароль или данные карты по email. Домен .net вместо .com — явный признак подделки.",
+		"points": 70
+	},
+	{
+		"id": 2,
+		"type": "scenario",
+		"question": "Вам позвонили якобы из банка и просят назвать код из SMS.",
+		"scenario": "Сотрудник представляется, знает ваше имя и говорит, что «выигрывали бонус».",
+		"actions": [
+			{ "id": "A", "text": "Назвать код, чтобы получить бонус", "isCorrect": false },
+			{
+				"id": "B",
+				"text": "Положить трубку и позвонить в банк по официальному номеру",
+				"isCorrect": true
+			}
+		],
+		"correctAnswer": "B",
+		"explanation": "Банк НИКОГДА не запрашивает коды подтверждения по телефону. Это голосовой фишинг (vishing).",
+		"points": 100
+	},
+	{
+		"id": 3,
+		"type": "true-false",
+		"question": "Оцените утверждение:",
+		"statement": "Если в письме есть логотип компании, оно точно настоящее.",
+		"correctAnswer": "false",
+		"explanation": "Логотипы легко скопировать. Фишинговые письма часто выглядят очень правдоподобно.",
+		"points": 50
+	},
+	{
+		"id": 4,
+		"type": "single-choice",
+		"question": "Какой признак указывает на email-фишинг?",
+		"options": [
+			{ "id": "A", "text": "Письмо пришло в будний день", "isCorrect": false },
+			{ "id": "B", "text": "В теме письма — слово «СРОЧНО!»", "isCorrect": true },
+			{ "id": "C", "text": "Письмо на русском языке", "isCorrect": false }
+		],
+		"correctAnswer": "B",
+		"explanation": "Создание ложной срочности — классический приём фишинга.",
+		"points": 60
+	},
+	{
+		"id": 5,
+		"type": "email-analysis",
+		"question": "Это письмо вызывает доверие?",
+		"email": {
+			"from": "security@yandex.ru",
+			"subject": "Изменение пароля",
+			"body": "Вы недавно меняли пароль? Если нет — нажмите здесь, чтобы защитить аккаунт.",
+			"attachments": []
+		},
+		"options": [
+			{ "id": "A", "text": "Да, домен правильный", "isCorrect": false },
+			{ "id": "B", "text": "Нет, Yandex не отправляет такие ссылки", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "Даже при правильном домене: Yandex никогда не присылает ссылки для «защиты аккаунта». Это фишинг внутри легитимного домена (compromised sender).",
+		"points": 110
+	},
+	{
+		"id": 6,
+		"type": "scenario",
+		"question": "Пришло SMS: «Ваша посылка задержана. Перейдите по ссылке, чтобы оплатить доставку».",
+		"scenario": "Ссылка ведёт на короткий URL (bit.ly/...)",
+		"actions": [
+			{ "id": "A", "text": "Перейти по ссылке и оплатить", "isCorrect": false },
+			{ "id": "B", "text": "Проверить статус посылки в приложении Почты России", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "SMS-фишинг (smishing) часто использует страх или срочность. Официальные службы не просят платить по коротким ссылкам.",
+		"points": 80
+	},
+	{
+		"id": 7,
+		"type": "url-analysis",
+		"question": "Какой URL используется в фишинге под Google?",
+		"urls": [
+			{ "id": "A", "url": "https://accounts.google.com", "isCorrect": false },
+			{ "id": "B", "url": "https://google-verify.ru/login", "isCorrect": true },
+			{ "id": "C", "url": "https://mail.google.com", "isCorrect": false }
+		],
+		"correctAnswer": "B",
+		"explanation": "Официальные сервисы Google используют домен google.com. Любой другой — подделка.",
+		"points": 75
+	},
+	{
+		"id": 8,
+		"type": "multiple-choice",
+		"question": "Какие признаки фишинга в email?",
+		"options": [
+			{ "id": "A", "text": "Обращение «Уважаемый клиент» без имени", "isCorrect": true },
+			{ "id": "B", "text": "Грамматические ошибки", "isCorrect": true },
+			{ "id": "C", "text": "Ссылка, ведущая на https://site.com", "isCorrect": false },
+			{ "id": "D", "text": "Требование срочно ввести данные", "isCorrect": true }
+		],
+		"correctAnswers": ["A", "B", "D"],
+		"explanation": "Фишинг часто использует безличные обращения, ошибки и давление. HTTPS не делает фишинговый сайт безопасным.",
+		"points": 90
+	},
+	{
+		"id": 9,
+		"type": "true-false",
+		"question": "Оцените утверждение:",
+		"statement": "Если письмо пришло в спам, оно точно фишинговое.",
+		"correctAnswer": "false",
+		"explanation": "Настоящие письма иногда попадают в спам. А фишинг может прийти в основной ящик. Спам-фильтр — не гарантия.",
+		"points": 55
+	},
+	{
+		"id": 10,
+		"type": "email-analysis",
+		"question": "Это письмо от Apple?",
+		"email": {
+			"from": "appleid@apple.com.su",
+			"subject": "Ваш Apple ID будет удалён!",
+			"body": "Подтвердите данные сейчас, иначе потеряете доступ навсегда.",
+			"attachments": []
+		},
+		"options": [
+			{ "id": "A", "text": "Да", "isCorrect": false },
+			{ "id": "B", "text": "Нет", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "Настоящие письма Apple приходят с домена @apple.com. Домен .com.su — подделка.",
+		"points": 85
+	},
+	{
+		"id": 11,
+		"type": "single-choice",
+		"question": "Что делать, если вы ввели пароль на фишинговом сайте?",
+		"options": [
+			{ "id": "A", "text": "Ничего — пароль сложный", "isCorrect": false },
+			{ "id": "B", "text": "Срочно сменить пароль и включить 2FA", "isCorrect": true },
+			{ "id": "C", "text": "Удалить историю браузера", "isCorrect": false }
+		],
+		"correctAnswer": "B",
+		"explanation": "Злоумышленники уже получили ваш пароль. Смена — единственный способ защититься.",
+		"points": 120
+	},
+	{
+		"id": 12,
+		"type": "scenario",
+		"question": "Звонок: «Мы из Microsoft. Ваш компьютер заражён. Разрешите подключиться?»",
+		"scenario": "Звонящий знает ваше имя и говорит, что всё «официально».",
+		"actions": [
+			{ "id": "A", "text": "Разрешить удалённый доступ", "isCorrect": false },
+			{
+				"id": "B",
+				"text": "Положить трубку — Microsoft не звонит пользователям",
+				"isCorrect": true
+			}
+		],
+		"correctAnswer": "B",
+		"explanation": "Microsoft, как и другие крупные компании, НИКОГДА не звонит с предложениями «починить компьютер».",
+		"points": 130
+	},
+	{
+		"id": 13,
+		"type": "email-analysis",
+		"question": "Письмо выглядит как от банка, но…",
+		"email": {
+			"from": "info@vtb-secure.ru",
+			"subject": "Подтвердите перевод на сумму 45 000 ₽",
+			"body": "Если вы не инициировали перевод, нажмите здесь для отмены.",
+			"attachments": []
+		},
+		"options": [
+			{ "id": "A", "text": "Нажать ссылку для отмены", "isCorrect": false },
+			{ "id": "B", "text": "Игнорировать и проверить в приложении банка", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "Фишинг использует страх потери денег. Настоящий банк не отменяет переводы по ссылке из email.",
+		"points": 95
+	},
+	{
+		"id": 14,
+		"type": "true-false",
+		"question": "Оцените утверждение:",
+		"statement": "Фишинг бывает только по email.",
+		"correctAnswer": "false",
+		"explanation": "Фишинг происходит через SMS (smishing), звонки (vishing), мессенджеры, соцсети и даже игровые платформы.",
+		"points": 60
+	},
+	{
+		"id": 15,
+		"type": "url-analysis",
+		"question": "Какая ссылка поддельная под Wildberries?",
+		"urls": [
+			{ "id": "A", "url": "https://www.wildberries.ru", "isCorrect": false },
+			{ "id": "B", "url": "https://wildberries.sale/discount", "isCorrect": true },
+			{ "id": "C", "url": "https://seller.wildberries.ru", "isCorrect": false }
+		],
+		"correctAnswer": "B",
+		"explanation": "Официальный домен — wildberries.ru. Все другие (включая .sale, .shop, .online) — фишинг.",
+		"points": 80
+	},
+	{
+		"id": 16,
+		"type": "multiple-choice",
+		"question": "Как защититься от SMS-фишинга?",
+		"options": [
+			{ "id": "A", "text": "Не переходить по ссылкам в SMS от неизвестных", "isCorrect": true },
+			{
+				"id": "B",
+				"text": "Использовать только официальные приложения для отслеживания",
+				"isCorrect": true
+			},
+			{ "id": "C", "text": "Ответить «STOP», чтобы отписаться", "isCorrect": false },
+			{ "id": "D", "text": "Проверять отправителя (короткий номер vs имя)", "isCorrect": true }
+		],
+		"correctAnswers": ["A", "B", "D"],
+		"explanation": "Ответ «STOP» может подтвердить, что номер активен. Лучше игнорировать и удалять.",
+		"points": 100
+	},
+	{
+		"id": 17,
+		"type": "single-choice",
+		"question": "Почему фишинговые письма часто содержат опечатки?",
+		"options": [
+			{ "id": "A", "text": "Авторы не знают языка", "isCorrect": true },
+			{ "id": "B", "text": "Так их легче найти", "isCorrect": false },
+			{ "id": "C", "text": "Это часть защиты от спам-фильтров", "isCorrect": true }
+		],
+		"correctAnswer": "A",
+		"explanation": "Многие фишинговые письма создаются не носителями языка или автоматически, чтобы обойти фильтры.",
+		"points": 65
+	},
+	{
+		"id": 18,
+		"type": "email-analysis",
+		"question": "Письмо от «ФНС» с вложением «Налоговый_возврат_2025.pdf.exe»",
+		"email": {
+			"from": "noreply@nalog-fns.ru",
+			"subject": "Вам положен возврат 12 450 ₽",
+			"body": "Откройте вложение для получения средств.",
+			"attachments": ["Налоговый_возврат_2025.pdf.exe"]
+		},
+		"options": [
+			{ "id": "A", "text": "Открыть вложение", "isCorrect": false },
+			{ "id": "B", "text": "Удалить — это фишинг с вредоносом", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "ФНС не отправляет возвраты по email. Файл .exe замаскирован под PDF — это вредонос.",
+		"points": 140
+	},
+	{
+		"id": 19,
+		"type": "scenario",
+		"question": "Вам пришло SMS от «СберБанка»: «Код подтверждения: 123456. Не сообщайте его никому».",
+		"scenario": "Вы не запрашивали никакой код.",
+		"actions": [
+			{ "id": "A", "text": "Позвонить в банк", "isCorrect": true },
+			{ "id": "B", "text": "Игнорировать — это просто ошибка", "isCorrect": false }
+		],
+		"correctAnswer": "A",
+		"explanation": "Если вы не запрашивали код, кто-то пытается войти в ваш аккаунт. Немедленно свяжитесь с банком!",
+		"points": 150
+	},
+	{
+		"id": 20,
+		"type": "true-false",
+		"question": "Оцените утверждение:",
+		"statement": "Если сайт выглядит как настоящий банк, можно вводить карту.",
+		"correctAnswer": "false",
+		"explanation": "Фишинговые сайты копируют дизайн до пикселя. Проверяйте URL и наличие HTTPS, но даже это не гарантирует безопасность.",
+		"points": 70
+	},
+	{
+		"id": 21,
+		"type": "single-choice",
+		"question": "Какой email может быть фишинговым?",
+		"options": [
+			{ "id": "A", "text": "support@ozon.ru", "isCorrect": false },
+			{ "id": "B", "text": "ozon.support@gmail.com", "isCorrect": true },
+			{ "id": "C", "text": "noreply@ozon.ru", "isCorrect": false }
+		],
+		"correctAnswer": "B",
+		"explanation": "Крупные компании используют корпоративные домены, а не Gmail, Mail.ru и т.п.",
+		"points": 75
+	},
+	{
+		"id": 22,
+		"type": "email-analysis",
+		"question": "Письмо: «Ваш аккаунт Steam заблокирован! Подтвердите данные»",
+		"email": {
+			"from": "steamcommunity@steam-support.org",
+			"subject": "Аккаунт заблокирован",
+			"body": "Введите логин и пароль на сайте steam-verify.net",
+			"attachments": []
+		},
+		"options": [
+			{ "id": "A", "text": "Перейти и ввести данные", "isCorrect": false },
+			{ "id": "B", "text": "Это фишинг — Steam не блокирует так", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "Steam никогда не запрашивает данные через email. Домен .org и .net — не официальные.",
+		"points": 90
+	},
+	{
+		"id": 23,
+		"type": "url-analysis",
+		"question": "Какой URL безопасен для входа в Telegram?",
+		"urls": [
+			{ "id": "A", "url": "https://web.telegram.org", "isCorrect": true },
+			{ "id": "B", "url": "https://telegram-login.ru", "isCorrect": false },
+			{ "id": "C", "url": "http://telegram.org", "isCorrect": false }
+		],
+		"correctAnswer": "A",
+		"explanation": "Официальный веб-клиент — web.telegram.org. Все другие домены — подделки.",
+		"points": 85
+	},
+	{
+		"id": 24,
+		"type": "multiple-choice",
+		"question": "Что делать при подозрении на фишинг?",
+		"options": [
+			{ "id": "A", "text": "Удалить письмо/SMS", "isCorrect": true },
+			{ "id": "B", "text": "Сообщить в поддержку компании", "isCorrect": true },
+			{ "id": "C", "text": "Переслать другу для проверки", "isCorrect": false },
+			{ "id": "D", "text": "Проверить, не вводили ли вы данные", "isCorrect": true }
+		],
+		"correctAnswers": ["A", "B", "D"],
+		"explanation": "Пересылка может распространить фишинг. Лучше удалить и сообщить в официальную поддержку.",
+		"points": 100
+	},
+	{
+		"id": 25,
+		"type": "true-false",
+		"question": "Оцените утверждение:",
+		"statement": "Фишинг может украсть не только пароли, но и деньги напрямую.",
+		"correctAnswer": "true",
+		"explanation": "Фишинг часто ведёт к переводу денег (например, через поддельные «возвраты» или «штрафы»).",
+		"points": 80
+	},
+	{
+		"id": 26,
+		"type": "scenario",
+		"question": "Звонок: «Вы выиграли iPhone! Оплатите доставку 1500 ₽».",
+		"scenario": "Звонящий говорит, что «акция от Apple».",
+		"actions": [
+			{ "id": "A", "text": "Оплатить доставку", "isCorrect": false },
+			{ "id": "B", "text": "Положить трубку — это мошенники", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "Настоящие компании не просят платить за «выигрыши». Это классический vishing.",
+		"points": 95
+	},
+	{
+		"id": 27,
+		"type": "email-analysis",
+		"question": "Письмо от «Яндекс.Такси»: «У вас долг 890 ₽. Оплатите сейчас»",
+		"email": {
+			"from": "billing@yandex-taxi.com",
+			"subject": "Задолженность по заказу",
+			"body": "Оплатите по ссылке, иначе заблокируют аккаунт.",
+			"attachments": []
+		},
+		"options": [
+			{ "id": "A", "text": "Оплатить по ссылке", "isCorrect": false },
+			{ "id": "B", "text": "Проверить в приложении — это фишинг", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "Яндекс использует домен yandex.ru. Домен .com — подделка. Долги отображаются только в приложении.",
+		"points": 105
+	},
+	{
+		"id": 28,
+		"type": "single-choice",
+		"question": "Как распознать фишинг в мессенджере?",
+		"options": [
+			{ "id": "A", "text": "Сообщение от друга с необычной ссылкой", "isCorrect": true },
+			{ "id": "B", "text": "Сообщение в группе", "isCorrect": false },
+			{ "id": "C", "text": "Сообщение без смайлов", "isCorrect": false }
+		],
+		"correctAnswer": "A",
+		"explanation": "Аккаунты друзей часто взламывают для рассылки фишинговых ссылок. Уточняйте лично!",
+		"points": 85
+	},
+	{
+		"id": 29,
+		"type": "true-false",
+		"question": "Оцените утверждение:",
+		"statement": "Если сайт имеет HTTPS, он не может быть фишинговым.",
+		"correctAnswer": "false",
+		"explanation": "HTTPS шифрует соединение, но не подтверждает легитимность сайта. Фишинговые сайты тоже используют HTTPS.",
+		"points": 90
+	},
+	{
+		"id": 30,
+		"type": "url-analysis",
+		"question": "Какой URL используется для фишинга под госуслуги?",
+		"urls": [
+			{ "id": "A", "url": "https://www.gosuslugi.ru", "isCorrect": false },
+			{ "id": "B", "url": "https://gosuslugi-online.ru", "isCorrect": true },
+			{ "id": "C", "url": "https://lk.gosuslugi.ru", "isCorrect": false }
+		],
+		"correctAnswer": "B",
+		"explanation": "Официальный сайт — только gosuslugi.ru. Любые дополнения (online, secure, login) — фишинг.",
+		"points": 110
+	},
+	{
+		"id": 31,
+		"type": "multiple-choice",
+		"question": "Какие фразы часто используются в фишинге?",
+		"options": [
+			{ "id": "A", "text": "Срочно!", "isCorrect": true },
+			{ "id": "B", "text": "Ваш счёт заблокирован", "isCorrect": true },
+			{ "id": "C", "text": "Вы выиграли!", "isCorrect": true },
+			{ "id": "D", "text": "Спасибо за сотрудничество", "isCorrect": false }
+		],
+		"correctAnswers": ["A", "B", "C"],
+		"explanation": "Фишинг использует страх, срочность и жадность, чтобы заставить действовать без размышлений.",
+		"points": 80
+	},
+	{
+		"id": 32,
+		"type": "email-analysis",
+		"question": "Письмо: «Ваш аккаунт TikTok будет удалён! Подтвердите возраст»",
+		"email": {
+			"from": "noreply@tiktok-support.com",
+			"subject": "Подтвердите данные",
+			"body": "Нажмите, чтобы не потерять аккаунт.",
+			"attachments": []
+		},
+		"options": [
+			{ "id": "A", "text": "Нажать ссылку", "isCorrect": false },
+			{ "id": "B", "text": "Игнорировать — TikTok не отправляет такие письма", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "TikTok не управляет аккаунтами через email. Домен .com вместо .com (официальный) — подделка.",
+		"points": 95
+	},
+	{
+		"id": 33,
+		"type": "scenario",
+		"question": "Пришло SMS от «Почты»: «Заберите посылку. Оплатите хранение 299 ₽».",
+		"scenario": "Ссылка ведёт на страницу с формой ввода карты.",
+		"actions": [
+			{ "id": "A", "text": "Оплатить, чтобы не потерять посылку", "isCorrect": false },
+			{ "id": "B", "text": "Проверить в приложении — это фишинг", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "Почта России не требует оплату хранения через SMS с ссылкой. Это smishing.",
+		"points": 100
+	},
+	{
+		"id": 34,
+		"type": "single-choice",
+		"question": "Почему фишинг через SMS особенно опасен?",
+		"options": [
+			{ "id": "A", "text": "SMS не фильтруются как email", "isCorrect": true },
+			{ "id": "B", "text": "SMS всегда приходят от друзей", "isCorrect": false },
+			{ "id": "C", "text": "В SMS нельзя вставить ссылку", "isCorrect": false }
+		],
+		"correctAnswer": "A",
+		"explanation": "Спам-фильтры в SMS слабее, и люди меньше подозревают SMS в мошенничестве.",
+		"points": 85
+	},
+	{
+		"id": 35,
+		"type": "true-false",
+		"question": "Оцените утверждение:",
+		"statement": "Если я не кликал по ссылке, фишинг мне не страшен.",
+		"correctAnswer": "false",
+		"explanation": "Некоторые вложения (например, .doc с макросами) могут быть вредоносными даже без клика по ссылке.",
+		"points": 95
+	},
+	{
+		"id": 36,
+		"type": "email-analysis",
+		"question": "Письмо «Изменение условий обслуживания» от Сбера",
+		"email": {
+			"from": "info@sberbank.com.ru",
+			"subject": "Новые тарифы с 01.01.2026",
+			"body": "Ознакомьтесь с изменениями по ссылке.",
+			"attachments": []
+		},
+		"options": [
+			{ "id": "A", "text": "Перейти по ссылке", "isCorrect": false },
+			{ "id": "B", "text": "Проверить на официальном сайте — домен поддельный", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "Официальный домен Сбера — sberbank.ru. sberbank.com.ru — фишинг.",
+		"points": 115
+	},
+	{
+		"id": 37,
+		"type": "url-analysis",
+		"question": "Какой URL фишинговый под Avito?",
+		"urls": [
+			{ "id": "A", "url": "https://www.avito.ru", "isCorrect": false },
+			{ "id": "B", "url": "https://avito.market/item123", "isCorrect": true },
+			{ "id": "C", "url": "https://m.avito.ru", "isCorrect": false }
+		],
+		"correctAnswer": "B",
+		"explanation": "Avito использует только домен avito.ru. .market, .shop, .online — фишинг.",
+		"points": 90
+	},
+	{
+		"id": 38,
+		"type": "multiple-choice",
+		"question": "Какие действия НИКОГДА не делает банк?",
+		"options": [
+			{ "id": "A", "text": "Звонит и просит код из SMS", "isCorrect": true },
+			{ "id": "B", "text": "Просит перевести деньги «для проверки»", "isCorrect": true },
+			{ "id": "C", "text": "Отправляет письмо с ссылкой на вход", "isCorrect": true },
+			{ "id": "D", "text": "Начисляет проценты на счёт", "isCorrect": false }
+		],
+		"correctAnswers": ["A", "B", "C"],
+		"explanation": "Банк никогда не запрашивает коды, переводы или данные по телефону/email. Это признаки фишинга.",
+		"points": 120
+	},
+	{
+		"id": 39,
+		"type": "scenario",
+		"question": "Звонок: «Ваша карта заблокирована. Назовите номер и CVV для разблокировки».",
+		"scenario": "Голос «официальный», есть шум в фоне, как в колл-центре.",
+		"actions": [
+			{ "id": "A", "text": "Назвать данные", "isCorrect": false },
+			{ "id": "B", "text": "Положить трубку и позвонить в банк", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "CVV никогда не требуется для разблокировки. Это vishing. Банк не запрашивает CVV по телефону.",
+		"points": 130
+	},
+	{
+		"id": 40,
+		"type": "true-false",
+		"question": "Оцените утверждение:",
+		"statement": "Фишинговые сайты могут использовать тот же IP-адрес, что и настоящие.",
+		"correctAnswer": "false",
+		"explanation": "Фишинговые сайты размещаются на других серверах. IP не совпадает, но это не всегда видно пользователю.",
+		"points": 70
+	},
+	{
+		"id": 41,
+		"type": "email-analysis",
+		"question": "Письмо: «Ваш iCloud заполнен! Освободите место»",
+		"email": {
+			"from": "icloud@storage-apple.com",
+			"subject": "Не хватает места",
+			"body": "Подтвердите данные для увеличения хранилища.",
+			"attachments": []
+		},
+		"options": [
+			{ "id": "A", "text": "Ввести данные", "isCorrect": false },
+			{ "id": "B", "text": "Это фишинг — Apple не так управляет хранилищем", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "Apple управляет iCloud только через устройство или icloud.com. Домен storage-apple.com — подделка.",
+		"points": 100
+	},
+	{
+		"id": 42,
+		"type": "single-choice",
+		"question": "Что делать, если друг прислал ссылку «Посмотри, это ты?»",
+		"options": [
+			{ "id": "A", "text": "Сразу открыть", "isCorrect": false },
+			{ "id": "B", "text": "Спросить у друга, отправлял ли он это", "isCorrect": true },
+			{ "id": "C", "text": "Переслать другим", "isCorrect": false }
+		],
+		"correctAnswer": "B",
+		"explanation": "Аккаунты взламывают для распространения фишинга. Уточнение — простая и эффективная защита.",
+		"points": 85
+	},
+	{
+		"id": 43,
+		"type": "url-analysis",
+		"question": "Какой URL фишинговый под Ozon?",
+		"urls": [
+			{ "id": "A", "url": "https://www.ozon.ru", "isCorrect": false },
+			{ "id": "B", "url": "https://ozon.sale/discount", "isCorrect": true },
+			{ "id": "C", "url": "https://seller.ozon.ru", "isCorrect": false }
+		],
+		"correctAnswer": "B",
+		"explanation": "Ozon использует только ozon.ru. .sale — домен мошенников.",
+		"points": 80
+	},
+	{
+		"id": 44,
+		"type": "multiple-choice",
+		"question": "Какие признаки SMS-фишинга?",
+		"options": [
+			{ "id": "A", "text": "Короткий номер отправителя", "isCorrect": false },
+			{ "id": "B", "text": "Ссылка с сокращением (bit.ly)", "isCorrect": true },
+			{ "id": "C", "text": "Требование срочно оплатить", "isCorrect": true },
+			{ "id": "D", "text": "Упоминание официальной службы (Почта, Сбер)", "isCorrect": true }
+		],
+		"correctAnswers": ["B", "C", "D"],
+		"explanation": "Официальные SMS часто приходят с коротких номеров, но не содержат сокращённых ссылок и требований оплаты.",
+		"points": 95
+	},
+	{
+		"id": 45,
+		"type": "true-false",
+		"question": "Оцените утверждение:",
+		"statement": "Фишинг может привести к взлому аккаунтов в соцсетях.",
+		"correctAnswer": "true",
+		"explanation": "Украв логин/пароль от почты или соцсети, злоумышленник получает полный доступ к аккаунту.",
+		"points": 80
+	},
+	{
+		"id": 46,
+		"type": "scenario",
+		"question": "Пришло письмо: «Ваш аккаунт Google заблокирован за нарушение».",
+		"scenario": "Ссылка ведёт на страницу с логотипом Google и формой входа.",
+		"actions": [
+			{ "id": "A", "text": "Ввести логин и пароль", "isCorrect": false },
+			{ "id": "B", "text": "Открыть Google в новой вкладке — это фишинг", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "Google никогда не блокирует аккаунты через email с ссылкой. Это классический фишинг.",
+		"points": 110
+	},
+	{
+		"id": 47,
+		"type": "email-analysis",
+		"question": "Письмо от «Госуслуг»: «Положен налоговый вычет 24 000 ₽»",
+		"email": {
+			"from": "support@gosuslugi-help.ru",
+			"subject": "Вам доступен вычет",
+			"body": "Подтвердите данные для зачисления средств.",
+			"attachments": []
+		},
+		"options": [
+			{ "id": "A", "text": "Подтвердить данные", "isCorrect": false },
+			{ "id": "B", "text": "Удалить — Госуслуги не так работают", "isCorrect": true }
+		],
+		"correctAnswer": "B",
+		"explanation": "Госуслуги НИКОГДА не присылают такие письма. Домен gosuslugi-help.ru — фишинг.",
+		"points": 125
+	},
+	{
+		"id": 48,
+		"type": "single-choice",
+		"question": "Какой самый надёжный способ избежать фишинга?",
+		"options": [
+			{ "id": "A", "text": "Не пользоваться интернетом", "isCorrect": false },
+			{
+				"id": "B",
+				"text": "Всегда вводить адрес сайта вручную или использовать закладки",
+				"isCorrect": true
+			},
+			{ "id": "C", "text": "Использовать только Wi-Fi", "isCorrect": false }
+		],
+		"correctAnswer": "B",
+		"explanation": "Ручной ввод или закладки гарантируют, что вы попадёте на настоящий сайт, а не на подделку по ссылке.",
+		"points": 150
+	}
+]
