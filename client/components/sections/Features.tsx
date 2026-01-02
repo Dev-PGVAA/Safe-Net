@@ -1,8 +1,9 @@
 'use client'
+import { m } from 'framer-motion'
+
+import { Smartphone, Sparkles, Target } from 'lucide-react'
 
 import { features } from '@/lib/data'
-import { motion } from 'framer-motion'
-import { Smartphone, Sparkles, Target } from 'lucide-react'
 
 export default function Features() {
 	return (
@@ -17,12 +18,11 @@ export default function Features() {
 						механики и реальные сценарии
 					</p>
 				</div>
-
 				<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
 					{features.map((feature, index) => {
 						const Icon = feature.icon
 						return (
-							<motion.div
+							<m.div
 								key={index}
 								initial={{ opacity: 0, y: 30, scale: 0.95 }}
 								whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -35,32 +35,27 @@ export default function Features() {
 							>
 								<div className='group relative bg-slate-800 hover:bg-slate-750 rounded-2xl p-6 border border-slate-700 hover:border-slate-600 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 overflow-hidden flex flex-col'>
 									<div
-										className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
+										className={`absolute inset-0 bg-linear-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
 									></div>
-
 									<div className='absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
 										<span
-											className={`text-xs font-bold px-2 py-1 rounded-full bg-gradient-to-r ${feature.color} text-white`}
+											className={`text-xs font-bold px-2 py-1 rounded-full bg-linear-to-r ${feature.color} text-white`}
 										>
 											{feature.highlight}
 										</span>
 									</div>
-
 									<div className='relative z-10 flex-1 flex flex-col'>
 										<div
-											className={`w-14 h-14 bg-gradient-to-br ${feature.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}
+											className={`w-14 h-14 bg-linear-to-br ${feature.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}
 										>
 											<Icon className='w-7 h-7 text-white' strokeWidth={2} />
 										</div>
-
-										<h4 className='text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-white group-hover:to-slate-300 transition-all'>
+										<h4 className='text-xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-linear-to-r group-hover:bg-clip-text group-hover:from-white group-hover:to-slate-300 transition-all'>
 											{feature.title}
 										</h4>
-
 										<p className='text-slate-400 text-sm leading-relaxed mb-4 flex-1'>
 											{feature.description}
 										</p>
-
 										<div className='flex items-center gap-2 pt-3 border-t border-slate-700 group-hover:border-slate-600 transition-colors mt-auto'>
 											<Sparkles className='w-4 h-4 text-indigo-400' />
 											<span className='text-xs font-medium text-slate-500 group-hover:text-slate-400 transition-colors'>
@@ -69,13 +64,12 @@ export default function Features() {
 										</div>
 									</div>
 								</div>
-							</motion.div>
+							</m.div>
 						)
 					})}
 				</div>
-
 				<div className='mt-16 grid md:grid-cols-2 gap-6'>
-					<motion.div
+					<m.div
 						initial={{ opacity: 0, x: -50, scale: 0.95 }}
 						whileInView={{ opacity: 1, x: 0, scale: 1 }}
 						transition={{
@@ -84,18 +78,17 @@ export default function Features() {
 							ease: [0.6, 0.05, 0.01, 0.9],
 						}}
 						viewport={{ once: true }}
-						className='bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-2xl p-6 text-center'
+						className='bg-linear-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-2xl p-6 text-center'
 					>
-						<div className='w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center'>
+						<div className='w-12 h-12 mx-auto mb-3 bg-linear-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center'>
 							<Target className='w-6 h-6 text-white' />
 						</div>
 						<h5 className='text-lg font-bold text-white mb-2'>Адаптивность</h5>
 						<p className='text-sm text-slate-400'>
 							Система автоматически подстраивает сложность под твой уровень
 						</p>
-					</motion.div>
-
-					<motion.div
+					</m.div>
+					<m.div
 						initial={{ opacity: 0, x: 50, scale: 0.95 }}
 						whileInView={{ opacity: 1, x: 0, scale: 1 }}
 						transition={{
@@ -104,16 +97,16 @@ export default function Features() {
 							ease: [0.6, 0.05, 0.01, 0.9],
 						}}
 						viewport={{ once: true }}
-						className='bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 rounded-2xl p-6 text-center'
+						className='bg-linear-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 rounded-2xl p-6 text-center'
 					>
-						<div className='w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center'>
+						<div className='w-12 h-12 mx-auto mb-3 bg-linear-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center'>
 							<Smartphone className='w-6 h-6 text-white' />
 						</div>
 						<h5 className='text-lg font-bold text-white mb-2'>Везде с тобой</h5>
 						<p className='text-sm text-slate-400'>
 							Учись с любого устройства: телефон, планшет или компьютер
 						</p>
-					</motion.div>
+					</m.div>
 				</div>
 			</div>
 		</section>

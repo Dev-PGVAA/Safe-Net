@@ -1,7 +1,8 @@
 'use client'
+import { animate, m, useInView, useMotionValue } from 'framer-motion'
 
-import { animate, motion, useInView, useMotionValue } from 'framer-motion'
 import { BookOpen, CheckCircle, Target, Users } from 'lucide-react'
+
 import { useEffect, useRef, useState } from 'react'
 import { IStatItem } from './stats.interface'
 
@@ -11,8 +12,6 @@ const stats = [
 	{ label: 'Средняя точность', value: 82, suffix: '%', icon: Target },
 	{ label: 'Уроков доступно', value: 300, suffix: '+', icon: BookOpen },
 ]
-
-// Компонент анимированного числа
 function AnimatedNumber({
 	value,
 	suffix = '',
@@ -24,7 +23,6 @@ function AnimatedNumber({
 }) {
 	const count = useMotionValue(0)
 	const [display, setDisplay] = useState('0' + suffix)
-
 	useEffect(() => {
 		const unsubscribe = count.on('change', v => {
 			const n = Math.floor(v)
@@ -39,17 +37,13 @@ function AnimatedNumber({
 			controls.stop()
 		}
 	}, [count, value, suffix, duration])
-
 	return <span>{display}</span>
 }
-
-// Отдельный элемент статистики
 function StatItem({ icon: Icon, label, value, suffix, index }: IStatItem) {
 	const ref = useRef(null)
 	const isInView = useInView(ref, { once: true, margin: '-20% 0px' })
-
 	return (
-		<motion.div
+		<m.div
 			ref={ref}
 			initial={{ opacity: 0, y: 40, scale: 0.8 }}
 			whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -61,15 +55,14 @@ function StatItem({ icon: Icon, label, value, suffix, index }: IStatItem) {
 			}}
 			className='text-center'
 		>
-			<motion.div
+			<m.div
 				whileHover={{ scale: 1.15, boxShadow: '0 0 15px #a78bfa' }}
 				transition={{ type: 'spring', stiffness: 300 }}
-				className='w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-3'
+				className='w-12 h-12 bg-linear-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-3'
 			>
 				<Icon className='w-6 h-6 text-white' />
-			</motion.div>
-
-			<motion.div
+			</m.div>
+			<m.div
 				initial={{ opacity: 0, y: 10 }}
 				whileInView={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.7, delay: 0.2 + index * 0.13 }}
@@ -80,13 +73,11 @@ function StatItem({ icon: Icon, label, value, suffix, index }: IStatItem) {
 				) : (
 					<span>0{suffix}</span>
 				)}
-			</motion.div>
-
+			</m.div>
 			<div className='text-sm text-slate-400'>{label}</div>
-		</motion.div>
+		</m.div>
 	)
 }
-
 export default function Stats() {
 	return (
 		<section id='stats' className='py-16 bg-slate-800/30'>

@@ -1,4 +1,7 @@
 'use client'
+import { useRouter } from 'next/navigation'
+
+import { Eye, EyeOff } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -12,17 +15,23 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useAuth } from '@/hooks/useAuth'
-import { Eye, EyeOff } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { toast } from 'react-hot-toast'
+import { useProfile } from '@/hooks/useProfile'
+import authService from '@/services/auth/auth.service'
+
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
+import { useEffect, useState, useTransition } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+import { IFormData } from '@/services/auth/auth.types'
+import { toast } from 'sonner'
 import { IAuthDialog } from './AuthDialog.interface'
 
 export function AuthDialog({
 	triggerButton = {
 		text: 'Начать обучение',
 		className:
-			'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-xl shadow-indigo-500/30 flex items-center gap-2 group',
+			'bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-xl shadow-indigo-500/30 flex items-center gap-2 group',
 		position: 'end',
 	},
 	dialogSize = 'md',
@@ -34,23 +43,54 @@ export function AuthDialog({
 	const [open, setOpen] = useState(false)
 	const [isLogin, setIsLogin] = useState(true)
 	const [agreedToPrivacy, setAgreedToPrivacy] = useState(false)
-	const [isLoading, setIsLoading] = useState(false)
-	const [formData, setFormData] = useState({
-		name: '',
-		email: '',
-		password: '',
-	})
 	const [showPassword, setShowPassword] = useState(false)
-
-	const { login, register, error: authError, user } = useAuth()
-
+	const { register, handleSubmit, reset } = useForm<IFormData>()
+	const router = useRouter()
+	const queryClient = useQueryClient()
+	const [isPending, startTransition] = useTransition()
+	const { user } = useProfile()
+	const { mutate: mutateLogin, isPending: isLoginPending } = useMutation({
+		mutationKey: ['login'],
+		mutationFn: (data: IFormData) => authService.main('login', data),
+		onSuccess() {
+			toast.success('Успешный вход в систему!')
+			startTransition(() => {
+				reset()
+				setOpen(false)
+				queryClient.invalidateQueries({ queryKey: ['profile'] })
+				router.push('/dashboard')
+			})
+		},
+		onError(error) {
+			if (axios.isAxiosError(error)) {
+				toast.error(error.response?.data?.message || 'Ошибка входа')
+			}
+		},
+	})
+	const { mutate: mutateRegister, isPending: isRegisterPending } = useMutation({
+		mutationKey: ['register'],
+		mutationFn: (data: IFormData) => authService.main('register', data),
+		onSuccess() {
+			toast.success('Аккаунт успешно создан!')
+			startTransition(() => {
+				reset()
+				setOpen(false)
+				queryClient.invalidateQueries({ queryKey: ['profile'] })
+				router.push('/dashboard')
+			})
+		},
+		onError(error) {
+			if (axios.isAxiosError(error)) {
+				toast.error(error.response?.data?.message || 'Ошибка регистрации')
+			}
+		},
+	})
+	const isLoading = isPending || isLoginPending || isRegisterPending
 	useEffect(() => {
-		// Очищаем форму и ошибки при переключении между логином и регистрацией
-		setFormData({ name: '', email: '', password: '' })
+		reset()
 		setAgreedToPrivacy(false)
 		setShowPassword(false)
-	}, [isLogin])
-
+	}, [isLogin, reset])
 	const sizeClasses = {
 		sm: 'sm:max-w-sm',
 		md: 'sm:max-w-md',
@@ -61,68 +101,20 @@ export function AuthDialog({
 		'4xl': 'sm:max-w-4xl',
 		'5xl': 'sm:max-w-5xl',
 	}
-
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault()
-
+	const onSubmit: SubmitHandler<IFormData> = data => {
 		if (!isLogin && !agreedToPrivacy) {
 			toast.error('Пожалуйста, согласитесь с обработкой персональных данных')
 			return
 		}
-
-		setIsLoading(true)
-		let result
-
-		try {
-			if (isLogin) {
-				result = await login(formData.email, formData.password)
-				if (result.success) {
-					toast.success('Успешный вход в систему!')
-					setOpen(false)
-					// Перезагружаем страницу после успешного входа
-					window.location.reload()
-				} else {
-					toast.error(result.error || 'Ошибка входа')
-				}
-			} else {
-				result = await register(
-					formData.name,
-					formData.email,
-					formData.password
-				)
-				if (result.success) {
-					toast.success('Аккаунт успешно создан!')
-					setOpen(false)
-					// Перезагружаем страницу после успешной регистрации
-					window.location.reload()
-				} else {
-					toast.error(result.error || 'Ошибка регистрации')
-				}
-			}
-		} catch (err) {
-			const errorMessage =
-				err instanceof Error ? err.message : 'Произошла ошибка'
-			toast.error(errorMessage)
-		} finally {
-			setIsLoading(false)
-		}
+		isLogin ? mutateLogin(data) : mutateRegister(data)
 	}
-
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target
-		setFormData(prev => ({ ...prev, [name]: value }))
-	}
-
 	const handleTriggerClick = () => {
-		if (user) {
-			// Если пользователь авторизован, перенаправляем на платформу
-			window.location.href = '/platform'
+		if (user?.isLoggedIn) {
+			router.push('/dashboard')
 		} else {
-			// Иначе открываем диалог
 			setOpen(true)
 		}
 	}
-
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<button
@@ -138,12 +130,11 @@ export function AuthDialog({
 					<span className='ml-2'>{triggerButton.icon}</span>
 				)}
 			</button>
-
 			<DialogContent
-				className={`${sizeClasses[dialogSize]} bg-gradient-to-b from-slate-900 to-slate-800 border border-slate-700 text-slate-100`}
+				className={`${sizeClasses[dialogSize]} bg-linear-to-b from-slate-900 to-slate-800 border border-slate-700 text-slate-100`}
 			>
 				<DialogHeader className='text-center'>
-					<DialogTitle className='text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent'>
+					<DialogTitle className='text-2xl font-bold bg-linear-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent'>
 						{isLogin ? `Вход в ${title}` : `Регистрация в ${title}`}
 					</DialogTitle>
 					<DialogDescription className='text-slate-400 mt-2'>
@@ -152,8 +143,7 @@ export function AuthDialog({
 							: `Создайте аккаунт, чтобы начать обучение в ${title}`}
 					</DialogDescription>
 				</DialogHeader>
-
-				<form className='space-y-4 mt-4' onSubmit={handleSubmit}>
+				<form className='space-y-4 mt-4' onSubmit={handleSubmit(onSubmit)}>
 					{!isLogin && showNameField && (
 						<div className='space-y-2'>
 							<Label htmlFor='name' className='text-slate-300'>
@@ -161,13 +151,10 @@ export function AuthDialog({
 							</Label>
 							<Input
 								id='name'
-								name='name'
 								type='text'
 								placeholder='Введите ваше имя'
 								className='bg-slate-800/50 border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
-								value={formData.name}
-								onChange={handleInputChange}
-								required={!isLogin}
+								{...register('name')}
 							/>
 						</div>
 					)}
@@ -177,13 +164,10 @@ export function AuthDialog({
 						</Label>
 						<Input
 							id='email'
-							name='email'
 							type='email'
 							placeholder='your@email.com'
 							className='bg-slate-800/50 border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
-							value={formData.email}
-							onChange={handleInputChange}
-							required
+							{...register('email')}
 						/>
 					</div>
 					<div className='relative space-y-2'>
@@ -192,17 +176,14 @@ export function AuthDialog({
 						</Label>
 						<Input
 							id='password'
-							name='password'
 							type={showPassword ? 'text' : 'password'}
 							placeholder='••••••••'
 							className='bg-slate-800/50 border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 pr-10'
-							value={formData.password}
-							onChange={handleInputChange}
-							required
+							{...register('password')}
 						/>
 						<button
 							type='button'
-							className='absolute right-3 top-1/2 transform -translate-y-1/2 translate-y-[-3px] text-slate-400 hover:text-white transition-colors flex items-center justify-center'
+							className='absolute right-3 top-1/2 transform translate-y-[-3px] text-slate-400 hover:text-white transition-colors flex items-center justify-center'
 							onClick={() => setShowPassword(!showPassword)}
 							aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
 						>
@@ -213,7 +194,6 @@ export function AuthDialog({
 							)}
 						</button>
 					</div>
-
 					{!isLogin && (
 						<div className='flex items-start space-x-3 pt-2'>
 							<Checkbox
@@ -236,11 +216,7 @@ export function AuthDialog({
 							</div>
 						</div>
 					)}
-
 					{children}
-
-					{authError && <div className='text-sm text-red-400'>{authError}</div>}
-
 					<DialogFooter className='flex flex-col gap-4 mt-2'>
 						<Button
 							type='submit'
@@ -248,7 +224,7 @@ export function AuthDialog({
 							className={`w-full ${
 								(!isLogin && !agreedToPrivacy) || isLoading
 									? 'bg-slate-700 cursor-not-allowed'
-									: 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700'
+									: 'bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700'
 							} text-white shadow-md py-5`}
 						>
 							{isLoading ? (
@@ -281,7 +257,6 @@ export function AuthDialog({
 								'Создать аккаунт'
 							)}
 						</Button>
-
 						<div className='w-full text-center'>
 							<button
 								type='button'

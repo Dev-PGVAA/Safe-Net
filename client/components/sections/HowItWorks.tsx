@@ -1,7 +1,7 @@
 import {
 	BookOpen,
 	Brain,
-	Fish,
+	FishingHook,
 	Lock,
 	MessageCircle,
 	ShoppingBag,
@@ -28,11 +28,10 @@ const steps = [
 		icon: Brain,
 	},
 ]
-
 const topicCards = [
 	{
 		name: 'Фишинг',
-		icon: Fish,
+		icon: FishingHook,
 		color: 'from-orange-500 to-red-600',
 	},
 	{
@@ -51,7 +50,6 @@ const topicCards = [
 		color: 'from-purple-500 to-pink-600',
 	},
 ]
-
 export default function HowItWorks() {
 	return (
 		<section className='py-20'>
@@ -65,13 +63,12 @@ export default function HowItWorks() {
 							SafeNet сочетает теорию и практику для эффективного обучения
 							кибербезопасности
 						</p>
-
 						<div className='space-y-6'>
 							{steps.map((item, index) => {
 								const Icon = item.icon
 								return (
 									<div key={index} className='flex gap-4 items-start'>
-										<div className='flex-shrink-0 w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center'>
+										<div className='shrink-0 w-12 h-12 bg-linear-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center'>
 											<span className='text-white font-bold text-lg'>
 												{item.step}
 											</span>
@@ -92,9 +89,8 @@ export default function HowItWorks() {
 							})}
 						</div>
 					</div>
-
 					<div className='relative'>
-						<div className='absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-3xl blur-2xl'></div>
+						<div className='absolute inset-0 bg-linear-to-r from-cyan-500/20 to-blue-500/20 rounded-3xl blur-2xl'></div>
 						<div className='relative bg-slate-800 rounded-2xl p-6 border border-slate-700'>
 							<div className='grid grid-cols-2 gap-4'>
 								{topicCards.map((item, index) => {
@@ -105,7 +101,7 @@ export default function HowItWorks() {
 											className='bg-slate-900/50 hover:bg-slate-900 rounded-xl p-4 border border-slate-700 hover:border-slate-600 transition-all cursor-pointer group'
 										>
 											<div
-												className={`w-12 h-12 bg-gradient-to-br ${item.color} rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}
+												className={`w-12 h-12 bg-linear-to-br ${item.color} rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}
 											>
 												<Icon className='w-6 h-6 text-white' />
 											</div>

@@ -1,11 +1,12 @@
 import { Play } from 'lucide-react'
+
 import { AuthDialog } from '../Auth/AuthDialog'
 
 export default function CTA() {
 	return (
 		<section className='py-20'>
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-				<div className='bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden'>
+				<div className='bg-linear-to-r from-indigo-600 to-purple-600 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden'>
 					<div className='absolute inset-0 opacity-10'>
 						<div className='absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl'></div>
 						<div className='absolute bottom-0 right-0 w-80 h-80 bg-white rounded-full blur-3xl'></div>
