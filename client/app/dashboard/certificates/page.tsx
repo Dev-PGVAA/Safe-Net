@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ROUTES } from '@/config/pages-url.config'
+import { useCourses } from '@/hooks/useCourses'
 import { cn } from '@/lib/utils'
 import { learningService } from '@/services/learning/learning.service'
 import { formatDate } from '@/utils/dateFormater'
@@ -26,7 +27,7 @@ import {
 	Zap,
 } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 export default function CertificatesPage() {
 	const { data: certificates, isLoading } = useQuery({
@@ -36,6 +37,14 @@ export default function CertificatesPage() {
 
 	const [hoveredCard, setHoveredCard] = useState<string | null>(null)
 	const hasCertificates = certificates && certificates.length > 0
+
+	const { courses: activeCourses } = useCourses('active')
+	const { courses: completedCourses } = useCourses('completed')
+
+	const stats = useMemo(() => {
+		const allCourses = [...activeCourses, ...completedCourses]
+		return { totalXP: allCourses.reduce((sum, c) => sum + (c.totalXp || 0), 0) }
+	}, [activeCourses, completedCourses])
 
 	if (isLoading) {
 		return (
@@ -126,7 +135,7 @@ export default function CertificatesPage() {
 								</Badge>
 								<div className='flex items-center gap-2 text-sm font-semibold text-white px-4 py-2 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10'>
 									<Zap className='w-4 h-4 text-yellow-400' />
-									{certificates.length * 100} XP
+									{stats.totalXP} XP
 								</div>
 							</m.div>
 						)}
@@ -206,7 +215,7 @@ export default function CertificatesPage() {
 						<Button
 							asChild
 							size='lg'
-							variant='outline'
+							// variant='outline'
 							className='w-full sm:w-auto h-12 sm:h-14 rounded-xl sm:rounded-2xl border-white/20 bg-white/5 hover:bg-white/10 backdrop-blur-sm font-semibold text-white group transition-all duration-300'
 						>
 							<Link href={ROUTES.COURSES}>
