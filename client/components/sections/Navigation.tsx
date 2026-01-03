@@ -3,15 +3,15 @@ import { useRouter } from 'next/navigation'
 
 import { LogOut, Menu, Shield, X } from 'lucide-react'
 
+import { useLogout } from '@/hooks/useLogout'
 import { useProfile } from '@/hooks/useProfile'
-import authService from '@/services/auth/auth.service'
 import { useEffect, useRef, useState } from 'react'
-import { toast } from 'sonner'
 
 export default function Navigation() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 	const [showLogout, setShowLogout] = useState(false)
 	const { user, isLoading } = useProfile()
+	const { logout } = useLogout()
 	const router = useRouter()
 	const profileRef = useRef<HTMLDivElement>(null)
 	const isAuthenticated = !!user?.isLoggedIn
@@ -33,15 +33,7 @@ export default function Navigation() {
 		}
 	}, [showLogout])
 
-	const handleLogout = async () => {
-		try {
-			await authService.logout()
-			toast.success('Вы успешно вышли из системы')
-			router.refresh()
-		} catch (error) {
-			toast.error('Ошибка при выходе из системы')
-		}
-	}
+	const handleLogout = () => logout()
 
 	const handleProfileClick = () => {
 		setShowLogout(!showLogout)

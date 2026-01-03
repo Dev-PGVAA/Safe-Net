@@ -7,10 +7,9 @@ import { AnimatePresence, m, useAnimation, usePresence } from 'framer-motion'
 import { ChevronDown, LogOut, Menu, Shield, ShieldCheck, X } from 'lucide-react'
 
 import { useProfile } from '@/hooks/useProfile'
-import authService from '@/services/auth/auth.service'
 import { useEffect, useState } from 'react'
 
-import { toast } from 'sonner'
+import { useLogout } from '@/hooks/useLogout'
 import { adminNavItems, navItems } from './navigation.data'
 
 interface NavItem {
@@ -25,6 +24,7 @@ export default function DashboardSidebar() {
 	const pathname = usePathname()
 	const router = useRouter()
 	const { user } = useProfile()
+	const { logout } = useLogout()
 	const [expandedItems, setExpandedItems] = useState<string[]>([])
 	const [isMobileOpen, setIsMobileOpen] = useState(false)
 	const [hasAnimated, setHasAnimated] = useState(false)
@@ -51,16 +51,7 @@ export default function DashboardSidebar() {
 		return pathname.startsWith(href)
 	}
 
-	const handleLogout = async () => {
-		try {
-			await authService.logout()
-			toast.success('Выход выполнен')
-			router.push('/')
-			router.refresh()
-		} catch (error) {
-			toast.error('Ошибка при выходе')
-		}
-	}
+	const handleLogout = () => logout('/')
 
 	const filteredAdminItems = adminNavItems.filter(
 		item => !item.adminOnly || user?.isAdmin
