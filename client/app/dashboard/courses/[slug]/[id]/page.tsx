@@ -7,8 +7,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ROUTES } from '@/config/pages-url.config'
-import { useCourseDetail } from '@/hooks/useCourseDetail'
-import { useLessonDetail } from '@/hooks/useLessonDetail'
+import { useCourseDetail } from '@/hooks/learning/useCourseDetail'
+import { useLessonDetail } from '@/hooks/learning/useLessonDetail'
 import { cn } from '@/lib/utils'
 import { m } from 'framer-motion'
 import {
@@ -123,7 +123,7 @@ export default function LessonDetailPage() {
 							</p>
 							<Button
 								onClick={() => router.back()}
-								className='w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/90 shadow-2xl font-bold text-sm sm:text-base'
+								className='w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/80 shadow-2xl font-bold text-sm sm:text-base'
 							>
 								<ArrowLeft className='mr-2 h-4 w-4' />
 								Вернуться назад

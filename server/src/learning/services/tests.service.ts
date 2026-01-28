@@ -3,10 +3,14 @@ import { TaskType } from '@prisma/client'
 import { PrismaService } from 'src/prisma.service'
 import { SubmitTestDto } from '../dto/submit-test.dto'
 import { TestDetailsDto, TestResultResponseDto } from '../dto/test-question.dto'
+import { AchievementsService } from './achievements.service'
 
 @Injectable()
 export class TestsService {
-	constructor(private readonly prisma: PrismaService) {}
+	constructor(
+		private AchievementsService: AchievementsService,
+		private prisma: PrismaService
+	) {}
 
 	async getTests() {
 		return this.prisma.test.findMany({
@@ -148,6 +152,9 @@ export class TestsService {
 				test.course.id
 			)
 			certificateIssued = !!certificateId
+
+			const newAchievements =
+				await this.AchievementsService.checkAndAwardAchievements(userId)
 		}
 
 		// Сохраняем детальные результаты ответов

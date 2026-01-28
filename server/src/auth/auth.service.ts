@@ -4,8 +4,10 @@ import {
 	UnauthorizedException,
 } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
+import { UserStatus } from '@prisma/client'
 import { verify } from 'argon2'
 import { Response } from 'express'
+import { AchievementsService } from 'src/learning/services/achievements.service'
 import { PrismaService } from 'src/prisma.service'
 import { UserService } from 'src/user/services/user.service'
 import { AuthLoginDto, AuthRegisterDto } from './dto/auth.dto'
@@ -16,6 +18,7 @@ export class AuthService {
 	constructor(
 		private jwt: JwtService,
 		private UserService: UserService,
+		private AchievementsService: AchievementsService,
 		private prisma: PrismaService
 	) {}
 	async login(dto: AuthLoginDto) {
@@ -29,9 +32,15 @@ export class AuthService {
 	async register(dto: AuthRegisterDto) {
 		const oldUserEmail = await this.UserService.getByEmail(dto.email)
 		if (oldUserEmail)
-			throw new UnauthorizedException('User with this email already exists')
+			throw new UnauthorizedException(
+				'Пользователь с этим email уже существует'
+			)
+
 		const { password, ...user } = await this.UserService.create(dto)
 		const tokens = this.issueTokens(user.id)
+
+		await this.AchievementsService.awardAchievement(user.id, 'FIRST_LOGIN')
+
 		return {
 			user,
 			...tokens,
@@ -58,9 +67,11 @@ export class AuthService {
 	}
 	private async validateUser(dto: AuthLoginDto) {
 		const user = await this.UserService.getByEmail(dto.email)
-		if (!user) throw new NotFoundException('User not found')
+		if (!user) throw new NotFoundException('Пользователь не найден')
 		const isValid = await verify(user.password, dto.password)
-		if (!isValid) throw new UnauthorizedException('Invalid password')
+		if (!isValid) throw new UnauthorizedException('Не верный пароль')
+		if (user.status === UserStatus.BLOCKED)
+			throw new UnauthorizedException('Пользователь заблокирован')
 		return user
 	}
 	addRefreshTokenToResponse(res: Response, refreshToken: string) {
@@ -78,7 +89,8 @@ export class AuthService {
 
 	async getNewTokens(refreshToken: string) {
 		const result = await this.jwt.verifyAsync(refreshToken)
-		if (!result) throw new UnauthorizedException('Invalid refresh token')
+		if (!result)
+			throw new UnauthorizedException('Неправильный токен обновления')
 		const { password, ...user } = await this.UserService.getById(result.id)
 		const tokens = this.issueTokens(user.id)
 		return {

@@ -8,10 +8,14 @@ import { PrismaService } from '../../prisma.service'
 import { AnswerResultDto } from '../dto/answer-result.dto'
 import { AnswerTaskDto } from '../dto/answer-task.dto'
 import { LessonDetailsDto } from '../dto/lesson-details.dto'
+import { AchievementsService } from './achievements.service'
 
 @Injectable()
 export class ProgressService {
-	constructor(private readonly prisma: PrismaService) {}
+	constructor(
+		private readonly prisma: PrismaService,
+		private readonly achievementsService: AchievementsService
+	) {}
 
 	async getLessonWithTasks(
 		lessonId: string,
@@ -99,6 +103,7 @@ export class ProgressService {
 
 		if (!user) throw new ForbiddenException('User not found or unauthorized')
 
+		// Проверяем, была ли уже правильная попытка
 		const previousCorrectAttempt = await this.prisma.taskAttempt.findFirst({
 			where: {
 				userId,
@@ -107,6 +112,7 @@ export class ProgressService {
 			},
 		})
 
+		// Проверка правильности ответа
 		let isCorrect = false
 
 		if (
@@ -128,11 +134,14 @@ export class ProgressService {
 			task.type === TaskType.PHISHING_EMAIL ||
 			task.type === TaskType.PHISHING_SITE
 		) {
+			// Для текстовых заданий требуется ручная проверка
 			isCorrect = false
 		}
 
+		// XP начисляется только при первом правильном ответе
 		const awardedXp = isCorrect && !previousCorrectAttempt ? task.points : 0
 
+		// Создаем запись о попытке
 		await this.prisma.taskAttempt.create({
 			data: {
 				userId,
@@ -144,6 +153,7 @@ export class ProgressService {
 			},
 		})
 
+		// Пересчитываем прогресс курса
 		const totalTasksInCourse = await this.prisma.task.count({
 			where: {
 				lesson: {
@@ -180,7 +190,6 @@ export class ProgressService {
 			},
 		})
 
-		// Прогресс по задачам (для уроков)
 		const progressPercent =
 			totalTasksInCourse > 0
 				? Math.min(
@@ -191,6 +200,7 @@ export class ProgressService {
 
 		const totalXp = totalXpAgg._sum?.awardedXp ?? 0
 
+		// Обновляем прогресс курса
 		await this.prisma.courseProgress.upsert({
 			where: {
 				userId_courseId: {
@@ -210,6 +220,7 @@ export class ProgressService {
 			},
 		})
 
+		// Проверяем завершение урока
 		const lessonTasks = await this.prisma.task.findMany({
 			where: { lessonId: task.lessonId },
 			select: { id: true },
@@ -245,10 +256,14 @@ export class ProgressService {
 			})
 		}
 
-		// ✅ Проверяем и выдаем сертификат после выполнения задания
+		// Проверяем и выдаем сертификат
 		let certificateIssued = false
 		const certificateId = await this.checkAndIssueCertificate(userId, course.id)
 		certificateIssued = !!certificateId
+
+		// ✅ Проверяем и выдаем достижения
+		const newAchievements =
+			await this.achievementsService.checkAndAwardAchievements(userId)
 
 		return {
 			taskId: task.id,
@@ -258,10 +273,10 @@ export class ProgressService {
 			courseProgress: progressPercent,
 			lessonCompleted,
 			certificateIssued,
+			newAchievements,
 		}
 	}
 
-	// ✅ ИСПРАВЛЕНА ЛОГИКА: Сертификат только при 100% завершении
 	async checkAndIssueCertificate(
 		userId: string,
 		courseId: string
@@ -318,18 +333,15 @@ export class ProgressService {
 		const totalTests = courseTests.length
 		const passedTests = passedTestResults.length
 
-		// ✅ ИСПРАВЛЕНО: Проверяем что все части курса завершены
-		// 1. Должны быть уроки И все завершены
+		// Проверяем полное завершение курса
 		if (totalLessons === 0 || completedLessons < totalLessons) {
 			return null
 		}
 
-		// 2. Должны быть задания И все выполнены
 		if (totalTasks === 0 || solvedTasks < totalTasks) {
 			return null
 		}
 
-		// 3. Если есть тесты - все должны быть пройдены
 		if (totalTests > 0 && passedTests < totalTests) {
 			return null
 		}

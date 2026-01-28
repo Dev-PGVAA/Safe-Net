@@ -1,30 +1,9 @@
 'use client'
 
-import { useHomeData } from '@/hooks/useHomeData'
+import { useHomeData } from '@/hooks/learning/useHomeData'
 import { m } from 'framer-motion'
-import {
-	Bug,
-	EyeOff,
-	Fish,
-	Link2Off,
-	Lock,
-	LucideIcon,
-	Shield,
-	Users,
-	Zap,
-} from 'lucide-react'
-
-// Маппинг иконок по slug
-const iconMap: Record<string, LucideIcon> = {
-	basics: Shield,
-	phishing: Fish,
-	'dangerous-links': Link2Off,
-	passwords: Lock,
-	malware: Bug,
-	'social-media': Users,
-	privacy: EyeOff,
-	advanced: Zap,
-}
+import * as icons from 'lucide-react'
+import { LucideIcon, Shield } from 'lucide-react'
 
 // Цветовая палитра для этапов
 const colorPalette = [
@@ -38,7 +17,7 @@ const colorPalette = [
 	'#6366f1', // indigo
 ]
 
-// Альтернатива: маппинг цветов по slug для консистентности
+// Маппинг цветов по slug для консистентности
 const colorMap: Record<string, string> = {
 	basics: '#3b82f6', // blue
 	phishing: '#ec4899', // pink
@@ -48,6 +27,22 @@ const colorMap: Record<string, string> = {
 	'social-media': '#06b6d4', // cyan
 	privacy: '#10b981', // emerald
 	advanced: '#f97316', // orange
+}
+
+// Функция для получения иконки по slug
+const getIconBySlug = (slug: string): LucideIcon => {
+	// Преобразуем slug в PascalCase для lucide-react
+	// Например: 'dangerous-links' -> 'DangerousLinks'
+	const pascalCase = slug
+		.split('-')
+		.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+		.join('')
+
+	// Пытаемся найти иконку в lucide-react
+	const icon = (icons as Record<string, LucideIcon>)[pascalCase]
+
+	// Возвращаем найденную иконку или Shield как fallback
+	return icon || Shield
 }
 
 export default function Topics() {
@@ -83,7 +78,9 @@ export default function Topics() {
 				</div>
 				<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
 					{stages.map((stage, index) => {
-						const Icon = iconMap[stage.slug] || Shield
+						// Получаем иконку динамически по slug из stage.icon или stage.slug
+						const Icon = getIconBySlug(stage.icon || stage.slug)
+
 						// Выбираем цвет по slug (консистентный) или по индексу (циклический)
 						const strokeColor =
 							colorMap[stage.slug] || colorPalette[index % colorPalette.length]
@@ -100,21 +97,13 @@ export default function Topics() {
 									ease: [0.25, 0.8, 0.25, 1],
 								}}
 							>
-								<div
-									className='relative overflow-hidden bg-slate-800/70 rounded-xl p-5 border border-slate-700
-                  group transition-all duration-500 ease-out
-                  hover:border-transparent hover:shadow-2xl hover:shadow-indigo-500/25
-                  hover:-translate-y-3 hover:scale-[1.03]
-                  hover:bg-linear-to-br hover:from-slate-800/80 hover:to-slate-700/60
-                  min-h-[150px]'
-								>
-									{/* Gradient glow effect */}
+								<div className='relative overflow-hidden bg-slate-800/70 rounded-xl p-5 border border-slate-700 group transition-all duration-500 ease-out hover:border-transparent hover:shadow-2xl hover:shadow-indigo-500/25 hover:-translate-y-3 hover:scale-[1.03] hover:bg-linear-to-br hover:from-slate-800/80 hover:to-slate-700/60 min-h-[150px]'>
 									<div
 										className='absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-700 blur-2xl'
 										style={{
 											background: `radial-gradient(circle at top right, ${strokeColor}B0 0%, transparent 70%)`,
 										}}
-									></div>
+									/>
 									<div className='relative flex flex-col justify-between h-full'>
 										<div>
 											<div className='flex items-center justify-between mb-3'>

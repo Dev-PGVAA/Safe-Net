@@ -3,13 +3,13 @@ import {
 	Injectable,
 	NotFoundException,
 } from '@nestjs/common'
-import { PrismaService } from '../../prisma.service'
+import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
 export class CertificatesService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async getCertificateById(id: string, userId: string) {
+	async getCertificateById(id: string, userId: string, userRights?: string[]) {
 		const certificate = await this.prisma.certificate.findUnique({
 			where: { id },
 			include: {
@@ -35,7 +35,11 @@ export class CertificatesService {
 			throw new NotFoundException('Certificate not found')
 		}
 
-		if (certificate.userId !== userId) {
+		// Проверяем, есть ли у пользователя права администратора
+		const isAdmin =
+			userRights?.includes('ADMIN') || userRights?.includes('admin')
+
+		if (!isAdmin && certificate.userId !== userId) {
 			throw new ForbiddenException('You do not have access to this certificate')
 		}
 

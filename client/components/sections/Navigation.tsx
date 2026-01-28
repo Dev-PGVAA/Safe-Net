@@ -3,8 +3,8 @@ import { useRouter } from 'next/navigation'
 
 import { LogOut, Menu, Shield, X } from 'lucide-react'
 
-import { useLogout } from '@/hooks/useLogout'
-import { useProfile } from '@/hooks/useProfile'
+import { useLogout } from '@/hooks/user/useLogout'
+import { useProfile } from '@/hooks/user/useProfile'
 import { useEffect, useRef, useState } from 'react'
 
 export default function Navigation() {
@@ -37,6 +37,7 @@ export default function Navigation() {
 
 	const handleProfileClick = () => {
 		setShowLogout(!showLogout)
+		logout()
 	}
 
 	return (

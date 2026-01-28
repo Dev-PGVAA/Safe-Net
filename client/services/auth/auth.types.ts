@@ -1,7 +1,13 @@
 export enum UserRole {
 	USER = 'USER',
-	ADMIN = 'ADMIN'
+	ADMIN = 'ADMIN',
 }
+
+export const UserRoleLabel: Record<UserRole, string> = {
+	[UserRole.USER]: 'Пользователь',
+	[UserRole.ADMIN]: 'Админ',
+}
+
 export interface ITokenInside {
 	id: string
 	rights: UserRole[]

@@ -1,0 +1,167 @@
+'use client'
+
+import { m } from 'framer-motion'
+import { BarChart3 } from 'lucide-react'
+import {
+	Bar,
+	BarChart,
+	CartesianGrid,
+	Legend,
+	ResponsiveContainer,
+	Tooltip,
+	XAxis,
+	YAxis,
+} from 'recharts'
+
+interface CourseData {
+	id: string
+	title: string
+	enrolledUsers: number
+	completionRate: number
+	avgScore: number
+}
+
+interface PerformanceChartProps {
+	data: CourseData[]
+}
+
+const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
+
+export default function PerformanceChart({ data }: PerformanceChartProps) {
+	const chartData = data.slice(0, 5).map(course => ({
+		name:
+			course.title.length > 15
+				? course.title.slice(0, 15) + '...'
+				: course.title,
+		score: course.avgScore,
+		completion: course.completionRate,
+		enrolled: course.enrolledUsers,
+		fullTitle: course.title,
+	}))
+
+	return (
+		<m.div
+			initial={{ opacity: 0, scale: 0.95 }}
+			animate={{ opacity: 1, scale: 1 }}
+			className='bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 hover:shadow-lg transition-shadow'
+		>
+			{/* Header */}
+			<div className='flex items-start justify-between mb-6'>
+				<div>
+					<div className='flex items-center gap-2 mb-2'>
+						<div className='p-2 rounded-lg bg-purple-100 dark:bg-purple-900/30'>
+							<BarChart3 className='w-5 h-5 text-purple-600 dark:text-purple-400' />
+						</div>
+						<h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
+							Топ-5 курсов
+						</h3>
+					</div>
+					<p className='text-sm text-gray-600 dark:text-gray-400 mt-1'>
+						По среднему баллу и завершению
+					</p>
+				</div>
+			</div>
+
+			{/* Chart */}
+			<m.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ delay: 0.2 }}
+			>
+				<ResponsiveContainer width='100%' height={350}>
+					<BarChart
+						data={chartData}
+						margin={{ top: 20, right: 30, left: 0, bottom: 60 }}
+					>
+						<CartesianGrid
+							strokeDasharray='3 3'
+							stroke='#e5e7eb'
+							className='dark:stroke-gray-800'
+							vertical={false}
+						/>
+						<XAxis
+							dataKey='name'
+							stroke='#9ca3af'
+							fontSize={12}
+							angle={-45}
+							textAnchor='end'
+							height={100}
+							style={{ fontFamily: 'inherit' }}
+						/>
+						<YAxis
+							stroke='#9ca3af'
+							fontSize={12}
+							style={{ fontFamily: 'inherit' }}
+							label={{ value: 'Балл (%)', angle: -90, position: 'insideLeft' }}
+							domain={[0, 100]}
+						/>
+						<Tooltip
+							contentStyle={{
+								backgroundColor: 'rgba(17, 24, 39, 0.95)',
+								border: 'none',
+								borderRadius: '12px',
+								color: '#fff',
+							}}
+							cursor={{ fill: 'rgba(59, 130, 246, 0.1)' }}
+							labelStyle={{ color: '#fff' }}
+							formatter={(value: number, name: string) => {
+								if (name === 'score') return [`${value}%`, 'Средний балл']
+								if (name === 'completion') return [`${value}%`, 'Завершение']
+								return [value, name]
+							}}
+						/>
+						<Legend wrapperStyle={{ paddingTop: '20px' }} iconType='circle' />
+						<Bar
+							dataKey='score'
+							fill='#3b82f6'
+							radius={[8, 8, 0, 0]}
+							name='Средний балл'
+							animationDuration={800}
+						/>
+						<Bar
+							dataKey='completion'
+							fill='#10b981'
+							radius={[8, 8, 0, 0]}
+							name='% Завершения'
+							animationDuration={800}
+						/>
+					</BarChart>
+				</ResponsiveContainer>
+			</m.div>
+
+			{/* Stats Grid */}
+			<div className='mt-6 pt-6 border-t border-gray-200 dark:border-gray-800'>
+				<div className='grid grid-cols-5 gap-3'>
+					{chartData.map((course, i) => (
+						<m.div
+							key={course.name}
+							initial={{ opacity: 0, scale: 0.9 }}
+							animate={{ opacity: 1, scale: 1 }}
+							transition={{ delay: 0.05 * i }}
+							className='p-3 rounded-lg bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition'
+							title={course.fullTitle}
+						>
+							<p className='text-xs font-medium text-gray-600 dark:text-gray-400 truncate'>
+								{course.name}
+							</p>
+							<div className='flex items-baseline gap-1 mt-1'>
+								<p className='text-lg font-bold text-blue-600 dark:text-blue-400'>
+									{course.score}%
+								</p>
+								<p className='text-xs text-gray-500 dark:text-gray-500'>балл</p>
+							</div>
+							<div className='flex items-baseline gap-1 mt-0.5'>
+								<p className='text-sm font-semibold text-green-600 dark:text-green-400'>
+									{course.enrolled}
+								</p>
+								<p className='text-xs text-gray-500 dark:text-gray-500'>
+									студ.
+								</p>
+							</div>
+						</m.div>
+					))}
+				</div>
+			</div>
+		</m.div>
+	)
+}

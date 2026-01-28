@@ -3,6 +3,7 @@ import {
 	Controller,
 	Delete,
 	Get,
+	HttpCode,
 	Param,
 	Patch,
 	Post,
@@ -29,6 +30,7 @@ export class LessonsController {
 		return this.lessonsService.getBlocksByLesson(lessonId)
 	}
 
+	@HttpCode(200)
 	@Post('blocks')
 	@Roles(Role.ADMIN)
 	async createBlock(@Body() dto: CreateLessonBlockDto) {

@@ -5,5 +5,6 @@ export class AnswerResultDto {
 	totalXp: number
 	courseProgress: number
 	lessonCompleted: boolean
-	certificateIssued?: boolean
+	certificateIssued: boolean
+	newAchievements?: string[] // Добавьте это поле
 }
