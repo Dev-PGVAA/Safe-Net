@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useProfile } from '@/hooks/useProfile'
+import { useProfile } from '@/hooks/user/useProfile'
 import authService from '@/services/auth/auth.service'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'

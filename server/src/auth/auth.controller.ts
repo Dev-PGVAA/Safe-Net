@@ -7,7 +7,7 @@ import {
 	Res,
 	UnauthorizedException,
 	UsePipes,
-	ValidationPipe
+	ValidationPipe,
 } from '@nestjs/common'
 import { Request, Response } from 'express'
 import { AuthService } from './auth.service'
@@ -38,7 +38,7 @@ export class AuthController {
 		this.authService.addRefreshTokenToResponse(res, refreshToken)
 		return response
 	}
-	
+
 	@HttpCode(200)
 	@Post('login/access-token')
 	async getNewTokens(
@@ -50,6 +50,7 @@ export class AuthController {
 		if (!refreshTokenFromCookies) {
 			this.authService.removeRefreshTokenFromResponse(res)
 			throw new UnauthorizedException('Refresh token not passed')
+			throw new UnauthorizedException('Токен обновления не передан')
 		}
 		const { refreshToken, ...response } = await this.authService.getNewTokens(
 			refreshTokenFromCookies

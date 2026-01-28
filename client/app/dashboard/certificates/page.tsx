@@ -6,10 +6,10 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ROUTES } from '@/config/pages-url.config'
-import { useCourses } from '@/hooks/useCourses'
+import { useCourses } from '@/hooks/learning/useCourses'
 import { cn } from '@/lib/utils'
 import { learningService } from '@/services/learning/learning.service'
-import { formatDate } from '@/utils/dateFormater'
+import { formatDate } from '@/utils/date-time/dateFormatter'
 import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, m } from 'framer-motion'
 import {
@@ -193,7 +193,7 @@ export default function CertificatesPage() {
 								<Button
 									asChild
 									size='lg'
-									className='h-12 rounded-2xl bg-white text-black hover:bg-white/90 font-bold shadow-2xl'
+									className='h-12 rounded-2xl bg-white text-black hover:bg-white/80 font-bold shadow-2xl'
 								>
 									<Link href={ROUTES.COURSES}>
 										<BookOpen className='w-5 h-5 mr-2' />
@@ -281,7 +281,7 @@ export default function CertificatesPage() {
 								<Button
 									asChild
 									size='lg'
-									className='mt-4 h-14 rounded-2xl bg-white text-black hover:bg-white/90 shadow-2xl font-bold text-base px-8'
+									className='mt-4 h-14 rounded-2xl bg-white text-black hover:bg-white/80 shadow-2xl font-bold text-base px-8'
 								>
 									<Link href={ROUTES.COURSES}>
 										<BookOpen className='w-5 h-5 mr-2' />
@@ -414,7 +414,7 @@ function CertificateCard({
 						{/* Meta Information */}
 						<div className='space-y-3 mb-6'>
 							<div className='flex items-center gap-2.5 text-white/60 group-hover:text-white/80 transition-colors duration-200'>
-								<div className='w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0'>
+								<div className='w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0'>
 									<Hash className='w-4 h-4' />
 								</div>
 								<span className='font-mono text-sm truncate'>
@@ -423,7 +423,7 @@ function CertificateCard({
 							</div>
 
 							<div className='flex items-center gap-2.5 text-white/60 group-hover:text-white/80 transition-colors duration-200'>
-								<div className='w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0'>
+								<div className='w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0'>
 									<Calendar className='w-4 h-4' />
 								</div>
 								<span className='text-sm'>

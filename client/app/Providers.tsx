@@ -10,8 +10,7 @@ export function Providers({ children }: PropsWithChildren) {
 	return (
 		<QueryClientProvider client={client}>
 			<LazyMotion features={domAnimation}>{children}</LazyMotion>
-			<Toaster expand position='top-right' />
-			{/* <ReactQueryDevtools initialIsOpen={false} /> */}
+			<Toaster position='top-right' theme='system' richColors expand />
 		</QueryClientProvider>
 	)
 }

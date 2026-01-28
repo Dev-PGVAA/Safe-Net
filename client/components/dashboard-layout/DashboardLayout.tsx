@@ -1,15 +1,15 @@
 'use client'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 import { AnimatePresence, m, useAnimation, usePresence } from 'framer-motion'
 
 import { ChevronDown, LogOut, Menu, Shield, ShieldCheck, X } from 'lucide-react'
 
-import { useProfile } from '@/hooks/useProfile'
+import { useProfile } from '@/hooks/user/useProfile'
 import { useEffect, useState } from 'react'
 
-import { useLogout } from '@/hooks/useLogout'
+import { useLogout } from '@/hooks/user/useLogout'
 import { adminNavItems, navItems } from './navigation.data'
 
 interface NavItem {
@@ -22,7 +22,6 @@ interface NavItem {
 
 export default function DashboardSidebar() {
 	const pathname = usePathname()
-	const router = useRouter()
 	const { user } = useProfile()
 	const { logout } = useLogout()
 	const [expandedItems, setExpandedItems] = useState<string[]>([])

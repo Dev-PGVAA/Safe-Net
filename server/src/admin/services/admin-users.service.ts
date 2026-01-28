@@ -12,8 +12,8 @@ export class AdminUsersService {
 				completedLessons: true,
 				achievements: true,
 				certificates: true,
-				testResults: true
-			}
+				testResults: true,
+			},
 		})
 		return users.map(u => ({
 			id: u.id,
@@ -28,8 +28,8 @@ export class AdminUsersService {
 				lessonsCompleted: u.completedLessons.length,
 				achievements: u.achievements.length,
 				certificates: u.certificates.length,
-				tests: u.testResults.length
-			}
+				tests: u.testResults.length,
+			},
 		}))
 	}
 	async getUserById(id: string) {
@@ -39,9 +39,9 @@ export class AdminUsersService {
 				courseProgress: {
 					include: {
 						course: {
-							select: { id: true, title: true, description: true }
-						}
-					}
+							select: { id: true, title: true, description: true },
+						},
+					},
 				},
 				completedLessons: {
 					include: {
@@ -49,20 +49,20 @@ export class AdminUsersService {
 							select: {
 								id: true,
 								title: true,
-								course: { select: { id: true, title: true } }
-							}
-						}
-					}
+								course: { select: { id: true, title: true } },
+							},
+						},
+					},
 				},
 				achievements: {
 					include: {
-						achievement: true
-					}
+						achievement: true,
+					},
 				},
 				certificates: {
 					include: {
-						course: { select: { id: true, title: true } }
-					}
+						course: { select: { id: true, title: true } },
+					},
 				},
 				testResults: {
 					include: {
@@ -70,12 +70,12 @@ export class AdminUsersService {
 							select: {
 								id: true,
 								title: true,
-								course: { select: { id: true, title: true } }
-							}
-						}
-					}
-				}
-			}
+								course: { select: { id: true, title: true } },
+							},
+						},
+					},
+				},
+			},
 		})
 		if (!user) throw new NotFoundException('User not found')
 		const totalLessons = user.completedLessons.length
@@ -95,21 +95,21 @@ export class AdminUsersService {
 				type: 'lesson',
 				title: cl.lesson.title,
 				course: cl.lesson.course.title,
-				date: cl.completedAt
+				date: cl.completedAt,
 			})),
 			...user.testResults.map(tr => ({
 				type: 'test',
 				title: tr.test.title,
 				course: tr.test.course?.title,
 				score: tr.score,
-				date: tr.createdAt
+				date: tr.createdAt,
 			})),
 			...user.achievements.map(a => ({
 				type: 'achievement',
 				title: a.achievement.title,
 				description: a.achievement.description,
-				date: a.earnedAt
-			}))
+				date: a.earnedAt,
+			})),
 		]
 			.sort((a, b) => +new Date(b.date) - +new Date(a.date))
 			.slice(0, 20)
@@ -129,7 +129,7 @@ export class AdminUsersService {
 				achievements: user.achievements.length,
 				certificates: user.certificates.length,
 				averageTestScore,
-				totalTests: user.testResults.length
+				totalTests: user.testResults.length,
 			},
 			courses: user.courseProgress.map(cp => ({
 				id: cp.course.id,
@@ -137,7 +137,7 @@ export class AdminUsersService {
 				description: cp.course.description,
 				progress: cp.progress,
 				totalXp: cp.totalXp,
-				updatedAt: cp.updatedAt
+				updatedAt: cp.updatedAt,
 			})),
 			recentActivity,
 			achievements: user.achievements.map(a => ({
@@ -145,14 +145,14 @@ export class AdminUsersService {
 				title: a.achievement.title,
 				description: a.achievement.description,
 				icon: a.achievement.icon,
-				earnedAt: a.earnedAt
+				earnedAt: a.earnedAt,
 			})),
 			certificates: user.certificates.map(c => ({
 				id: c.id,
 				courseId: c.course.id,
 				courseTitle: c.course.title,
 				issuedAt: c.issuedAt,
-				certificateNumber: c.certificateNumber
+				certificateNumber: c.certificateNumber,
 			})),
 			testResults: user.testResults.map(tr => ({
 				id: tr.id,
@@ -160,11 +160,12 @@ export class AdminUsersService {
 				testTitle: tr.test.title,
 				courseTitle: tr.test.course?.title,
 				score: tr.score,
+				time: tr.time,
 				totalQuestions: tr.totalQuestions,
 				correctAnswers: tr.correctAnswers,
 				passed: tr.passed,
-				completedAt: tr.createdAt
-			}))
+				completedAt: tr.createdAt,
+			})),
 		}
 	}
 	async updateUser(id: string, dto: AdminUpdateUserDto) {
@@ -174,8 +175,8 @@ export class AdminUsersService {
 				email: dto.email,
 				name: dto.name,
 				status: dto.status,
-				rights: dto.rights
-			}
+				rights: dto.rights,
+			},
 		})
 		const { password, ...rest } = user
 		return rest

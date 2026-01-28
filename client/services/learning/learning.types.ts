@@ -165,3 +165,23 @@ export interface ICertificate {
 		difficulty: Difficulty
 	}
 }
+export interface IAchievement {
+	id: string
+	code: string
+	title: string
+	description: string
+	icon: string
+	createdAt: string
+}
+
+export interface IUserAchievement {
+	id: string
+	earnedAt: string
+	achievement: {
+		id: string
+		code: string
+		title: string
+		description: string
+		icon: string
+	}
+}

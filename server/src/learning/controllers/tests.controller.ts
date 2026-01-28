@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common'
 import { Auth } from 'src/auth/decorators/auth.decorator'
 import { CurrentUser } from 'src/auth/decorators/user.decorator'
 import { TProtectUserData } from 'src/types/auth.types'
@@ -17,6 +17,7 @@ export class TestsController {
 	async getTest(@Param('id') id: string) {
 		return this.testsService.getTestById(id)
 	}
+	@HttpCode(200)
 	@Post(':id/submit')
 	async submitTest(
 		@Param('id') id: string,

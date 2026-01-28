@@ -1,4 +1,5 @@
 'use client'
+
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -17,7 +18,6 @@ export default function NotFound() {
 					transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
 					className='text-center'
 				>
-					{}
 					<m.div
 						initial={{ scale: 0.9, opacity: 0 }}
 						animate={{ scale: 1, opacity: 1 }}

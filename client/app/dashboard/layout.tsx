@@ -1,19 +1,18 @@
 import DashboardSidebar from '@/components/dashboard-layout/DashboardLayout'
-import { NO_INDEX_PAGE } from '@/constants/seo.constants'
-import { Metadata } from 'next'
-import type { PropsWithChildren } from 'react'
+import { ReactNode } from 'react'
 
-
-export const metadata: Metadata = {
-	...NO_INDEX_PAGE
-}
-export default function Layout({ children }: PropsWithChildren<unknown>) {
+export default function DashboardLayout({ children }: { children: ReactNode }) {
 	return (
-		<div className="flex min-h-screen">
+		<div className='flex h-screen'>
 			<DashboardSidebar />
-			<main className="flex-1 overflow-x-hidden">
-				<div className="p-8">{children}</div>
-			</main>
+
+			{/* Main Content */}
+			<div className='flex-1 overflow-x-hidden'>
+				{/* Content */}
+				<main className='flex-1 overflow-x-hidden'>
+					<div className='p-8'>{children}</div>
+				</main>
+			</div>
 		</div>
 	)
 }

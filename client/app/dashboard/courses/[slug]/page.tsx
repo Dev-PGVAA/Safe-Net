@@ -24,11 +24,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ROUTES } from '@/config/pages-url.config'
-import { useCourseDetail } from '@/hooks/useCourseDetail'
+import { useCourseDetail } from '@/hooks/learning/useCourseDetail'
 import { cn } from '@/lib/utils'
 import { DifficultyLabel } from '@/services/learning/learning.types'
-import { formatDate } from '@/utils/dateFormater'
-import { secondsToHMS } from '@/utils/secondsToHMS'
+import { formatDate } from '@/utils/date-time/dateFormatter'
+import { secondsToHMS } from '@/utils/date-time/secondsToHMS'
 import { useMemo, useState } from 'react'
 import AppleLessonCard from './AppleLessonCard'
 
@@ -68,7 +68,7 @@ export default function CourseDetailPage() {
 				>
 					<div className='absolute inset-0 bg-linear-to-r from-white/2 via-transparent to-white/2' />
 					<div className='relative z-10 grid grid-cols-1 lg:grid-cols-5 gap-6 sm:gap-8 lg:gap-12 items-start lg:items-center'>
-						{}
+						{ }
 						<div className='lg:col-span-3 space-y-4 sm:space-y-5'>
 							<Badge className='bg-white/10 backdrop-blur-sm border-white/20 text-white/80 px-3 sm:px-4 py-1 sm:py-1.5 rounded-xl w-fit text-xs sm:text-sm'>
 								<Users className='w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2 opacity-80' />
@@ -96,7 +96,7 @@ export default function CourseDetailPage() {
 								</div>
 							</div>
 						</div>
-						{}
+						{ }
 						<div className='lg:col-span-2 space-y-4 sm:space-y-5'>
 							<div className='space-y-2.5 sm:space-y-3'>
 								<div className='flex justify-between text-xs sm:text-sm text-white/60'>
@@ -131,7 +131,7 @@ export default function CourseDetailPage() {
 						</div>
 					</div>
 				</m.section>
-				{}
+				{ }
 				<m.section
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
@@ -182,9 +182,9 @@ export default function CourseDetailPage() {
 						</button>
 					</div>
 				</m.section>
-				{}
+				{ }
 				<div className='grid grid-cols-1 xl:grid-cols-3 gap-5 sm:gap-6 lg:gap-8'>
-					{}
+					{ }
 					<section className='xl:col-span-2 space-y-4 sm:space-y-5'>
 						{activeTab === 'lessons' ? (
 							lessons.length > 0 ? (
@@ -217,9 +217,9 @@ export default function CourseDetailPage() {
 							/>
 						)}
 					</section>
-					{}
+					{ }
 					<div className='xl:col-span-1 space-y-5 sm:space-y-6'>
-						{}
+						{ }
 						<Card className='bg-white/3 backdrop-blur-2xl border border-white/10 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden'>
 							<CardContent className='p-6 sm:p-8 text-center'>
 								<m.div
@@ -241,7 +241,7 @@ export default function CourseDetailPage() {
 									>
 										<Button
 											size='lg'
-											className='w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/90 shadow-2xl shadow-white/20 font-bold text-sm sm:text-base'
+											className='w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/80 shadow-2xl shadow-white/20 font-bold text-sm sm:text-base'
 										>
 											<Play className='w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2' />
 											Первый урок
@@ -250,7 +250,7 @@ export default function CourseDetailPage() {
 								)}
 							</CardContent>
 						</Card>
-						{}
+						{ }
 						<Card className='bg-white/3 backdrop-blur-2xl border border-white/10 rounded-2xl sm:rounded-3xl shadow-2xl'>
 							<CardHeader className='pb-3 sm:pb-4'>
 								<CardTitle className='text-base sm:text-lg font-black text-white flex items-center gap-2'>
@@ -459,7 +459,7 @@ const AppleNotFound = () => {
 				</p>
 				<Button
 					onClick={() => router.back()}
-					className='w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/90 shadow-2xl font-bold text-sm sm:text-base'
+					className='w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/80 shadow-2xl font-bold text-sm sm:text-base'
 				>
 					← Вернуться к курсам
 				</Button>

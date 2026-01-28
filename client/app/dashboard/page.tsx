@@ -2,8 +2,8 @@
 import { BookOpen, Play, Trophy, Zap } from 'lucide-react'
 
 import { ROUTES } from '@/config/pages-url.config'
-import { useHomeData } from '@/hooks/useHomeData'
-import { useProfile } from '@/hooks/useProfile'
+import { useHomeData } from '@/hooks/learning/useHomeData'
+import { useProfile } from '@/hooks/user/useProfile'
 import { cn } from '@/lib/utils'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AchievementNotification } from './components/AchievementNotification'

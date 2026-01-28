@@ -1,5 +1,6 @@
 import { instance } from '@/api/axios'
 import {
+	IAchievement,
 	ICertificate,
 	ICertificateListItem,
 	ICourseDetail,
@@ -7,6 +8,7 @@ import {
 	IStage,
 	ITest,
 	ITestResult,
+	IUserAchievement,
 	IUserCourse,
 } from './learning.types'
 
@@ -88,6 +90,21 @@ class LearningService {
 
 	async getUserCertificates(): Promise<ICertificateListItem[]> {
 		const { data } = await instance.get('/learning/certificates')
+		return data
+	}
+
+	async getUserAchievements(): Promise<IUserAchievement[]> {
+		const { data } = await instance.get('/learning/achievements')
+		return data
+	}
+
+	async getAllAchievements(): Promise<IAchievement[]> {
+		const { data } = await instance.get('/learning/achievements/all')
+		return data
+	}
+
+	async getAchievementById(id: string): Promise<IAchievement> {
+		const { data } = await instance.get(`/learning/achievements/${id}`)
 		return data
 	}
 }

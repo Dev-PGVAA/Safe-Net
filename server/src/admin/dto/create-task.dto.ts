@@ -8,7 +8,7 @@ import {
 	IsOptional,
 	IsString,
 	Min,
-	ValidateNested
+	ValidateNested,
 } from 'class-validator'
 class TaskOptionInput {
 	@IsString()

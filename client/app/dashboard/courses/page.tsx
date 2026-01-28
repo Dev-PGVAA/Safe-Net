@@ -2,8 +2,8 @@
 import { ArrowUpRight, Award, BookOpen, Sparkles, Zap } from 'lucide-react'
 
 import { ROUTES } from '@/config/pages-url.config'
-import { useCourses } from '@/hooks/useCourses'
-import { useProfile } from '@/hooks/useProfile'
+import { useCourses } from '@/hooks/learning/useCourses'
+import { useProfile } from '@/hooks/user/useProfile'
 import { cn } from '@/lib/utils'
 import { useEffect, useMemo, useState } from 'react'
 import { AppleButton } from '../components/AppleButton'

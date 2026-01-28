@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ROUTES } from '@/config/pages-url.config'
-import { useTestDetail } from '@/hooks/useTestDetail'
+import { useTestDetail } from '@/hooks/learning/useTestDetail'
 import { cn } from '@/lib/utils'
 import { AnimatePresence, m } from 'framer-motion'
 import {
@@ -202,9 +202,9 @@ export default function TestPage() {
 													>
 														<div className='flex items-start gap-3'>
 															{answer.isCorrect ? (
-																<CheckCircle2 className='w-5 h-5 text-green-400 flex-shrink-0 mt-0.5' />
+																<CheckCircle2 className='w-5 h-5 text-green-400 shrink-0 mt-0.5' />
 															) : (
-																<XCircle className='w-5 h-5 text-red-400 flex-shrink-0 mt-0.5' />
+																<XCircle className='w-5 h-5 text-red-400 shrink-0 mt-0.5' />
 															)}
 															<div className='flex-1'>
 																<p className='text-white/60 text-sm mb-1'>
@@ -228,7 +228,7 @@ export default function TestPage() {
 							<Button
 								onClick={goToCourse}
 								size='lg'
-								className='flex-1 w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/90 shadow-2xl shadow-white/15 font-bold text-sm sm:text-base'
+								className='flex-1 w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/80 shadow-2xl shadow-white/15 font-bold text-sm sm:text-base'
 							>
 								Вернуться к курсу
 							</Button>
@@ -237,7 +237,7 @@ export default function TestPage() {
 									onClick={() => window.location.reload()}
 									size='lg'
 									variant='outline'
-									className='flex-1'
+									className='flex-1 h-11 rounded-xl'
 								>
 									Пройти заново
 								</Button>

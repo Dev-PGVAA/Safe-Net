@@ -5,34 +5,24 @@ import { Breadcrumb } from '@/components/ui/breadcrumb'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ROUTES } from '@/config/pages-url.config'
-import { useCertificateDetail } from '@/hooks/useCertificateDetail'
+import { useCertificateDetail } from '@/hooks/learning/useCertificateDetail'
 import { DifficultyLabel } from '@/services/learning/learning.types'
-import { formatDate } from '@/utils/dateFormater'
+import { formatDate } from '@/utils/date-time/dateFormatter'
 import { m } from 'framer-motion'
 import {
-	Award,
-	Calendar,
-	CheckCircle2,
-	Hash,
-	Shield,
-	Sparkles,
+    Award,
+    Calendar,
+    CheckCircle2,
+    Hash,
+    Shield,
+    Sparkles,
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
-/**
- * Certificate Page Component
- *
- * Displays a digital certificate for completed courses
- * Pure presentation component without export functionality
- */
 export default function CertificatePage() {
-	const router = useRouter()
 	const { certificate, isLoading, isError } = useCertificateDetail()
 
-	// Loading state
 	if (isLoading) return <CertificateSkeleton />
-
-	// Error state
 	if (isError || !certificate) return <CertificateNotFound />
 
 	return (
@@ -57,7 +47,7 @@ export default function CertificatePage() {
 				style={{
 					minHeight: '842px',
 					background:
-						'linear-gradient(135deg, #111728 0%, #1a1f3a 50%, #111728 100%)',
+						'linear-gradient(135deg, #0A0F1D 0%, #1a1f3a 50%, #0A0F1D 100%)',
 				}}
 				aria-label='Сертификат об окончании курса'
 			>
@@ -82,8 +72,8 @@ export default function CertificatePage() {
 						className='flex justify-center'
 					>
 						<div className='relative'>
-							<div className='absolute inset-0 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-3xl blur-xl opacity-50' />
-							<div className='relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center shadow-2xl'>
+							<div className='absolute inset-0 bg-linear-to-br from-yellow-400 to-orange-500 rounded-3xl blur-xl opacity-50' />
+							<div className='relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-linear-to-br from-yellow-400 to-orange-500 flex items-center justify-center shadow-2xl'>
 								<Award
 									className='w-10 h-10 sm:w-12 sm:h-12 text-white'
 									strokeWidth={2.5}
@@ -100,11 +90,11 @@ export default function CertificatePage() {
 						className='text-center space-y-4 sm:space-y-5'
 					>
 						<div className='space-y-2'>
-							<h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/80 tracking-tight leading-tight'>
+							<h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-white via-white to-white/80 tracking-tight leading-tight'>
 								СЕРТИФИКАТ
 							</h1>
 							<div className='flex justify-center'>
-								<div className='h-1 w-32 bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-full' />
+								<div className='h-1 w-32 bg-linear-to-r from-transparent via-white/50 to-transparent rounded-full' />
 							</div>
 						</div>
 
@@ -128,9 +118,9 @@ export default function CertificatePage() {
 						</p>
 
 						<div className='relative inline-block'>
-							<div className='absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl' />
+							<div className='absolute inset-0 bg-linear-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl' />
 							<div className='relative px-8 sm:px-12 py-5 sm:py-6 bg-white/5 backdrop-blur-2xl rounded-3xl border-2 border-white/20 shadow-2xl'>
-								<h2 className='text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400'>
+								<h2 className='text-3xl sm:text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-400 via-purple-400 to-blue-400'>
 									{certificate.user.name}
 								</h2>
 							</div>
@@ -154,7 +144,7 @@ export default function CertificatePage() {
 							</h3>
 
 							<div className='flex justify-center'>
-								<Badge className='bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-blue-400/30 text-blue-300 px-5 py-2 rounded-xl text-sm font-bold uppercase tracking-wide'>
+								<Badge className='bg-linear-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-blue-400/30 text-blue-300 px-5 py-2 rounded-xl text-sm font-bold uppercase tracking-wide'>
 									{DifficultyLabel[certificate.course.difficulty]}
 								</Badge>
 							</div>
@@ -280,7 +270,7 @@ const CertificateNotFound = () => {
 					</p>
 					<button
 						onClick={() => router.push(ROUTES.CERTIFICATES)}
-						className='w-full h-14 rounded-2xl bg-white text-black hover:bg-white/90 shadow-2xl font-bold text-base transition-colors duration-200'
+						className='w-full h-14 rounded-2xl bg-white text-black hover:bg-white/80 shadow-2xl font-bold text-base transition-colors duration-200'
 					>
 						← Вернуться к сертификатам
 					</button>

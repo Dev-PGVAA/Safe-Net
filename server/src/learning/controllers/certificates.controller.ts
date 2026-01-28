@@ -11,9 +11,10 @@ export class CertificatesController {
 	@Get(':id')
 	async getCertificate(
 		@Param('id') id: string,
-		@CurrentUser('id') userId: string
+		@CurrentUser('id') userId: string,
+		@CurrentUser('rights') userRights: string[]
 	) {
-		return this.certificatesService.getCertificateById(id, userId)
+		return this.certificatesService.getCertificateById(id, userId, userRights)
 	}
 
 	@Get()

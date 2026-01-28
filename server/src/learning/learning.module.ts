@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common'
-import { PrismaService } from '../prisma.service'
+import { PrismaService } from 'src/prisma.service'
+import { AchievementsController } from './controllers/achievements.controller'
 import { CertificatesController } from './controllers/certificates.controller'
 import { CoursesController } from './controllers/courses.controller'
 import { ProgressController } from './controllers/progress.controller'
 import { StagesController } from './controllers/stages.controller'
 import { TestsController } from './controllers/tests.controller'
+import { AchievementsService } from './services/achievements.service'
 import { CertificatesService } from './services/certificates.service'
 import { CoursesService } from './services/courses.service'
 import { ProgressService } from './services/progress.service'
@@ -18,6 +20,7 @@ import { TestsService } from './services/tests.service'
 		TestsController,
 		ProgressController,
 		CertificatesController,
+		AchievementsController,
 	],
 	providers: [
 		PrismaService,
@@ -26,7 +29,13 @@ import { TestsService } from './services/tests.service'
 		TestsService,
 		ProgressService,
 		CertificatesService,
+		AchievementsService,
 	],
-	exports: [StagesService, CoursesService, ProgressService],
+	exports: [
+		StagesService,
+		CoursesService,
+		ProgressService,
+		AchievementsService,
+	],
 })
 export class LearningModule {}
