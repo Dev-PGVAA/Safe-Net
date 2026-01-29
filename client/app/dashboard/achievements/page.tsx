@@ -84,162 +84,162 @@ export default function AchievementsPage() {
 
 	return (
 		<div className='container mx-auto max-w-7xl space-y-6 px-4 py-6 sm:space-y-8 sm:px-6 sm:py-8'>
-			<Breadcrumb
-				showBackButton
-				items={[
-					{ label: 'Главная', href: ROUTES.HOME },
-					{ label: 'Достижения', href: ROUTES.ACHIEVEMENTS },
-				]}
-			/>
+				<Breadcrumb
+					showBackButton
+					items={[
+						{ label: 'Главная', href: ROUTES.HOME },
+						{ label: 'Достижения', href: ROUTES.ACHIEVEMENTS },
+					]}
+				/>
 
-			{/* Hero Section */}
-			<div className='relative overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-br from-slate-800/90 via-slate-800/80 to-slate-900/90 p-6 shadow-2xl shadow-yellow-500/5 sm:rounded-3xl sm:p-8 md:p-12'>
-				{/* Animated background */}
-				<div className='pointer-events-none absolute inset-0 overflow-hidden'>
-					<div className='absolute -right-20 -top-20 h-64 w-64 animate-pulse rounded-full bg-yellow-500/20 blur-3xl' />
-					<div className='absolute -bottom-20 -left-20 h-64 w-64 animate-pulse rounded-full bg-purple-500/20 blur-3xl delay-700' />
-				</div>
-
-				<div className='relative grid gap-6 sm:gap-8 md:grid-cols-2'>
-					{/* Left Content */}
-					<div className='space-y-4'>
-						<m.div
-							initial={{ opacity: 0, y: 20 }}
-							animate={{ opacity: 1, y: 0 }}
-							className='flex items-center gap-3'
-						>
-							<div className='rounded-xl bg-gradient-to-br from-yellow-500/30 to-orange-500/30 p-2.5 shadow-lg shadow-yellow-500/20 ring-1 ring-yellow-500/30 sm:rounded-2xl sm:p-3'>
-								<Trophy className='h-6 w-6 text-yellow-400 sm:h-8 sm:w-8' />
-							</div>
-							<h1 className='text-2xl font-bold text-white sm:text-3xl md:text-4xl'>
-								Достижения
-							</h1>
-						</m.div>
-
-						<p className='text-sm text-white/70 sm:text-base md:text-lg'>
-							{hasAchievements ? (
-								<>
-									Получено{' '}
-									<span className='font-semibold text-white'>
-										{earnedCount}
-									</span>{' '}
-									из{' '}
-									<span className='font-semibold text-white'>{totalCount}</span>{' '}
-									достижений. Продолжайте обучение и открывайте новые награды!
-								</>
-							) : (
-								'Выполняйте задания, проходите курсы и тесты, чтобы получить первые достижения'
-							)}
-						</p>
-
-						{/* Filter Tabs */}
-						<div className='flex flex-wrap gap-2'>
-							<Button
-								variant='default'
-								size='sm'
-								onClick={() => setFilter('all')}
-								className={
-									filter === 'all'
-										? ''
-										: 'border-white/20 bg-slate-800/50 hover:bg-slate-700/50'
-								}
-							>
-								Все
-							</Button>
-							<Button
-								variant='default'
-								size='sm'
-								onClick={() => setFilter('earned')}
-								className={
-									filter === 'earned'
-										? ''
-										: 'border-white/20 bg-slate-800/50 hover:bg-slate-700/50'
-								}
-							>
-								Получено ({earnedCount})
-							</Button>
-							<Button
-								variant='default'
-								size='sm'
-								onClick={() => setFilter('locked')}
-								className={
-									filter === 'locked'
-										? ''
-										: 'border-white/20 bg-slate-800/50 hover:bg-slate-700/50'
-								}
-							>
-								Закрыто ({totalCount - earnedCount})
-							</Button>
-						</div>
+				{/* Hero Section */}
+				<div className='relative overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-br from-slate-800/90 via-slate-800/80 to-slate-900/90 p-6 shadow-2xl shadow-yellow-500/5 sm:rounded-3xl sm:p-8 md:p-12'>
+					{/* Animated background */}
+					<div className='pointer-events-none absolute inset-0 overflow-hidden'>
+						<div className='absolute -right-20 -top-20 h-64 w-64 animate-pulse rounded-full bg-yellow-500/20 blur-3xl' />
+						<div className='absolute -bottom-20 -left-20 h-64 w-64 animate-pulse rounded-full bg-purple-500/20 blur-3xl delay-700' />
 					</div>
 
-					{/* Right Content - Progress */}
-					{hasAchievements && (
-						<div className='flex flex-col justify-center space-y-3 sm:space-y-4'>
-							<StatCard
-								icon={Trophy}
-								label='Прогресс'
-								value={`${Math.round((earnedCount / totalCount) * 100)}%`}
-								color='yellow'
-								delay={0.1}
-							/>
-							<StatCard
-								icon={Sparkles}
-								label='Получено наград'
-								value={earnedCount}
-								color='purple'
-								delay={0.2}
-							/>
+					<div className='relative grid gap-6 sm:gap-8 md:grid-cols-2'>
+						{/* Left Content */}
+						<div className='space-y-4'>
+							<m.div
+								initial={{ opacity: 0, y: 20 }}
+								animate={{ opacity: 1, y: 0 }}
+								className='flex items-center gap-3'
+							>
+								<div className='rounded-xl bg-gradient-to-br from-yellow-500/30 to-orange-500/30 p-2.5 shadow-lg shadow-yellow-500/20 ring-1 ring-yellow-500/30 sm:rounded-2xl sm:p-3'>
+									<Trophy className='h-6 w-6 text-yellow-400 sm:h-8 sm:w-8' />
+								</div>
+								<h1 className='text-2xl font-bold text-white sm:text-3xl md:text-4xl'>
+									Достижения
+								</h1>
+							</m.div>
+
+							<p className='text-sm text-white/70 sm:text-base md:text-lg'>
+								{hasAchievements ? (
+									<>
+										Получено{' '}
+										<span className='font-semibold text-white'>
+											{earnedCount}
+										</span>{' '}
+										из{' '}
+										<span className='font-semibold text-white'>{totalCount}</span>{' '}
+										достижений. Продолжайте обучение и открывайте новые награды!
+									</>
+								) : (
+									'Выполняйте задания, проходите курсы и тесты, чтобы получить первые достижения'
+								)}
+							</p>
+
+							{/* Filter Tabs */}
+							<div className='flex flex-wrap gap-2'>
+								<Button
+									variant='default'
+									size='sm'
+									onClick={() => setFilter('all')}
+									className={
+										filter === 'all'
+											? ''
+											: 'border-white/20 bg-slate-800/50 hover:bg-slate-700/50'
+									}
+								>
+									Все
+								</Button>
+								<Button
+									variant='default'
+									size='sm'
+									onClick={() => setFilter('earned')}
+									className={
+										filter === 'earned'
+											? ''
+											: 'border-white/20 bg-slate-800/50 hover:bg-slate-700/50'
+									}
+								>
+									Получено ({earnedCount})
+								</Button>
+								<Button
+									variant='default'
+									size='sm'
+									onClick={() => setFilter('locked')}
+									className={
+										filter === 'locked'
+											? ''
+											: 'border-white/20 bg-slate-800/50 hover:bg-slate-700/50'
+									}
+								>
+									Закрыто ({totalCount - earnedCount})
+								</Button>
+							</div>
 						</div>
-					)}
-				</div>
-			</div>
 
-			{/* Achievements Grid */}
-			<div className='grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-				<AnimatePresence mode='popLayout'>
-					{filteredAchievements?.map((achievement, index) => {
-						const userAchievement = userAchievements?.find(
-							ua => ua.achievement.id === achievement.id
-						)
-						const isEarned = !!userAchievement
-
-						return (
-							<AchievementCard
-								key={achievement.id}
-								achievement={achievement}
-								earnedAt={userAchievement?.earnedAt}
-								isEarned={isEarned}
-								index={index}
-								isHovered={hoveredCard === achievement.id}
-								onHover={setHoveredCard}
-							/>
-						)
-					})}
-				</AnimatePresence>
-			</div>
-
-			{filteredAchievements?.length === 0 && (
-				<Card className='border-white/20 bg-slate-800/50 shadow-lg'>
-					<CardContent className='flex flex-col items-center justify-center py-12 text-center sm:py-16'>
-						<div className='mb-4 rounded-full bg-white/10 p-4 shadow-inner sm:p-6'>
-							<Lock className='h-8 w-8 text-white/50 sm:h-12 sm:w-12' />
-						</div>
-						<h3 className='mb-2 text-lg font-semibold text-white sm:text-xl'>
-							Нет достижений
-						</h3>
-						<p className='mb-6 text-sm text-white/70 sm:text-base'>
-							{filter === 'earned'
-								? 'Вы пока не получили ни одного достижения'
-								: 'Все достижения уже разблокированы!'}
-						</p>
-						{filter !== 'all' && (
-							<Button onClick={() => setFilter('all')}>Показать все</Button>
+						{/* Right Content - Progress */}
+						{hasAchievements && (
+							<div className='flex flex-col justify-center space-y-3 sm:space-y-4'>
+								<StatCard
+									icon={Trophy}
+									label='Прогресс'
+									value={`${Math.round((earnedCount / totalCount) * 100)}%`}
+									color='yellow'
+									delay={0.1}
+								/>
+								<StatCard
+									icon={Sparkles}
+									label='Получено наград'
+									value={earnedCount}
+									color='purple'
+									delay={0.2}
+								/>
+							</div>
 						)}
-					</CardContent>
-				</Card>
-			)}
-		</div>
+					</div>
+				</div>
+
+				{/* Achievements Grid */}
+				<div className='grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+					<AnimatePresence mode='popLayout'>
+						{filteredAchievements?.map((achievement, index) => {
+							const userAchievement = userAchievements?.find(
+								ua => ua.achievement.id === achievement.id
+							)
+							const isEarned = !!userAchievement
+
+							return (
+								<AchievementCard
+									key={achievement.id}
+									achievement={achievement}
+									earnedAt={userAchievement?.earnedAt}
+									isEarned={isEarned}
+									index={index}
+									isHovered={hoveredCard === achievement.id}
+									onHover={setHoveredCard}
+								/>
+							)
+						})}
+					</AnimatePresence>
+				</div>
+
+				{filteredAchievements?.length === 0 && (
+					<Card className='border-white/20 bg-slate-800/50 shadow-lg'>
+						<CardContent className='flex flex-col items-center justify-center py-12 text-center sm:py-16'>
+							<div className='mb-4 rounded-full bg-white/10 p-4 shadow-inner sm:p-6'>
+								<Lock className='h-8 w-8 text-white/50 sm:h-12 sm:w-12' />
+							</div>
+							<h3 className='mb-2 text-lg font-semibold text-white sm:text-xl'>
+								Нет достижений
+							</h3>
+							<p className='mb-6 text-sm text-white/70 sm:text-base'>
+								{filter === 'earned'
+									? 'Вы пока не получили ни одного достижения'
+									: 'Все достижения уже разблокированы!'}
+							</p>
+							{filter !== 'all' && (
+								<Button onClick={() => setFilter('all')}>Показать все</Button>
+							)}
+						</CardContent>
+					</Card>
+				)}
+				</div>
 	)
 }
 
