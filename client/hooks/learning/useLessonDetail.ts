@@ -1,9 +1,10 @@
 'use client'
 
 import {
-    ILesson,
-    ITask,
-    learningService,
+	ILesson,
+	ITask,
+	ITaskAnswerResponse,
+	learningService,
 } from '@/services/learning/learning.service'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
@@ -15,6 +16,19 @@ type LessonWithNav = ILesson & {
 	estimatedDuration: number
 	previousLessonId?: string | null
 	nextLessonId?: string | null
+}
+
+// ✅ Утилита для работы с localStorage
+const getCompletedTasks = (): Set<string> => {
+	if (typeof window === 'undefined') return new Set()
+	const stored = localStorage.getItem('completedTasks')
+	return stored ? new Set(JSON.parse(stored)) : new Set()
+}
+
+const saveCompletedTask = (taskId: string) => {
+	const completed = getCompletedTasks()
+	completed.add(taskId)
+	localStorage.setItem('completedTasks', JSON.stringify([...completed]))
 }
 
 export function useLessonDetail() {
@@ -32,8 +46,17 @@ export function useLessonDetail() {
 		queryKey: ['lesson', lessonId],
 		queryFn: async () => {
 			const data = await learningService.getLessonDetail(lessonId)
+
+			// ✅ Применяем сохраненное состояние completed из localStorage
+			const completedTasks = getCompletedTasks()
+			const tasksWithCompleted = data.tasks?.map(task => ({
+				...task,
+				completed: task.completed || completedTasks.has(task.id),
+			}))
+
 			return {
 				...data,
+				tasks: tasksWithCompleted,
 				courseTitle: data.courseTitle,
 				courseSlug: data.courseSlug,
 				estimatedDuration: data.estimatedDuration || 15,
@@ -50,11 +73,21 @@ export function useLessonDetail() {
 
 	// ✅ Мутация для отправки ответа на задачу
 	const answerMutation = useMutation({
-		mutationFn: (payload: { taskId: string; selectedOptionIds: string[] }) =>
+		mutationFn: (payload: {
+			taskId: string
+			selectedOptionIds: string[]
+			textAnswer?: string
+		}) =>
 			learningService.answerTask(payload.taskId, {
 				selectedOptionIds: payload.selectedOptionIds,
+				textAnswer: payload.textAnswer,
 			}),
-		onSuccess: (res, variables) => {
+		onSuccess: (res: ITaskAnswerResponse, variables) => {
+			// ✅ Сохраняем в localStorage если правильный ответ
+			if (res.isCorrect) {
+				saveCompletedTask(variables.taskId)
+			}
+
 			// Обновляем кэш урока
 			queryClient.setQueryData(['lesson', lessonId], (prev: any) => {
 				if (!prev || !prev.tasks) return prev
@@ -68,7 +101,7 @@ export function useLessonDetail() {
 				}
 			})
 
-			// Показываем результат
+			// ✅ Показываем результат с объяснением
 			if (res.isCorrect) {
 				toast.success(`Правильно! +${res.awardedXp} XP`)
 			} else {
@@ -84,6 +117,13 @@ export function useLessonDetail() {
 			if (res.certificateIssued) {
 				toast.success('Получен сертификат!')
 			}
+
+			// ✅ Если есть новые достижения
+			if (res.newAchievements && res.newAchievements.length > 0) {
+				res.newAchievements.forEach(achievement => {
+					toast.success(`Получено достижение: ${achievement.title}`)
+				})
+			}
 		},
 		onError: error => {
 			toast.error('Ошибка при отправке ответа')
@@ -91,10 +131,18 @@ export function useLessonDetail() {
 		},
 	})
 
-	// ✅ ИЗМЕНЕНИЕ: возвращаем Promise с результатом
-	const answerTask = async (taskId: string, selectedOptionIds: string[]) => {
-		const result = await answerMutation.mutateAsync({ taskId, selectedOptionIds })
-		return result // ✅ Возвращаем результат { isCorrect, awardedXp, ... }
+	// ✅ Возвращаем Promise с результатом (включая explanation)
+	const answerTask = async (
+		taskId: string,
+		selectedOptionIds: string[],
+		textAnswer?: string
+	): Promise<ITaskAnswerResponse> => {
+		const result = await answerMutation.mutateAsync({
+			taskId,
+			selectedOptionIds,
+			textAnswer,
+		})
+		return result
 	}
 
 	// Навигация по урокам

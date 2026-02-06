@@ -1,6 +1,7 @@
 export class AnswerResultDto {
 	taskId: string
 	isCorrect: boolean
+	explanation?: string
 	awardedXp: number
 	totalXp: number
 	courseProgress: number

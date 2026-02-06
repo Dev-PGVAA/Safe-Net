@@ -80,7 +80,7 @@ export class ProgressService {
 		taskId: string,
 		userId: string,
 		dto: AnswerTaskDto
-	): Promise<AnswerResultDto> {
+): Promise<AnswerResultDto> {
 		const task = await this.prisma.task.findUnique({
 			where: { id: taskId },
 			include: {
@@ -268,6 +268,7 @@ export class ProgressService {
 		return {
 			taskId: task.id,
 			isCorrect,
+			explanation: task.explanation, // ✅ Добавлено объяснение
 			awardedXp,
 			totalXp,
 			courseProgress: progressPercent,

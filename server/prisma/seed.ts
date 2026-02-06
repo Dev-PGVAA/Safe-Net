@@ -1,10 +1,10 @@
 import { PrismaPg } from '@prisma/adapter-pg'
 import {
-	BlockType,
-	Difficulty,
-	PrismaClient,
-	Role,
-	TaskType,
+    BlockType,
+    Difficulty,
+    PrismaClient,
+    Role,
+    TaskType,
 } from '@prisma/client'
 import { hash } from 'argon2'
 import { Pool } from 'pg'
@@ -2347,7 +2347,7 @@ https://www.example.com:443/path/page?id=123#section
 
 **Известные группы:**
 - APT28 (Fancy Bear) — Россия
-- APT29 (Cozy Bear) — Россия  
+- APT29 (Cozy Bear) — Россия
 - APT1 — Китай
 - Lazarus Group — Северная Корея
 

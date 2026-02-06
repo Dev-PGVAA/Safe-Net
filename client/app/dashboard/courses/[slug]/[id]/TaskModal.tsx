@@ -14,6 +14,7 @@ interface Task {
 	type: 'SINGLE_CHOICE' | 'MULTI_CHOICE'
 	title: string
 	question?: string
+	explanation?: string
 	points: number
 	difficulty: 'EASY' | 'MEDIUM' | 'HARD'
 	options: Array<{ id: string; text: string }>
@@ -32,7 +33,11 @@ interface TaskModalProps {
 	hasPrevLesson?: boolean
 	onNextLesson?: () => void
 	onPrevLesson?: () => void
-	answerTask: (taskId: string, selectedOptionIds: string[]) => Promise<{ isCorrect: boolean; awardedXp: number }> // ✅ Возвращает результат
+	answerTask: (taskId: string, selectedOptionIds: string[]) => Promise<{
+  	isCorrect: boolean;
+  	explanation?: string  // ✅ Добавь это
+		awardedXp: number
+	}>
 	isAnswering: boolean
 }
 
@@ -53,7 +58,11 @@ export function TaskModal({
 }: TaskModalProps) {
 	const [selectedOptions, setSelectedOptions] = useState<string[]>([])
 	const [hasSubmitted, setHasSubmitted] = useState(false)
-	const [answerResult, setAnswerResult] = useState<boolean | null>(null) // ✅ Локальное состояние результата
+	const [answerResult, setAnswerResult] = useState<{
+	  isCorrect: boolean
+	  explanation?: string
+	  awardedXp: number
+	} | null>(null)
 
 	const currentTask = tasks[currentTaskIndex]
 	const isMultiChoice = currentTask?.type === 'MULTI_CHOICE'
@@ -127,7 +136,7 @@ export function TaskModal({
 			const result = await answerTask(currentTask.id, selectedOptions)
 
 			// ✅ Сразу сохраняем результат в локальное состояние
-			setAnswerResult(result.isCorrect)
+			setAnswerResult(result)
 			setHasSubmitted(true)
 		} catch (error) {
 			toast.error('Ошибка при отправке ответа')
@@ -156,8 +165,8 @@ export function TaskModal({
 
 	if (!currentTask) return null
 
-	// ✅ Используем локальное состояние результата
-	const isCorrect = answerResult === true
+	const isCorrect = answerResult?.isCorrect === true
+
 
 	return (
 		<AnimatePresence>
@@ -292,9 +301,10 @@ export function TaskModal({
 												{isCorrect ? 'Правильно!' : 'Неправильно'}
 											</p>
 											<p className='text-sm text-gray-400'>
-												{isCorrect
-													? `Вы получили ${currentTask.points} опыта`
-													: 'Попробуйте ещё раз или выберите другой вариант'}
+												{isCorrect && `Вы получили ${currentTask.points} опыта`}
+												{answerResult.explanation && (
+												  <>{answerResult.explanation}</>
+												)}
 											</p>
 										</div>
 									</div>
