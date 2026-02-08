@@ -101,7 +101,7 @@ export default function Stats() {
 			icon: Target,
 		},
 		{
-			label: 'Уроков доступно',
+			label: 'Доступно курсов',
 			value: stats?.totalLessons ?? 0,
 			suffix: '+',
 			icon: BookOpen,

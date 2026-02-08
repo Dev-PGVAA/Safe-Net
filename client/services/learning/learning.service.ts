@@ -1,15 +1,16 @@
 import { instance } from '@/api/axios'
 import {
-	IAchievement,
-	ICertificate,
-	ICertificateListItem,
-	ICourseDetail,
-	ILesson,
-	IStage,
-	ITest,
-	ITestResult,
-	IUserAchievement,
-	IUserCourse,
+    IAchievement,
+    ICertificate,
+    ICertificateListItem,
+    ICourseDetail,
+    ILesson,
+    IStage,
+    ITaskAnswerResponse, // ✅ Импортируй новый тип
+    ITest,
+    ITestResult,
+    IUserAchievement,
+    IUserCourse,
 } from './learning.types'
 
 class LearningService {
@@ -43,18 +44,11 @@ class LearningService {
 		return data
 	}
 
+	// ✅ Обновлён тип возврата
 	async answerTask(
 		taskId: string,
-		payload: { selectedOptionIds: string[] }
-	): Promise<{
-		taskId: string
-		isCorrect: boolean
-		awardedXp: number
-		totalXp: number
-		courseProgress: number
-		lessonCompleted: boolean
-		certificateIssued: boolean
-	}> {
+		payload: { selectedOptionIds: string[]; textAnswer?: string }
+	): Promise<ITaskAnswerResponse> {
 		const { data } = await instance.post(
 			`/learning/tasks/${taskId}/answer`,
 			payload

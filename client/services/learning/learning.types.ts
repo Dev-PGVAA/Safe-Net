@@ -19,6 +19,7 @@ export interface IStage {
 	coursesCount: number
 	totalLessons: number
 }
+
 export interface IUserCourse {
 	id: string
 	slug: string
@@ -29,6 +30,7 @@ export interface IUserCourse {
 	completed: boolean
 	stageTitle?: string
 }
+
 export interface ICourseDetail {
 	id: string
 	slug: string
@@ -56,7 +58,7 @@ export interface ICourseDetail {
 export interface ILessonBlock {
 	id: string
 	order: number
-	type: 'THEORY' // BlockType enum
+	type: 'THEORY'
 	title?: string | null
 	content: string
 }
@@ -75,11 +77,12 @@ export interface ILesson {
 export interface ITask {
 	id: string
 	order: number
-	type: 'SINGLE_CHOICE'
+	type: 'SINGLE_CHOICE' | 'MULTI_CHOICE' | 'TEXT_INPUT' | 'SHORT_ANSWER'
 	title: string
 	question: string
 	points: number
 	difficulty: 'EASY' | 'MEDIUM' | 'HARD'
+	explanation?: string // ✅ Добавлено
 	options: Array<ITaskOption>
 	completed?: boolean
 }
@@ -87,6 +90,25 @@ export interface ITask {
 export interface ITaskOption {
 	id: string
 	text: string
+}
+
+// ✅ Новый интерфейс для ответа на задачу
+export interface ITaskAnswerResponse {
+	taskId: string
+	isCorrect: boolean
+	explanation?: string // ✅ Добавлено
+	awardedXp: number
+	totalXp: number
+	courseProgress: number
+	lessonCompleted: boolean
+	certificateIssued: boolean
+	newAchievements?: Array<{
+		id: string
+		code: string
+		title: string
+		description: string
+		icon: string
+	}>
 }
 
 export interface ITestQuestion {
@@ -129,6 +151,7 @@ export interface ITestResult {
 		isCorrect: boolean
 		selectedOptions?: string[]
 		correctOptions?: string[]
+		explanation?: string // ✅ Добавлено для теста
 	}>
 }
 
@@ -165,6 +188,7 @@ export interface ICertificate {
 		difficulty: Difficulty
 	}
 }
+
 export interface IAchievement {
 	id: string
 	code: string

@@ -10,16 +10,15 @@ import { adminService } from '@/services/admin/admin.service'
 import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, m } from 'framer-motion'
 import {
-	ArrowLeft,
-	BookOpen,
-	CheckCircle2,
-	Clock,
-	FileText,
-	Layers,
-	Plus,
-	Sparkles,
-	Target,
-	Zap,
+    ArrowLeft,
+    BookOpen,
+    CheckCircle2,
+    Clock,
+    FileText,
+    Layers,
+    Plus,
+    Target,
+    Zap
 } from 'lucide-react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
@@ -239,109 +238,78 @@ export default function LessonEditPage() {
 					</div>
 				</m.div>
 
-				{/* Main Content Grid */}
+				{/* Main Content Grid with Independent Sticky Scrolling */}
 				<div className='grid gap-6 lg:grid-cols-2'>
-					{/* Left Column - Lesson Editor */}
+					{/* Left Column - Lesson Editor (Independent Scroll) */}
 					<m.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.3, delay: 0.2 }}
 						className='space-y-6'
 					>
-						{/* Section Header */}
-						<div className='flex items-center gap-3'>
-							<div className='flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/10'>
-								<Layers className='h-4 w-4 text-purple-400' />
+						{/* Sticky Container */}
+						<div className='sticky top-6 space-y-6'>
+							{/* Section Header */}
+							<div className='flex items-center gap-3'>
+								<div className='flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/10'>
+									<Layers className='h-4 w-4 text-purple-400' />
+								</div>
+								<h2 className='text-2xl font-bold text-white'>
+									Теоретический контент
+								</h2>
 							</div>
-							<h2 className='text-2xl font-bold text-white'>
-								Теоретический контент
-							</h2>
-						</div>
 
-						{/* Editor Card */}
-						<div className='overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.03] to-transparent backdrop-blur-xl'>
-							<LessonEditor lesson={lesson} onSuccess={refetch} />
+							{/* Editor Card with max-height and scroll */}
+							<div className='max-h-[calc(100vh-12rem)] overflow-y-auto rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.03] to-transparent backdrop-blur-xl'>
+								<LessonEditor lesson={lesson} onSuccess={refetch} />
+							</div>
 						</div>
 					</m.div>
 
-					{/* Right Column - Tasks */}
+					{/* Right Column - Tasks (Independent Scroll) */}
 					<m.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.3, delay: 0.25 }}
 						className='space-y-6'
 					>
-						{/* Section Header with Action Button */}
-						<div className='flex items-center justify-between'>
-							<div className='flex items-center gap-3'>
-								<div className='flex h-8 w-8 items-center justify-center rounded-lg bg-green-500/10'>
-									<Target className='h-4 w-4 text-green-400' />
+						{/* Sticky Container */}
+						<div className='sticky top-6 space-y-6'>
+							{/* Section Header with Action Button */}
+							<div className='flex items-center justify-between'>
+								<div className='flex items-center gap-3'>
+									<div className='flex h-8 w-8 items-center justify-center rounded-lg bg-green-500/10'>
+										<Target className='h-4 w-4 text-green-400' />
+									</div>
+									<div>
+										<h2 className='text-2xl font-bold text-white'>
+											Практические задания
+										</h2>
+										<p className='text-sm text-gray-500'>
+											{stats.tasksCount === 0
+												? 'Добавьте первое задание'
+												: `${stats.tasksCount} ${stats.tasksCount === 1 ? 'задание' : 'заданий'} • ${stats.totalPoints} XP`}
+										</p>
+									</div>
 								</div>
-								<div>
-									<h2 className='text-2xl font-bold text-white'>
-										Практические задания
-									</h2>
-									<p className='text-sm text-gray-500'>
-										{stats.tasksCount === 0
-											? 'Добавьте первое задание'
-											: `${stats.tasksCount} ${stats.tasksCount === 1 ? 'задание' : 'заданий'} • ${stats.totalPoints} XP`}
-									</p>
+								<m.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+									<Button
+										onClick={() => setShowCreateTask(true)}
+										className='group flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 font-semibold text-black shadow-lg shadow-white/10 transition-all hover:bg-white/90 hover:shadow-white/20'
+									>
+										<Plus className='h-4 w-4 transition-transform group-hover:rotate-90' />
+										<span>Добавить</span>
+									</Button>
+								</m.div>
+							</div>
+
+							{/* Tasks Card with max-height and scroll */}
+							<div className='max-h-[calc(100vh-16rem)] space-y-6 overflow-y-auto'>
+								<div className='rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.03] to-transparent backdrop-blur-xl'>
+									<TasksList lesson={lesson} onRefetch={refetch} />
 								</div>
 							</div>
-							<m.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-								<Button
-									onClick={() => setShowCreateTask(true)}
-									className='group flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 font-semibold text-black shadow-lg shadow-white/10 transition-all hover:bg-white/90 hover:shadow-white/20'
-								>
-									<Plus className='h-4 w-4 transition-transform group-hover:rotate-90' />
-									<span>Добавить</span>
-								</Button>
-							</m.div>
 						</div>
-
-						{/* Tasks Card */}
-						<div className='overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.03] to-transparent backdrop-blur-xl'>
-							<TasksList lesson={lesson} onRefetch={refetch} />
-						</div>
-
-						{/* Quick Stats */}
-						{stats.tasksCount > 0 && (
-							<m.div
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								transition={{ duration: 0.3, delay: 0.3 }}
-								className='rounded-2xl border border-white/[0.08] bg-gradient-to-br from-blue-500/5 to-purple-500/5 p-6 backdrop-blur-xl'
-							>
-								<div className='mb-3 flex items-center gap-2'>
-									<Sparkles className='h-5 w-5 text-blue-400' />
-									<h3 className='font-semibold text-white'>Прогресс урока</h3>
-								</div>
-								<div className='space-y-3'>
-									<div className='flex items-center justify-between text-sm'>
-										<span className='text-gray-400'>Теория</span>
-										<span className='font-semibold text-white'>
-											{stats.blocksCount > 0 ? '✓ Готово' : '○ Не готово'}
-										</span>
-									</div>
-									<div className='flex items-center justify-between text-sm'>
-										<span className='text-gray-400'>Практика</span>
-										<span className='font-semibold text-white'>
-											{stats.tasksCount > 0 ? '✓ Готово' : '○ Не готово'}
-										</span>
-									</div>
-									<div className='h-2 overflow-hidden rounded-full bg-white/10'>
-										<m.div
-											initial={{ width: 0 }}
-											animate={{
-												width: `${stats.isComplete ? 100 : stats.blocksCount > 0 ? 50 : 0}%`,
-											}}
-											transition={{ duration: 0.5 }}
-											className='h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-600'
-										/>
-									</div>
-								</div>
-							</m.div>
-						)}
 					</m.div>
 				</div>
 			</div>
