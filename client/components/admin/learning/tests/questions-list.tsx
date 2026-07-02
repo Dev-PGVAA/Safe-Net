@@ -37,14 +37,14 @@ export default function QuestionsList({
 
     setIsDeleting(true)
     try {
-      // Исправлено: deleteTestQuestion вместо deleteQuestion
+      // Fixed: deleteTestQuestion instead of deleteQuestion
       await adminService.deleteTestQuestion(deleteDialog.question.id)
-      toast.success('Вопрос успешно удалён')
+      toast.success('Question deleted successfully')
       onUpdate()
       setDeleteDialog({ open: false, question: null })
     } catch (error) {
       console.error('Delete question error:', error)
-      toast.error('Ошибка при удалении вопроса')
+      toast.error('Error deleting question')
     } finally {
       setIsDeleting(false)
     }
@@ -71,7 +71,7 @@ export default function QuestionsList({
               <div className='flex-1'>
                 <div className='flex items-center gap-2 mb-2'>
                   <span className='text-xs font-semibold text-gray-500'>
-                    Вопрос {index + 1}
+                    Question {index + 1}
                   </span>
                   <span
                     className={`text-xs px-2 py-0.5 rounded-full ${
@@ -83,22 +83,22 @@ export default function QuestionsList({
                     }`}
                   >
                     {question.type === 'SINGLE_CHOICE'
-                      ? 'Один ответ'
+                      ? 'Single Answer'
                       : question.type === 'MULTI_CHOICE'
-                      ? 'Несколько ответов'
+                      ? 'Multiple Answers'
                       : question.type === 'SHORT_ANSWER'
-                      ? 'Короткий ответ'
+                      ? 'Short Answer'
                       : question.type === 'TEXT_INPUT'
-                      ? 'Свободный ввод'
+                      ? 'Free Text'
                       : question.type === 'PHISHING_EMAIL'
-                      ? 'Фишинг Email'
-                      : 'Фишинг Сайт'}
+                      ? 'Phishing Email'
+                      : 'Phishing Website'}
                   </span>
                 </div>
                 <p className='text-white font-medium mb-2'>{question.text}</p>
                 {question.options && question.options.length > 0 && (
                   <p className='text-sm text-gray-400'>
-                    Вариантов: {question.options.length}
+                    Options: {question.options.length}
                   </p>
                 )}
               </div>

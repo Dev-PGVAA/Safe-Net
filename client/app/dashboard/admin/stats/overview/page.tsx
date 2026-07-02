@@ -51,7 +51,7 @@ export default function AdminDashboardPage() {
 	const handleRefresh = async () => {
 		setIsRefreshing(true)
 		await refetch()
-		toast.success('Статистика обновлена')
+		toast.success('Statistics updated')
 		setIsRefreshing(false)
 	}
 
@@ -60,7 +60,7 @@ export default function AdminDashboardPage() {
 			<div className='flex min-h-screen items-center justify-center'>
 				<div className='flex flex-col items-center gap-4'>
 					<div className='h-12 w-12 animate-spin rounded-full border-4 border-white/20 border-t-white' />
-					<p className='text-sm text-gray-400'>Загрузка статистики...</p>
+					<p className='text-sm text-gray-400'>Loading statistics...</p>
 				</div>
 			</div>
 		)
@@ -85,10 +85,10 @@ export default function AdminDashboardPage() {
 							</div>
 							<div>
 								<h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold text-white'>
-									Панель управления
+									Dashboard
 								</h1>
 								<p className='mt-1 text-sm text-gray-400'>
-									Полный обзор платформы Safe-Net
+									Full overview of the Safe-Net platform
 								</p>
 							</div>
 						</div>
@@ -102,7 +102,7 @@ export default function AdminDashboardPage() {
 						<RefreshCw
 							className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`}
 						/>
-						<span className='hidden sm:inline'>Обновить</span>
+						<span className='hidden sm:inline'>Refresh</span>
 					</Button>
 				</div>
 			</m.div>
@@ -124,10 +124,10 @@ export default function AdminDashboardPage() {
 						<div className='mb-4 sm:mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
 							<div>
 								<h2 className='text-xl sm:text-2xl font-bold text-white'>
-									Популярные курсы
+									Popular courses
 								</h2>
 								<p className='mt-1 text-xs sm:text-sm text-gray-400'>
-									Курсы с наибольшим количеством студентов
+									Courses with the most students
 								</p>
 							</div>
 							<Link href={ROUTES.ADMIN.LEARNING.COURSES}>
@@ -136,7 +136,7 @@ export default function AdminDashboardPage() {
 									size='sm'
 									className='gap-2 text-gray-400 hover:text-white'
 								>
-									Все курсы
+									All courses
 									<ArrowRight className='h-4 w-4' />
 								</Button>
 							</Link>
@@ -160,20 +160,20 @@ export default function AdminDashboardPage() {
 												{course.title}
 											</h3>
 											<p className='text-xs sm:text-sm text-gray-400'>
-												{course.enrolledUsers} студентов
+												{course.enrolledUsers} students
 											</p>
 										</div>
 									</div>
 
 									<div className='flex items-center gap-4 text-sm sm:text-base'>
 										<div className='text-right'>
-											<p className='text-xs sm:text-sm text-gray-400'>Завершение</p>
+											<p className='text-xs sm:text-sm text-gray-400'>Completion</p>
 											<p className='font-semibold text-white'>
 												{course.completionRate}%
 											</p>
 										</div>
 										<div className='text-right'>
-											<p className='text-xs sm:text-sm text-gray-400'>Средний балл</p>
+											<p className='text-xs sm:text-sm text-gray-400'>Avg. score</p>
 											<p className='font-semibold text-green-400'>
 												{course.avgScore}%
 											</p>
@@ -195,8 +195,8 @@ export default function AdminDashboardPage() {
 									<BookOpen className='h-5 w-5 sm:h-6 sm:w-6 text-blue-400' />
 								</div>
 								<div>
-									<p className='font-semibold text-white'>Курсы</p>
-									<p className='text-xs sm:text-sm text-gray-400'>Управление контентом</p>
+									<p className='font-semibold text-white'>Courses</p>
+									<p className='text-xs sm:text-sm text-gray-400'>Content management</p>
 								</div>
 							</div>
 						</Link>
@@ -207,8 +207,8 @@ export default function AdminDashboardPage() {
 									<FileQuestion className='h-5 w-5 sm:h-6 sm:w-6 text-purple-400' />
 								</div>
 								<div>
-									<p className='font-semibold text-white'>Тесты</p>
-									<p className='text-xs sm:text-sm text-gray-400'>Проверка знаний</p>
+									<p className='font-semibold text-white'>Tests</p>
+									<p className='text-xs sm:text-sm text-gray-400'>Knowledge checks</p>
 								</div>
 							</div>
 						</Link>
@@ -219,8 +219,8 @@ export default function AdminDashboardPage() {
 									<Users className='h-5 w-5 sm:h-6 sm:w-6 text-green-400' />
 								</div>
 								<div>
-									<p className='font-semibold text-white'>Пользователи</p>
-									<p className='text-xs sm:text-sm text-gray-400'>Управление доступом</p>
+									<p className='font-semibold text-white'>Users</p>
+									<p className='text-xs sm:text-sm text-gray-400'>Access management</p>
 								</div>
 							</div>
 						</Link>
@@ -238,14 +238,14 @@ export default function AdminDashboardPage() {
 								<Zap className='h-5 w-5 text-green-400' />
 							</div>
 							<div>
-								<h3 className='font-semibold text-white'>Статус системы</h3>
-								<p className='text-xs sm:text-sm text-gray-400'>Все системы работают</p>
+								<h3 className='font-semibold text-white'>System status</h3>
+								<p className='text-xs sm:text-sm text-gray-400'>All systems operational</p>
 							</div>
 						</div>
 
 						<div className='space-y-3'>
 							<div className='flex items-center justify-between'>
-								<span className='text-xs sm:text-sm text-gray-400'>Последнее обновление</span>
+								<span className='text-xs sm:text-sm text-gray-400'>Latest update</span>
 								<span className='text-xs sm:text-sm text-gray-400'>
 									{toTime(new Date()) || 'N/A'}
 								</span>

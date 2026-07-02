@@ -34,12 +34,12 @@ export default function UserInfoBlock({
 			await adminService.updateUser(user.id, { status: newStatus })
 			toast.success(
 				newStatus === UserStatus.ACTIVE
-					? 'Пользователь разблокирован'
-					: 'Пользователь заблокирован'
+					? 'User unblocked'
+					: 'User blocked'
 			)
 			onUserUpdated()
 		} catch (error) {
-			toast.error('Ошибка при изменении статуса')
+			toast.error('Error updating status')
 		}
 	}
 
@@ -48,14 +48,14 @@ export default function UserInfoBlock({
 			format: 'date-long',
 			locale: 'ru-RU',
 			gracefulFail: true,
-		}) || 'Неизвестно'
+		}) || 'Unknown'
 
 	const updatedDate =
 		formatDate(user.updatedAt, {
 			format: 'date-long',
 			locale: 'ru-RU',
 			gracefulFail: true,
-		}) || 'Неизвестно'
+		}) || 'Unknown'
 
 	return (
 		<m.div
@@ -83,12 +83,12 @@ export default function UserInfoBlock({
 					{user.status === UserStatus.ACTIVE ? (
 						<>
 							<Lock className='w-4 h-4' />
-							Заблокировать
+							Block
 						</>
 					) : (
 						<>
 							<CheckCircle2 className='w-4 h-4' />
-							Разблокировать
+							Unblock
 						</>
 					)}
 				</Button>
@@ -102,17 +102,17 @@ export default function UserInfoBlock({
 				/>
 				<InfoItem
 					icon={<Shield className='w-4 h-4' />}
-					label='Роли'
+					label='Roles'
 					value={user.rights.map(r => UserRoleLabel[r]).join(', ')}
 				/>
 				<InfoItem
 					icon={<CalendarDays className='w-4 h-4' />}
-					label='Регистрация'
+					label='Sign Up'
 					value={createdDate}
 				/>
 				<InfoItem
 					icon={<CalendarDays className='w-4 h-4' />}
-					label='Обновление'
+					label='Update'
 					value={updatedDate}
 				/>
 			</div>

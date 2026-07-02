@@ -18,10 +18,10 @@ import { toast } from 'sonner'
 const getLessonWord = (count: number) => {
 	const lastDigit = count % 10
 	const lastTwoDigits = count % 100
-	if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return 'уроков'
-	if (lastDigit === 1) return 'урок'
-	if (lastDigit >= 2 && lastDigit <= 4) return 'урока'
-	return 'уроков'
+	if (lastTwoDigits >= 11 && lastTwoDigits <= 14) return 'lessons'
+	if (lastDigit === 1) return 'lesson'
+	if (lastDigit >= 2 && lastDigit <= 4) return 'lessons'
+	return 'lessons'
 }
 
 export default function CourseEditPage() {
@@ -49,19 +49,19 @@ export default function CourseEditPage() {
 	const handleDeleteCourse = async () => {
 		try {
 			await adminService.deleteCourse(courseId)
-			toast.success('Курс успешно удален')
+			toast.success('Course successfully deleted')
 			router.push(ROUTES.ADMIN.LEARNING.COURSES)
 		} catch (error) {
-			toast.error('Ошибка при удалении курса')
+			toast.error('Error while deleting course')
 		}
 	}
 
 	const getDifficultyConfig = (difficulty: string) => {
 		switch (difficulty) {
-			case 'EASY': return { label: 'Легкий', color: 'bg-green-500/10 text-green-400 border-green-500/20' }
-			case 'MEDIUM': return { label: 'Средний', color: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' }
-			case 'HARD': return { label: 'Сложный', color: 'bg-red-500/10 text-red-400 border-red-500/20' }
-			default: return { label: 'Средний', color: 'bg-gray-500/10 text-gray-400 border-gray-500/20' }
+			case 'EASY': return { label: 'Easy', color: 'bg-green-500/10 text-green-400 border-green-500/20' }
+			case 'MEDIUM': return { label: 'Medium', color: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' }
+			case 'HARD': return { label: 'Hard', color: 'bg-red-500/10 text-red-400 border-red-500/20' }
+			default: return { label: 'Medium', color: 'bg-gray-500/10 text-gray-400 border-gray-500/20' }
 		}
 	}
 
@@ -75,9 +75,9 @@ export default function CourseEditPage() {
 		<div className='min-h-screen flex items-center justify-center'>
 			<div className='max-w-md w-full p-12 rounded-2xl text-center bg-white/5 border border-white/10'>
 				<AlertCircle className='w-10 h-10 text-red-400 mx-auto mb-6' />
-				<h2 className='text-2xl font-bold text-white mb-3'>Курс не найден</h2>
+				<h2 className='text-2xl font-bold text-white mb-3'>Course not found</h2>
 				<Button onClick={() => router.push(ROUTES.ADMIN.LEARNING.COURSES)} className='bg-white text-black font-semibold hover:bg-white/80'>
-					Вернуться к курсам
+					Back to courses
 				</Button>
 			</div>
 		</div>
@@ -90,7 +90,7 @@ export default function CourseEditPage() {
 			<div className='max-w-7xl mx-auto px-6 py-8 space-y-6'>
 				<Breadcrumb
 					showBackButton
-					items={[{ label: 'Курсы', href: ROUTES.ADMIN.LEARNING.COURSES }, { label: course.title }]}
+					items={[{ label: 'Courses', href: ROUTES.ADMIN.LEARNING.COURSES }, { label: course.title }]}
 				/>
 
 				{/* Header Card */}
@@ -120,7 +120,7 @@ export default function CourseEditPage() {
 							className='gap-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 transition-all'
 						>
 							<Trash2 className='w-4 h-4' />
-							Удалить курс
+							Delete course
 						</Button>
 					</div>
 				</m.div>
@@ -128,7 +128,7 @@ export default function CourseEditPage() {
 				{/* Editor */}
 				<div className='rounded-[24px] bg-white/[0.03] border border-white/[0.08] overflow-hidden'>
 					<div className='p-6 border-b border-white/[0.05]'>
-						<h2 className='text-lg font-semibold text-white'>Информация о курсе</h2>
+						<h2 className='text-lg font-semibold text-white'>Course information</h2>
 					</div>
 					<div className='p-6'>
 						<CourseEditForm course={course} onSuccess={refetch} />
@@ -139,15 +139,15 @@ export default function CourseEditPage() {
 				<div className='rounded-[24px] bg-white/[0.03] border border-white/[0.08] overflow-hidden'>
 					<div className='p-6 border-b border-white/[0.05] flex items-center justify-between'>
 						<div>
-							<h2 className='text-lg font-semibold text-white'>Уроки курса</h2>
-							<p className='text-sm text-gray-500'>Управление контентом обучения</p>
+							<h2 className='text-lg font-semibold text-white'>Course lessons</h2>
+							<p className='text-sm text-gray-500'>Manage learning content</p>
 						</div>
 						<Button
 							onClick={() => setShowCreateLesson(true)}
 							className='gap-2 bg-white text-black hover:bg-white/90 font-semibold'
 						>
 							<Plus className='w-4 h-4' />
-							Добавить урок
+							Add lesson
 						</Button>
 					</div>
 
@@ -158,12 +158,12 @@ export default function CourseEditPage() {
 							) : (
 								<div className='text-center py-16 rounded-2xl border border-dashed border-white/[0.08]'>
 									<BookOpen className='w-12 h-12 text-gray-700 mx-auto mb-4' />
-									<h3 className='text-white font-medium mb-6'>Уроки отсутствуют</h3>
+									<h3 className='text-white font-medium mb-6'>No lessons yet</h3>
 									<Button
 										onClick={() => setShowCreateLesson(true)}
 										className='bg-white text-black font-semibold'
 									>
-										Создать первый урок
+										Create first lesson
 									</Button>
 								</div>
 							)}

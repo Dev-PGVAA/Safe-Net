@@ -51,7 +51,7 @@ export default function Navigation() {
 						<div>
 							<h1 className='text-lg font-bold'>SafeNet</h1>
 							<p className='text-xs text-slate-400 -mt-1'>
-								Учись. Играя. Защищайся.
+								Learn. Play. Stay Safe.
 							</p>
 						</div>
 					</div>
@@ -62,19 +62,19 @@ export default function Navigation() {
 							href='#features'
 							className='text-sm text-slate-300 hover:text-white transition-colors'
 						>
-							Возможности
+							Features
 						</a>
 						<a
 							href='#topics'
 							className='text-sm text-slate-300 hover:text-white transition-colors'
 						>
-							Темы
+							Topics
 						</a>
 						<a
 							href='#stats'
 							className='text-sm text-slate-300 hover:text-white transition-colors'
 						>
-							Статистика
+							Statistics
 						</a>
 
 						{/* User Profile with Logout */}
@@ -83,7 +83,7 @@ export default function Navigation() {
 								<button
 									onClick={handleProfileClick}
 									className='relative w-10 h-10 rounded-full bg-linear-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white font-semibold text-lg cursor-pointer overflow-hidden group'
-									title='Профиль'
+									title='Profile'
 								>
 									{/* User Initial */}
 									<span
@@ -112,7 +112,7 @@ export default function Navigation() {
 										className='absolute top-full right-0 mt-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-red-400 text-sm font-medium flex items-center gap-2 shadow-lg border border-slate-700 transition-colors md:hidden'
 									>
 										<LogOut className='w-4 h-4' />
-										Выйти
+										Log Out
 									</button>
 								)}
 
@@ -145,19 +145,19 @@ export default function Navigation() {
 							href='#features'
 							className='block text-sm text-slate-300 hover:text-white transition-colors'
 						>
-							Возможности
+							Features
 						</a>
 						<a
 							href='#topics'
 							className='block text-sm text-slate-300 hover:text-white transition-colors'
 						>
-							Темы
+							Topics
 						</a>
 						<a
 							href='#stats'
 							className='block text-sm text-slate-300 hover:text-white transition-colors'
 						>
-							Статистика
+							Statistics
 						</a>
 
 						{!isLoading && isAuthenticated && user && (
@@ -170,7 +170,7 @@ export default function Navigation() {
 									className='text-left w-full text-red-400 hover:text-red-300 transition-colors flex items-center gap-2'
 								>
 									<LogOut className='w-4 h-4' />
-									Выйти
+									Log Out
 								</button>
 							</>
 						)}

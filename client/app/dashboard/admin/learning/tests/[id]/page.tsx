@@ -43,11 +43,11 @@ export default function TestEditPage() {
 	const handleDeleteTest = async () => {
 		try {
 			await adminService.deleteTest(testId)
-			toast.success('Тест успешно удален')
+			toast.success('Test successfully deleted')
 			router.push('/dashboard/admin/learning/tests')
 		} catch (error) {
 			console.error('Delete error:', error)
-			toast.error('Ошибка при удалении теста')
+			toast.error('Error deleting test')
 		}
 	}
 
@@ -61,7 +61,7 @@ export default function TestEditPage() {
 					className='text-center'
 				>
 					<div className='w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4' />
-					<p className='text-sm text-gray-400'>Загрузка...</p>
+					<p className='text-sm text-gray-400'>Loading...</p>
 				</m.div>
 			</div>
 		)
@@ -79,15 +79,15 @@ export default function TestEditPage() {
 					<div className='w-20 h-20 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6'>
 						<AlertCircle className='w-10 h-10 text-red-400' />
 					</div>
-					<h2 className='text-2xl font-bold text-white mb-3'>Тест не найден</h2>
+					<h2 className='text-2xl font-bold text-white mb-3'>Test not found</h2>
 					<p className='text-gray-400 mb-8'>
-						Запрашиваемый тест не существует или был удален
+						The requested test does not exist or has been deleted
 					</p>
 					<Button
 						onClick={() => router.push('/dashboard/admin/learning/tests')}
 						className='bg-white text-black hover:bg-white/80 font-semibold'
 					>
-						Вернуться к тестам
+						Back to tests
 					</Button>
 				</m.div>
 			</div>
@@ -107,7 +107,7 @@ export default function TestEditPage() {
 						<Breadcrumb
 							showBackButton
 							items={[
-								{ label: 'Тесты', href: ROUTES.ADMIN.LEARNING.TESTS },
+								{ label: 'Tests', href: ROUTES.ADMIN.LEARNING.TESTS },
 								{ label: test.title },
 							]}
 						/>
@@ -144,7 +144,7 @@ export default function TestEditPage() {
 								className='gap-2 border bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-800/10 hover:border-red-800/30 hover:text-red-400 transition-all'
 							>
 								<Trash2 className='w-4 h-4' />
-								Удалить тест
+								Delete test
 							</Button>
 						</m.div>
 					</m.div>
@@ -166,7 +166,7 @@ export default function TestEditPage() {
 									<FileQuestion className='w-5 h-5 text-blue-400' />
 								</div>
 								<span className='text-xs text-gray-500 uppercase font-semibold'>
-									Вопросов в тесте
+									Questions in test
 								</span>
 							</div>
 							<p className='text-3xl font-bold text-white'>
@@ -184,7 +184,7 @@ export default function TestEditPage() {
 									<Target className='w-5 h-5 text-purple-400' />
 								</div>
 								<span className='text-xs text-gray-500 uppercase font-semibold'>
-									Проходной балл
+									Passing score
 								</span>
 							</div>
 							<p className='text-3xl font-bold text-white'>
@@ -206,12 +206,12 @@ export default function TestEditPage() {
 							</div>
 							<div className='flex-1'>
 								<h3 className='font-semibold text-amber-400 mb-1.5'>
-									Рекомендуется добавить больше вопросов
+									We recommend adding more questions
 								</h3>
 								<p className='text-sm text-amber-200/70 leading-relaxed'>
-									Для качественной проверки знаний рекомендуется минимум{' '}
-									{TEST_CONSTANTS.MIN_QUESTIONS_RECOMMENDED} вопросов. Сейчас у
-									вас {getQuestionsLabel(stats.questionsCount)}.
+									For a thorough knowledge check we recommend at least{' '}
+									{TEST_CONSTANTS.MIN_QUESTIONS_RECOMMENDED} questions. You
+									currently have {getQuestionsLabel(stats.questionsCount)}.
 								</p>
 							</div>
 						</m.div>
@@ -239,12 +239,12 @@ export default function TestEditPage() {
 							<div className='flex flex-col sm:flex-row sm:items-center justify-between gap-4'>
 								<div>
 									<h2 className='text-2xl font-bold text-white mb-1'>
-										Вопросы теста
+										Test questions
 									</h2>
 									<p className='text-sm text-gray-400'>
 										{stats.questionsCount === 0
-											? 'Добавьте вопросы для активации теста'
-											: `Всего ${getQuestionsLabel(stats.questionsCount)}`}
+											? 'Add questions to activate the test'
+											: `Total ${getQuestionsLabel(stats.questionsCount)}`}
 									</p>
 								</div>
 
@@ -254,7 +254,7 @@ export default function TestEditPage() {
 										className='gap-2 bg-white text-black hover:bg-white/80 font-semibold'
 									>
 										<Plus className='w-5 h-5' />
-										Добавить вопрос
+										Add question
 									</Button>
 								</m.div>
 							</div>
@@ -290,11 +290,10 @@ export default function TestEditPage() {
 											<FileQuestion className='w-10 h-10 text-gray-600' />
 										</div>
 										<h3 className='text-xl font-semibold text-white mb-2'>
-											Вопросы отсутствуют
+											No questions yet
 										</h3>
 										<p className='text-gray-400 max-w-md mx-auto mb-8 leading-relaxed'>
-											Добавьте первый вопрос, чтобы пользователи могли проходить
-											этот тест
+											Add the first question so users can take this test
 										</p>
 										<m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
 											<Button
@@ -302,7 +301,7 @@ export default function TestEditPage() {
 												className='gap-2 bg-white text-black hover:bg-white/80 font-semibold'
 											>
 												<Plus className='w-5 h-5' />
-												Создать первый вопрос
+												Create first question
 											</Button>
 										</m.div>
 									</m.div>

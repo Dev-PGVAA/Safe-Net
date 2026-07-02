@@ -31,7 +31,7 @@ export default function UserCertificatesBlock({
 			>
 				<Award className='w-12 h-12 text-white/20 mb-4' />
 				<p className='text-white/50 text-center max-w-md'>
-					Сертификаты выдаются после успешного завершения курса
+					Certificates are issued after successful course completion
 				</p>
 			</m.div>
 		)
@@ -45,7 +45,7 @@ export default function UserCertificatesBlock({
 						format: 'date-medium',
 						locale: 'ru-RU',
 						gracefulFail: true,
-					}) || 'Дата неизвестна'
+					}) || 'Date unknown'
 
 				return (
 					<m.div

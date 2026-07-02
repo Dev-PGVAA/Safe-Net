@@ -27,12 +27,12 @@ import { z } from 'zod'
 const questionSchema = z.object({
 	testId: z.string(),
 	order: z.number().int().positive(),
-	text: z.string().min(5, 'Минимум 5 символов'),
+	text: z.string().min(5, 'Minimum 5 characters'),
 	type: z.nativeEnum(TaskType),
 	options: z
 		.array(
 			z.object({
-				text: z.string().min(1, 'Вариант не может быть пустым'),
+				text: z.string().min(1, 'Option cannot be empty'),
 				isCorrect: z.boolean(),
 			})
 		)
@@ -42,12 +42,12 @@ const questionSchema = z.object({
 type QuestionFormData = z.infer<typeof questionSchema>
 
 const TaskTypeLabels: Record<TaskType, string> = {
-	[TaskType.SINGLE_CHOICE]: 'Один вариант',
-	[TaskType.MULTI_CHOICE]: 'Несколько вариантов',
-	[TaskType.SHORT_ANSWER]: 'Короткий ответ',
-	[TaskType.PHISHING_EMAIL]: 'Фишинг: Email',
-	[TaskType.PHISHING_SITE]: 'Фишинг: Сайт',
-	[TaskType.TEXT_INPUT]: 'Текстовый ввод',
+	[TaskType.SINGLE_CHOICE]: 'Single Choice',
+	[TaskType.MULTI_CHOICE]: 'Multiple Choice',
+	[TaskType.SHORT_ANSWER]: 'Short Answer',
+	[TaskType.PHISHING_EMAIL]: 'Phishing: Email',
+	[TaskType.PHISHING_SITE]: 'Phishing: Website',
+	[TaskType.TEXT_INPUT]: 'Text Input',
 }
 
 interface CreateQuestionDialogProps {
@@ -101,12 +101,12 @@ export default function CreateQuestionDialog({
 		setIsSubmitting(true)
 		try {
 			await adminService.createTestQuestion(data)
-			toast.success('Вопрос добавлен')
+			toast.success('Question added')
 			reset()
 			onOpenChange(false)
 			onSuccess()
 		} catch (error) {
-			toast.error('Ошибка при создании вопроса')
+			toast.error('Error creating question')
 		} finally {
 			setIsSubmitting(false)
 		}
@@ -125,9 +125,9 @@ export default function CreateQuestionDialog({
 					<div className='border-b border-white/10 bg-[#0A0F1D]/80 backdrop-blur-xl'>
 						<div className='mx-auto flex max-w-4xl items-center justify-between px-6 py-4'>
 							<div>
-								<h3 className='text-2xl font-bold text-white'>Добавить вопрос</h3>
+								<h3 className='text-2xl font-bold text-white'>Add Question</h3>
 								<p className='mt-1 text-sm text-gray-500'>
-									Создайте вопрос для тестирования знаний
+									Create a question to test knowledge
 								</p>
 							</div>
 							<m.button
@@ -157,13 +157,13 @@ export default function CreateQuestionDialog({
 							<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 								<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 									<Sparkles className='h-5 w-5 text-blue-400' />
-									Информация о вопросе
+									Question Information
 								</h4>
 
 								<div className='space-y-6'>
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Тип вопроса
+											Question Type
 										</label>
 										<Controller
 											name='type'
@@ -197,7 +197,7 @@ export default function CreateQuestionDialog({
 
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Порядковый номер
+											Order Number
 										</label>
 										<input
 											{...register('order', { valueAsNumber: true })}
@@ -209,13 +209,13 @@ export default function CreateQuestionDialog({
 
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Текст вопроса
+											Question Text
 										</label>
 										<textarea
 											{...register('text')}
 											rows={3}
 											className='w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
-											placeholder='Введите вопрос...'
+											placeholder='Enter question...'
 										/>
 										{errors.text && (
 											<p className='mt-2 text-sm text-red-400'>
@@ -232,7 +232,7 @@ export default function CreateQuestionDialog({
 									<div className='mb-4 flex items-center justify-between'>
 										<h4 className='flex items-center gap-2 text-lg font-semibold text-white'>
 											<CheckCircle2 className='h-5 w-5 text-green-400' />
-											Варианты ответов
+											Answer Options
 										</h4>
 										<m.button
 											type='button'
@@ -242,7 +242,7 @@ export default function CreateQuestionDialog({
 											className='flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-all hover:bg-white/90'
 										>
 											<Plus className='h-4 w-4' />
-											Добавить вариант
+											Add Option
 										</m.button>
 									</div>
 
@@ -262,18 +262,18 @@ export default function CreateQuestionDialog({
 															checked={checkField.value}
 															onChange={(e) => {
 																if (taskType === TaskType.SINGLE_CHOICE) {
-																	// Для radio - снимаем все остальные галочки
+																	// For radio - uncheck all other options
 																	fields.forEach((_, i) => {
 																		if (i === index) {
 																			checkField.onChange(true)
 																		} else {
-																			// Используем setValue для остальных
+																			// Use setValue for the rest
 																			const otherField = `options.${i}.isCorrect` as const
 																			control._formValues.options[i].isCorrect = false
 																		}
 																	})
 																} else {
-																	// Для checkbox - просто переключаем
+																	// For checkbox - just toggle
 																	checkField.onChange(e.target.checked)
 																}
 															}}
@@ -285,7 +285,7 @@ export default function CreateQuestionDialog({
 												<input
 													{...register(`options.${index}.text`)}
 													className='flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
-													placeholder={`Вариант ${index + 1}`}
+													placeholder={`Option ${index + 1}`}
 												/>
 
 												{fields.length > 2 && (
@@ -305,8 +305,8 @@ export default function CreateQuestionDialog({
 
 									<p className='mt-4 text-sm text-gray-400'>
 										{taskType === TaskType.SINGLE_CHOICE
-											? 'Выберите один правильный ответ (radio)'
-											: 'Отметьте все правильные ответы (checkbox)'}
+											? 'Select one correct answer (radio)'
+											: 'Check all correct answers (checkbox)'}
 									</p>
 								</div>
 							)}
@@ -323,7 +323,7 @@ export default function CreateQuestionDialog({
 									}}
 									className='flex-1 rounded-xl border border-white/10 bg-white/5 px-6 py-4 font-semibold text-gray-300 transition-all hover:bg-white/10'
 								>
-									Отмена
+									Cancel
 								</m.button>
 								<m.button
 									type='submit'
@@ -335,12 +335,12 @@ export default function CreateQuestionDialog({
 									{isSubmitting ? (
 										<>
 											<Loader2 className='mr-2 inline h-5 w-5 animate-spin' />
-											Добавление...
+											Adding...
 										</>
 									) : (
 										<>
 											<Plus className='mr-2 inline h-5 w-5' />
-											Добавить вопрос
+											Add Question
 										</>
 									)}
 								</m.button>

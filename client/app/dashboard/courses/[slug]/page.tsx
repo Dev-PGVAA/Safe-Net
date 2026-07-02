@@ -56,7 +56,7 @@ export default function CourseDetailPage() {
 				<Breadcrumb
 					showBackButton
 					items={[
-						{ label: 'Обучение', href: ROUTES.COURSES, icon: BookOpen },
+						{ label: 'Courses', href: ROUTES.COURSES, icon: BookOpen },
 						{ label: course.title },
 					]}
 				/>
@@ -72,7 +72,7 @@ export default function CourseDetailPage() {
 						<div className='lg:col-span-3 space-y-4 sm:space-y-5'>
 							<Badge className='bg-white/10 backdrop-blur-sm border-white/20 text-white/80 px-3 sm:px-4 py-1 sm:py-1.5 rounded-xl w-fit text-xs sm:text-sm'>
 								<Users className='w-3 h-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2 opacity-80' />
-								{course.stage?.title || 'Общий курс'}
+								{course.stage?.title || 'General course'}
 							</Badge>
 							<div>
 								<CardTitle className='text-2xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-black text-white leading-tight mb-3 sm:mb-4 tracking-tight'>
@@ -88,7 +88,7 @@ export default function CourseDetailPage() {
 								</Badge>
 								<div className='text-sm sm:text-base text-white/60 flex items-center gap-1.5 sm:gap-2'>
 									<Clock className='w-3.5 h-3.5 sm:w-4 sm:h-4 opacity-70' />
-									{stats.completedLessons}/{stats.totalLessons} уроков
+									{stats.completedLessons}/{stats.totalLessons} lessons
 								</div>
 								<div className='text-sm sm:text-base font-semibold text-white flex items-center gap-1.5 sm:gap-2'>
 									<Zap className='w-3.5 h-3.5 sm:w-4 sm:h-4 text-yellow-400' />
@@ -100,7 +100,7 @@ export default function CourseDetailPage() {
 						<div className='lg:col-span-2 space-y-4 sm:space-y-5'>
 							<div className='space-y-2.5 sm:space-y-3'>
 								<div className='flex justify-between text-xs sm:text-sm text-white/60'>
-									<span className='font-medium'>Общий прогресс</span>
+									<span className='font-medium'>Overall progress</span>
 									<span className='font-bold text-white'>
 										{course.progress}%
 									</span>
@@ -116,7 +116,7 @@ export default function CourseDetailPage() {
 										{stats.completedLessons}
 									</div>
 									<div className='text-[10px] sm:text-xs text-white/60'>
-										из {stats.totalLessons}
+										of {stats.totalLessons}
 									</div>
 								</div>
 								<div className='text-center p-3 sm:p-4 bg-white/5 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-white/10'>
@@ -124,7 +124,7 @@ export default function CourseDetailPage() {
 										{tests.length}
 									</div>
 									<div className='text-[10px] sm:text-xs text-white/60'>
-										тестов
+										tests
 									</div>
 								</div>
 							</div>
@@ -155,7 +155,7 @@ export default function CourseDetailPage() {
 							)}
 							<span className='relative z-10 flex items-center justify-center gap-1.5 sm:gap-2'>
 								<BookOpen className='w-3.5 h-3.5 sm:w-4.5 sm:h-4.5' />
-								<span className='hidden xs:inline'>Уроки</span> (
+								<span className='hidden xs:inline'>Lessons</span> (
 								{lessons.length})
 							</span>
 						</button>
@@ -177,7 +177,7 @@ export default function CourseDetailPage() {
 							)}
 							<span className='relative z-10 flex items-center justify-center gap-1.5 sm:gap-2'>
 								<Award className='w-3.5 h-3.5 sm:w-4.5 sm:h-4.5' />
-								<span className='hidden xs:inline'>Тесты</span> ({tests.length})
+								<span className='hidden xs:inline'>Tests</span> ({tests.length})
 							</span>
 						</button>
 					</div>
@@ -201,7 +201,7 @@ export default function CourseDetailPage() {
 									icon={
 										<BookOpen className='w-12 h-12 sm:w-16 sm:h-16 text-white/20' />
 									}
-									title='Уроки скоро появятся'
+									title='Lessons coming soon'
 								/>
 							)
 						) : tests.length > 0 ? (
@@ -213,7 +213,7 @@ export default function CourseDetailPage() {
 								icon={
 									<Award className='w-12 h-12 sm:w-16 sm:h-16 text-white/20' />
 								}
-								title='Тесты скоро появятся'
+								title='Tests coming soon'
 							/>
 						)}
 					</section>
@@ -230,10 +230,10 @@ export default function CourseDetailPage() {
 									<Sparkles className='w-6 h-6 sm:w-8 sm:h-8 text-white' />
 								</m.div>
 								<h3 className='text-lg sm:text-xl font-black text-white mb-2 sm:mb-3 leading-tight'>
-									Начни сейчас
+									Start now
 								</h3>
 								<p className='text-white/60 mb-5 sm:mb-6 text-xs sm:text-sm leading-relaxed'>
-									Первый урок ждет тебя
+									Your first lesson awaits
 								</p>
 								{lessons[0] && (
 									<Link
@@ -244,7 +244,7 @@ export default function CourseDetailPage() {
 											className='w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/80 shadow-2xl shadow-white/20 font-bold text-sm sm:text-base'
 										>
 											<Play className='w-3.5 h-3.5 sm:w-4 sm:h-4 mr-2' />
-											Первый урок
+											First lesson
 										</Button>
 									</Link>
 								)}
@@ -255,13 +255,13 @@ export default function CourseDetailPage() {
 							<CardHeader className='pb-3 sm:pb-4'>
 								<CardTitle className='text-base sm:text-lg font-black text-white flex items-center gap-2'>
 									<Target className='w-4 h-4 sm:w-5 sm:h-5 text-blue-400' />
-									Детали прогресса
+									Progress details
 								</CardTitle>
 							</CardHeader>
 							<CardContent className='space-y-4 sm:space-y-5 pt-0'>
 								<div className='space-y-2.5 sm:space-y-3'>
 									<div className='flex justify-between text-xs sm:text-sm text-white/60'>
-										<span>Курс</span>
+										<span>Course</span>
 										<span className='font-semibold text-white'>
 											{course.progress}%
 										</span>
@@ -273,7 +273,7 @@ export default function CourseDetailPage() {
 								</div>
 								<div className='space-y-2.5 sm:space-y-3'>
 									<div className='flex justify-between text-xs sm:text-sm text-white/60'>
-										<span>Уроки</span>
+										<span>Lessons</span>
 										<span className='font-semibold text-white'>
 											{Math.round(
 												(stats.completedLessons / stats.totalLessons) * 100
@@ -304,22 +304,22 @@ export default function CourseDetailPage() {
 									{tests[0].score ? (
 										<>
 											<div className='text-xs sm:text-sm text-white/60 mb-4 sm:mb-5'>
-												Результат: {tests[0].score}%
+												Result: {tests[0].score}%
 											</div>
 											<Link href={`${ROUTES.HOME}/tests/${tests[0].id}`}>
 												<Button className='w-full h-10 sm:h-11 rounded-xl sm:rounded-2xl border-white/20 bg-white/2 backdrop-blur-sm hover:bg-white/5 font-semibold text-white hover:text-white text-xs sm:text-sm'>
-													Перепройти
+													Retake
 												</Button>
 											</Link>
 										</>
 									) : (
 										<>
 											<div className='text-xs sm:text-sm text-white/60 mb-4 sm:mb-5'>
-												Проходной: {tests[0].passingScore}%
+												Passing score: {tests[0].passingScore}%
 											</div>
 											<Link href={`${ROUTES.HOME}/tests/${tests[0].id}`}>
 												<Button className='w-full h-10 sm:h-11 rounded-xl sm:rounded-2xl border-white/20 bg-white/2 backdrop-blur-sm hover:bg-white/5 font-semibold text-white hover:text-white text-xs sm:text-sm'>
-													Пройти тест
+													Take test
 												</Button>
 											</Link>
 										</>
@@ -348,7 +348,7 @@ const AppleTestCard = ({ test }: any) => (
 						<div className='flex flex-col gap-3'>
 							<div className='flex gap-3 items-center'>
 								<p className='text-xs sm:text-base font-semibold text-white/60'>
-									Результат:
+									Result:
 								</p>
 								<Badge className='bg-green-500/10 text-green-400 border-yellow-500/20 font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl backdrop-blur-sm text-xs sm:text-sm'>
 									{test.score}%
@@ -356,7 +356,7 @@ const AppleTestCard = ({ test }: any) => (
 							</div>
 							<div className='flex gap-2'>
 								<p className='text-xs sm:text-base font-semibold text-white/60'>
-									Пройден за:
+									Completed in:
 								</p>
 								<p className='text-xs sm:text-base text-white'>
 									{secondsToHMS(test.time)}
@@ -364,7 +364,7 @@ const AppleTestCard = ({ test }: any) => (
 							</div>
 							<div className='flex gap-2'>
 								<p className='text-xs sm:text-base font-semibold text-white/60'>
-									Дата:
+									Date:
 								</p>
 								<p className='text-xs sm:text-base text-white'>
 									{formatDate(test.lastAttemptDate)}
@@ -374,7 +374,7 @@ const AppleTestCard = ({ test }: any) => (
 					) : (
 						<div className='flex gap-3 items-center'>
 							<p className='text-xs sm:text-base font-semibold text-white/60'>
-								Проходной балл
+								Passing score
 							</p>
 							<Badge className='bg-yellow-500/10 text-yellow-400 border-yellow-500/20 font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl backdrop-blur-sm text-xs sm:text-sm'>
 								{test.passingScore}%
@@ -409,7 +409,7 @@ const AppleEmptyState = ({ icon, title }: any) => (
 			</div>
 			<h3 className='text-xl sm:text-2xl font-black text-white'>{title}</h3>
 			<p className='text-base sm:text-lg text-white/60 max-w-md leading-relaxed'>
-				Содержимое скоро появится
+				Content coming soon
 			</p>
 		</div>
 	</Card>
@@ -452,16 +452,16 @@ const AppleNotFound = () => {
 			<Card className='w-full max-w-lg bg-white/3 backdrop-blur-2xl border border-white/10 rounded-2xl sm:rounded-3xl shadow-2xl p-8 sm:p-12 text-center'>
 				<BookOpen className='w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-5 sm:mb-6 text-white/20' />
 				<CardTitle className='text-2xl sm:text-3xl font-black text-white mb-2 sm:mb-3'>
-					Курс не найден
+					Course not found
 				</CardTitle>
 				<p className='text-base sm:text-lg text-white/60 mb-6 sm:mb-8 leading-relaxed'>
-					К сожалению, данный курс не существует
+					Unfortunately, this course doesn't exist
 				</p>
 				<Button
 					onClick={() => router.back()}
 					className='w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/80 shadow-2xl font-bold text-sm sm:text-base'
 				>
-					← Вернуться к курсам
+					← Back to courses
 				</Button>
 			</Card>
 		</div>

@@ -22,9 +22,8 @@ export function DeleteStageDialog({
 	const [isDeleting, setIsDeleting] = useState(false)
 
 	const getCourseWord = (count: number): string => {
-		if (count === 1) return 'курс'
-		if (count >= 2 && count <= 4) return 'курса'
-		return 'курсов'
+		if (count === 1) return 'course'
+		return 'courses'
 	}
 
 	const handleConfirm = () => {
@@ -61,16 +60,16 @@ export function DeleteStageDialog({
 						{/* Content */}
 						<div className='text-center'>
 							<h3 className='mb-2 text-2xl font-bold text-white'>
-								Удалить этап?
+								Delete stage?
 							</h3>
 							<p className='mb-2 text-gray-400'>
-								Вы собираетесь удалить этап{' '}
+								You are about to delete the stage{' '}
 								<span className='font-semibold text-white'>
 									"{stageTitle}"
 								</span>
 								{coursesCount > 0 && (
 									<>
-										, который содержит{' '}
+										, which contains{' '}
 										<span className='font-semibold text-white'>
 											{coursesCount} {getCourseWord(coursesCount)}
 										</span>
@@ -79,10 +78,10 @@ export function DeleteStageDialog({
 							</p>
 							{coursesCount > 0 && (
 								<div className='mx-auto mb-2 max-w-xs rounded-lg bg-yellow-500/10 p-3 text-sm text-yellow-400'>
-									<p className='font-semibold'>⚠️ Внимание</p>
+									<p className='font-semibold'>⚠️ Attention</p>
 									<p className='mt-1 text-xs'>
-										Все курсы и их уроки внутри этого этапа будут безвозвратно
-										удалены. Это действие нельзя отменить.
+										All courses and lessons within this stage will be
+										permanently deleted. This action cannot be undone.
 									</p>
 								</div>
 							)}
@@ -97,7 +96,7 @@ export function DeleteStageDialog({
 								disabled={isDeleting}
 								className='flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 font-semibold text-gray-300 transition-all hover:bg-white/10 disabled:opacity-50'
 							>
-								Отмена
+								Cancel
 							</m.button>
 							<m.button
 								whileHover={{ scale: 1.02 }}
@@ -109,12 +108,12 @@ export function DeleteStageDialog({
 								{isDeleting ? (
 									<>
 										<Loader2 className='mr-2 inline h-4 w-4 animate-spin' />
-										Удаление...
+										Deleting...
 									</>
 								) : coursesCount > 0 ? (
-									'Удалить всё'
+									'Delete all'
 								) : (
-									'Удалить'
+									'Delete'
 								)}
 							</m.button>
 						</div>

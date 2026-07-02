@@ -26,7 +26,7 @@ export default function UserCoursesBlock({ courses }: UserCoursesBlockProps) {
 				className='flex flex-col items-center justify-center py-16 bg-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/5'
 			>
 				<BookOpen className='w-12 h-12 text-white/20 mb-4' />
-				<p className='text-white/50'>Пользователь не записан ни на один курс</p>
+				<p className='text-white/50'>User is not enrolled in any course</p>
 			</m.div>
 		)
 	}
@@ -44,7 +44,7 @@ export default function UserCoursesBlock({ courses }: UserCoursesBlockProps) {
 					<div className='text-2xl font-bold text-white mb-1'>
 						{completedCourses.length}
 					</div>
-					<div className='text-white/60 text-xs'>Завершено</div>
+					<div className='text-white/60 text-xs'>Completed</div>
 				</div>
 
 				<div className='bg-linear-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-xl p-4'>
@@ -52,7 +52,7 @@ export default function UserCoursesBlock({ courses }: UserCoursesBlockProps) {
 					<div className='text-2xl font-bold text-white mb-1'>
 						{activeCourses.length}
 					</div>
-					<div className='text-white/60 text-xs'>В процессе</div>
+					<div className='text-white/60 text-xs'>In progress</div>
 				</div>
 
 				<div className='bg-linear-to-br from-gray-500/10 to-gray-600/5 border border-gray-500/20 rounded-xl p-4'>
@@ -60,7 +60,7 @@ export default function UserCoursesBlock({ courses }: UserCoursesBlockProps) {
 					<div className='text-2xl font-bold text-white mb-1'>
 						{notStartedCourses.length}
 					</div>
-					<div className='text-white/60 text-xs'>Не начаты</div>
+					<div className='text-white/60 text-xs'>Not started</div>
 				</div>
 			</div>
 
@@ -72,7 +72,7 @@ export default function UserCoursesBlock({ courses }: UserCoursesBlockProps) {
 							format: 'date-medium',
 							locale: 'ru-RU',
 							gracefulFail: true,
-						}) || 'Недавно'
+						}) || 'Recently'
 
 					return (
 						<m.div
@@ -89,7 +89,7 @@ export default function UserCoursesBlock({ courses }: UserCoursesBlockProps) {
 											{course.title}
 										</h3>
 										<p className='text-white/60 text-sm line-clamp-2 mb-2'>
-											{course.description || 'Описание отсутствует'}
+											{course.description || 'No description'}
 										</p>
 									</div>
 
@@ -101,7 +101,7 @@ export default function UserCoursesBlock({ courses }: UserCoursesBlockProps) {
 								{/* Progress bar */}
 								<div className='mb-3'>
 									<div className='flex items-center justify-between text-xs mb-1.5'>
-										<span className='text-white/60'>Прогресс</span>
+										<span className='text-white/60'>Progress</span>
 										<span className='text-white/80 font-semibold'>
 											{course.progress}%
 										</span>

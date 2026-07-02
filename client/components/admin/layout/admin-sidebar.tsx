@@ -20,33 +20,33 @@ import { toast } from 'sonner'
 
 const menuItems = [
 	{
-		label: 'Главная',
+		label: 'Home',
 		href: '/dashboard/admin',
 		icon: LayoutDashboard,
 	},
 	{
-		label: 'Управление',
+		label: 'Management',
 		icon: BookOpen,
 		submenu: [
-			{ label: 'Курсы', href: '/dashboard/admin/learning/courses' },
-			{ label: 'Тесты', href: '/dashboard/admin/learning/tests' },
+			{ label: 'Courses', href: '/dashboard/admin/learning/courses' },
+			{ label: 'Tests', href: '/dashboard/admin/learning/tests' },
 		],
 	},
 	{
-		label: 'Пользователи',
+		label: 'Users',
 		href: '/dashboard/admin/users',
 		icon: Users,
 	},
 	{
-		label: 'Статистика',
+		label: 'Statistics',
 		icon: BarChart3,
 		submenu: [
-			{ label: 'Обзор', href: '/dashboard/admin/stats/overview' },
-			{ label: 'Аналитика курсов', href: '/dashboard/admin/stats/courses' },
+			{ label: 'Overview', href: '/dashboard/admin/stats/overview' },
+			{ label: 'Course analytics', href: '/dashboard/admin/stats/courses' },
 		],
 	},
 	{
-		label: 'Настройки',
+		label: 'Settings',
 		href: '/dashboard/admin/settings',
 		icon: Settings,
 	},
@@ -56,17 +56,17 @@ export default function AdminSidebar() {
 	const pathname = usePathname()
 	const router = useRouter()
 	const [isMobileOpen, setIsMobileOpen] = useState(false)
-	const [expandedMenu, setExpandedMenu] = useState<string | null>('Управление')
+	const [expandedMenu, setExpandedMenu] = useState<string | null>('Management')
 	const [isLoggingOut, setIsLoggingOut] = useState(false)
 
 	const handleLogout = async () => {
 		setIsLoggingOut(true)
 		try {
 			await adminService.logout()
-			toast.success('Вы вышли из системы')
+			toast.success('You have logged out')
 			router.push('/login')
 		} catch (error) {
-			toast.error('Ошибка при выходе')
+			toast.error('Error while logging out')
 		} finally {
 			setIsLoggingOut(false)
 		}
@@ -215,7 +215,7 @@ export default function AdminSidebar() {
 						className='w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 rounded-lg font-medium transition disabled:opacity-50'
 					>
 						<LogOut className='w-4 h-4' />
-						Выход
+						Logout
 					</m.button>
 				</div>
 			</m.aside>

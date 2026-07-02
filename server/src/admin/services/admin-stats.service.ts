@@ -35,7 +35,7 @@ export class AdminStatsService {
 				this.prisma.test.count(),
 			])
 
-		// Performance stats (используем правильную модель TaskAttempt)
+		// Performance stats (using the correct TaskAttempt model)
 		const [totalAttempts, correctAttempts, certificates] = await Promise.all([
 			this.prisma.taskAttempt.count(),
 			this.prisma.taskAttempt.count({ where: { isCorrect: true } }),
@@ -55,7 +55,7 @@ export class AdminStatsService {
 				this.prisma.user.count({ where: { createdAt: { gte: monthAgo } } }),
 			])
 
-		// Registrations data для графика (последние 30 дней)
+		// Registrations data for the chart (last 30 days)
 		const registrationsData = await this.getRegistrationsChartData()
 
 		// Top courses
@@ -112,7 +112,7 @@ export class AdminStatsService {
 			orderBy: { createdAt: 'asc' },
 		})
 
-		// Группируем по датам
+		// Group by date
 		const grouped = users.reduce(
 			(acc, user) => {
 				const date = user.createdAt.toISOString().split('T')[0]
@@ -122,7 +122,7 @@ export class AdminStatsService {
 			{} as Record<string, number>
 		)
 
-		// Заполняем пропущенные дни нулями
+		// Fill in missing days with zeros
 		const result = []
 		for (let i = 30; i >= 0; i--) {
 			const date = new Date()
@@ -138,7 +138,7 @@ export class AdminStatsService {
 	}
 
 	private async getTopCourses() {
-		// Получаем курсы с количеством прогрессов
+		// Get courses with progress counts
 		const courses = await this.prisma.course.findMany({
 			include: {
 				_count: {
@@ -189,7 +189,7 @@ export class AdminStatsService {
 	}
 
 	private async getRecentActivity() {
-		// Получаем последние регистрации
+		// Get recent registrations
 		const userRegistrations = await this.prisma.user.findMany({
 			take: 7,
 			orderBy: { createdAt: 'desc' },
@@ -201,7 +201,7 @@ export class AdminStatsService {
 			},
 		})
 
-		// Получаем последние завершенные уроки
+		// Get recently completed lessons
 		const completedLessons = await this.prisma.completedLesson.findMany({
 			take: 7,
 			orderBy: { completedAt: 'desc' },
@@ -216,7 +216,7 @@ export class AdminStatsService {
 			},
 		})
 
-		// Получаем последние сертификаты
+		// Get recent certificates
 		const certificates = await this.prisma.certificate.findMany({
 			take: 6,
 			orderBy: { issuedAt: 'desc' },
@@ -230,25 +230,25 @@ export class AdminStatsService {
 			...userRegistrations.map(user => ({
 				id: `reg-${user.id}`,
 				type: 'USER_REGISTERED' as const,
-				userName: user.name || 'Неизвестный пользователь',
+				userName: user.name || 'Unknown user',
 				userEmail: user.email,
-				description: 'Зарегистрировался на платформе',
+				description: 'Registered on the platform',
 				timestamp: user.createdAt.toISOString(),
 			})),
 			...completedLessons.map(cl => ({
 				id: `lesson-${cl.id}`,
 				type: 'LESSON_COMPLETED' as const,
-				userName: cl.user.name || 'Неизвестный пользователь',
+				userName: cl.user.name || 'Unknown user',
 				userEmail: cl.user.email,
-				description: `Завершил урок "${cl.lesson.title}" в курсе "${cl.lesson.course.title}"`,
+				description: `Completed lesson "${cl.lesson.title}" in course "${cl.lesson.course.title}"`,
 				timestamp: cl.completedAt.toISOString(),
 			})),
 			...certificates.map(cert => ({
 				id: `cert-${cert.id}`,
 				type: 'CERTIFICATE_ISSUED' as const,
-				userName: cert.user.name || 'Неизвестный пользователь',
+				userName: cert.user.name || 'Unknown user',
 				userEmail: cert.user.email,
-				description: `Получил сертификат по курсу "${cert.course.title}"`,
+				description: `Received a certificate for course "${cert.course.title}"`,
 				timestamp: cert.issuedAt.toISOString(),
 			})),
 		]
@@ -270,7 +270,7 @@ export class AdminStatsService {
 			select: { createdAt: true, status: true },
 		})
 
-		// Группируем по месяцам
+		// Group by month
 		const grouped = users.reduce(
 			(acc, user) => {
 				const period = user.createdAt.toISOString().slice(0, 7) // YYYY-MM
@@ -285,7 +285,7 @@ export class AdminStatsService {
 			{} as Record<string, { total: number; active: number; new: number }>
 		)
 
-		// Заполняем все месяцы (включая нулевые)
+		// Fill in all months (including zero months)
 		const result = []
 		for (let i = 5; i >= 0; i--) {
 			const date = new Date()
@@ -299,7 +299,7 @@ export class AdminStatsService {
 			})
 		}
 
-		// Делаем cumulative (накопительные) значения для total и active
+		// Compute cumulative values for total and active
 		let cumulativeTotal = 0
 		let cumulativeActive = 0
 		return result.map(item => {

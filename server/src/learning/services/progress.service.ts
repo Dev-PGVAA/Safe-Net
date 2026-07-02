@@ -103,7 +103,7 @@ export class ProgressService {
 
 		if (!user) throw new ForbiddenException('User not found or unauthorized')
 
-		// Проверяем, была ли уже правильная попытка
+		// Check whether there was already a correct attempt
 		const previousCorrectAttempt = await this.prisma.taskAttempt.findFirst({
 			where: {
 				userId,
@@ -112,7 +112,7 @@ export class ProgressService {
 			},
 		})
 
-		// Проверка правильности ответа
+		// Check answer correctness
 		let isCorrect = false
 
 		if (
@@ -134,14 +134,14 @@ export class ProgressService {
 			task.type === TaskType.PHISHING_EMAIL ||
 			task.type === TaskType.PHISHING_SITE
 		) {
-			// Для текстовых заданий требуется ручная проверка
+			// Text-based tasks require manual review
 			isCorrect = false
 		}
 
-		// XP начисляется только при первом правильном ответе
+		// XP is awarded only for the first correct answer
 		const awardedXp = isCorrect && !previousCorrectAttempt ? task.points : 0
 
-		// Создаем запись о попытке
+		// Create the attempt record
 		await this.prisma.taskAttempt.create({
 			data: {
 				userId,
@@ -153,7 +153,7 @@ export class ProgressService {
 			},
 		})
 
-		// Пересчитываем прогресс курса
+		// Recalculate course progress
 		const totalTasksInCourse = await this.prisma.task.count({
 			where: {
 				lesson: {
@@ -200,7 +200,7 @@ export class ProgressService {
 
 		const totalXp = totalXpAgg._sum?.awardedXp ?? 0
 
-		// Обновляем прогресс курса
+		// Update course progress
 		await this.prisma.courseProgress.upsert({
 			where: {
 				userId_courseId: {
@@ -220,7 +220,7 @@ export class ProgressService {
 			},
 		})
 
-		// Проверяем завершение урока
+		// Check lesson completion
 		const lessonTasks = await this.prisma.task.findMany({
 			where: { lessonId: task.lessonId },
 			select: { id: true },
@@ -256,19 +256,19 @@ export class ProgressService {
 			})
 		}
 
-		// Проверяем и выдаем сертификат
+		// Check and issue certificate
 		let certificateIssued = false
 		const certificateId = await this.checkAndIssueCertificate(userId, course.id)
 		certificateIssued = !!certificateId
 
-		// ✅ Проверяем и выдаем достижения
+		// ✅ Check and award achievements
 		const newAchievements =
 			await this.achievementsService.checkAndAwardAchievements(userId)
 
 		return {
 			taskId: task.id,
 			isCorrect,
-			explanation: task.explanation, // ✅ Добавлено объяснение
+			explanation: task.explanation, // ✅ Explanation added
 			awardedXp,
 			totalXp,
 			courseProgress: progressPercent,
@@ -334,7 +334,7 @@ export class ProgressService {
 		const totalTests = courseTests.length
 		const passedTests = passedTestResults.length
 
-		// Проверяем полное завершение курса
+		// Check full course completion
 		if (totalLessons === 0 || completedLessons < totalLessons) {
 			return null
 		}
@@ -347,7 +347,7 @@ export class ProgressService {
 			return null
 		}
 
-		// Проверка существующего сертификата
+		// Check for an existing certificate
 		const existingCertificate = await this.prisma.certificate.findFirst({
 			where: { userId, courseId },
 		})
@@ -356,7 +356,7 @@ export class ProgressService {
 			return existingCertificate.id
 		}
 
-		// Генерация и создание нового сертификата
+		// Generate and create a new certificate
 		const certificateNumber = await this.generateCertificateNumber()
 
 		const certificate = await this.prisma.certificate.create({

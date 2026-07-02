@@ -27,13 +27,13 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 const courseSchema = z.object({
-	stageId: z.string().min(1, 'Выберите этап'),
+	stageId: z.string().min(1, 'Select a stage'),
 	slug: z
 		.string()
-		.min(1, 'Slug обязателен')
-		.regex(/^[a-z0-9-]+$/, 'Slug может содержать только буквы, цифры и дефис'),
-	title: z.string().min(3, 'Название минимум 3 символа').max(255),
-	description: z.string().min(10, 'Описание минимум 10 символов'),
+		.min(1, 'Slug is required')
+		.regex(/^[a-z0-9-]+$/, 'Slug may only contain letters, numbers, and hyphens'),
+	title: z.string().min(3, 'Title must be at least 3 characters').max(255),
+	description: z.string().min(10, 'Description must be at least 10 characters'),
 	difficulty: z.enum(['EASY', 'MEDIUM', 'HARD'] as const),
 })
 
@@ -86,13 +86,13 @@ export default function CreateCourseDialog({
 		setIsSubmitting(true)
 		try {
 			await adminService.createCourse(data)
-			toast.success('Курс создан успешно')
+			toast.success('Course created successfully')
 			reset()
 			onOpenChange(false)
 			onSuccess()
 		} catch (error) {
 			console.error('Create course error:', error)
-			toast.error('Ошибка при создании курса')
+			toast.error('Error creating course')
 		} finally {
 			setIsSubmitting(false)
 		}
@@ -112,10 +112,10 @@ export default function CreateCourseDialog({
 						<div className='mx-auto flex max-w-4xl items-center justify-between px-6 py-4'>
 							<div>
 								<h3 className='text-2xl font-bold text-white'>
-									Создать новый курс
+									Create a new course
 								</h3>
 								<p className='mt-1 text-sm text-gray-500'>
-									Добавьте курс для обучения студентов
+									Add a course for student training
 								</p>
 							</div>
 							<m.button
@@ -145,18 +145,18 @@ export default function CreateCourseDialog({
 							<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 								<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 									<Sparkles className='h-5 w-5 text-blue-400' />
-									Основная информация
+									Basic information
 								</h4>
 
 								<div className='space-y-6'>
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Название курса
+											Course title
 										</label>
 										<input
 											{...register('title')}
 											className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
-											placeholder='Введите название курса'
+											placeholder='Enter course title'
 										/>
 										{errors.title && (
 											<p className='mt-2 text-sm text-red-400'>
@@ -169,7 +169,7 @@ export default function CreateCourseDialog({
 										<label className='mb-2 flex items-center gap-2 text-sm font-semibold text-white'>
 											Slug
 											<span className='text-xs font-normal text-gray-500'>
-												(генерируется автоматически)
+												(generated automatically)
 											</span>
 										</label>
 										<input
@@ -186,13 +186,13 @@ export default function CreateCourseDialog({
 
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Описание
+											Description
 										</label>
 										<textarea
 											{...register('description')}
 											rows={4}
 											className='w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
-											placeholder='Краткое описание курса'
+											placeholder='Brief course description'
 										/>
 										{errors.description && (
 											<p className='mt-2 text-sm text-red-400'>
@@ -207,13 +207,13 @@ export default function CreateCourseDialog({
 							<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 								<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 									<Target className='h-5 w-5 text-green-400' />
-									Настройки курса
+									Course settings
 								</h4>
 
 								<div className='space-y-6'>
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Этап
+											Stage
 										</label>
 										<Controller
 											name='stageId'
@@ -228,8 +228,8 @@ export default function CreateCourseDialog({
 															<span>
 																{field.value
 																	? stages.find(s => s.id === field.value)?.title ||
-																	  'Выберите этап'
-																	: 'Выберите этап'}
+																	  'Select a stage'
+																	: 'Select a stage'}
 															</span>
 															<ChevronDown className='ml-2 h-4 w-4 flex-shrink-0 text-gray-400' />
 														</button>
@@ -257,7 +257,7 @@ export default function CreateCourseDialog({
 
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Сложность
+											Difficulty
 										</label>
 										<Controller
 											name='difficulty'
@@ -278,19 +278,19 @@ export default function CreateCourseDialog({
 															onClick={() => field.onChange('EASY')}
 															className='cursor-pointer text-white hover:bg-white/10'
 														>
-															Легкий
+															Easy
 														</DropdownMenuItem>
 														<DropdownMenuItem
 															onClick={() => field.onChange('MEDIUM')}
 															className='cursor-pointer text-white hover:bg-white/10'
 														>
-															Средний
+															Medium
 														</DropdownMenuItem>
 														<DropdownMenuItem
 															onClick={() => field.onChange('HARD')}
 															className='cursor-pointer text-white hover:bg-white/10'
 														>
-															Сложный
+															Hard
 														</DropdownMenuItem>
 													</DropdownMenuContent>
 												</DropdownMenu>
@@ -305,11 +305,11 @@ export default function CreateCourseDialog({
 								<AlertCircle className='mt-0.5 h-5 w-5 flex-shrink-0 text-blue-400' />
 								<div>
 									<p className='text-sm font-semibold text-blue-300'>
-										Автоматическая транслитерация
+										Automatic transliteration
 									</p>
 									<p className='mt-1 text-sm text-gray-400'>
-										Slug генерируется автоматически на основе названия курса с
-										поддержкой русского языка
+										The slug is generated automatically from the course title,
+										with support for Russian text
 									</p>
 								</div>
 							</div>
@@ -326,7 +326,7 @@ export default function CreateCourseDialog({
 									}}
 									className='flex-1 rounded-xl border border-white/10 bg-white/5 px-6 py-4 font-semibold text-gray-300 transition-all hover:bg-white/10'
 								>
-									Отмена
+									Cancel
 								</m.button>
 								<m.button
 									type='submit'
@@ -338,12 +338,12 @@ export default function CreateCourseDialog({
 									{isSubmitting ? (
 										<>
 											<Loader2 className='mr-2 inline h-5 w-5 animate-spin' />
-											Создание...
+											Creating...
 										</>
 									) : (
 										<>
 											<Plus className='mr-2 inline h-5 w-5' />
-											Создать курс
+											Create course
 										</>
 									)}
 								</m.button>

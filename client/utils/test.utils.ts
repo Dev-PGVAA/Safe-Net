@@ -1,38 +1,38 @@
 import { TEST_CONSTANTS } from '@/constants/tests.constants'
 
 /**
- * Определяет статус теста на основе количества вопросов
+ * Determines the test status based on the number of questions
  */
 export const getTestStatus = (questionsCount: number): 'ready' | 'draft' => {
 	return questionsCount > 0 ? 'ready' : 'draft'
 }
 
 /**
- * Возвращает локализованное склонение для числа вопросов
- * @example getQuestionsLabel(1) // "1 вопрос"
- * @example getQuestionsLabel(5) // "5 вопросов"
+ * Returns the pluralized label for the number of questions
+ * @example getQuestionsLabel(1) // "1 question"
+ * @example getQuestionsLabel(5) // "5 questions"
  */
 export const getQuestionsLabel = (count: number): string => {
 	const lastDigit = count % 10
 	const lastTwoDigits = count % 100
 
 	if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
-		return `${count} вопросов`
+		return `${count} questions`
 	}
 
 	if (lastDigit === 1) {
-		return `${count} вопрос`
+		return `${count} question`
 	}
 
 	if (lastDigit >= 2 && lastDigit <= 4) {
-		return `${count} вопроса`
+		return `${count} questions`
 	}
 
-	return `${count} вопросов`
+	return `${count} questions`
 }
 
 /**
- * Валидация названия теста
+ * Test title validation
  */
 export const validateTestTitle = (title: string): boolean => {
 	return (
@@ -42,7 +42,7 @@ export const validateTestTitle = (title: string): boolean => {
 }
 
 /**
- * Проверяет, нужно ли показывать предупреждение о недостатке вопросов
+ * Checks whether a low-questions warning should be shown
  */
 export const shouldShowLowQuestionsWarning = (
 	questionsCount: number

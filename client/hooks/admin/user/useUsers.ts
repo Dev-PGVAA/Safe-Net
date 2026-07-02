@@ -13,7 +13,7 @@ export function useUsers(options?: UseUsersOptions) {
 	const { data, isLoading, error, refetch } = useQuery({
 		queryKey: ['admin-users', options],
 		queryFn: () => adminService.getUsers(options),
-		refetchInterval: 30000, // 30 секунд
+		refetchInterval: 30000, // 30 seconds
 	})
 
 	return {

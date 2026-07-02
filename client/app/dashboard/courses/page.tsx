@@ -73,36 +73,36 @@ export default function CoursesPage() {
 						<div className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10'>
 							<Sparkles className='w-4 h-4 text-blue-400' />
 							<span className='text-sm font-medium text-slate-400'>
-								{user?.name ? `Привет, ${user.name}` : 'Добро пожаловать'}
+								{user?.name ? `Hi, ${user.name}` : 'Welcome'}
 							</span>
 						</div>
 						<h1 className='text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-none'>
-							Мои курсы
+							My Courses
 						</h1>
 						<p className='text-xl md:text-2xl text-slate-400 max-w-2xl leading-relaxed'>
-							Продолжайте обучение там, где остановились. Каждый шаг приближает
-							вас к цели.
+							Continue learning where you left off. Every step brings you
+							closer to your goal.
 						</p>
 					</div>
 
 					{/* Stats */}
 					<div className='grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6'>
 						<AppleStatCard
-							label='Активных'
+							label='Active'
 							value={stats.activeCount}
 							icon={<BookOpen className='w-6 h-6' />}
 							color='from-blue-500/20 to-cyan-500/20'
 							iconColor='text-blue-400'
 						/>
 						<AppleStatCard
-							label='Завершено'
+							label='Completed'
 							value={stats.completedCount}
 							icon={<Award className='w-6 h-6' />}
 							color='from-emerald-500/20 to-teal-500/20'
 							iconColor='text-emerald-400'
 						/>
 						<AppleStatCard
-							label='Всего XP'
+							label='Total XP'
 							value={stats.totalXP.toLocaleString()}
 							icon={<Zap className='w-6 h-6' />}
 							color='from-amber-500/20 to-orange-500/20'
@@ -123,7 +123,7 @@ export default function CoursesPage() {
 							active={activeTab === 'active'}
 							onClick={() => setActiveTab('active')}
 						>
-							Активные
+							Active
 							<span className='ml-2 text-xs opacity-60'>
 								{stats.activeCount}
 							</span>
@@ -132,7 +132,7 @@ export default function CoursesPage() {
 							active={activeTab === 'completed'}
 							onClick={() => setActiveTab('completed')}
 						>
-							Завершённые
+							Completed
 							<span className='ml-2 text-xs opacity-60'>
 								{stats.completedCount}
 							</span>
@@ -141,7 +141,7 @@ export default function CoursesPage() {
 							active={activeTab === 'all'}
 							onClick={() => setActiveTab('all')}
 						>
-							Все
+							All
 							<span className='ml-2 text-xs opacity-60'>
 								{stats.totalCourses}
 							</span>
@@ -164,9 +164,9 @@ export default function CoursesPage() {
 							) : activeCourses.length === 0 ? (
 								<EmptyState
 									icon={<BookOpen className='w-16 h-16' />}
-									title='Нет активных курсов'
-									description='Начните обучение с любого курса из каталога'
-									actionLabel='Открыть каталог'
+									title='No active courses'
+									description='Start learning with any course from the catalog'
+									actionLabel='Open catalog'
 									actionHref={ROUTES.COURSES}
 								/>
 							) : (
@@ -191,9 +191,9 @@ export default function CoursesPage() {
 							) : completedCourses.length === 0 ? (
 								<EmptyState
 									icon={<Award className='w-16 h-16' />}
-									title='Завершённых курсов пока нет'
-									description='Завершите первый курс, чтобы получить сертификат'
-									actionLabel='Открыть каталог'
+									title='No completed courses yet'
+									description='Complete your first course to earn a certificate'
+									actionLabel='Open catalog'
 									actionHref={ROUTES.COURSES}
 								/>
 							) : (
@@ -218,9 +218,9 @@ export default function CoursesPage() {
 							) : stats.allCourses.length === 0 ? (
 								<EmptyState
 									icon={<BookOpen className='w-16 h-16' />}
-									title='Нет курсов'
-									description='Начните своё обучение прямо сейчас'
-									actionLabel='Выбрать курс'
+									title='No courses'
+									description='Start your learning journey right now'
+									actionLabel='Select a course'
 									actionHref={ROUTES.COURSES}
 								/>
 							) : (
@@ -254,19 +254,19 @@ export default function CoursesPage() {
 							<div className='relative z-10 space-y-6'>
 								<div>
 									<h3 className='text-2xl md:text-3xl font-bold mb-2'>
-										Продолжайте обучение
+										Continue learning
 									</h3>
 									<p className='text-slate-400 text-lg'>
-										Изучайте новые направления и получайте сертификаты
+										Explore new topics and earn certificates
 									</p>
 								</div>
 								<div className='flex flex-wrap gap-4'>
 									<AppleButton href={ROUTES.COURSES} variant='primary'>
-										Каталог курсов
+										Course catalog
 										<ArrowUpRight className='w-4 h-4 ml-2' />
 									</AppleButton>
 									<AppleButton href={ROUTES.CERTIFICATES} variant='secondary'>
-										Сертификаты
+										Certificates
 									</AppleButton>
 								</div>
 							</div>

@@ -12,27 +12,27 @@ export function Markdown({ children, className }: MarkdownProps) {
 		<div
 			className={cn(
 				'prose prose-invert prose-sm sm:prose-base max-w-none',
-				// Заголовки
+				// Headings
 				'prose-headings:font-black prose-headings:text-white prose-headings:tracking-tight',
 				'prose-h1:text-2xl sm:prose-h1:text-3xl',
 				'prose-h2:text-xl sm:prose-h2:text-2xl',
 				'prose-h3:text-lg sm:prose-h3:text-xl',
-				// Параграфы
+				// Paragraphs
 				'prose-p:text-white/80 prose-p:leading-relaxed prose-p:mb-4',
-				// Жирный и курсив
+				// Bold and italic
 				'prose-strong:text-white prose-strong:font-bold',
 				'prose-em:text-white/90 prose-em:italic',
-				// Списки
+				// Lists
 				'prose-ul:text-white/80 prose-ul:list-disc prose-ul:pl-6 prose-ul:space-y-2',
 				'prose-ol:text-white/80 prose-ol:list-decimal prose-ol:pl-6 prose-ol:space-y-2',
 				'prose-li:text-white/80',
-				// Ссылки
+				// Links
 				'prose-a:text-blue-400 prose-a:underline prose-a:decoration-blue-400/30',
 				'hover:prose-a:text-blue-300 hover:prose-a:decoration-blue-300/50',
-				// Код
+				// Code
 				'prose-code:text-emerald-400 prose-code:bg-white/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-[""] prose-code:after:content-[""]',
 				'prose-pre:bg-white/5 prose-pre:border prose-pre:border-white/10 prose-pre:rounded-xl',
-				// Цитаты
+				// Quotes
 				'prose-blockquote:border-l-4 prose-blockquote:border-blue-400/30 prose-blockquote:pl-4',
 				'prose-blockquote:text-white/70 prose-blockquote:italic',
 				className

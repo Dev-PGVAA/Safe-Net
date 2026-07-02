@@ -16,14 +16,14 @@ import { useState } from 'react'
 const appleEasing = [0.42, 0, 0.58, 1] as const
 const appleEaseOut = [0.16, 1, 0.3, 1] as const
 
-// Функция для получения иконки по slug
+// Function to get an icon by slug
 const getIconBySlug = (slug: string): LucideIcon => {
 	const pascalCase = slug
 		.split('-')
 		.map(word => word.charAt(0).toUpperCase() + word.slice(1))
 		.join('')
 
-	// Используем named import icons объекта
+	// Use named import from icons object
 	const icon = icons[pascalCase as keyof typeof icons]
 	return (icon as LucideIcon) || Trophy
 }
@@ -38,16 +38,16 @@ export default function AchievementsPage() {
 	const totalCount = achievements?.length || 0
 	const hasAchievements = earnedCount > 0
 
-	// Сортировка: сначала выполненные, потом по дате получения
+	// Sort: completed first, then by date received
 	const sortedAchievements = achievements?.slice().sort((a, b) => {
 		const aEarned = earnedIds.has(a.id)
 		const bEarned = earnedIds.has(b.id)
 
-		// Сначала выполненные
+		// Completed first
 		if (aEarned && !bEarned) return -1
 		if (!aEarned && bEarned) return 1
 
-		// Среди выполненных - по дате получения (новые первые)
+		// Among completed items - by date received (newest first)
 		if (aEarned && bEarned) {
 			const aDate = userAchievements?.find(
 				ua => ua.achievement.id === a.id
@@ -87,8 +87,8 @@ export default function AchievementsPage() {
 				<Breadcrumb
 					showBackButton
 					items={[
-						{ label: 'Главная', href: ROUTES.HOME },
-						{ label: 'Достижения', href: ROUTES.ACHIEVEMENTS },
+						{ label: 'Home', href: ROUTES.HOME },
+						{ label: 'Achievements', href: ROUTES.ACHIEVEMENTS },
 					]}
 				/>
 
@@ -112,23 +112,23 @@ export default function AchievementsPage() {
 									<Trophy className='h-6 w-6 text-yellow-400 sm:h-8 sm:w-8' />
 								</div>
 								<h1 className='text-2xl font-bold text-white sm:text-3xl md:text-4xl'>
-									Достижения
+									Achievements
 								</h1>
 							</m.div>
 
 							<p className='text-sm text-white/70 sm:text-base md:text-lg'>
 								{hasAchievements ? (
 									<>
-										Получено{' '}
+										Received{' '}
 										<span className='font-semibold text-white'>
 											{earnedCount}
 										</span>{' '}
-										из{' '}
+										out of{' '}
 										<span className='font-semibold text-white'>{totalCount}</span>{' '}
-										достижений. Продолжайте обучение и открывайте новые награды!
+										achievements. Keep learning and unlock new rewards!
 									</>
 								) : (
-									'Выполняйте задания, проходите курсы и тесты, чтобы получить первые достижения'
+									'Complete tasks, courses, and tests to earn your first achievements'
 								)}
 							</p>
 
@@ -144,7 +144,7 @@ export default function AchievementsPage() {
 											: 'border-white/20 bg-slate-800/50 hover:bg-slate-700/50'
 									}
 								>
-									Все
+									All
 								</Button>
 								<Button
 									variant='default'
@@ -156,7 +156,7 @@ export default function AchievementsPage() {
 											: 'border-white/20 bg-slate-800/50 hover:bg-slate-700/50'
 									}
 								>
-									Получено ({earnedCount})
+									Received ({earnedCount})
 								</Button>
 								<Button
 									variant='default'
@@ -168,7 +168,7 @@ export default function AchievementsPage() {
 											: 'border-white/20 bg-slate-800/50 hover:bg-slate-700/50'
 									}
 								>
-									Закрыто ({totalCount - earnedCount})
+									Locked ({totalCount - earnedCount})
 								</Button>
 							</div>
 						</div>
@@ -178,14 +178,14 @@ export default function AchievementsPage() {
 							<div className='flex flex-col justify-center space-y-3 sm:space-y-4'>
 								<StatCard
 									icon={Trophy}
-									label='Прогресс'
+									label='Progress'
 									value={`${Math.round((earnedCount / totalCount) * 100)}%`}
 									color='yellow'
 									delay={0.1}
 								/>
 								<StatCard
 									icon={Sparkles}
-									label='Получено наград'
+									label='Rewards received'
 									value={earnedCount}
 									color='purple'
 									delay={0.2}
@@ -226,15 +226,15 @@ export default function AchievementsPage() {
 								<Lock className='h-8 w-8 text-white/50 sm:h-12 sm:w-12' />
 							</div>
 							<h3 className='mb-2 text-lg font-semibold text-white sm:text-xl'>
-								Нет достижений
+								No achievements
 							</h3>
 							<p className='mb-6 text-sm text-white/70 sm:text-base'>
 								{filter === 'earned'
-									? 'Вы пока не получили ни одного достижения'
-									: 'Все достижения уже разблокированы!'}
+									? "You haven't earned any achievements yet"
+									: 'All achievements are already unlocked!'}
 							</p>
 							{filter !== 'all' && (
-								<Button onClick={() => setFilter('all')}>Показать все</Button>
+								<Button onClick={() => setFilter('all')}>Show all</Button>
 							)}
 						</CardContent>
 					</Card>

@@ -54,10 +54,10 @@ export function DeleteQuestionDialog({
                 <AlertTriangle className='w-8 h-8 text-red-400' />
               </m.div>
               <DialogTitle className='text-center text-2xl'>
-                Удалить вопрос?
+                Delete question?
               </DialogTitle>
               <DialogDescription className='text-center text-base pt-2'>
-                Вы действительно хотите удалить этот вопрос?
+                Are you sure you want to delete this question?
               </DialogDescription>
             </DialogHeader>
 
@@ -80,7 +80,7 @@ export function DeleteQuestionDialog({
                   disabled={isDeleting}
                   className='w-full sm:w-auto'
                 >
-                  Отмена
+                  Cancel
                 </Button>
               </m.div>
               <m.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -93,10 +93,10 @@ export function DeleteQuestionDialog({
                   {isDeleting ? (
                     <>
                       <Loader2 className='w-4 h-4 mr-2 animate-spin' />
-                      Удаление...
+                      Deleting...
                     </>
                   ) : (
-                    'Удалить'
+                    'Delete'
                   )}
                 </Button>
               </m.div>

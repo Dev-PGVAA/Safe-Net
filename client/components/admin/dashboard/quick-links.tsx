@@ -7,19 +7,19 @@ import Link from 'next/link'
 const quickLinks = [
 	{
 		icon: BookOpen,
-		label: 'Управление курсами',
+		label: 'Manage courses',
 		href: '/dashboard/admin/learning/courses',
 		color: 'from-purple-500 to-purple-600',
 	},
 	{
 		icon: Users,
-		label: 'Пользователи',
+		label: 'Users',
 		href: '/dashboard/admin/users',
 		color: 'from-blue-500 to-blue-600',
 	},
 	{
 		icon: BarChart3,
-		label: 'Статистика',
+		label: 'Statistics',
 		href: '/dashboard/admin/stats/overview',
 		color: 'from-green-500 to-green-600',
 	},

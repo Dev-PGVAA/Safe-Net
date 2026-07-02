@@ -7,5 +7,5 @@ export class AnswerResultDto {
 	courseProgress: number
 	lessonCompleted: boolean
 	certificateIssued: boolean
-	newAchievements?: string[] // Добавьте это поле
+	newAchievements?: string[] // Add this field
 }

@@ -8,10 +8,10 @@ export function secondsToHMS(seconds: number): string {
 	const remainingSeconds = seconds % 60
 
 	if (hours > 0) {
-		return `${hours} ч ${minutes.toString().padStart(2, '0')} мин ${remainingSeconds.toString().padStart(2, '0')} сек`
+		return `${hours}h ${minutes.toString().padStart(2, '0')}m ${remainingSeconds.toString().padStart(2, '0')}s`
 	} else if (minutes > 0) {
-		return `${minutes} мин ${remainingSeconds.toString().padStart(2, '0')} сек`
+		return `${minutes}m ${remainingSeconds.toString().padStart(2, '0')}s`
 	} else {
-		return `${remainingSeconds} сек`
+		return `${remainingSeconds}s`
 	}
 }

@@ -48,11 +48,11 @@ export default function RegistrationsChart({
 							<TrendingUp className='w-5 h-5 text-blue-600 dark:text-blue-400' />
 						</div>
 						<h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
-							Регистрации пользователей
+							User registrations
 						</h3>
 					</div>
 					<p className='text-sm text-gray-600 dark:text-gray-400 mt-1'>
-						Динамика за последние 30 дней
+						Trend over the last 30 days
 					</p>
 				</div>
 
@@ -61,7 +61,7 @@ export default function RegistrationsChart({
 					<div className='inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800'>
 						<div>
 							<p className='text-xs text-gray-600 dark:text-gray-400'>
-								Сегодня
+								Today
 							</p>
 							<p className='text-lg font-bold text-gray-900 dark:text-white'>
 								{stats.today}
@@ -70,7 +70,7 @@ export default function RegistrationsChart({
 						<div className='w-px h-12 bg-gray-300 dark:bg-gray-700' />
 						<div>
 							<p className='text-xs text-gray-600 dark:text-gray-400'>
-								За неделю
+								This week
 							</p>
 							<p className='text-lg font-bold text-blue-600 dark:text-blue-400'>
 								{stats.week}
@@ -79,7 +79,7 @@ export default function RegistrationsChart({
 						<div className='w-px h-12 bg-gray-300 dark:bg-gray-700' />
 						<div>
 							<p className='text-xs text-gray-600 dark:text-gray-400'>
-								За месяц
+								This month
 							</p>
 							<p className='text-lg font-bold text-purple-600 dark:text-purple-400'>
 								{stats.month}
@@ -134,7 +134,7 @@ export default function RegistrationsChart({
 								borderRadius: '12px',
 								color: '#fff',
 							}}
-							formatter={(value: number) => [`${value} чел.`, 'Регистрации']}
+							formatter={(value: number) => [`${value}`, 'Registrations']}
 							labelStyle={{ color: '#fff' }}
 						/>
 						<Area
@@ -153,7 +153,7 @@ export default function RegistrationsChart({
 			{/* Footer */}
 			<div className='mt-4 pt-4 border-t border-gray-200 dark:border-gray-800'>
 				<p className='text-xs text-gray-500 dark:text-gray-500 text-center'>
-					Обновлено автоматически каждые 30 секунд
+					Updated automatically every 30 seconds
 				</p>
 			</div>
 		</m.div>

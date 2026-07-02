@@ -19,8 +19,8 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 const lessonSchema = z.object({
-  order: z.number().int().positive('Порядок должен быть больше 0'),
-  title: z.string().min(3, 'Название минимум 3 символа').max(255),
+  order: z.number().int().positive('Order must be greater than 0'),
+  title: z.string().min(3, 'Title must be at least 3 characters').max(255),
   estimatedDuration: z.number().int().positive().optional(),
 })
 
@@ -60,7 +60,7 @@ export default function CreateLessonDialog({
     },
   })
 
-  // Обновление order при открытии
+  // Update order when the dialog opens
   useEffect(() => {
     if (open) {
       setValue('order', nextLessonOrder)
@@ -74,13 +74,13 @@ export default function CreateLessonDialog({
         ...data,
         courseId,
       })
-      toast.success('Урок создан успешно')
+      toast.success('Lesson created successfully')
       reset()
       onOpenChange(false)
       onSuccess()
     } catch (error) {
       console.error('Create lesson error:', error)
-      toast.error('Ошибка при создании урока')
+      toast.error('Error creating lesson')
     } finally {
       setIsSubmitting(false)
     }
@@ -100,7 +100,7 @@ export default function CreateLessonDialog({
               <DialogHeader>
                 <DialogTitle className='flex items-center gap-2 text-2xl'>
                   <Sparkles className='w-6 h-6 text-blue-400' />
-                  Создать новый урок
+                  Create new lesson
                 </DialogTitle>
               </DialogHeader>
 
@@ -111,7 +111,7 @@ export default function CreateLessonDialog({
                 {/* Order */}
                 <div className='space-y-2'>
                   <Label htmlFor='order' className='text-sm font-medium text-gray-300'>
-                    Порядковый номер
+                    Order number
                   </Label>
                   <Input
                     id='order'
@@ -131,12 +131,12 @@ export default function CreateLessonDialog({
                 {/* Title */}
                 <div className='space-y-2'>
                   <Label htmlFor='title' className='text-sm font-medium text-gray-300'>
-                    Название урока
+                    Lesson title
                   </Label>
                   <Input
                     id='title'
                     type='text'
-                    placeholder='Основные угрозы безопасности'
+                    placeholder='Key security threats'
                     {...register('title')}
                     className='bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20'
                   />
@@ -151,14 +151,14 @@ export default function CreateLessonDialog({
                 {/* Duration */}
                 <div className='space-y-2'>
                   <Label htmlFor='duration' className='text-sm font-medium text-gray-300'>
-                    Время прохождения{' '}
-                    <span className='text-gray-500 font-normal'>(минут, опционально)</span>
+                    Estimated duration{' '}
+                    <span className='text-gray-500 font-normal'>(minutes, optional)</span>
                   </Label>
                   <div className='relative'>
                     <Input
                       id='duration'
                       type='number'
-                      placeholder='Будет рассчитано автоматически'
+                      placeholder='Will be calculated automatically'
                       {...register('estimatedDuration', { valueAsNumber: true })}
                       className='bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 pl-10'
                     />
@@ -166,7 +166,7 @@ export default function CreateLessonDialog({
                   </div>
                   <p className='text-xs text-gray-500 flex items-center gap-1.5'>
                     <span className='w-1 h-1 rounded-full bg-gray-600' />
-                    Формула: 2 мин + блоки × 2 мин + задания × 5 мин
+                    Formula: 2 min + blocks × 2 min + tasks × 5 min
                   </p>
                 </div>
 
@@ -176,10 +176,10 @@ export default function CreateLessonDialog({
                     <BookOpen className='w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5' />
                     <div>
                       <p className='text-sm font-semibold text-blue-300 mb-1'>
-                        Совет
+                        Tip
                       </p>
                       <p className='text-xs text-blue-400/80 leading-relaxed'>
-                        После создания урока добавьте блоки контента и задания для полноценного обучения
+                        After creating the lesson, add content blocks and tasks for a complete learning experience
                       </p>
                     </div>
                   </div>
@@ -197,7 +197,7 @@ export default function CreateLessonDialog({
                     variant='outline'
                     className='flex-1 bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:text-white transition-colors'
                   >
-                    Отмена
+                    Cancel
                   </Button>
                   <Button
                     type='submit'
@@ -207,12 +207,12 @@ export default function CreateLessonDialog({
                     {isSubmitting ? (
                       <>
                         <Loader2 className='w-4 h-4 animate-spin' />
-                        Создание...
+                        Creating...
                       </>
                     ) : (
                       <>
                         <BookOpen className='w-4 h-4' />
-                        Создать урок
+                        Create lesson
                       </>
                     )}
                   </Button>

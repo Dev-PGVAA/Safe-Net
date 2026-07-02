@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 /**
- * Query keys для инвалидации кеша
+ * Query keys for cache invalidation
  */
 const TESTS_QUERY_KEYS = {
 	all: ['tests'] as const,
@@ -21,13 +21,13 @@ interface UseTestsReturn {
 }
 
 /**
- * Хук для управления списком тестов
- * Инкапсулирует логику работы с API и состоянием
+ * Hook for managing the list of tests
+ * Encapsulates the API and state logic
  */
 export function useTests(): UseTestsReturn {
 	const queryClient = useQueryClient()
 
-	// Получение списка тестов
+	// Fetching the list of tests
 	const {
 		data: tests,
 		isLoading,
@@ -36,30 +36,30 @@ export function useTests(): UseTestsReturn {
 	} = useQuery<ITest[], Error>({
 		queryKey: TESTS_QUERY_KEYS.all,
 		queryFn: () => adminService.getTests(),
-		staleTime: 5 * 60 * 1000, // 5 минут
-		gcTime: 10 * 60 * 1000, // 10 минут (бывший cacheTime)
+		staleTime: 5 * 60 * 1000, // 5 minutes
+		gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
 	})
 
-	// Мутация удаления теста
+	// Test deletion mutation
 	const deleteMutation = useMutation({
 		mutationFn: async (testId: string) => {
 			await adminService.deleteTest(testId)
 			return testId
 		},
 		onSuccess: deletedTestId => {
-			// Оптимистичное обновление UI
+			// Optimistic UI update
 			queryClient.setQueryData<ITest[]>(TESTS_QUERY_KEYS.all, old => {
 				return old?.filter(test => test.id !== deletedTestId) ?? []
 			})
 
-			// Инвалидация кеша для консистентности
+			// Invalidate cache for consistency
 			queryClient.invalidateQueries({ queryKey: TESTS_QUERY_KEYS.all })
 
-			toast.success('Тест успешно удален')
+			toast.success('Test deleted successfully')
 		},
 		onError: (error: Error) => {
 			console.error('[useTests] Delete error:', error)
-			toast.error('Ошибка при удалении теста')
+			toast.error('Error deleting test')
 		},
 	})
 

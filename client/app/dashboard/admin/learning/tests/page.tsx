@@ -23,7 +23,7 @@ export default function TestsPage() {
   const { tests, isLoading, deleteTest, isDeleting } = useTests()
   const { courses } = useCoursesList()
 
-  // Фильтрация
+  // Filtering
   const filteredTests = useMemo(() => {
     if (!tests) return []
 
@@ -53,7 +53,7 @@ export default function TestsPage() {
       <div className='min-h-screen flex items-center justify-center'>
         <div className='text-center'>
           <div className='w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4' />
-          <p className='text-sm text-gray-400'>Загрузка...</p>
+          <p className='text-sm text-gray-400'>Loading...</p>
         </div>
       </div>
     )
@@ -66,9 +66,9 @@ export default function TestsPage() {
           {/* Header */}
           <div className='flex items-center justify-between'>
             <div>
-              <h1 className='text-4xl font-bold text-white mb-2'>Тесты</h1>
+              <h1 className='text-4xl font-bold text-white mb-2'>Tests</h1>
               <p className='text-gray-400'>
-                Управление тестами для курсов
+                Manage tests for courses
               </p>
             </div>
             <Button
@@ -76,7 +76,7 @@ export default function TestsPage() {
               className='bg-white text-black hover:bg-white/80'
             >
               <Plus className='w-5 h-5' />
-              Создать тест
+              Create test
             </Button>
           </div>
 
@@ -90,7 +90,7 @@ export default function TestsPage() {
                 <FileQuestion className='w-5 h-5 text-blue-400' />
               </div>
               <span className='text-xs text-gray-500 uppercase font-semibold'>
-                Всего тестов
+                Total tests
               </span>
             </div>
             <p className='text-3xl font-bold text-white'>{tests?.length ?? 0}</p>
@@ -100,7 +100,7 @@ export default function TestsPage() {
           <div className='relative'>
             <Search className='absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400' />
             <Input
-              placeholder='Поиск по названию, описанию или курсу...'
+              placeholder='Search by title, description, or course...'
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               className='pl-12 pr-10 h-12 bg-white/15! border-white/10 text-white placeholder:text-gray-500 focus:border-blue-500/50'
@@ -118,7 +118,7 @@ export default function TestsPage() {
           {/* Active search info */}
           {searchQuery && (
             <div className='flex items-center gap-3 text-sm'>
-              <span className='text-gray-500'>Найдено:</span>
+              <span className='text-gray-500'>Found:</span>
               <span className='font-bold text-white'>{filteredTests.length}</span>
             </div>
           )}
@@ -154,12 +154,12 @@ export default function TestsPage() {
                   <FileQuestion className='w-10 h-10 text-gray-600' />
                 </div>
                 <h3 className='text-xl font-semibold text-white mb-2'>
-                  {searchQuery ? 'Не найдено' : 'Нет тестов'}
+                  {searchQuery ? 'Not Found' : 'No tests yet'}
                 </h3>
                 <p className='text-gray-400 mb-6'>
                   {searchQuery
-                    ? 'Попробуйте изменить запрос'
-                    : 'Создайте первый тест'}
+                    ? 'Try changing your search query'
+                    : 'Create your first test'}
                 </p>
                 <Button
                   onClick={
@@ -169,7 +169,7 @@ export default function TestsPage() {
                   }
                   className='bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600'
                 >
-                  {searchQuery ? 'Сбросить поиск' : 'Создать тест'}
+                  {searchQuery ? 'Clear search' : 'Create test'}
                 </Button>
               </m.div>
             )}

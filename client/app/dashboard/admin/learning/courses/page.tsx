@@ -15,7 +15,7 @@ export default function CoursesPage() {
   const [showStageDialog, setShowStageDialog] = useState(false)
   const [showCourseDialog, setShowCourseDialog] = useState(false)
 
-  // Статистика
+  // Statistics
   const stats = useMemo(() => {
     const stagesCount = stages?.length || 0
     const coursesCount = stages?.reduce(
@@ -35,7 +35,7 @@ export default function CoursesPage() {
           className='text-center'
         >
           <div className='w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4' />
-          <p className='text-sm text-gray-400'>Загрузка...</p>
+          <p className='text-sm text-gray-400'>Loading...</p>
         </m.div>
       </div>
     )
@@ -54,10 +54,10 @@ export default function CoursesPage() {
           >
             <div className='flex-1'>
               <h1 className='text-4xl font-bold text-white mb-2'>
-                Управление контентом
+                Content management
               </h1>
               <p className='text-gray-400'>
-                Создавайте и управляйте этапами, курсами и уроками
+                Create and manage stages, courses, and lessons
               </p>
             </div>
 
@@ -68,7 +68,7 @@ export default function CoursesPage() {
                   className='gap-2 bg-white/[0.08] hover:bg-white/[0.12] text-white font-semibold border border-white/[0.1] backdrop-blur-xl shadow-lg'
                 >
                   <Plus className='w-5 h-5' />
-                  Создать этап
+                  Create stage
                 </Button>
               </m.div>
               <m.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -77,7 +77,7 @@ export default function CoursesPage() {
 		              className='bg-white text-black hover:bg-white/80'
 		            >
 		              <Plus className='w-5 h-5' />
-		              Создать курс
+		              Create course
 		            </Button>
               </m.div>
             </div>
@@ -100,7 +100,7 @@ export default function CoursesPage() {
                   <Layers className='w-5 h-5 text-purple-400' />
                 </div>
                 <span className='text-xs text-gray-500 uppercase font-semibold'>
-                  Всего этапов
+                  Total stages
                 </span>
               </div>
               <p className='text-3xl font-bold text-white'>
@@ -118,7 +118,7 @@ export default function CoursesPage() {
                   <BookOpen className='w-5 h-5 text-blue-400' />
                 </div>
                 <span className='text-xs text-gray-500 uppercase font-semibold'>
-                  Всего курсов
+                  Total courses
                 </span>
               </div>
               <p className='text-3xl font-bold text-white'>
@@ -155,10 +155,10 @@ export default function CoursesPage() {
                     <Layers className='w-10 h-10 text-gray-600' />
                   </div>
                   <h3 className='text-xl font-semibold text-white mb-2'>
-                    Этапы отсутствуют
+                    No stages yet
                   </h3>
                   <p className='text-gray-400 max-w-md mx-auto mb-8 leading-relaxed'>
-                    Создайте первый этап, чтобы начать добавлять курсы и уроки
+                    Create your first stage to start adding courses and lessons
                   </p>
                   <m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button
@@ -166,7 +166,7 @@ export default function CoursesPage() {
                       className='gap-2 bg-white/[0.08] hover:bg-white/[0.12] text-white font-semibold border border-white/[0.1] backdrop-blur-xl shadow-lg'
                     >
                       <Plus className='w-5 h-5' />
-                      Создать первый этап
+                      Create first stage
                     </Button>
                   </m.div>
                 </m.div>

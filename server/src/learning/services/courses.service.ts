@@ -168,17 +168,17 @@ export class CoursesService {
 			0
 		)
 
-		// ✅ ИСПРАВЛЕНО: Простой расчет прогресса
-		// (выполненные уроки + пройденные тесты) / (всего уроков + всего тестов) * 100
+		// ✅ FIXED: Simple progress calculation
+		// (completed lessons + passed tests) / (total lessons + total tests) * 100
 		const totalLessons = course.lessons.length
 		const totalTests = course.tests.length
 		const totalItems = totalLessons + totalTests
 
-		// ✅ ИСПРАВЛЕНО: Получаем уникальные пройденные тесты (только последние попытки)
+		// ✅ FIXED: Get unique passed tests (latest attempts only)
 		const passedTestIds = new Set<string>()
 		const testResultsByTestId = new Map<string, (typeof testResults)[0]>()
 
-		// Группируем результаты по testId, оставляя только последний (самый свежий)
+		// Group results by testId, keeping only the latest one
 		testResults.forEach(result => {
 			if (!testResultsByTestId.has(result.testId)) {
 				testResultsByTestId.set(result.testId, result)
@@ -199,7 +199,7 @@ export class CoursesService {
 			title: course.title,
 			description: course.description,
 			difficulty: course.difficulty,
-			progress: calculatedProgress, // ✅ Используем исправленный прогресс
+			progress: calculatedProgress, // ✅ Use the fixed progress value
 			totalXp: userCourseProgress?.totalXp ?? calculatedTotalXp,
 			stage: course.stage
 				? {
@@ -228,7 +228,7 @@ export class CoursesService {
 				}
 			}),
 			tests: course.tests.map(test => {
-				// ✅ ИСПРАВЛЕНО: Берем последний результат для каждого теста
+				// ✅ FIXED: Take the latest result for each test
 				const result = testResultsByTestId.get(test.id)
 				const allAttemptsForTest = testResults.filter(r => r.testId === test.id)
 
@@ -241,7 +241,7 @@ export class CoursesService {
 					score: result?.score ?? null,
 					time: result?.time ?? null,
 					attempts: allAttemptsForTest.length,
-					lastAttemptDate: result?.createdAt ?? null, // Последняя попытка
+					lastAttemptDate: result?.createdAt ?? null, // Latest attempt
 				}
 			}),
 		}

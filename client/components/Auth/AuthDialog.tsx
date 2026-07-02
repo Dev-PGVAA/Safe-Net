@@ -29,14 +29,14 @@ import { IAuthDialog } from './AuthDialog.interface'
 
 export function AuthDialog({
 	triggerButton = {
-		text: 'Начать обучение',
+		text: 'Start Learning',
 		className:
 			'bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-xl shadow-indigo-500/30 flex items-center gap-2 group',
 		position: 'end',
 	},
 	dialogSize = 'md',
 	title = 'SafeNet',
-	description = 'Введите свои данные для входа в систему или создайте аккаунт',
+	description = 'Enter your details to log in or create an account',
 	showNameField = true,
 	children,
 }: IAuthDialog) {
@@ -53,7 +53,7 @@ export function AuthDialog({
 		mutationKey: ['login'],
 		mutationFn: (data: IFormData) => authService.main('login', data),
 		onSuccess() {
-			toast.success('Успешный вход в систему!')
+			toast.success('Successfully logged in!')
 			startTransition(() => {
 				reset()
 				setOpen(false)
@@ -63,7 +63,7 @@ export function AuthDialog({
 		},
 		onError(error) {
 			if (axios.isAxiosError(error)) {
-				toast.error(error.response?.data?.message || 'Ошибка входа')
+				toast.error(error.response?.data?.message || 'Login error')
 			}
 		},
 	})
@@ -71,7 +71,7 @@ export function AuthDialog({
 		mutationKey: ['register'],
 		mutationFn: (data: IFormData) => authService.main('register', data),
 		onSuccess() {
-			toast.success('Аккаунт успешно создан!')
+			toast.success('Account successfully created!')
 			startTransition(() => {
 				reset()
 				setOpen(false)
@@ -81,7 +81,7 @@ export function AuthDialog({
 		},
 		onError(error) {
 			if (axios.isAxiosError(error)) {
-				toast.error(error.response?.data?.message || 'Ошибка регистрации')
+				toast.error(error.response?.data?.message || 'Registration error')
 			}
 		},
 	})
@@ -103,7 +103,7 @@ export function AuthDialog({
 	}
 	const onSubmit: SubmitHandler<IFormData> = data => {
 		if (!isLogin && !agreedToPrivacy) {
-			toast.error('Пожалуйста, согласитесь с обработкой персональных данных')
+			toast.error('Please agree to the processing of personal data')
 			return
 		}
 		isLogin ? mutateLogin(data) : mutateRegister(data)
@@ -135,24 +135,24 @@ export function AuthDialog({
 			>
 				<DialogHeader className='text-center'>
 					<DialogTitle className='text-2xl font-bold bg-linear-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent'>
-						{isLogin ? `Вход в ${title}` : `Регистрация в ${title}`}
+						{isLogin ? `Log in to ${title}` : `Sign up for ${title}`}
 					</DialogTitle>
 					<DialogDescription className='text-slate-400 mt-2'>
 						{isLogin
 							? description
-							: `Создайте аккаунт, чтобы начать обучение в ${title}`}
+							: `Create an account to start learning with ${title}`}
 					</DialogDescription>
 				</DialogHeader>
 				<form className='space-y-4 mt-4' onSubmit={handleSubmit(onSubmit)}>
 					{!isLogin && showNameField && (
 						<div className='space-y-2'>
 							<Label htmlFor='name' className='text-slate-300'>
-								Имя
+								Name
 							</Label>
 							<Input
 								id='name'
 								type='text'
-								placeholder='Введите ваше имя'
+								placeholder='Enter your name'
 								className='bg-slate-800/50 border-slate-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'
 								{...register('name')}
 							/>
@@ -172,7 +172,7 @@ export function AuthDialog({
 					</div>
 					<div className='relative space-y-2'>
 						<Label htmlFor='password' className='text-slate-300'>
-							Пароль
+							Password
 						</Label>
 						<Input
 							id='password'
@@ -185,7 +185,7 @@ export function AuthDialog({
 							type='button'
 							className='absolute right-3 top-1/2 transform translate-y-[-3px] text-slate-400 hover:text-white transition-colors flex items-center justify-center'
 							onClick={() => setShowPassword(!showPassword)}
-							aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+							aria-label={showPassword ? 'Hide password' : 'Show password'}
 						>
 							{showPassword ? (
 								<EyeOff className='w-5 h-5' />
@@ -207,11 +207,11 @@ export function AuthDialog({
 									htmlFor='privacy'
 									className='text-slate-400 cursor-pointer'
 								>
-									Согласен на обработку персональных данных
+									I agree to the processing of personal data
 								</Label>
 								<p className='text-xs text-slate-500 mt-1'>
-									Принимаю условия пользовательского соглашения и политики
-									конфиденциальности
+									I accept the terms of the user agreement and privacy
+									policy
 								</p>
 							</div>
 						</div>
@@ -249,12 +249,12 @@ export function AuthDialog({
 											d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
 										></path>
 									</svg>
-									{isLogin ? 'Вход...' : 'Регистрация...'}
+									{isLogin ? 'Logging in...' : 'Signing up...'}
 								</span>
 							) : isLogin ? (
-								'Войти в аккаунт'
+								'Log In'
 							) : (
-								'Создать аккаунт'
+								'Create Account'
 							)}
 						</Button>
 						<div className='w-full text-center'>
@@ -264,8 +264,8 @@ export function AuthDialog({
 								onClick={() => setIsLogin(!isLogin)}
 							>
 								{isLogin
-									? 'Нет аккаунта? Зарегистрироваться'
-									: 'Уже есть аккаунт? Войти'}
+									? "Don't have an account? Sign up"
+									: 'Already have an account? Log in'}
 							</button>
 						</div>
 					</DialogFooter>

@@ -45,11 +45,11 @@ export default function LessonsList({ lessons, onUpdate }: LessonsListProps) {
 		setIsDeleting(true)
 		try {
 			await adminService.deleteLesson(selectedLesson.id)
-			toast.success('Урок удален')
+			toast.success('Lesson deleted')
 			onUpdate()
 			setDeleteDialogOpen(false)
 		} catch (error) {
-			toast.error('Ошибка при удалении урока')
+			toast.error('Error deleting lesson')
 		} finally {
 			setIsDeleting(false)
 			setSelectedLesson(null)
@@ -81,15 +81,13 @@ export default function LessonsList({ lessons, onUpdate }: LessonsListProps) {
 									<div className='flex items-center gap-1.5 text-[13px] text-gray-500'>
 										<Layers className='w-3.5 h-3.5' />
 										<span>{lesson.blocks?.length || 0} {lesson.blocks?.length === 1
-											? 'блок'
-											: lesson.blocks.length < 5
-												? 'блока'
-												: 'блоков'}</span>
+											? 'block'
+											: 'blocks'}</span>
 									</div>
 									{lesson.estimatedDuration && (
 										<div className='flex items-center gap-1.5 text-[13px] text-gray-500'>
 											<Clock className='w-3.5 h-3.5' />
-											<span>{lesson.estimatedDuration} мин</span>
+											<span>{lesson.estimatedDuration} min</span>
 										</div>
 									)}
 								</div>
@@ -132,11 +130,11 @@ export default function LessonsList({ lessons, onUpdate }: LessonsListProps) {
 									>
 										<AlertTriangle className='h-5 w-5 text-red-500' />
 									</m.div>
-									Удалить урок?
+									Delete lesson?
 								</AlertDialogTitle>
 								<AlertDialogDescription className='space-y-2 text-white/70'>
 									<p>
-										Вы действительно хотите удалить урок{' '}
+										Are you sure you want to delete the lesson{' '}
 										<span className='font-semibold text-white'>
 											"{selectedLesson.title}"
 										</span>
@@ -144,16 +142,14 @@ export default function LessonsList({ lessons, onUpdate }: LessonsListProps) {
 									</p>
 									{selectedLesson.blocksCount > 0 && (
 										<p className='text-sm text-red-400'>
-											⚠️ Это действие удалит{' '}
+											⚠️ This action will delete{' '}
 											<span className='font-semibold'>
 												{selectedLesson.blocksCount}{' '}
 												{selectedLesson.blocksCount === 1
-													? 'блок'
-													: selectedLesson.blocksCount < 5
-														? 'блока'
-														: 'блоков'}
+													? 'block'
+													: 'blocks'}
 											</span>
-											{' '}и все задания. Действие необратимо.
+											{' '}and all tasks. This action cannot be undone.
 										</p>
 									)}
 								</AlertDialogDescription>
@@ -163,7 +159,7 @@ export default function LessonsList({ lessons, onUpdate }: LessonsListProps) {
 									disabled={isDeleting}
 									className='border-white/20 bg-slate-800/50 hover:bg-slate-700/50'
 								>
-									Отмена
+									Cancel
 								</AlertDialogCancel>
 								<AlertDialogAction
 									onClick={handleDeleteConfirm}
@@ -173,10 +169,10 @@ export default function LessonsList({ lessons, onUpdate }: LessonsListProps) {
 									{isDeleting ? (
 										<>
 											<Loader2 className='mr-2 h-4 w-4 animate-spin' />
-											Удаление...
+											Deleting...
 										</>
 									) : (
-										'Удалить урок'
+										'Delete lesson'
 									)}
 								</AlertDialogAction>
 							</AlertDialogFooter>

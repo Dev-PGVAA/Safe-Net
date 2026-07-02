@@ -5,7 +5,7 @@ import { m } from 'framer-motion'
 import * as icons from 'lucide-react'
 import { LucideIcon, Shield } from 'lucide-react'
 
-// Цветовая палитра для этапов
+// Color palette for stages
 const colorPalette = [
 	'#3b82f6', // blue
 	'#ec4899', // pink
@@ -17,7 +17,7 @@ const colorPalette = [
 	'#6366f1', // indigo
 ]
 
-// Маппинг цветов по slug для консистентности
+// Color mapping by slug for consistency
 const colorMap: Record<string, string> = {
 	basics: '#3b82f6', // blue
 	phishing: '#ec4899', // pink
@@ -29,19 +29,19 @@ const colorMap: Record<string, string> = {
 	advanced: '#f97316', // orange
 }
 
-// Функция для получения иконки по slug
+// Function to get an icon by slug
 const getIconBySlug = (slug: string): LucideIcon => {
-	// Преобразуем slug в PascalCase для lucide-react
-	// Например: 'dangerous-links' -> 'DangerousLinks'
+	// Convert slug to PascalCase for lucide-react
+	// Example: 'dangerous-links' -> 'DangerousLinks'
 	const pascalCase = slug
 		.split('-')
 		.map(word => word.charAt(0).toUpperCase() + word.slice(1))
 		.join('')
 
-	// Пытаемся найти иконку в lucide-react
+	// Try to find the icon in lucide-react
 	const icon = (icons as Record<string, LucideIcon>)[pascalCase]
 
-	// Возвращаем найденную иконку или Shield как fallback
+	// Return the found icon or Shield as a fallback
 	return icon || Shield
 }
 
@@ -70,18 +70,18 @@ export default function Topics() {
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
 				<div className='text-center mb-14'>
 					<h3 className='text-3xl sm:text-4xl font-bold text-white mb-4'>
-						Этапы обучения
+						Learning Stages
 					</h3>
 					<p className='text-lg text-slate-400 max-w-2xl mx-auto'>
-						Изучай различные аспекты кибербезопасности поэтапно
+						Explore different aspects of cybersecurity step by step
 					</p>
 				</div>
 				<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
 					{stages.map((stage, index) => {
-						// Получаем иконку динамически по slug из stage.icon или stage.slug
+						// Get the icon dynamically by slug from stage.icon or stage.slug
 						const Icon = getIconBySlug(stage.icon || stage.slug)
 
-						// Выбираем цвет по slug (консистентный) или по индексу (циклический)
+						// Pick a color by slug (consistent) or by index (cyclical)
 						const strokeColor =
 							colorMap[stage.slug] || colorPalette[index % colorPalette.length]
 
@@ -123,7 +123,7 @@ export default function Topics() {
 												</m.div>
 												<div className='text-sm text-slate-400'>
 													{stage.totalLessons}{' '}
-													{stage.totalLessons === 1 ? 'урок' : 'уроков'}
+													{stage.totalLessons === 1 ? 'lesson' : 'lessons'}
 												</div>
 											</div>
 											<h4 className='text-lg font-semibold text-white tracking-wide group-hover:text-indigo-300 transition-colors duration-300'>

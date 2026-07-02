@@ -10,7 +10,7 @@ interface Achievement {
 	title: string
 	description: string
 	icon: string
-	earnedAt: string // Изменено с unlockedAt на earnedAt
+	earnedAt: string // Renamed from unlockedAt to earnedAt
 }
 
 interface UserAchievementsBlockProps {
@@ -21,7 +21,7 @@ interface UserAchievementsBlockProps {
 const appleEasing = [0.42, 0, 0.58, 1]
 const appleEaseOut = [0.16, 1, 0.3, 1]
 
-// Функция для получения иконки по slug
+// Get an icon component by slug
 const getIconBySlug = (slug: string): LucideIcon => {
 	const pascalCase = slug
 		.split('-')
@@ -57,7 +57,7 @@ export default function UserAchievementsBlock({
 					transition={{ delay: 0.3, duration: 0.6, ease: appleEasing }}
 					className='text-lg font-bold text-white mb-2'
 				>
-					Нет достижений
+					No achievements
 				</m.h3>
 				<m.p
 					initial={{ opacity: 0, y: 10 }}
@@ -65,7 +65,7 @@ export default function UserAchievementsBlock({
 					transition={{ delay: 0.4, duration: 0.6, ease: appleEasing }}
 					className='text-white/50 text-sm'
 				>
-					Достижения появятся после выполнения определенных задач
+					Achievements will appear after completing certain tasks
 				</m.p>
 			</m.div>
 		)
@@ -79,7 +79,7 @@ export default function UserAchievementsBlock({
 						format: 'date-medium',
 						locale: 'ru-RU',
 						gracefulFail: true,
-					}) || 'Дата неизвестна'
+					}) || 'Date unknown'
 
 				const Icon = getIconBySlug(achievement.icon || 'trophy')
 

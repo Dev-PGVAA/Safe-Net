@@ -53,12 +53,12 @@ export function DeleteTestDialog({
                     <AlertTriangle className='w-6 h-6 text-red-400' />
                   </div>
                   <AlertDialogTitle className='text-xl'>
-                    Удалить тест?
+                    Delete test?
                   </AlertDialogTitle>
                 </div>
                 <AlertDialogDescription className='text-gray-300 space-y-3'>
                   <p>
-                    Вы действительно хотите удалить тест{' '}
+                    Are you sure you want to delete the test{' '}
                     <span className='font-semibold text-white'>
                       "{testTitle}"
                     </span>
@@ -67,11 +67,11 @@ export function DeleteTestDialog({
                   {questionsCount > 0 && (
                     <div className='p-3 rounded-lg bg-red-500/10 border border-red-500/20'>
                       <p className='text-sm text-red-300'>
-                        ⚠️ Это действие удалит{' '}
+                        ⚠️ This action will delete{' '}
                         <span className='font-semibold'>
                           {getQuestionsLabel(questionsCount)}
                         </span>{' '}
-                        и не может быть отменено.
+                        and cannot be undone.
                       </p>
                     </div>
                   )}
@@ -79,7 +79,7 @@ export function DeleteTestDialog({
               </AlertDialogHeader>
               <AlertDialogFooter className='mt-6'>
                 <AlertDialogCancel className='bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:text-white'>
-                  Отмена
+                  Cancel
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={handleConfirm}
@@ -89,10 +89,10 @@ export function DeleteTestDialog({
                   {isDeleting ? (
                     <>
                       <Loader2 className='w-4 h-4 animate-spin' />
-                      Удаление...
+                      Deleting...
                     </>
                   ) : (
-                    'Удалить тест'
+                    'Delete test'
                   )}
                 </AlertDialogAction>
               </AlertDialogFooter>

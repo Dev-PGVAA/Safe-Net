@@ -13,51 +13,50 @@ export default function Footer() {
 							<div>
 								<h4 className='text-lg font-bold text-white'>SafeNet</h4>
 								<p className='text-xs text-slate-400'>
-									Учись. Играя. Защищайся.
+									Learn. Play. Stay Safe.
 								</p>
 							</div>
 						</div>
 						<p className='text-sm text-slate-400 leading-relaxed'>
-							Образовательная платформа по кибербезопасности для школьников
+							A cybersecurity education platform for schoolkids
 						</p>
 					</div>
 					<div>
-						<h5 className='text-white font-semibold mb-4'>Навигация</h5>
+						<h5 className='text-white font-semibold mb-4'>Navigation</h5>
 						<div className='space-y-2'>
 							<a
 								href='#features'
 								className='block text-sm text-slate-400 hover:text-white transition-colors'
 							>
-								Возможности
+								Features
 							</a>
 							<a
 								href='#topics'
 								className='block text-sm text-slate-400 hover:text-white transition-colors'
 							>
-								Темы обучения
+								Learning Topics
 							</a>
 							<a
 								href='#stats'
 								className='block text-sm text-slate-400 hover:text-white transition-colors'
 							>
-								Статистика
+								Statistics
 							</a>
 						</div>
 					</div>
 					<div>
-						<h5 className='text-white font-semibold mb-4'>Контакты</h5>
+						<h5 className='text-white font-semibold mb-4'>Contact</h5>
 						<div className='space-y-2'>
 							<p className='text-sm text-slate-400'>
-								ГБОУ Школа № 1560 «Лидер»
+								SafeNet Team
 							</p>
-							<p className='text-sm text-slate-400'>Москва, 2025</p>
+							<p className='text-sm text-slate-400'>Moscow, 2025</p>
 						</div>
 					</div>
 				</div>
 				<div className='pt-8 border-t border-slate-700 text-center'>
 					<p className='text-sm text-slate-500'>
-						© 2025 SafeNet — проект учеников 10-2 класса ГБОУ Школа № 1560
-						«Лидер»
+						© 2025 SafeNet — Cybersecurity Education Platform
 					</p>
 				</div>
 			</div>

@@ -25,8 +25,8 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 const testSchema = z.object({
-	title: z.string().min(3, 'Минимум 3 символа').max(255),
-	description: z.string().min(10, 'Минимум 10 символов').optional(),
+	title: z.string().min(3, 'Minimum 3 characters').max(255),
+	description: z.string().min(10, 'Minimum 10 characters').optional(),
 	courseId: z.string().optional(),
 	passingScore: z.number().min(0).max(100).optional(),
 })
@@ -68,13 +68,13 @@ export default function CreateTestDialog({
 		setIsSubmitting(true)
 		try {
 			await adminService.createTest(data)
-			toast.success('Тест создан успешно')
+			toast.success('Test created successfully')
 			reset()
 			onOpenChange(false)
 			onSuccess()
 		} catch (error) {
 			console.error('Create test error:', error)
-			toast.error('Ошибка при создании теста')
+			toast.error('Error creating test')
 		} finally {
 			setIsSubmitting(false)
 		}
@@ -93,9 +93,9 @@ export default function CreateTestDialog({
 					<div className='border-b border-white/10 bg-[#0A0F1D]/80 backdrop-blur-xl'>
 						<div className='mx-auto flex max-w-4xl items-center justify-between px-6 py-4'>
 							<div>
-								<h3 className='text-2xl font-bold text-white'>Создать тест</h3>
+								<h3 className='text-2xl font-bold text-white'>Create Test</h3>
 								<p className='mt-1 text-sm text-gray-500'>
-									Добавьте тест для проверки знаний по курсу
+									Add a test to check knowledge for a course
 								</p>
 							</div>
 							<m.button
@@ -125,18 +125,18 @@ export default function CreateTestDialog({
 							<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 								<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 									<Sparkles className='h-5 w-5 text-blue-400' />
-									Основная информация
+									Basic Information
 								</h4>
 
 								<div className='space-y-6'>
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Название теста
+											Test Title
 										</label>
 										<input
 											{...register('title')}
 											className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
-											placeholder='Основы кибербезопасности'
+											placeholder='Cybersecurity Basics'
 										/>
 										{errors.title && (
 											<p className='mt-2 text-sm text-red-400'>
@@ -147,13 +147,13 @@ export default function CreateTestDialog({
 
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Описание
+											Description
 										</label>
 										<textarea
 											{...register('description')}
 											rows={4}
 											className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10 resize-none'
-											placeholder='Тест на проверку базовых знаний в области информационной безопасности'
+											placeholder='A test to check basic knowledge of information security'
 										/>
 										{errors.description && (
 											<p className='mt-2 text-sm text-red-400'>
@@ -168,13 +168,13 @@ export default function CreateTestDialog({
 							<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 								<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 									<FileQuestion className='h-5 w-5 text-purple-400' />
-									Настройки теста
+									Test Settings
 								</h4>
 
 								<div className='grid gap-6 md:grid-cols-2'>
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Курс (опционально)
+											Course (optional)
 										</label>
 										<Controller
 											name='courseId'
@@ -189,8 +189,8 @@ export default function CreateTestDialog({
 															<span className='truncate'>
 																{field.value
 																	? courses.find((c) => c.id === field.value)
-																			?.title || 'Выберите курс'
-																	: 'Без привязки к курсу'}
+																			?.title || 'Select a course'
+																	: 'No course'}
 															</span>
 															<ChevronDown className='h-4 w-4 text-gray-400 flex-shrink-0 ml-2' />
 														</button>
@@ -200,7 +200,7 @@ export default function CreateTestDialog({
 															onClick={() => field.onChange('')}
 															className='text-white hover:bg-white/10 cursor-pointer'
 														>
-															Без привязки
+															No course
 														</DropdownMenuItem>
 														{courses.map((course) => (
 															<DropdownMenuItem
@@ -219,7 +219,7 @@ export default function CreateTestDialog({
 
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Проходной балл (%)
+											Passing Score (%)
 										</label>
 										<input
 											{...register('passingScore', { valueAsNumber: true })}
@@ -241,12 +241,12 @@ export default function CreateTestDialog({
 									</div>
 									<div>
 										<h5 className='font-semibold text-white'>
-											После создания
+											After creation
 										</h5>
 										<p className='mt-1 text-sm text-gray-400'>
-											Вы сможете добавить вопросы к тесту на странице
-											редактирования. Рекомендуется минимум 5 вопросов для
-											полноценного теста.
+											You'll be able to add questions to the test on the
+											editing page. A minimum of 5 questions is recommended
+											for a complete test.
 										</p>
 									</div>
 								</div>
@@ -264,7 +264,7 @@ export default function CreateTestDialog({
 									}}
 									className='flex-1 rounded-xl border border-white/10 bg-white/5 px-6 py-4 font-semibold text-gray-300 transition-all hover:bg-white/10'
 								>
-									Отмена
+									Cancel
 								</m.button>
 								<m.button
 									type='submit'
@@ -276,12 +276,12 @@ export default function CreateTestDialog({
 									{isSubmitting ? (
 										<>
 											<Loader2 className='mr-2 inline h-5 w-5 animate-spin' />
-											Создание...
+											Creating...
 										</>
 									) : (
 										<>
 											<Plus className='mr-2 inline h-5 w-5' />
-											Создать тест
+											Create Test
 										</>
 									)}
 								</m.button>

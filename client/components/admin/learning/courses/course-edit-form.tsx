@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-// Импортируем компоненты DropdownMenu
+// Import DropdownMenu components
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -20,8 +20,8 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 const courseEditSchema = z.object({
-	title: z.string().min(3, 'Минимум 3 символа').max(255),
-	description: z.string().min(10, 'Минимум 10 символов'),
+	title: z.string().min(3, 'Minimum 3 characters').max(255),
+	description: z.string().min(10, 'Minimum 10 characters'),
 	difficulty: z.enum(['EASY', 'MEDIUM', 'HARD']),
 })
 
@@ -39,8 +39,8 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 	const {
 		register,
 		handleSubmit,
-		setValue, // Используем для обновления значения из dropdown
-		watch,    // Следим за текущим значением сложности
+		setValue, // Used to update the value from the dropdown
+		watch,    // Track the current difficulty value
 		formState: { errors },
 		reset,
 	} = useForm<CourseEditData>({
@@ -58,11 +58,11 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 		setIsSubmitting(true)
 		try {
 			await adminService.updateCourse(course.id, data)
-			toast.success('Курс обновлен')
+			toast.success('Course updated')
 			setIsEditing(false)
 			onSuccess()
 		} catch (error) {
-			toast.error('Ошибка при обновлении')
+			toast.error('Error while updating')
 		} finally {
 			setIsSubmitting(false)
 		}
@@ -74,12 +74,12 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 				<div className="space-y-6">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 						<div className="space-y-1">
-							<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Название</p>
+							<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Title</p>
 							<p className="text-white font-medium text-lg">{course.title}</p>
 						</div>
 
 						<div className="space-y-1">
-							<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Сложность</p>
+							<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Difficulty</p>
 							<p className="text-white font-medium">
 								{DifficultyLabel[course.difficulty || Difficulty.EASY]}
 							</p>
@@ -87,7 +87,7 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 					</div>
 
 					<div className="space-y-1">
-						<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Описание</p>
+						<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Description</p>
 						<p className="text-gray-400 text-sm leading-relaxed">{course.description}</p>
 					</div>
 
@@ -97,7 +97,7 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 							className="gap-2 bg-white text-black hover:bg-white/90 font-semibold px-8"
 						>
 							<Edit2 className="w-4 h-4" />
-							Редактировать информацию
+							Edit information
 						</Button>
 					</div>
 				</div>
@@ -105,7 +105,7 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 				<form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div className="space-y-2">
-							<label className="text-sm font-medium text-gray-400">Название курса</label>
+							<label className="text-sm font-medium text-gray-400">Course title</label>
 							<input
 								type="text"
 								{...register('title')}
@@ -115,8 +115,8 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 						</div>
 
 						<div className="space-y-2">
-							<label className="text-sm font-medium text-gray-400">Сложность</label>
-							{/* Dropdown Menu вместо Select */}
+							<label className="text-sm font-medium text-gray-400">Difficulty</label>
+							{/* Dropdown Menu instead of Select */}
 							<DropdownMenu>
 								<DropdownMenuTrigger asChild>
 									<button
@@ -135,19 +135,19 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 										onClick={() => setValue('difficulty', 'EASY')}
 										className="hover:bg-white/10 focus:bg-white/10 focus:text-white cursor-pointer"
 									>
-										Легкий
+										Easy
 									</DropdownMenuItem>
 									<DropdownMenuItem
 										onClick={() => setValue('difficulty', 'MEDIUM')}
 										className="hover:bg-white/10 focus:bg-white/10 focus:text-white cursor-pointer"
 									>
-										Средний
+										Medium
 									</DropdownMenuItem>
 									<DropdownMenuItem
 										onClick={() => setValue('difficulty', 'HARD')}
 										className="hover:bg-white/10 focus:bg-white/10 focus:text-white cursor-pointer"
 									>
-										Сложный
+										Hard
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
@@ -155,7 +155,7 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 					</div>
 
 					<div className="space-y-2">
-						<label className="text-sm font-medium text-gray-400">Описание</label>
+						<label className="text-sm font-medium text-gray-400">Description</label>
 						<textarea
 							{...register('description')}
 							rows={4}
@@ -171,7 +171,7 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 							className="gap-2 bg-white text-black hover:bg-white/90 font-semibold px-8"
 						>
 							{isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-							Сохранить изменения
+							Save changes
 						</Button>
 
 						<Button
@@ -184,7 +184,7 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 							className="gap-2 text-gray-400 hover:text-white hover:bg-white/5"
 						>
 							<X className="w-4 h-4" />
-							Отмена
+							Cancel
 						</Button>
 					</div>
 				</form>

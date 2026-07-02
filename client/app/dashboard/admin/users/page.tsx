@@ -146,11 +146,11 @@ export default function UsersPage() {
 				status: newStatus,
 			})
 			toast.success(
-				isBlocked ? `Пользователь разблокирован` : `Пользователь заблокирован`
+				isBlocked ? `User unblocked` : `User blocked`
 			)
 			await refetch()
 		} catch (error: any) {
-			toast.error('Ошибка при изменении статуса')
+			toast.error('Error updating status')
 		} finally {
 			setBlockingUserId(null)
 			setBlockDialogData(null)
@@ -161,18 +161,18 @@ export default function UsersPage() {
 		try {
 			const headers = [
 				'ID',
-				'Имя',
+				'Name',
 				'Email',
-				'Роли',
-				'Статус',
-				'Дата регистрации',
+				'Roles',
+				'Status',
+				'Registration date',
 			]
 			const rows = filteredUsers.map(user => [
 				user.id,
 				user.name,
 				user.email,
 				user.rights.join('; '),
-				user.status === UserStatus.ACTIVE ? 'Активный' : 'Блокирован',
+				user.status === UserStatus.ACTIVE ? 'Active' : 'Blocked',
 				format(new Date(user.createdAt), 'dd.MM.yyyy HH:mm', { locale: ru }),
 			])
 			const csvContent = [
@@ -192,27 +192,27 @@ export default function UsersPage() {
 			link.click()
 			document.body.removeChild(link)
 		} catch (error) {
-			toast.error('Ошибка экспорта')
+			toast.error('Export error')
 		}
 	}
 
 	const roles = [
-		{ value: 'all', label: 'Все роли', icon: Users },
-		{ value: 'USER', label: 'Пользователь', icon: User },
-		{ value: 'ADMIN', label: 'Администратор', icon: Shield },
+		{ value: 'all', label: 'All roles', icon: Users },
+		{ value: 'USER', label: 'User', icon: User },
+		{ value: 'ADMIN', label: 'Admin', icon: Shield },
 	]
 
 	const statuses = [
-		{ value: 'all', label: 'Все статусы', icon: Activity },
-		{ value: 'ACTIVE', label: 'Активный', icon: CheckCircle2 },
-		{ value: 'BLOCKED', label: 'Блокирован', icon: LockClosedIcon },
+		{ value: 'all', label: 'All statuses', icon: Activity },
+		{ value: 'ACTIVE', label: 'Active', icon: CheckCircle2 },
+		{ value: 'BLOCKED', label: 'Blocked', icon: LockClosedIcon },
 	]
 
 	const limits = [
-		{ value: 10, label: '10 строк' },
-		{ value: 20, label: '20 строк' },
-		{ value: 50, label: '50 строк' },
-		{ value: 100, label: '100 строк' },
+		{ value: 10, label: '10 rows' },
+		{ value: 20, label: '20 rows' },
+		{ value: 50, label: '50 rows' },
+		{ value: 100, label: '100 rows' },
 	]
 
 	if (isLoading) {
@@ -238,12 +238,12 @@ export default function UsersPage() {
 					>
 						<div className='space-y-1'>
 							<h1 className='text-5xl font-bold tracking-tight text-white'>
-								Пользователи
+								Users
 							</h1>
 							<div className='flex items-center gap-2 text-white/50 text-sm'>
 								<Sparkles className='w-4 h-4' />
 								<span>
-									Всего пользователей:{' '}
+									Total users:{' '}
 									<span className='text-white font-semibold'>
 										{users.length}
 									</span>
@@ -257,7 +257,7 @@ export default function UsersPage() {
 							className='bg-white text-black hover:bg-white/80 font-semibold rounded-xl px-5 h-11 shadow-lg transition-all active:scale-[0.98] disabled:opacity-50'
 						>
 							<ArrowDownTrayIcon className='w-5 h-5 mr-2' />
-							Экспорт CSV
+							Export CSV
 						</Button>
 					</m.div>
 
@@ -274,7 +274,7 @@ export default function UsersPage() {
 							</div>
 							<input
 								type='text'
-								placeholder='Найти пользователя...'
+								placeholder='Find a user...'
 								value={search}
 								onChange={e => handleFilterChange(setSearch)(e.target.value)}
 								className='w-full pl-12 pr-4 h-12 rounded-xl bg-white/5 backdrop-blur-xl border border-white/10
@@ -426,7 +426,7 @@ export default function UsersPage() {
 										onClick={clearFilters}
 										className='h-12 w-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center
                       text-white/40 hover:text-white hover:bg-white/10 transition-all shrink-0'
-										title='Сбросить все фильтры'
+										title='Reset all filters'
 									>
 										<X className='w-5 h-5' />
 									</m.button>
@@ -447,17 +447,17 @@ export default function UsersPage() {
 									<Filter className='w-8 h-8 text-white/20' />
 								</div>
 								<h3 className='text-xl font-semibold text-white mb-1.5'>
-									Ничего не найдено
+									Nothing found
 								</h3>
 								<p className='text-white/50 mb-6 text-sm'>
-									Попробуйте изменить параметры поиска
+									Try changing your search parameters
 								</p>
 								<Button
 									onClick={clearFilters}
 									variant='outline'
 									className='h-10 px-6 rounded-xl border-white/10 text-white hover:bg-white/5 bg-transparent font-medium'
 								>
-									Сбросить фильтры
+									Reset filters
 								</Button>
 							</m.div>
 						) : (
@@ -471,12 +471,12 @@ export default function UsersPage() {
 										<thead className='bg-white/[0.02] border-b border-white/5'>
 											<tr>
 												{[
-													'Пользователь',
+													'User',
 													'Email',
-													'Роли',
-													'Статус',
-													'Дата',
-													'Действия',
+													'Roles',
+													'Status',
+													'Date',
+													'Actions',
 												].map(h => (
 													<th
 														key={h}
@@ -546,8 +546,8 @@ export default function UsersPage() {
 																<LockClosedIcon className='w-3 h-3' />
 															)}
 															{user.status === UserStatus.ACTIVE
-																? 'Активен'
-																: 'Заблокирован'}
+																? 'Active'
+																: 'Blocked'}
 														</span>
 													</td>
 													<td className='px-5 py-4 text-sm font-medium text-white/50'>
@@ -567,7 +567,7 @@ export default function UsersPage() {
 																	</Link>
 																</TooltipTrigger>
 																<TooltipContent className='bg-[#0E172B] border-white/10 text-white text-xs'>
-																	Профиль
+																	Profile
 																</TooltipContent>
 															</Tooltip>
 
@@ -597,8 +597,8 @@ export default function UsersPage() {
 																</TooltipTrigger>
 																<TooltipContent className='bg-[#0E172B] border-white/10 text-white text-xs'>
 																	{user.status === UserStatus.BLOCKED
-																		? 'Разблокировать'
-																		: 'Заблокировать'}
+																		? 'Unblock'
+																		: 'Block'}
 																</TooltipContent>
 															</Tooltip>
 														</div>
@@ -620,7 +620,7 @@ export default function UsersPage() {
 													aria-expanded={openLimit}
 													className='h-9 gap-2 text-white/60 hover:text-white hover:bg-white/5 rounded-lg px-3'
 												>
-													<span className='text-sm'>{itemsPerPage} строк</span>
+													<span className='text-sm'>{itemsPerPage} rows</span>
 													<ChevronsUpDown className='h-3.5 w-3.5 opacity-50' />
 												</Button>
 											</PopoverTrigger>
@@ -643,7 +643,7 @@ export default function UsersPage() {
 																	className='text-white/70 hover:bg-white/10 hover:text-white cursor-pointer rounded-lg py-2.5 px-3 text-sm mb-0.5 last:mb-0 transition-colors'
 																>
 																	<span className='font-medium'>
-																		{limit.value} строк
+																		{limit.value} rows
 																	</span>
 																	{itemsPerPage === limit.value && (
 																		<Check className='ml-auto h-3.5 w-3.5 text-blue-400' />
@@ -661,7 +661,7 @@ export default function UsersPage() {
 												currentPage * itemsPerPage,
 												filteredUsers.length
 											)}{' '}
-											из {filteredUsers.length}
+											of {filteredUsers.length}
 										</span>
 									</div>
 
@@ -699,11 +699,11 @@ export default function UsersPage() {
 						<AlertDialogHeader>
 							<AlertDialogTitle className='text-xl font-bold text-white'>
 								{blockDialogData?.status === UserStatus.BLOCKED
-									? 'Разблокировать?'
-									: 'Заблокировать?'}
+									? 'Unblock?'
+									: 'Block?'}
 							</AlertDialogTitle>
 							<AlertDialogDescription className='text-white/60 text-sm mt-1.5'>
-								Вы уверены, что хотите изменить статус пользователя
+								Are you sure you want to change the status of user
 								<br />
 								<span className='text-white font-semibold bg-white/5 px-2 py-0.5 rounded-md'>
 									{blockDialogData?.userName}
@@ -713,7 +713,7 @@ export default function UsersPage() {
 						</AlertDialogHeader>
 						<AlertDialogFooter className='mt-4 gap-2'>
 							<AlertDialogCancel className='bg-white/5 border-white/10 text-white hover:bg-white/10 hover:text-white rounded-xl h-10 px-5 font-medium'>
-								Отмена
+								Cancel
 							</AlertDialogCancel>
 							<AlertDialogAction
 								onClick={confirmToggleBlockUser}
@@ -724,7 +724,7 @@ export default function UsersPage() {
 										: 'bg-red-600 hover:bg-red-700'
 								)}
 							>
-								Подтвердить
+								Confirm
 							</AlertDialogAction>
 						</AlertDialogFooter>
 					</AlertDialogContent>

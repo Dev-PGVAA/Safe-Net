@@ -11,11 +11,11 @@ export default function Features() {
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
 				<div className='text-center mb-16'>
 					<h3 className='text-3xl sm:text-4xl font-bold text-white mb-4'>
-						Почему SafeNet?
+						Why SafeNet?
 					</h3>
 					<p className='text-lg text-slate-400 max-w-2xl mx-auto'>
-						Современный подход к обучению кибербезопасности через игровые
-						механики и реальные сценарии
+						A modern approach to cybersecurity education through game mechanics
+						and real-world scenarios
 					</p>
 				</div>
 				<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-8'>
@@ -83,9 +83,9 @@ export default function Features() {
 						<div className='w-12 h-12 mx-auto mb-3 bg-linear-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center'>
 							<Target className='w-6 h-6 text-white' />
 						</div>
-						<h5 className='text-lg font-bold text-white mb-2'>Адаптивность</h5>
+						<h5 className='text-lg font-bold text-white mb-2'>Adaptive</h5>
 						<p className='text-sm text-slate-400'>
-							Система автоматически подстраивает сложность под твой уровень
+							The system automatically adjusts the difficulty to your level
 						</p>
 					</m.div>
 					<m.div
@@ -102,9 +102,9 @@ export default function Features() {
 						<div className='w-12 h-12 mx-auto mb-3 bg-linear-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center'>
 							<Smartphone className='w-6 h-6 text-white' />
 						</div>
-						<h5 className='text-lg font-bold text-white mb-2'>Везде с тобой</h5>
+						<h5 className='text-lg font-bold text-white mb-2'>Always With You</h5>
 						<p className='text-sm text-slate-400'>
-							Учись с любого устройства: телефон, планшет или компьютер
+							Learn from any device: phone, tablet, or computer
 						</p>
 					</m.div>
 				</div>

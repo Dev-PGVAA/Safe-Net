@@ -80,28 +80,28 @@ function StatItem({ icon: Icon, label, value, suffix, index }: IStatItem) {
 export default function Stats() {
 	const { stats, isLoading } = usePublicStats()
 
-	// Маппинг данных с API на статистику
+	// Mapping API data to stats
 	const statsData = [
 		{
-			label: 'Активных пользователей',
+			label: 'Active Users',
 			value: stats?.totalUsers ?? 0,
 			suffix: '+',
 			icon: Users,
 		},
 		{
-			label: 'Пройдено заданий',
+			label: 'Tasks Completed',
 			value: stats?.totalTasks ?? 0,
 			suffix: '+',
 			icon: CheckCircle,
 		},
 		{
-			label: 'Средняя точность',
+			label: 'Average Accuracy',
 			value: stats?.averageAccuracy ?? 0,
 			suffix: '%',
 			icon: Target,
 		},
 		{
-			label: 'Доступно курсов',
+			label: 'Courses Available',
 			value: stats?.totalLessons ?? 0,
 			suffix: '+',
 			icon: BookOpen,

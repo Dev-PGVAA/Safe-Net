@@ -27,9 +27,9 @@ const COLORS = {
 
 export default function UsersStatusChart({ data }: UsersStatusChartProps) {
 	const chartData = [
-		{ name: 'Активные', value: data.active, color: COLORS.active },
-		{ name: 'Заблокированные', value: data.blocked, color: COLORS.blocked },
-		{ name: 'Админы', value: data.admins, color: COLORS.admins },
+		{ name: 'Active', value: data.active, color: COLORS.active },
+		{ name: 'Blocked', value: data.blocked, color: COLORS.blocked },
+		{ name: 'Admins', value: data.admins, color: COLORS.admins },
 	]
 
 	const total = data.active + data.blocked + data.admins
@@ -47,11 +47,11 @@ export default function UsersStatusChart({ data }: UsersStatusChartProps) {
 							<Users className='w-5 h-5 text-orange-600 dark:text-orange-400' />
 						</div>
 						<h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
-							Распределение пользователей
+							User distribution
 						</h3>
 					</div>
 					<p className='text-sm text-gray-600 dark:text-gray-400 mt-1'>
-						По статусам и ролям
+						By status and role
 					</p>
 				</div>
 			</div>
@@ -84,7 +84,7 @@ export default function UsersStatusChart({ data }: UsersStatusChartProps) {
 								borderRadius: '12px',
 								color: '#fff',
 							}}
-							formatter={(value: number) => `${value} чел.`}
+							formatter={(value: number) => `${value}`}
 							labelStyle={{ color: '#fff' }}
 						/>
 						<Legend
@@ -109,7 +109,7 @@ export default function UsersStatusChart({ data }: UsersStatusChartProps) {
 						className='p-3 rounded-lg bg-green-50 dark:bg-green-900/20'
 					>
 						<p className='text-xs font-medium text-green-700 dark:text-green-300'>
-							Активные
+							Active
 						</p>
 						<p className='text-2xl font-bold text-green-600 dark:text-green-400 mt-1'>
 							{data.active}
@@ -123,7 +123,7 @@ export default function UsersStatusChart({ data }: UsersStatusChartProps) {
 						className='p-3 rounded-lg bg-red-50 dark:bg-red-900/20'
 					>
 						<p className='text-xs font-medium text-red-700 dark:text-red-300'>
-							Блокированные
+							Blocked
 						</p>
 						<p className='text-2xl font-bold text-red-600 dark:text-red-400 mt-1'>
 							{data.blocked}
@@ -137,7 +137,7 @@ export default function UsersStatusChart({ data }: UsersStatusChartProps) {
 						className='p-3 rounded-lg bg-purple-50 dark:bg-purple-900/20'
 					>
 						<p className='text-xs font-medium text-purple-700 dark:text-purple-300'>
-							Админы
+							Admins
 						</p>
 						<p className='text-2xl font-bold text-purple-600 dark:text-purple-400 mt-1'>
 							{data.admins}

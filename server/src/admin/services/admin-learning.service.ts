@@ -152,11 +152,11 @@ export class AdminLearningService {
 	async createTask(dto: CreateTaskDto) {
 		const { options, ...taskData } = dto
 
-		// Если есть опции, добавляем order к каждой
+		// If there are options, add order to each
 		const formattedOptions = options?.map((option, index) => ({
 			text: option.text,
 			isCorrect: option.isCorrect || false,
-			order: index + 1, // ✅ Добавляем порядок
+			order: index + 1, // ✅ Add order
 		}))
 
 		return this.prisma.task.create({
@@ -181,16 +181,16 @@ export class AdminLearningService {
 	async updateTask(id: string, dto: any) {
 		const { options, ...taskData } = dto
 
-		// Удаляем старые опции
+		// Remove old options
 		await this.prisma.taskOption.deleteMany({
 			where: { taskId: id },
 		})
 
-		// Если есть новые опции, добавляем order
+		// If there are new options, add order
 		const formattedOptions = options?.map((option: any, index: number) => ({
 			text: option.text,
 			isCorrect: option.isCorrect || false,
-			order: index + 1, // ✅ Добавляем порядок
+			order: index + 1, // ✅ Add order
 		}))
 
 		return this.prisma.task.update({
@@ -276,11 +276,11 @@ export class AdminLearningService {
 	async createTestQuestion(dto: any) {
 		const { options, ...questionData } = dto
 
-		// Если есть опции, добавляем order к каждой
+		// If there are options, add order to each
 		const formattedOptions = options?.map((option: any, index: number) => ({
 			text: option.text,
 			isCorrect: option.isCorrect || false,
-			order: index + 1, // ✅ Добавляем порядок
+			order: index + 1, // ✅ Add order
 		}))
 
 		return this.prisma.testQuestion.create({
@@ -305,16 +305,16 @@ export class AdminLearningService {
 	async updateTestQuestion(id: string, dto: any) {
 		const { options, ...questionData } = dto
 
-		// Удаляем старые опции
+		// Remove old options
 		await this.prisma.testQuestionOption.deleteMany({
 			where: { testQuestionId: id },
 		})
 
-		// Добавляем order к новым опциям
+		// Add order to new options
 		const formattedOptions = options?.map((option: any, index: number) => ({
 			text: option.text,
 			isCorrect: option.isCorrect || false,
-			order: index + 1, // ✅ Добавляем порядок
+			order: index + 1, // ✅ Add order
 		}))
 
 		return this.prisma.testQuestion.update({

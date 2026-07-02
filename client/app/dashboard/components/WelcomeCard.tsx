@@ -37,7 +37,7 @@ export const WelcomeCard = memo(({ greeting, userName, message }: any) => {
 					<span className='font-medium text-sm'>{greeting}</span>
 				</Badge>
 				<h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight animate-in fade-in slide-in-from-left-6 duration-1000 ease-out'>
-					Привет,
+					Hi,
 					<span className='text-transparent bg-clip-text bg-linear-to-r from-indigo-400 via-purple-400 to-pink-400 inline-block ml-3'>
 						{userName}
 					</span>

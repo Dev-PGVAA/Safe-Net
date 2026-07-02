@@ -23,35 +23,35 @@ const activityConfig = {
 		color: 'from-blue-500/10 to-blue-600/5 border-blue-500/20',
 		bgHover: 'group-hover:from-blue-500/15 group-hover:to-blue-600/10',
 		iconColor: 'text-blue-400',
-		label: 'Урок пройден',
+		label: 'Lesson completed',
 	},
 	test: {
 		icon: FileText,
 		color: 'from-emerald-500/10 to-emerald-600/5 border-emerald-500/20',
 		bgHover: 'group-hover:from-emerald-500/15 group-hover:to-emerald-600/10',
 		iconColor: 'text-emerald-400',
-		label: 'Тест выполнен',
+		label: 'Test completed',
 	},
 	course: {
 		icon: Trophy,
 		color: 'from-amber-500/10 to-amber-600/5 border-amber-500/20',
 		bgHover: 'group-hover:from-amber-500/15 group-hover:to-amber-600/10',
 		iconColor: 'text-amber-400',
-		label: 'Курс завершен',
+		label: 'Course completed',
 	},
 	achievement: {
 		icon: Trophy,
 		color: 'from-purple-500/10 to-purple-600/5 border-purple-500/20',
 		bgHover: 'group-hover:from-purple-500/15 group-hover:to-purple-600/10',
 		iconColor: 'text-purple-400',
-		label: 'Достижение',
+		label: 'Achievement',
 	},
 	default: {
 		icon: Activity,
 		color: 'from-white/5 to-white/5 border-white/10',
 		bgHover: 'group-hover:from-white/10 group-hover:to-white/10',
 		iconColor: 'text-white/60',
-		label: 'Активность',
+		label: 'Activity',
 	},
 }
 
@@ -66,7 +66,7 @@ export default function UserActivityBlock({
 				className='flex flex-col items-center justify-center py-16 bg-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/5'
 			>
 				<TrendingUp className='w-12 h-12 text-white/20 mb-4' />
-				<p className='text-white/50'>История действий пуста</p>
+				<p className='text-white/50'>No activity history yet</p>
 			</m.div>
 		)
 	}
@@ -84,7 +84,7 @@ export default function UserActivityBlock({
 						format: 'medium',
 						locale: 'ru-RU',
 						gracefulFail: true,
-					}) || 'Дата неизвестна'
+					}) || 'Date unknown'
 
 				return (
 					<m.div
@@ -107,7 +107,7 @@ export default function UserActivityBlock({
 								<div className='flex-1 min-w-0'>
 									<div className='flex items-start justify-between gap-2 mb-1'>
 										<h4 className='font-medium text-white text-sm leading-tight'>
-											{activity.title || 'Без названия'}
+											{activity.title || 'Untitled'}
 										</h4>
 										{activity.score !== undefined && (
 											<span className='shrink-0 text-xs font-semibold text-emerald-400'>
@@ -118,7 +118,7 @@ export default function UserActivityBlock({
 
 									{activity.course && (
 										<p className='text-white/60 text-xs mb-2'>
-											{activity.course || 'Неизвестный курс'}
+											{activity.course || 'Unknown course'}
 										</p>
 									)}
 

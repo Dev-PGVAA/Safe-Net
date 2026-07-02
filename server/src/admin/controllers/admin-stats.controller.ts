@@ -11,7 +11,7 @@ export class AdminStatsController {
 
 	@Get('overview')
 	async getOverview() {
-		// ✅ Исправлено: вызываем правильный метод
+		// ✅ Fixed: calling the correct method
 		return this.adminStatsService.getOverviewStats()
 	}
 }

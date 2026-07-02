@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/prisma.service'
 
-export interface PublicStatsResponse { // ← Добавь export
+export interface PublicStatsResponse {
 	totalUsers: number
 	totalTasks: number
 	averageAccuracy: number

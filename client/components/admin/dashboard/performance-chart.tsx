@@ -53,11 +53,11 @@ export default function PerformanceChart({ data }: PerformanceChartProps) {
 							<BarChart3 className='w-5 h-5 text-purple-600 dark:text-purple-400' />
 						</div>
 						<h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
-							Топ-5 курсов
+							Top 5 courses
 						</h3>
 					</div>
 					<p className='text-sm text-gray-600 dark:text-gray-400 mt-1'>
-						По среднему баллу и завершению
+						By average score and completion
 					</p>
 				</div>
 			</div>
@@ -92,7 +92,7 @@ export default function PerformanceChart({ data }: PerformanceChartProps) {
 							stroke='#9ca3af'
 							fontSize={12}
 							style={{ fontFamily: 'inherit' }}
-							label={{ value: 'Балл (%)', angle: -90, position: 'insideLeft' }}
+							label={{ value: 'Score (%)', angle: -90, position: 'insideLeft' }}
 							domain={[0, 100]}
 						/>
 						<Tooltip
@@ -105,8 +105,8 @@ export default function PerformanceChart({ data }: PerformanceChartProps) {
 							cursor={{ fill: 'rgba(59, 130, 246, 0.1)' }}
 							labelStyle={{ color: '#fff' }}
 							formatter={(value: number, name: string) => {
-								if (name === 'score') return [`${value}%`, 'Средний балл']
-								if (name === 'completion') return [`${value}%`, 'Завершение']
+								if (name === 'score') return [`${value}%`, 'Average score']
+								if (name === 'completion') return [`${value}%`, 'Completion']
 								return [value, name]
 							}}
 						/>
@@ -115,14 +115,14 @@ export default function PerformanceChart({ data }: PerformanceChartProps) {
 							dataKey='score'
 							fill='#3b82f6'
 							radius={[8, 8, 0, 0]}
-							name='Средний балл'
+							name='Average score'
 							animationDuration={800}
 						/>
 						<Bar
 							dataKey='completion'
 							fill='#10b981'
 							radius={[8, 8, 0, 0]}
-							name='% Завершения'
+							name='% Completion'
 							animationDuration={800}
 						/>
 					</BarChart>
@@ -148,14 +148,14 @@ export default function PerformanceChart({ data }: PerformanceChartProps) {
 								<p className='text-lg font-bold text-blue-600 dark:text-blue-400'>
 									{course.score}%
 								</p>
-								<p className='text-xs text-gray-500 dark:text-gray-500'>балл</p>
+								<p className='text-xs text-gray-500 dark:text-gray-500'>point</p>
 							</div>
 							<div className='flex items-baseline gap-1 mt-0.5'>
 								<p className='text-sm font-semibold text-green-600 dark:text-green-400'>
 									{course.enrolled}
 								</p>
 								<p className='text-xs text-gray-500 dark:text-gray-500'>
-									студ.
+									students
 								</p>
 							</div>
 						</m.div>

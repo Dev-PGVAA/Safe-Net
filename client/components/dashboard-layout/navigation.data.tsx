@@ -6,23 +6,23 @@ import { NavItem } from './navigation.types'
 // Admin Menu Items
 export const adminNavItems: NavItem[] = [
 	{
-		label: 'Управление',
+		label: 'Management',
 		href: ROUTES.ADMIN.ROOT,
 		icon: <Shield className='w-[18px] h-[18px]' />,
 		adminOnly: true,
 		children: [
-			{ label: 'Курсы', href: ROUTES.ADMIN.LEARNING.COURSES },
-			{ label: 'Тесты', href: `${ROUTES.ADMIN.ROOT}/learning/tests` },
+			{ label: 'Courses', href: ROUTES.ADMIN.LEARNING.COURSES },
+			{ label: 'Tests', href: `${ROUTES.ADMIN.ROOT}/learning/tests` },
 		],
 	},
 	{
-		label: 'Пользователи',
+		label: 'Users',
 		href: ROUTES.ADMIN.USERS,
 		icon: <Users className='w-[18px] h-[18px]' />,
 		adminOnly: true,
 	},
 	{
-		label: 'Статистика',
+		label: 'Statistics',
 		href: ROUTES.ADMIN.STATS,
 		icon: <ChartLine className='w-[18px] h-[18px]' />,
 		adminOnly: true,
@@ -32,22 +32,22 @@ export const adminNavItems: NavItem[] = [
 // User Menu Items
 export const navItems: NavItem[] = [
 	{
-		label: 'Главная',
+		label: 'Home',
 		href: ROUTES.HOME,
 		icon: <Home className='w-[18px] h-[18px]' />,
 	},
 	{
-		label: 'Мои курсы',
+		label: 'My Courses',
 		href: ROUTES.COURSES,
 		icon: <BookOpen className='w-[18px] h-[18px]' />,
 	},
 	{
-		label: 'Сертификаты',
+		label: 'Certificates',
 		href: ROUTES.CERTIFICATES,
 		icon: <FileText className='w-[18px] h-[18px]' />,
 	},
 	{
-		label: 'Достижения',
+		label: 'Achievements',
 		href: ROUTES.ACHIEVEMENTS,
 		icon: <Trophy className='w-[18px] h-[18px]' />,
 	},

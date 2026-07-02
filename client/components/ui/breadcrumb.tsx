@@ -151,17 +151,17 @@ export const Breadcrumb = memo(
 						items.map((item, index) => renderBreadcrumbItem(item, index))
 					) : (
 						<>
-							{/* Десктоп: показываем все элементы */}
+							{/* Desktop: show all items */}
 							<div className='hidden md:flex md:items-center md:gap-2'>
 								{items.map((item, index) => renderBreadcrumbItem(item, index))}
 							</div>
 
-							{/* Мобильные: первый + dropdown + последний */}
+							{/* Mobile: first + dropdown + last */}
 							<div className='flex md:hidden items-center gap-2'>
-								{/* Первый элемент */}
+								{/* First item */}
 								{renderBreadcrumbItem(items[0], 0)}
 
-								{/* Dropdown для скрытых элементов */}
+								{/* Dropdown for hidden items */}
 								{middleItems.length > 0 && (
 									<>
 										<DropdownMenu>
@@ -173,7 +173,7 @@ export const Breadcrumb = memo(
 												>
 													<MoreHorizontal className='h-4 w-4 text-white/40' />
 													<span className='sr-only'>
-														Показать скрытые элементы
+														Show hidden items
 													</span>
 												</Button>
 											</DropdownMenuTrigger>
@@ -191,7 +191,7 @@ export const Breadcrumb = memo(
 									</>
 								)}
 
-								{/* Последний элемент */}
+								{/* Last item */}
 								<div className='flex items-center gap-1.5 min-w-0'>
 									{LastIcon && (
 										<LastIcon className='h-4 w-4 opacity-100 shrink-0' />

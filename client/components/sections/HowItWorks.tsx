@@ -11,41 +11,41 @@ import {
 const steps = [
 	{
 		step: '1',
-		title: 'Обучение',
-		description: 'Краткие карточки с правилами и примерами угроз',
+		title: 'Learn',
+		description: 'Short cards with rules and examples of threats',
 		icon: BookOpen,
 	},
 	{
 		step: '2',
-		title: 'Практика',
-		description: 'Интерактивные задания и реалистичные симуляции',
+		title: 'Practice',
+		description: 'Interactive tasks and realistic simulations',
 		icon: Target,
 	},
 	{
 		step: '3',
-		title: 'Анализ',
-		description: 'Подробные пояснения после каждого задания',
+		title: 'Review',
+		description: 'Detailed explanations after every task',
 		icon: Brain,
 	},
 ]
 const topicCards = [
 	{
-		name: 'Фишинг',
+		name: 'Phishing',
 		icon: FishingHook,
 		color: 'from-orange-500 to-red-600',
 	},
 	{
-		name: 'Пароли',
+		name: 'Passwords',
 		icon: Lock,
 		color: 'from-emerald-500 to-teal-600',
 	},
 	{
-		name: 'Соцсети',
+		name: 'Social Media',
 		icon: MessageCircle,
 		color: 'from-blue-500 to-cyan-600',
 	},
 	{
-		name: 'Покупки',
+		name: 'Shopping',
 		icon: ShoppingBag,
 		color: 'from-purple-500 to-pink-600',
 	},
@@ -57,11 +57,11 @@ export default function HowItWorks() {
 				<div className='grid lg:grid-cols-2 gap-12 items-center'>
 					<div>
 						<h3 className='text-3xl sm:text-4xl font-bold text-white mb-6'>
-							Как это работает
+							How It Works
 						</h3>
 						<p className='text-lg text-slate-400 mb-8'>
-							SafeNet сочетает теорию и практику для эффективного обучения
-							кибербезопасности
+							SafeNet combines theory and practice for effective cybersecurity
+							training
 						</p>
 						<div className='space-y-6'>
 							{steps.map((item, index) => {
@@ -109,7 +109,7 @@ export default function HowItWorks() {
 												{item.name}
 											</div>
 											<div className='text-xs text-slate-400 mt-1'>
-												Изучить тему
+												Explore topic
 											</div>
 										</div>
 									)

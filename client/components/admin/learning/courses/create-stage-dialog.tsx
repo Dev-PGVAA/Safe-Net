@@ -12,12 +12,12 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 const stageSchema = z.object({
-	order: z.number().int().positive('Порядок должен быть больше 0'),
+	order: z.number().int().positive('Order must be greater than 0'),
 	slug: z
 		.string()
-		.min(1, 'Slug обязателен')
-		.regex(/^[a-z0-9-]+$/, 'Slug может содержать только буквы, цифры и дефис'),
-	title: z.string().min(3, 'Название минимум 3 символа').max(255),
+		.min(1, 'Slug is required')
+		.regex(/^[a-z0-9-]+$/, 'Slug may only contain letters, numbers, and hyphens'),
+	title: z.string().min(3, 'Title must be at least 3 characters').max(255),
 	subtitle: z.string().optional(),
 	icon: z.string().optional(),
 })
@@ -78,13 +78,13 @@ export default function CreateStageDialog({
 		setIsSubmitting(true)
 		try {
 			await adminService.createStage(data)
-			toast.success('Этап создан успешно')
+			toast.success('Stage created successfully')
 			reset()
 			onOpenChange(false)
 			onSuccess()
 		} catch (error) {
 			console.error('Create stage error:', error)
-			toast.error('Ошибка при создании этапа')
+			toast.error('Error creating stage')
 		} finally {
 			setIsSubmitting(false)
 		}
@@ -104,10 +104,10 @@ export default function CreateStageDialog({
 						<div className='mx-auto flex max-w-4xl items-center justify-between px-6 py-4'>
 							<div>
 								<h3 className='text-2xl font-bold text-white'>
-									Создать новый этап
+									Create a new stage
 								</h3>
 								<p className='mt-1 text-sm text-gray-500'>
-									Добавьте этап обучения для структурирования курсов
+									Add a learning stage to organize courses
 								</p>
 							</div>
 							<m.button
@@ -137,13 +137,13 @@ export default function CreateStageDialog({
 							<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 								<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 									<Sparkles className='h-5 w-5 text-blue-400' />
-									Основная информация
+									Basic information
 								</h4>
 
 								<div className='space-y-6'>
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Порядковый номер
+											Order number
 										</label>
 										<input
 											{...register('order', { valueAsNumber: true })}
@@ -160,12 +160,12 @@ export default function CreateStageDialog({
 
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
-											Название этапа
+											Stage title
 										</label>
 										<input
 											{...register('title')}
 											className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
-											placeholder='Введите название этапа'
+											placeholder='Enter stage title'
 										/>
 										{errors.title && (
 											<p className='mt-2 text-sm text-red-400'>
@@ -178,7 +178,7 @@ export default function CreateStageDialog({
 										<label className='mb-2 flex items-center gap-2 text-sm font-semibold text-white'>
 											Slug
 											<span className='text-xs font-normal text-gray-500'>
-												(генерируется автоматически)
+												(generated automatically)
 											</span>
 										</label>
 										<input
@@ -195,15 +195,15 @@ export default function CreateStageDialog({
 
 									<div>
 										<label className='mb-2 flex items-center gap-2 text-sm font-semibold text-white'>
-											Подзаголовок{' '}
+											Subtitle{' '}
 											<span className='text-xs font-normal text-gray-500'>
-												(опционально)
+												(optional)
 											</span>
 										</label>
 										<input
 											{...register('subtitle')}
 											className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
-											placeholder='Краткое описание этапа'
+											placeholder='Brief stage description'
 										/>
 									</div>
 								</div>
@@ -213,19 +213,19 @@ export default function CreateStageDialog({
 							<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 								<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 									<Target className='h-5 w-5 text-green-400' />
-									Оформление
+									Appearance
 								</h4>
 
 								<div>
 									<label className='mb-2 block text-sm font-semibold text-white'>
-										Иконка (Lucide)
+										Icon (Lucide)
 									</label>
 									<IconPicker
 										value={icon}
 										onChange={value => setValue('icon', value)}
 									/>
 									<p className='mt-2 text-xs text-gray-500'>
-										Выберите иконку из библиотеки Lucide React
+										Choose an icon from the Lucide React library
 									</p>
 								</div>
 							</div>
@@ -235,11 +235,11 @@ export default function CreateStageDialog({
 								<AlertCircle className='mt-0.5 h-5 w-5 flex-shrink-0 text-blue-400' />
 								<div>
 									<p className='text-sm font-semibold text-blue-300'>
-										Совет: Автоматическая транслитерация
+										Tip: Automatic transliteration
 									</p>
 									<p className='mt-1 text-sm text-gray-400'>
-										Slug генерируется автоматически из названия этапа с
-										поддержкой русского языка
+										The slug is generated automatically from the stage title,
+										with support for Russian text
 									</p>
 								</div>
 							</div>
@@ -257,7 +257,7 @@ export default function CreateStageDialog({
 									disabled={isSubmitting}
 									className='flex-1 rounded-xl border border-white/10 bg-white/5 px-6 py-4 font-semibold text-gray-300 transition-all hover:bg-white/10 disabled:opacity-50'
 								>
-									Отмена
+									Cancel
 								</m.button>
 								<m.button
 									type='submit'
@@ -269,12 +269,12 @@ export default function CreateStageDialog({
 									{isSubmitting ? (
 										<>
 											<Loader2 className='mr-2 inline h-5 w-5 animate-spin' />
-											Создание...
+											Creating...
 										</>
 									) : (
 										<>
 											<Plus className='mr-2 inline h-5 w-5' />
-											Создать этап
+											Create stage
 										</>
 									)}
 								</m.button>

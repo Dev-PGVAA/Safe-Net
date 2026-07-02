@@ -85,10 +85,10 @@ export class AchievementsService {
 	async checkAndAwardAchievements(userId: string): Promise<string[]> {
 		const awardedCodes: string[] = []
 
-		// 1. Первый вход - при регистрации (вызывается отдельно)
-		// Эту ачивку нужно вызывать в auth.service.ts после создания пользователя
+		// 1. First login - awarded during registration (called separately)
+		// This achievement should be called in auth.service.ts after user creation
 
-		// 2. Первый урок - завершили первый урок
+		// 2. First lesson - completed the first lesson
 		const firstCompletedLesson = await this.prisma.completedLesson.findFirst({
 			where: { userId },
 		})
@@ -97,13 +97,12 @@ export class AchievementsService {
 			if (awarded) awardedCodes.push('FIRST_LESSON')
 		}
 
-		// 3. Мастер фишинга - прошли курс по фишингу
+		// 3. Phishing master - completed the phishing course
 		const phishingCourse = await this.prisma.course.findFirst({
 			where: {
 				OR: [
 					{ slug: { contains: 'phishing' } },
-					{ title: { contains: 'фишинг' } },
-					{ title: { contains: 'Фишинг' } },
+					{ title: { contains: 'phishing', mode: 'insensitive' } },
 				],
 			},
 		})
@@ -120,13 +119,12 @@ export class AchievementsService {
 			}
 		}
 
-		// 4. Эксперт паролей - завершили все курсы по паролям
+		// 4. Password expert - completed all password courses
 		const passwordCourses = await this.prisma.course.findMany({
 			where: {
 				OR: [
 					{ slug: { contains: 'password' } },
-					{ title: { contains: 'пароль' } },
-					{ title: { contains: 'Пароль' } },
+					{ title: { contains: 'password', mode: 'insensitive' } },
 				],
 			},
 		})
@@ -143,37 +141,37 @@ export class AchievementsService {
 			}
 		}
 
-		// 5. Новичок безопасности - прошли первый этап (все курсы 1-го этапа)
+		// 5. Security novice - completed the first stage (all stage-1 courses)
 		await this.checkStageCompletion(userId, 1, 'SECURITY_NOVICE', awardedCodes)
 
-		// 6. Продвинутый пользователь - прошли 4 этапа
+		// 6. Advanced user - completed 4 stages
 		const completedStages = await this.getCompletedStagesCount(userId)
 		if (completedStages >= 4) {
 			const awarded = await this.awardAchievement(userId, 'ADVANCED_USER')
 			if (awarded) awardedCodes.push('ADVANCED_USER')
 		}
 
-		// 7. Эксперт безопасности - прошли все 8 этапов
+		// 7. Security expert - completed all 8 stages
 		if (completedStages >= 8) {
 			const awarded = await this.awardAchievement(userId, 'SECURITY_EXPERT')
 			if (awarded) awardedCodes.push('SECURITY_EXPERT')
 		}
 
-		// 8. Идеальный результат - решили 50 заданий подряд без ошибок
+		// 8. Perfect score - solved 50 tasks in a row without a mistake
 		const perfectStreak = await this.checkPerfectStreak(userId, 50)
 		if (perfectStreak) {
 			const awarded = await this.awardAchievement(userId, 'PERFECT_STREAK')
 			if (awarded) awardedCodes.push('PERFECT_STREAK')
 		}
 
-		// 9. Быстрый ученик - завершили курс за 1 день
+		// 9. Fast learner - completed a course in 1 day
 		const fastCourse = await this.checkFastCourseCompletion(userId)
 		if (fastCourse) {
 			const awarded = await this.awardAchievement(userId, 'FAST_LEARNER')
 			if (awarded) awardedCodes.push('FAST_LEARNER')
 		}
 
-		// 10. Сертифицированный - получили первый сертификат
+		// 10. Certified - earned the first certificate
 		const firstCertificate = await this.prisma.certificate.findFirst({
 			where: { userId },
 		})
@@ -185,7 +183,7 @@ export class AchievementsService {
 		return awardedCodes
 	}
 
-	// Проверка завершения этапа
+	// Check stage completion
 	private async checkStageCompletion(
 		userId: string,
 		stageOrder: number,
@@ -216,7 +214,7 @@ export class AchievementsService {
 		}
 	}
 
-	// Подсчет завершенных этапов
+	// Count completed stages
 	private async getCompletedStagesCount(userId: string): Promise<number> {
 		const stages = await this.prisma.stage.findMany({
 			include: {
@@ -246,7 +244,7 @@ export class AchievementsService {
 		return completedCount
 	}
 
-	// Проверка серии из 50 правильных ответов подряд
+	// Check for a streak of 50 correct answers in a row
 	private async checkPerfectStreak(
 		userId: string,
 		targetStreak: number
@@ -264,7 +262,7 @@ export class AchievementsService {
 		return attempts.every(attempt => attempt.isCorrect)
 	}
 
-	// Проверка быстрого прохождения курса (за 1 день)
+	// Check for fast course completion (within 1 day)
 	private async checkFastCourseCompletion(userId: string): Promise<boolean> {
 		const certificates = await this.prisma.certificate.findMany({
 			where: { userId },
@@ -284,7 +282,7 @@ export class AchievementsService {
 		})
 
 		for (const cert of certificates) {
-			// Получаем первую и последнюю попытку задания в этом курсе
+			// Get the first and last task attempt in this course
 			const attempts = await this.prisma.taskAttempt.findMany({
 				where: {
 					userId,
