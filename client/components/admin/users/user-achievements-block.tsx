@@ -77,7 +77,7 @@ export default function UserAchievementsBlock({
 				const formattedDate =
 					formatDate(achievement.earnedAt, {
 						format: 'date-medium',
-						locale: 'ru-RU',
+						locale: 'en-US',
 						gracefulFail: true,
 					}) || 'Date unknown'
 

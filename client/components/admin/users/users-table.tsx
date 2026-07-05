@@ -60,7 +60,7 @@ export default function UsersTable({ users, onUserUpdated }: UsersTableProps) {
 						const createdDate =
 							formatDate(user.createdAt, {
 								format: 'date-medium',
-								locale: 'ru-RU',
+								locale: 'en-US',
 								gracefulFail: true,
 							}) || '—'
 

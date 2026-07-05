@@ -82,7 +82,7 @@ export default function UserActivityBlock({
 				const formattedDate =
 					formatDate(activity.date, {
 						format: 'medium',
-						locale: 'ru-RU',
+						locale: 'en-US',
 						gracefulFail: true,
 					}) || 'Date unknown'
 

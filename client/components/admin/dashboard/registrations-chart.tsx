@@ -1,7 +1,6 @@
 'use client'
 
 import { format, parseISO } from 'date-fns'
-import { ru } from 'date-fns/locale'
 import { m } from 'framer-motion'
 import { TrendingUp } from 'lucide-react'
 import {
@@ -29,7 +28,7 @@ export default function RegistrationsChart({
 }: RegistrationsChartProps) {
 	const formattedData = data.map(item => ({
 		...item,
-		date: format(parseISO(item.date), 'd MMM', { locale: ru }),
+		date: format(parseISO(item.date), 'd MMM'),
 	}))
 
 	const maxValue = Math.max(...data.map(d => d.count), 1)

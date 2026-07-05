@@ -44,7 +44,6 @@ import {
 } from '@heroicons/react/24/outline'
 import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
-import { ru } from 'date-fns/locale'
 import { AnimatePresence, m } from 'framer-motion'
 import {
     Activity,
@@ -173,7 +172,7 @@ export default function UsersPage() {
 				user.email,
 				user.rights.join('; '),
 				user.status === UserStatus.ACTIVE ? 'Active' : 'Blocked',
-				format(new Date(user.createdAt), 'dd.MM.yyyy HH:mm', { locale: ru }),
+				format(new Date(user.createdAt), 'dd.MM.yyyy HH:mm'),
 			])
 			const csvContent = [
 				headers.join(','),
@@ -551,9 +550,7 @@ export default function UsersPage() {
 														</span>
 													</td>
 													<td className='px-5 py-4 text-sm font-medium text-white/50'>
-														{format(new Date(user.createdAt), 'dd.MM.yyyy', {
-															locale: ru,
-														})}
+														{format(new Date(user.createdAt), 'dd.MM.yyyy')}
 													</td>
 													<td className='px-5 py-4 last:pr-6'>
 														<div className='flex items-center gap-1.5 transition-opacity duration-150'>

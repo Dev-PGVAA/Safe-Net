@@ -70,7 +70,7 @@ export default function UserCoursesBlock({ courses }: UserCoursesBlockProps) {
 					const formattedDate =
 						formatDate(course.updatedAt, {
 							format: 'date-medium',
-							locale: 'ru-RU',
+							locale: 'en-US',
 							gracefulFail: true,
 						}) || 'Recently'
 

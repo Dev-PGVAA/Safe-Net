@@ -46,14 +46,14 @@ export default function UserInfoBlock({
 	const createdDate =
 		formatDate(user.createdAt, {
 			format: 'date-long',
-			locale: 'ru-RU',
+			locale: 'en-US',
 			gracefulFail: true,
 		}) || 'Unknown'
 
 	const updatedDate =
 		formatDate(user.updatedAt, {
 			format: 'date-long',
-			locale: 'ru-RU',
+			locale: 'en-US',
 			gracefulFail: true,
 		}) || 'Unknown'
 

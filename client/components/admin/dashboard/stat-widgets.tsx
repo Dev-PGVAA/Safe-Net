@@ -90,7 +90,7 @@ export default function StatWidgets({ stats }: StatWidgetsProps) {
 									<div className='flex items-baseline gap-2'>
 										<p className='text-3xl font-bold'>
 											{typeof widget.value === 'number'
-												? widget.value.toLocaleString('ru-RU')
+												? widget.value.toLocaleString('en-US')
 												: widget.value}
 										</p>
 										{widget.change !== undefined && (

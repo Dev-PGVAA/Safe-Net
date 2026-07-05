@@ -43,7 +43,7 @@ export default function UserCertificatesBlock({
 				const formattedDate =
 					formatDate(cert.issuedAt, {
 						format: 'date-medium',
-						locale: 'ru-RU',
+						locale: 'en-US',
 						gracefulFail: true,
 					}) || 'Date unknown'
 

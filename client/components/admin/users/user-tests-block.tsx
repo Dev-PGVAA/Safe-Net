@@ -123,7 +123,7 @@ export default function UserTestsBlock({ testResults }: UserTestsBlockProps) {
 						{testResults.map((result, idx) => {
 							const formattedDate =
 								formatDate(result.completedAt, {
-									locale: 'ru-RU',
+									locale: 'en-US',
 									gracefulFail: true,
 								}) || 'Date unknown'
 
