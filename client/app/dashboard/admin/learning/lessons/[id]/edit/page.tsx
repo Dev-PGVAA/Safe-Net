@@ -59,7 +59,7 @@ export default function LessonEditPage() {
 						<div className='absolute inset-0 rounded-full border-4 border-white/10' />
 						<div className='absolute inset-0 rounded-full border-4 border-transparent border-t-white' />
 					</m.div>
-					<p className='text-sm font-medium text-gray-400'>Загрузка урока...</p>
+					<p className='text-sm font-medium text-gray-400'>Loading lesson...</p>
 				</div>
 			</div>
 		)
@@ -72,16 +72,16 @@ export default function LessonEditPage() {
 					<div className='mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-red-500/10'>
 						<BookOpen className='h-10 w-10 text-red-400' />
 					</div>
-					<h2 className='text-2xl font-bold text-white'>Урок не найден</h2>
+					<h2 className='text-2xl font-bold text-white'>Lesson not found</h2>
 					<p className='mt-2 text-gray-500'>
-						Возможно, он был удален или не существует
+						It may have been deleted or does not exist
 					</p>
 					<Link
 						href={ROUTES.ADMIN.LEARNING.COURSES}
 						className='mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 font-semibold text-black transition-all hover:scale-105'
 					>
 						<ArrowLeft className='h-4 w-4' />
-						Вернуться к курсам
+						Back to courses
 					</Link>
 				</div>
 			</div>
@@ -97,11 +97,11 @@ export default function LessonEditPage() {
 						showBackButton
 						items={[
 							{
-								label: 'Обучение',
+								label: 'Learning',
 								href: ROUTES.ADMIN.LEARNING.COURSES,
 							},
 							{
-								label: 'Курсы',
+								label: 'Courses',
 								href: ROUTES.ADMIN.LEARNING.COURSES,
 							},
 							{
@@ -131,12 +131,12 @@ export default function LessonEditPage() {
 								<div>
 									<div className='flex items-center gap-2'>
 										<span className='text-sm font-semibold text-gray-500'>
-											Урок {lesson.order}
+											Lesson {lesson.order}
 										</span>
 										{stats.isComplete && (
 											<div className='flex items-center gap-1 rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-medium text-green-400'>
 												<CheckCircle2 className='h-3 w-3' />
-												Готов
+												Ready
 											</div>
 										)}
 									</div>
@@ -164,10 +164,10 @@ export default function LessonEditPage() {
 								</div>
 								<p className='text-3xl font-bold text-white'>
 									{lesson.estimatedDuration || 0}
-									<span className='ml-1 text-lg text-gray-500'>мин</span>
+									<span className='ml-1 text-lg text-gray-500'>min</span>
 								</p>
 								<p className='mt-1 text-sm font-medium text-gray-500'>
-									Длительность
+									Duration
 								</p>
 							</div>
 						</m.div>
@@ -188,7 +188,7 @@ export default function LessonEditPage() {
 									{stats.blocksCount}
 								</p>
 								<p className='mt-1 text-sm font-medium text-gray-500'>
-									Блоки теории
+									Theory blocks
 								</p>
 							</div>
 						</m.div>
@@ -209,7 +209,7 @@ export default function LessonEditPage() {
 									{stats.tasksCount}
 								</p>
 								<p className='mt-1 text-sm font-medium text-gray-500'>
-									Практика
+									Practice
 								</p>
 							</div>
 						</m.div>
@@ -231,7 +231,7 @@ export default function LessonEditPage() {
 									<span className='ml-1 text-lg text-gray-500'>XP</span>
 								</p>
 								<p className='mt-1 text-sm font-medium text-gray-500'>
-									Всего баллов
+									Total points
 								</p>
 							</div>
 						</m.div>
@@ -255,7 +255,7 @@ export default function LessonEditPage() {
 									<Layers className='h-4 w-4 text-purple-400' />
 								</div>
 								<h2 className='text-2xl font-bold text-white'>
-									Теоретический контент
+									Theory content
 								</h2>
 							</div>
 
@@ -283,12 +283,12 @@ export default function LessonEditPage() {
 									</div>
 									<div>
 										<h2 className='text-2xl font-bold text-white'>
-											Практические задания
+											Practice tasks
 										</h2>
 										<p className='text-sm text-gray-500'>
 											{stats.tasksCount === 0
-												? 'Добавьте первое задание'
-												: `${stats.tasksCount} ${stats.tasksCount === 1 ? 'задание' : 'заданий'} • ${stats.totalPoints} XP`}
+												? 'Add your first task'
+												: `${stats.tasksCount} ${stats.tasksCount === 1 ? 'task' : 'tasks'} • ${stats.totalPoints} XP`}
 										</p>
 									</div>
 								</div>
@@ -298,7 +298,7 @@ export default function LessonEditPage() {
 										className='group flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 font-semibold text-black shadow-lg shadow-white/10 transition-all hover:bg-white/90 hover:shadow-white/20'
 									>
 										<Plus className='h-4 w-4 transition-transform group-hover:rotate-90' />
-										<span>Добавить</span>
+										<span>Add</span>
 									</Button>
 								</m.div>
 							</div>

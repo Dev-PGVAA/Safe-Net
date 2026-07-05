@@ -72,17 +72,16 @@ export default function DashboardHome() {
 
 	const getGreeting = useCallback(() => {
 		const hour = new Date().getHours()
-		if (hour < 6) return 'Доброй ночи'
-		if (hour < 12) return 'Доброе утро'
-		if (hour < 18) return 'Добрый день'
-		return 'Добрый вечер'
+		if (hour < 6) return 'Good night'
+		if (hour < 12) return 'Good morning'
+		if (hour < 18) return 'Good afternoon'
+		return 'Good evening'
 	}, [])
 
 	const getMotivationalMessage = useCallback((activeCount: number) => {
-		if (activeCount === 0) return 'Начните первый курс!'
-		if (activeCount === 1) return '1 активный курс'
-		if (activeCount < 5) return `${activeCount} активных курса`
-		return `${activeCount} активных курсов`
+		if (activeCount === 0) return 'Start your first course!'
+		if (activeCount === 1) return '1 active course'
+		return `${activeCount} active courses`
 	}, [])
 
 	return (
@@ -108,8 +107,8 @@ export default function DashboardHome() {
 			<AchievementNotification
 				show={showAchievement}
 				onClose={() => setShowAchievement(false)}
-				title='Добро пожаловать! 🎉'
-				description='Начни своё обучение и получай награды'
+				title='Welcome! 🎉'
+				description='Start your learning journey and earn rewards'
 			/>
 
 			<div
@@ -120,22 +119,22 @@ export default function DashboardHome() {
 			>
 				<WelcomeCard
 					greeting={getGreeting()}
-					userName={user?.name || 'Студент'}
+					userName={user?.name || 'Student'}
 					message={getMotivationalMessage(stats.activeCourses)}
 				/>
 				<div className='flex flex-col gap-3 lg:grid-cols-2 lg:gap-4'>
 					<AppleStatCard
 						icon={<Trophy className='w-5 h-5 text-emerald-400' />}
-						label='Завершено'
+						label='Completed'
 						value={stats.completedCourses.toString()}
-						subtext='курсов'
-						tooltip='Успешно пройденные курсы'
+						subtext='courses'
+						tooltip='Successfully completed courses'
 					/>
 					<AppleStatCard
 						icon={<Zap className='w-5 h-5 text-yellow-400' />}
-						label='Всего XP'
+						label='Total XP'
 						value={stats.totalXp.toLocaleString()}
-						tooltip='Общий опыт за все время'
+						tooltip='Total experience earned of all time'
 					/>
 				</div>
 			</div>
@@ -148,13 +147,13 @@ export default function DashboardHome() {
 			>
 				<SectionHeader
 					icon={<Play className='w-5 h-5 text-indigo-400' />}
-					title='Активные курсы'
+					title='Active courses'
 					subtitle={
 						stats.activeCourses > 0
-							? `${stats.activeCourses} ${stats.activeCourses === 1 ? 'курс' : stats.activeCourses < 5 ? 'курса' : 'курсов'} в процессе`
-							: 'Начни свое обучение'
+							? `${stats.activeCourses} ${stats.activeCourses === 1 ? 'course' : 'courses'} in progress`
+							: 'Start your learning journey'
 					}
-					actionLabel='Ко всем курсам'
+					actionLabel='View all courses'
 					actionHref={ROUTES.COURSES}
 					showAction={true}
 				/>
@@ -173,9 +172,9 @@ export default function DashboardHome() {
 				) : (
 					<EmptyState
 						icon={<BookOpen className='w-8 h-8 text-slate-600' />}
-						title='Нет активных курсов'
-						description='Начни свой путь к новым знаниям! Выбери курс из каталога ниже и получи первый опыт.'
-						actionLabel='Выбрать курс'
+						title='No active courses'
+						description='Start your journey to new knowledge! Pick a course from the catalog below and gain your first experience.'
+						actionLabel='Select a course'
 						actionHref={ROUTES.COURSES}
 					/>
 				)}

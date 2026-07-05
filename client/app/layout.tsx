@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 		default: SITE_NAME,
 		template: `%s | ${SITE_NAME}`,
 	},
-	description: 'Тренажер по кибербезопастности',
+	description: 'Cybersecurity Training Simulator',
 	icons: '/favicon.ico',
 }
 export default function RootLayout({

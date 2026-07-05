@@ -11,11 +11,11 @@ export default function AdminHeader() {
 	const [showUserMenu, setShowUserMenu] = useState(false)
 
 	const getPageTitle = () => {
-		if (pathname.includes('/learning/courses')) return 'Управление контентом'
-		if (pathname.includes('/users')) return 'Пользователи'
-		if (pathname.includes('/stats')) return 'Статистика'
-		if (pathname.includes('/settings')) return 'Настройки'
-		return 'Панель администратора'
+		if (pathname.includes('/learning/courses')) return 'Content management'
+		if (pathname.includes('/users')) return 'Users'
+		if (pathname.includes('/stats')) return 'Statistics'
+		if (pathname.includes('/settings')) return 'Settings'
+		return 'Admin panel'
 	}
 
 	return (
@@ -36,7 +36,7 @@ export default function AdminHeader() {
 				<Search className='w-4 h-4 text-gray-400' />
 				<input
 					type='text'
-					placeholder='Поиск...'
+					placeholder='Search...'
 					className='bg-transparent outline-none text-sm text-gray-900 dark:text-white placeholder-gray-500 flex-1'
 				/>
 			</div>
@@ -74,10 +74,10 @@ export default function AdminHeader() {
 							href='/dashboard/admin/settings'
 							className='block px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition border-b border-gray-200 dark:border-gray-800'
 						>
-							Профиль
+							Profile
 						</Link>
 						<button className='w-full text-left px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition'>
-							Выход
+							Logout
 						</button>
 					</m.div>
 				)}

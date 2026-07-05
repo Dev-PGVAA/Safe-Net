@@ -31,7 +31,7 @@ export default function CertificatePage() {
 				showBackButton
 				items={[
 					{
-						label: 'Сертификаты',
+						label: 'Certificates',
 						href: ROUTES.CERTIFICATES,
 					},
 					{ label: certificate.course.title },
@@ -49,7 +49,7 @@ export default function CertificatePage() {
 					background:
 						'linear-gradient(135deg, #0A0F1D 0%, #1a1f3a 50%, #0A0F1D 100%)',
 				}}
-				aria-label='Сертификат об окончании курса'
+				aria-label='Course completion certificate'
 			>
 				{/* Animated background gradient */}
 				<div className='absolute inset-0 opacity-20 pointer-events-none'>
@@ -91,7 +91,7 @@ export default function CertificatePage() {
 					>
 						<div className='space-y-2'>
 							<h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-white via-white to-white/80 tracking-tight leading-tight'>
-								СЕРТИФИКАТ
+								CERTIFICATE
 							</h1>
 							<div className='flex justify-center'>
 								<div className='h-1 w-32 bg-linear-to-r from-transparent via-white/50 to-transparent rounded-full' />
@@ -101,7 +101,7 @@ export default function CertificatePage() {
 						<div className='inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/20 shadow-lg'>
 							<Shield className='w-4 h-4 text-blue-400' />
 							<p className='text-sm sm:text-base text-white/80 font-semibold'>
-								об успешном завершении курса
+								of successful course completion
 							</p>
 						</div>
 					</m.div>
@@ -114,7 +114,7 @@ export default function CertificatePage() {
 						className='text-center space-y-5'
 					>
 						<p className='text-sm sm:text-base text-white/60 font-light uppercase tracking-wider'>
-							Настоящим подтверждается, что
+							This is to certify that
 						</p>
 
 						<div className='relative inline-block'>
@@ -135,7 +135,7 @@ export default function CertificatePage() {
 						className='text-center space-y-5 px-4'
 					>
 						<p className='text-sm sm:text-base text-white/60 font-light'>
-							успешно завершил(а) образовательный курс
+							has successfully completed the educational course
 						</p>
 
 						<div className='max-w-4xl mx-auto'>
@@ -160,18 +160,18 @@ export default function CertificatePage() {
 					>
 						<DetailCard
 							icon={Hash}
-							label='Номер сертификата'
+							label='Certificate Number'
 							value={certificate.certificateNumber}
 						/>
 						<DetailCard
 							icon={Calendar}
-							label='Дата выдачи'
+							label='Issue Date'
 							value={formatDate(certificate.issuedAt)}
 						/>
 						<DetailCard
 							icon={CheckCircle2}
-							label='Статус'
-							value='Подтверждён'
+							label='Status'
+							value='Verified'
 						/>
 					</m.div>
 
@@ -191,9 +191,9 @@ export default function CertificatePage() {
 						</div>
 
 						<p className='text-xs sm:text-sm text-white/40 text-center font-light max-w-2xl mx-auto'>
-							Официальный документ, подтверждающий успешное прохождение курса.
+							An official document confirming successful completion of the course.
 							<br />
-							Сертификат действителен и может быть верифицирован по номеру.
+							This certificate is valid and can be verified by its number.
 						</p>
 					</m.div>
 				</div>
@@ -235,7 +235,7 @@ function DetailCard({ icon: Icon, label, value }: DetailCardProps) {
  * Displayed while certificate data is being fetched
  */
 const CertificateSkeleton = () => (
-	<div className='space-y-8' role='status' aria-label='Загрузка сертификата'>
+	<div className='space-y-8' role='status' aria-label='Loading certificate'>
 		<Skeleton className='h-10 w-64 rounded-xl bg-white/5' />
 		<Skeleton className='h-[842px] rounded-3xl bg-white/5' />
 	</div>
@@ -263,16 +263,16 @@ const CertificateNotFound = () => {
 						<Award className='w-10 h-10 text-white/20' />
 					</div>
 					<h2 className='text-3xl font-black text-white mb-3'>
-						Сертификат не найден
+						Certificate Not Found
 					</h2>
 					<p className='text-lg text-white/60 mb-8 leading-relaxed'>
-						Проверьте ссылку или обратитесь к администратору
+						Check the link or contact your administrator
 					</p>
 					<button
 						onClick={() => router.push(ROUTES.CERTIFICATES)}
 						className='w-full h-14 rounded-2xl bg-white text-black hover:bg-white/80 shadow-2xl font-bold text-base transition-colors duration-200'
 					>
-						← Вернуться к сертификатам
+						← Back to certificates
 					</button>
 				</Card>
 			</m.div>

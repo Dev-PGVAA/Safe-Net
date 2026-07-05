@@ -7,7 +7,7 @@ export function useLearningContent() {
 	const { data, isLoading, error, refetch } = useQuery({
 		queryKey: ['learning-content', 'stages'],
 		queryFn: () => adminService.getStages(),
-		refetchInterval: 60000, // 1 минута
+		refetchInterval: 60000, // 1 minute
 	})
 
 	return {

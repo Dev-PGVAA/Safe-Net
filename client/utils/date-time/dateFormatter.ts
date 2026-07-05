@@ -173,7 +173,7 @@ export function formatDate(
 ): string | null {
 	const {
 		format = 'medium',
-		locale = 'ru-RU',
+		locale = 'en-US',
 		timeZone = getSystemTimeZone(),
 		customOptions,
 		gracefulFail = true,
@@ -219,7 +219,7 @@ export function toISO(date: Date | string | number): string | null {
 
 export function toRelative(
 	date: Date | string | number,
-	locale = 'ru-RU'
+	locale = 'en-US'
 ): string | null {
 	return formatDate(date, { format: 'relative', locale })
 }

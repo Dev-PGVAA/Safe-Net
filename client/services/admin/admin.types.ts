@@ -33,7 +33,7 @@ export enum ActivityType {
 	ACHIEVEMENT_UNLOCKED = 'ACHIEVEMENT_UNLOCKED',
 }
 
-// ✅ РАСШИРЕННАЯ Stats Overview с данными для графиков
+// ✅ EXTENDED Stats Overview with chart data
 export interface IAdminStats {
 	users: {
 		total: number
@@ -57,7 +57,7 @@ export interface IAdminStats {
 		today: number
 		week: number
 		month: number
-		data: { date: string; count: number }[] // Для Line Chart
+		data: { date: string; count: number }[] // For the line chart
 	}
 	topCourses: {
 		id: string
@@ -105,7 +105,7 @@ export interface IUserListItem {
 	}
 }
 
-// ✅ ИСПРАВЛЕНО: структура данных с сервера
+// ✅ FIXED: data structure from the server
 export interface IUserDetail {
 	id: string
 	email: string
@@ -131,7 +131,7 @@ export interface IUserDetail {
 	testResults: IUserDetailTestResult[]
 }
 
-// ✅ НОВЫЙ: Курс в детальной информации пользователя
+// ✅ NEW: Course in the user detail info
 export interface IUserDetailCourse {
 	id: string
 	title: string
@@ -141,7 +141,7 @@ export interface IUserDetailCourse {
 	updatedAt: string
 }
 
-// ✅ НОВЫЙ: Активность пользователя (реальная структура с сервера)
+// ✅ NEW: User activity (actual structure from the server)
 export interface IUserRecentActivity {
 	type: 'lesson' | 'test' | 'course'
 	title: string
@@ -150,7 +150,7 @@ export interface IUserRecentActivity {
 	date: string
 }
 
-// ✅ НОВЫЙ: Сертификат в детальной информации
+// ✅ NEW: Certificate in the detail info
 export interface IUserDetailCertificate {
 	id: string
 	courseId: string
@@ -159,7 +159,7 @@ export interface IUserDetailCertificate {
 	certificateNumber: string
 }
 
-// ✅ НОВЫЙ: Результат теста в детальной информации
+// ✅ NEW: Test result in the detail info
 export interface IUserDetailTestResult {
 	id: string
 	testId: string
@@ -172,7 +172,7 @@ export interface IUserDetailTestResult {
 	completedAt: string
 }
 
-// ✅ ОСТАВЛЕНО для обратной совместимости (старые интерфейсы)
+// ✅ KEPT for backward compatibility (legacy interfaces)
 export interface IUserCourse {
 	id: string
 	title: string

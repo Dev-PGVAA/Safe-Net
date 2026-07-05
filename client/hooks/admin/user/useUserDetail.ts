@@ -7,7 +7,7 @@ export function useUserDetail(userId: string) {
 	const { data, isLoading, error, refetch } = useQuery({
 		queryKey: ['admin-user', userId],
 		queryFn: () => adminService.getUserDetail(userId),
-		refetchInterval: 60000, // 1 минута
+		refetchInterval: 60000, // 1 minute
 		enabled: !!userId,
 	})
 

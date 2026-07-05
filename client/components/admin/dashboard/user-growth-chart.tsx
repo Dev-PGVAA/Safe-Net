@@ -33,7 +33,7 @@ export default function UserGrowthChart({ data }: UserGrowthChartProps) {
 				className='bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6'
 			>
 				<p className='text-center text-gray-500 dark:text-gray-400 py-8'>
-					Нет данных для отображения
+					No data to display
 				</p>
 			</m.div>
 		)
@@ -53,11 +53,11 @@ export default function UserGrowthChart({ data }: UserGrowthChartProps) {
 							<TrendingUp className='w-5 h-5 text-green-600 dark:text-green-400' />
 						</div>
 						<h3 className='text-xl font-semibold text-gray-900 dark:text-white'>
-							Рост пользователей
+							User growth
 						</h3>
 					</div>
 					<p className='text-sm text-gray-600 dark:text-gray-400 mt-1'>
-						Динамика за последние 6 месяцев
+						Trend over the last 6 months
 					</p>
 				</div>
 			</div>
@@ -105,9 +105,9 @@ export default function UserGrowthChart({ data }: UserGrowthChartProps) {
 								color: '#fff',
 							}}
 							formatter={(value: number, name: string) => {
-								if (name === 'total') return [`${value}`, 'Всего']
-								if (name === 'active') return [`${value}`, 'Активных']
-								if (name === 'new') return [`${value}`, 'Новых']
+								if (name === 'total') return [`${value}`, 'Total']
+								if (name === 'active') return [`${value}`, 'Active']
+								if (name === 'new') return [`${value}`, 'New']
 								return [value, name]
 							}}
 							labelStyle={{ color: '#fff' }}
@@ -118,7 +118,7 @@ export default function UserGrowthChart({ data }: UserGrowthChartProps) {
 							dataKey='total'
 							stroke='#3b82f6'
 							fill='url(#colorTotal)'
-							name='Всего'
+							name='Total'
 							strokeWidth={2}
 							animationDuration={800}
 						/>
@@ -127,7 +127,7 @@ export default function UserGrowthChart({ data }: UserGrowthChartProps) {
 							dataKey='active'
 							stroke='#10b981'
 							fill='url(#colorActive)'
-							name='Активных'
+							name='Active'
 							strokeWidth={2}
 							animationDuration={800}
 						/>

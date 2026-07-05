@@ -4,8 +4,8 @@ export enum UserRole {
 }
 
 export const UserRoleLabel: Record<UserRole, string> = {
-	[UserRole.USER]: 'Пользователь',
-	[UserRole.ADMIN]: 'Админ',
+	[UserRole.USER]: 'User',
+	[UserRole.ADMIN]: 'Admin',
 }
 
 export interface ITokenInside {

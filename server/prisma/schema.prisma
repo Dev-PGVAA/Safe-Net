@@ -6,7 +6,7 @@ datasource db {
   provider = "postgresql"
 }
 
-/// Роли и статусы
+/// Roles and statuses
 enum Role {
   USER
   ADMIN
@@ -33,10 +33,10 @@ enum Difficulty {
 }
 
 enum BlockType {
-  THEORY // Теоретический блок (текст/параграф)
+  THEORY // Theory block (text/paragraph)
 }
 
-/// Пользователи и аутентификация
+/// Users and authentication
 model User {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now()) @map("created_at")
@@ -58,7 +58,7 @@ model User {
   @@map("users")
 }
 
-/// Учебная структура: этапы → курсы → уроки → задания
+/// Learning structure: stages → courses → lessons → tasks
 model Stage {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -127,9 +127,9 @@ model LessonBlock {
   order Int
   type  BlockType @default(THEORY)
 
-  // Контент блока
+  // Block content
   title   String?
-  content String // Markdown текст
+  content String // Markdown text
 
   @@index([lessonId])
   @@index([lessonId, order])
@@ -148,14 +148,14 @@ model Task {
   type        TaskType
   title       String
   question    String?
-  meta        Json? // Доп. данные для PHISHING_EMAIL/SITE
+  meta        Json? // Extra data for PHISHING_EMAIL/SITE
   explanation String?
   points      Int        @default(10)
   difficulty  Difficulty @default(MEDIUM)
 
-  // Правильные ответы
-  correctAnswerIndex Int? // Для SINGLE/MULTI_CHOICE
-  correctAnswer      String? // Для SHORT_ANSWER/TEXT_INPUT
+  // Correct answers
+  correctAnswerIndex Int? // For SINGLE/MULTI_CHOICE
+  correctAnswer      String? // For SHORT_ANSWER/TEXT_INPUT
 
   options  TaskOption[]
   attempts TaskAttempt[]
@@ -180,7 +180,7 @@ model TaskOption {
   @@map("task_options")
 }
 
-/// Прогресс и попытки
+/// Progress and attempts
 model TaskAttempt {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -238,7 +238,7 @@ model CourseProgress {
   @@map("course_progress")
 }
 
-/// Тесты
+/// Tests
 model Test {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())

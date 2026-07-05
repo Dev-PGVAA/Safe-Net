@@ -8,23 +8,23 @@ import * as LucideIcons from 'lucide-react'
 import { useMemo, useState } from 'react'
 
 const ICON_NAMES: string[] = [
-	// Основное (Навигация и Обучение)
-	'Shield', 'ShieldCheck', 'ShieldAlert', 'ShieldOff', // Безопасность
-	'Lock', 'Unlock', 'Key', 'KeyRound', 'Fingerprint', // Доступ
-	'BookOpen', 'GraduationCap', 'Library', 'School', // Образование
+	// Core (Navigation and Learning)
+	'Shield', 'ShieldCheck', 'ShieldAlert', 'ShieldOff', // Security
+	'Lock', 'Unlock', 'Key', 'KeyRound', 'Fingerprint', // Access
+	'BookOpen', 'GraduationCap', 'Library', 'School', // Education
 	'LayoutDashboard', 'Home', 'Settings', 'User', 'Users', // UI
 
-	// Техническое (Кодинг и Сети)
-	'Terminal', 'Code2', 'Cpu', 'Binary', 'Database', // Разработка
-	'Network', 'Globe', 'Server', 'HardDrive', 'Wifi', // Инфраструктура
-	'Bug', 'Venom', 'Skull', 'Zap', 'Flame', // Угрозы и вирусы
-	'Scan', 'SearchCode', 'Activity', 'Radar', 'Eye', // Мониторинг
+	// Technical (Coding and Networks)
+	'Terminal', 'Code2', 'Cpu', 'Binary', 'Database', // Development
+	'Network', 'Globe', 'Server', 'HardDrive', 'Wifi', // Infrastructure
+	'Bug', 'Venom', 'Skull', 'Zap', 'Flame', // Threats and viruses
+	'Scan', 'SearchCode', 'Activity', 'Radar', 'Eye', // Monitoring
 
-	// Аналитика и Файлы
-	'FileCode', 'FileLock2', 'FileSearch', 'FileWarning', // Работа с файлом
-	'BarChart3', 'LineChart', 'PieChart', 'History', // Статистика
+	// Analytics and Files
+	'FileCode', 'FileLock2', 'FileSearch', 'FileWarning', // File handling
+	'BarChart3', 'LineChart', 'PieChart', 'History', // Statistics
 
-	// Интерфейс (Действия)
+	// Interface (Actions)
 	'Plus', 'Trash2', 'Edit3', 'Save', 'Download', 'Upload',
 	'AlertTriangle', 'Info', 'CheckCircle2', 'XCircle',
 	'ArrowRight', 'ChevronRight', 'ExternalLink', 'Share2',
@@ -52,7 +52,7 @@ export function IconPicker({ value = 'BookOpen', onValueChange }: IconPickerProp
 			? ICON_NAMES.filter(name => name.toLowerCase().includes(s))
 			: ICON_NAMES
 
-		// 2. Жёсткий лимит на количество отображаемых иконок
+		// 2. Hard limit on the number of displayed icons
 		return base.slice(0, 200)
 	}, [search])
 
@@ -68,7 +68,7 @@ export function IconPicker({ value = 'BookOpen', onValueChange }: IconPickerProp
 				>
 					<div className='flex items-center gap-2'>
 						<SelectedIcon className='w-4 h-4' />
-						<span>{value || 'Выберите иконку'}</span>
+						<span>{value || 'Select an icon'}</span>
 					</div>
 					<LucideIcons.ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
 				</Button>
@@ -82,7 +82,7 @@ export function IconPicker({ value = 'BookOpen', onValueChange }: IconPickerProp
 				<div className='flex flex-col'>
 					<div className='border-b border-white/10 p-3'>
 						<Input
-							placeholder='Поиск иконки...'
+							placeholder='Search icons...'
 							value={search}
 							onChange={e => setSearch(e.target.value)}
 							className='bg-white/5 border-white/10 text-white placeholder:text-gray-500 h-10'
@@ -130,13 +130,13 @@ export function IconPicker({ value = 'BookOpen', onValueChange }: IconPickerProp
 
 							<div className='border-t border-white/10 px-4 py-3 bg-white/[0.02]'>
 								<p className='text-xs text-gray-400'>
-									Показано {filtered.length} из {ICON_NAMES.length} иконок
+									Showing {filtered.length} of {ICON_NAMES.length} icons
 								</p>
 							</div>
 						</>
 					) : (
 						<div className='text-center py-8 text-gray-400 text-sm'>
-							Иконка не найдена
+							No icons found
 						</div>
 					)}
 				</div>

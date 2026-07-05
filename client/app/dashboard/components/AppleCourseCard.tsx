@@ -46,7 +46,7 @@ export const AppleCourseCard = memo(({ course, index }: any) => {
 					{}
 					<div className='flex-1 flex flex-col justify-end space-y-3'>
 						<div className='flex items-center justify-between text-sm'>
-							<span className='text-slate-400 font-medium'>Прогресс</span>
+							<span className='text-slate-400 font-medium'>Progress</span>
 							<span className='font-bold text-slate-200'>
 								{Math.round(course.progress)}%
 							</span>
@@ -69,7 +69,7 @@ export const AppleCourseCard = memo(({ course, index }: any) => {
 						<span className='font-medium'>{course.totalXp} XP</span>
 					</div>
 					<div className='flex items-center gap-1.5 text-sm font-medium text-slate-300 group-hover:text-blue-300 group-hover:gap-2 transition-all duration-300'>
-						<span>{course.completed ? 'Повторить' : 'Продолжить'}</span>
+						<span>{course.completed ? 'Retake' : 'Continue'}</span>
 						<ArrowUpRight className='w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300' />
 					</div>
 				</div>

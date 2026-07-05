@@ -55,7 +55,7 @@ async function main() {
 			update: {},
 			create: {
 				email: 'demo@safe.net',
-				name: 'Демо Пользователь',
+				name: 'Demo User',
 				password: hashedPassword,
 				rights: [Role.USER],
 			},
@@ -66,7 +66,7 @@ async function main() {
 			update: {},
 			create: {
 				email: 'admin@safe.net',
-				name: 'Админ',
+				name: 'Admin',
 				password: hashedPassword,
 				rights: [Role.ADMIN, Role.USER],
 			},
@@ -78,8 +78,8 @@ async function main() {
 				data: {
 					order: 1,
 					slug: 'basics',
-					title: 'Основы безопасности',
-					subtitle: 'Фундаментальные знания • 3 курса',
+					title: 'Security Basics',
+					subtitle: 'Fundamental knowledge • 3 courses',
 					icon: 'shield',
 				},
 			}),
@@ -87,8 +87,8 @@ async function main() {
 				data: {
 					order: 2,
 					slug: 'phishing',
-					title: 'Фишинг и мошенничество',
-					subtitle: 'Распознавание угроз • 3 курса',
+					title: 'Phishing & Fraud',
+					subtitle: 'Recognizing threats • 3 courses',
 					icon: 'fish',
 				},
 			}),
@@ -96,8 +96,8 @@ async function main() {
 				data: {
 					order: 3,
 					slug: 'dangerous-links',
-					title: 'Опасные ссылки',
-					subtitle: 'Проверка URL • 2 курса',
+					title: 'Dangerous Links',
+					subtitle: 'Checking URLs • 2 courses',
 					icon: 'link-2-off',
 				},
 			}),
@@ -105,8 +105,8 @@ async function main() {
 				data: {
 					order: 4,
 					slug: 'passwords',
-					title: 'Пароли',
-					subtitle: 'Надежная аутентификация • 3 курса',
+					title: 'Passwords',
+					subtitle: 'Reliable authentication • 3 courses',
 					icon: 'lock',
 				},
 			}),
@@ -114,8 +114,8 @@ async function main() {
 				data: {
 					order: 5,
 					slug: 'malware',
-					title: 'Вредоносное ПО',
-					subtitle: 'Защита от угроз • 2 курса',
+					title: 'Malware',
+					subtitle: 'Protection from threats • 2 courses',
 					icon: 'bug',
 				},
 			}),
@@ -123,8 +123,8 @@ async function main() {
 				data: {
 					order: 6,
 					slug: 'social-media',
-					title: 'Соцсети',
-					subtitle: 'Безопасность онлайн • 2 курса',
+					title: 'Social Media',
+					subtitle: 'Staying safe online • 2 courses',
 					icon: 'users',
 				},
 			}),
@@ -132,8 +132,8 @@ async function main() {
 				data: {
 					order: 7,
 					slug: 'privacy',
-					title: 'Личные данные',
-					subtitle: 'Конфиденциальность • 3 курса',
+					title: 'Personal Data',
+					subtitle: 'Privacy • 3 courses',
 					icon: 'eye-off',
 				},
 			}),
@@ -141,8 +141,8 @@ async function main() {
 				data: {
 					order: 8,
 					slug: 'advanced',
-					title: 'Продвинутый уровень',
-					subtitle: 'Для экспертов • 2 курса',
+					title: 'Advanced Level',
+					subtitle: 'For experts • 2 courses',
 					icon: 'zap',
 				},
 			}),
@@ -151,13 +151,13 @@ async function main() {
 		console.log('🎓 Creating courses for all stages...')
 
 		// ========================
-		// ЭТАП 1: ОСНОВЫ БЕЗОПАСНОСТИ
+		// STAGE 1: SECURITY BASICS
 		// ========================
 		const course1 = await tx.course.create({
 			data: {
 				slug: 'digital-safety-basics',
-				title: 'Основы цифровой безопасности',
-				description: 'Фундаментальные принципы защиты в интернете',
+				title: 'Digital Safety Basics',
+				description: 'Fundamental principles of protection online',
 				difficulty: Difficulty.EASY,
 				stageId: stages[0].id,
 			},
@@ -165,7 +165,7 @@ async function main() {
 
 		const lesson1_1 = await tx.lesson.create({
 			data: {
-				title: 'Что такое цифровая безопасность?',
+				title: 'What Is Digital Safety?',
 				order: 1,
 				courseId: course1.id,
 				estimatedDuration: calculateEstimatedDuration(3, 2),
@@ -178,39 +178,39 @@ async function main() {
 					lessonId: lesson1_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Введение в цифровую безопасность',
-					content: `Цифровая безопасность — это защита ваших данных, устройств и личной информации в интернете. В современном мире мы храним на телефонах и компьютерах фотографии, переписки, банковские данные и многое другое.
+					title: 'Introduction to Digital Safety',
+					content: `Digital safety is the protection of your data, devices, and personal information online. In today's world, we store photos, messages, banking details, and much more on our phones and computers.
 
-Без правильной защиты злоумышленники могут:
-- Украсть ваши деньги
-- Получить доступ к личной переписке
-- Использовать ваши данные для мошенничества
-- Заблокировать доступ к вашим файлам`,
+Without proper protection, attackers can:
+- Steal your money
+- Gain access to your private messages
+- Use your data for fraud
+- Lock you out of your own files`,
 				},
 				{
 					lessonId: lesson1_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Основные угрозы',
-					content: `**Вирусы и вредоносное ПО** — программы, которые заражают ваше устройство и крадут данные.
+					title: 'Main Threats',
+					content: `**Viruses and malware** — programs that infect your device and steal data.
 
-**Фишинг** — мошенники выдают себя за банки или известные компании, чтобы выманить ваши пароли.
+**Phishing** — scammers pose as banks or well-known companies to trick you into revealing your passwords.
 
-**Слежка** — сбор информации о вас без вашего согласия.
+**Surveillance** — collecting information about you without your consent.
 
-**Утечки данных** — когда компании теряют базы с паролями пользователей.`,
+**Data breaches** — when companies lose databases containing users' passwords.`,
 				},
 				{
 					lessonId: lesson1_1.id,
 					order: 3,
 					type: BlockType.THEORY,
-					title: 'Как защититься?',
-					content: `1. Используйте надежные пароли
-2. Включите двухфакторную аутентификацию
-3. Устанавливайте обновления системы
-4. Не открывайте подозрительные ссылки
-5. Используйте антивирус
-6. Делайте резервные копии важных файлов`,
+					title: 'How to Protect Yourself?',
+					content: `1. Use strong passwords
+2. Turn on two-factor authentication
+3. Install system updates
+4. Don't open suspicious links
+5. Use antivirus software
+6. Back up your important files`,
 				},
 			],
 		})
@@ -220,13 +220,13 @@ async function main() {
 				lessonId: lesson1_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Основные угрозы',
-				question: 'Что НЕ является угрозой цифровой безопасности?',
+				title: 'Main Threats',
+				question: 'Which of these is NOT a digital safety threat?',
 				points: 10,
 				difficulty: Difficulty.EASY,
 				correctAnswerIndex: 2,
 				explanation:
-					'Обновления операционной системы не являются угрозой — наоборот, они закрывают уязвимости и защищают от атак.', // ✅ Добавьте
+					'Operating system updates are not a threat — on the contrary, they close vulnerabilities and protect against attacks.',
 			},
 		})
 
@@ -235,25 +235,25 @@ async function main() {
 				{
 					taskId: task1_1.id,
 					order: 1,
-					text: 'Фишинговое письмо от "банка"',
+					text: 'A phishing email from a "bank"',
 					isCorrect: false,
 				},
 				{
 					taskId: task1_1.id,
 					order: 2,
-					text: 'Вирус на флешке',
+					text: 'A virus on a USB drive',
 					isCorrect: false,
 				},
 				{
 					taskId: task1_1.id,
 					order: 3,
-					text: 'Обновление операционной системы',
+					text: 'An operating system update',
 					isCorrect: true,
 				},
 				{
 					taskId: task1_1.id,
 					order: 4,
-					text: 'Взлом аккаунта',
+					text: 'An account hack',
 					isCorrect: false,
 				},
 			],
@@ -264,12 +264,12 @@ async function main() {
 				lessonId: lesson1_1.id,
 				order: 2,
 				type: TaskType.MULTI_CHOICE,
-				title: 'Методы защиты',
-				question: 'Выберите правильные способы защиты (несколько вариантов):',
+				title: 'Protection Methods',
+				question: 'Select the correct protection methods (multiple answers):',
 				points: 15,
 				difficulty: Difficulty.EASY,
 				explanation:
-					'Двухфакторная аутентификация и обновления безопасности — основные методы защиты. Один пароль везде и отключение антивируса делают вас уязвимыми.', // ✅
+					'Two-factor authentication and security updates are the main protection methods. Using one password everywhere and disabling antivirus make you vulnerable.',
 			},
 		})
 
@@ -278,25 +278,25 @@ async function main() {
 				{
 					taskId: task1_2.id,
 					order: 1,
-					text: 'Использовать один пароль везде',
+					text: 'Use one password everywhere',
 					isCorrect: false,
 				},
 				{
 					taskId: task1_2.id,
 					order: 2,
-					text: 'Включить двухфакторную аутентификацию',
+					text: 'Enable two-factor authentication',
 					isCorrect: true,
 				},
 				{
 					taskId: task1_2.id,
 					order: 3,
-					text: 'Устанавливать обновления безопасности',
+					text: 'Install security updates',
 					isCorrect: true,
 				},
 				{
 					taskId: task1_2.id,
 					order: 4,
-					text: 'Отключить антивирус для ускорения ПК',
+					text: 'Disable antivirus to speed up the PC',
 					isCorrect: false,
 				},
 			],
@@ -304,7 +304,7 @@ async function main() {
 
 		const lesson1_2 = await tx.lesson.create({
 			data: {
-				title: 'Антивирус и обновления',
+				title: 'Antivirus and Updates',
 				order: 2,
 				courseId: course1.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -317,32 +317,32 @@ async function main() {
 					lessonId: lesson1_2.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Зачем нужен антивирус?',
-					content: `Антивирус — это программа, которая защищает ваш компьютер от вредоносного ПО. Он работает как охранник, проверяя все файлы и программы на наличие угроз.
+					title: 'Why Do You Need Antivirus?',
+					content: `Antivirus is software that protects your computer from malware. It works like a guard, checking all files and programs for threats.
 
-**Что делает антивирус:**
-- Сканирует файлы при скачивании
-- Блокирует опасные сайты
-- Удаляет обнаруженные вирусы
-- Защищает в реальном времени
+**What antivirus does:**
+- Scans files as they're downloaded
+- Blocks dangerous websites
+- Removes detected viruses
+- Protects in real time
 
-**Популярные антивирусы:** Windows Defender (встроен в Windows), Kaspersky, ESET, Avast.`,
+**Popular antivirus software:** Windows Defender (built into Windows), Kaspersky, ESET, Avast.`,
 				},
 				{
 					lessonId: lesson1_2.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Обновления системы',
-					content: `Обновления закрывают уязвимости в операционной системе. Хакеры постоянно ищут слабые места, а разработчики выпускают "заплатки".
+					title: 'System Updates',
+					content: `Updates close vulnerabilities in the operating system. Hackers constantly search for weak spots, and developers release "patches" to fix them.
 
-**Почему это важно:**
-- В 2017 вирус WannaCry заразил 200 000 компьютеров, используя уязвимость, для которой уже был патч
-- Устаревшие системы — легкая цель для атак
-- Обновления также улучшают производительность
+**Why this matters:**
+- In 2017 the WannaCry virus infected 200,000 computers by exploiting a vulnerability a patch already existed for
+- Outdated systems are an easy target for attacks
+- Updates also improve performance
 
-**Как включить автообновления:**
-Windows: Настройки → Обновление и безопасность → Автоматически
-macOS: Системные настройки → Обновление ПО → Автоматически`,
+**How to enable automatic updates:**
+Windows: Settings → Update & Security → Automatic
+macOS: System Settings → Software Update → Automatic`,
 				},
 			],
 		})
@@ -352,8 +352,8 @@ macOS: Системные настройки → Обновление ПО → �
 				lessonId: lesson1_2.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Роль антивируса',
-				question: 'Какая основная функция антивируса?',
+				title: 'The Role of Antivirus',
+				question: "What is antivirus software's main function?",
 				points: 10,
 				difficulty: Difficulty.EASY,
 				correctAnswerIndex: 1,
@@ -365,25 +365,25 @@ macOS: Системные настройки → Обновление ПО → �
 				{
 					taskId: task1_3.id,
 					order: 1,
-					text: 'Ускорять работу компьютера',
+					text: 'Speed up the computer',
 					isCorrect: false,
 				},
 				{
 					taskId: task1_3.id,
 					order: 2,
-					text: 'Обнаруживать и блокировать вирусы',
+					text: 'Detect and block viruses',
 					isCorrect: true,
 				},
 				{
 					taskId: task1_3.id,
 					order: 3,
-					text: 'Увеличивать скорость интернета',
+					text: 'Increase internet speed',
 					isCorrect: false,
 				},
 				{
 					taskId: task1_3.id,
 					order: 4,
-					text: 'Удалять ненужные файлы',
+					text: 'Delete unnecessary files',
 					isCorrect: false,
 				},
 			],
@@ -392,8 +392,8 @@ macOS: Системные настройки → Обновление ПО → �
 		const course2 = await tx.course.create({
 			data: {
 				slug: 'safe-browsing',
-				title: 'Безопасный интернет-серфинг',
-				description: 'Как безопасно пользоваться браузером',
+				title: 'Safe Web Browsing',
+				description: 'How to use your browser safely',
 				difficulty: Difficulty.EASY,
 				stageId: stages[0].id,
 			},
@@ -401,7 +401,7 @@ macOS: Системные настройки → Обновление ПО → �
 
 		const lesson2_1 = await tx.lesson.create({
 			data: {
-				title: 'HTTPS и безопасные соединения',
+				title: 'HTTPS and Secure Connections',
 				order: 1,
 				courseId: course2.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -414,40 +414,40 @@ macOS: Системные настройки → Обновление ПО → �
 					lessonId: lesson2_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Что такое HTTPS?',
-					content: `HTTPS — это защищенная версия протокола HTTP. Буква "S" означает Secure (безопасный).
+					title: 'What Is HTTPS?',
+					content: `HTTPS is a secure version of the HTTP protocol. The "S" stands for Secure.
 
-**В чем разница:**
-- HTTP — данные передаются открытым текстом
-- HTTPS — данные шифруются
+**The difference:**
+- HTTP — data is transmitted as plain text
+- HTTPS — data is encrypted
 
-**Как проверить:**
-Посмотрите на адресную строку браузера. Должен быть замочек 🔒 и "https://" в начале URL.
+**How to check:**
+Look at your browser's address bar. There should be a lock icon 🔒 and "https://" at the start of the URL.
 
-**Когда это критично:**
-- Интернет-банкинг
-- Онлайн-покупки
-- Ввод паролей
-- Личная переписка`,
+**When this is critical:**
+- Online banking
+- Online shopping
+- Entering passwords
+- Private messaging`,
 				},
 				{
 					lessonId: lesson2_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Опасность публичного Wi-Fi',
-					content: `В кафе, аэропортах и других местах с бесплатным Wi-Fi ваши данные могут перехватить.
+					title: 'The Danger of Public Wi-Fi',
+					content: `In cafes, airports, and other places with free Wi-Fi, your data can be intercepted.
 
-**Что может украсть хакер в публичной сети:**
-- Пароли от соцсетей
-- Данные банковских карт
-- Переписку
-- Куки и сессии
+**What a hacker can steal on a public network:**
+- Social media passwords
+- Bank card details
+- Private messages
+- Cookies and sessions
 
-**Как защититься:**
-1. Используйте VPN (виртуальную частную сеть)
-2. Не вводите пароли в публичном Wi-Fi
-3. Отключайте автоподключение к сетям
-4. Используйте мобильный интернет для важных операций`,
+**How to protect yourself:**
+1. Use a VPN (virtual private network)
+2. Don't enter passwords on public Wi-Fi
+3. Turn off auto-connect to networks
+4. Use mobile data for important transactions`,
 				},
 			],
 		})
@@ -457,13 +457,13 @@ macOS: Системные настройки → Обновление ПО → �
 				lessonId: lesson2_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Безопасное соединение',
-				question: 'По какому признаку определить безопасное соединение?',
+				title: 'A Secure Connection',
+				question: 'What sign indicates a secure connection?',
 				points: 10,
 				difficulty: Difficulty.EASY,
 				correctAnswerIndex: 1,
 				explanation:
-					'Замочек 🔒 и префикс https:// указывают на шифрование данных по протоколу SSL/TLS.', // ✅
+					'A lock icon 🔒 and the https:// prefix indicate data is encrypted using the SSL/TLS protocol.',
 			},
 		})
 
@@ -472,25 +472,25 @@ macOS: Системные настройки → Обновление ПО → �
 				{
 					taskId: task2_1.id,
 					order: 1,
-					text: 'Сайт быстро загружается',
+					text: 'The site loads quickly',
 					isCorrect: false,
 				},
 				{
 					taskId: task2_1.id,
 					order: 2,
-					text: 'В адресной строке есть замочек и https://',
+					text: 'The address bar shows a lock icon and https://',
 					isCorrect: true,
 				},
 				{
 					taskId: task2_1.id,
 					order: 3,
-					text: 'Сайт имеет красивый дизайн',
+					text: 'The site has a nice design',
 					isCorrect: false,
 				},
 				{
 					taskId: task2_1.id,
 					order: 4,
-					text: 'Сайт на английском языке',
+					text: 'The site is in English',
 					isCorrect: false,
 				},
 			],
@@ -499,8 +499,8 @@ macOS: Системные настройки → Обновление ПО → �
 		const course3 = await tx.course.create({
 			data: {
 				slug: 'device-security',
-				title: 'Защита устройств',
-				description: 'Безопасность смартфонов и компьютеров',
+				title: 'Device Protection',
+				description: 'Smartphone and computer security',
 				difficulty: Difficulty.MEDIUM,
 				stageId: stages[0].id,
 			},
@@ -508,7 +508,7 @@ macOS: Системные настройки → Обновление ПО → �
 
 		const lesson3_1 = await tx.lesson.create({
 			data: {
-				title: 'Блокировка экрана и биометрия',
+				title: 'Screen Lock and Biometrics',
 				order: 1,
 				courseId: course3.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -521,41 +521,41 @@ macOS: Системные настройки → Обновление ПО → �
 					lessonId: lesson3_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Почему важна блокировка экрана',
-					content: `Блокировка экрана — первая линия защиты вашего устройства. Если телефон попадет в чужие руки, блокировка не даст получить доступ к данным.
+					title: 'Why Screen Lock Matters',
+					content: `Screen lock is the first line of defense for your device. If your phone ends up in the wrong hands, the lock prevents access to your data.
 
-**Типы блокировки:**
-- PIN-код (4-6 цифр)
-- Графический ключ
-- Отпечаток пальца
-- Face ID / распознавание лица
-- Пароль
+**Types of lock:**
+- PIN code (4-6 digits)
+- Pattern lock
+- Fingerprint
+- Face ID / face recognition
+- Password
 
-**Что защищает блокировка:**
-- Фотографии и видео
-- Переписки в мессенджерах
-- Банковские приложения
-- Email и соцсети
-- Файлы и документы`,
+**What the lock protects:**
+- Photos and videos
+- Messenger conversations
+- Banking apps
+- Email and social media
+- Files and documents`,
 				},
 				{
 					lessonId: lesson3_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Биометрия: за и против',
-					content: `**Преимущества биометрии:**
-- Быстрый доступ к устройству
-- Сложно подделать
-- Не нужно запоминать пароль
-- Удобно в использовании
+					title: 'Biometrics: Pros and Cons',
+					content: `**Advantages of biometrics:**
+- Fast access to your device
+- Hard to fake
+- No password to remember
+- Convenient to use
 
-**Недостатки:**
-- Можно разблокировать во сне
-- Нельзя изменить отпечаток пальца
-- При утечке биометрические данные скомпрометированы навсегда
+**Disadvantages:**
+- Can be unlocked while you sleep
+- You can't change your fingerprint
+- If leaked, biometric data is compromised forever
 
-**Рекомендации:**
-Используйте биометрию + PIN-код вместе. Если один метод скомпрометирован, второй защитит данные.`,
+**Recommendation:**
+Use biometrics together with a PIN. If one method is compromised, the other still protects your data.`,
 				},
 			],
 		})
@@ -565,13 +565,13 @@ macOS: Системные настройки → Обновление ПО → �
 				lessonId: lesson3_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Методы блокировки',
-				question: 'Какой метод блокировки самый надежный?',
+				title: 'Lock Methods',
+				question: 'Which lock method is the most secure?',
 				points: 10,
 				difficulty: Difficulty.MEDIUM,
 				correctAnswerIndex: 3,
 				explanation:
-					'Комбинация биометрии и сложного PIN создает два независимых уровня защиты.', // ✅
+					'Combining biometrics with a strong PIN creates two independent layers of protection.',
 			},
 		})
 
@@ -580,38 +580,38 @@ macOS: Системные настройки → Обновление ПО → �
 				{
 					taskId: task3_1.id,
 					order: 1,
-					text: 'Графический ключ',
+					text: 'Pattern lock',
 					isCorrect: false,
 				},
 				{
 					taskId: task3_1.id,
 					order: 2,
-					text: 'Простой PIN 1234',
+					text: 'Simple PIN 1234',
 					isCorrect: false,
 				},
 				{
 					taskId: task3_1.id,
 					order: 3,
-					text: 'Отпечаток пальца',
+					text: 'Fingerprint',
 					isCorrect: false,
 				},
 				{
 					taskId: task3_1.id,
 					order: 4,
-					text: 'Биометрия + сложный PIN-код',
+					text: 'Biometrics + a strong PIN',
 					isCorrect: true,
 				},
 			],
 		})
 
 		// ========================
-		// ЭТАП 2: ФИШИНГ
+		// STAGE 2: PHISHING
 		// ========================
 		const course4 = await tx.course.create({
 			data: {
 				slug: 'phishing-basics',
-				title: 'Введение в фишинг',
-				description: 'Учимся распознавать фишинговые атаки',
+				title: 'Introduction to Phishing',
+				description: 'Learning to recognize phishing attacks',
 				difficulty: Difficulty.MEDIUM,
 				stageId: stages[1].id,
 			},
@@ -619,7 +619,7 @@ macOS: Системные настройки → Обновление ПО → �
 
 		const lesson4_1 = await tx.lesson.create({
 			data: {
-				title: 'Что такое фишинг?',
+				title: 'What Is Phishing?',
 				order: 1,
 				courseId: course4.id,
 				estimatedDuration: calculateEstimatedDuration(3, 2),
@@ -632,54 +632,54 @@ macOS: Системные настройки → Обновление ПО → �
 					lessonId: lesson4_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Определение фишинга',
-					content: `Фишинг (phishing) — это вид мошенничества, когда злоумышленники выдают себя за доверенные организации, чтобы выманить у вас:
-- Пароли
-- Данные банковских карт
-- Личную информацию
-- Деньги
+					title: 'Defining Phishing',
+					content: `Phishing is a type of fraud where attackers pose as trusted organizations to trick you into revealing:
+- Passwords
+- Bank card details
+- Personal information
+- Money
 
-**Откуда название:**
-Слово "phishing" произошло от "fishing" (рыбалка). Мошенники "забрасывают удочку" в виде поддельного письма и ждут, кто "клюнет".
+**Where the name comes from:**
+The word "phishing" comes from "fishing." Scammers "cast a line" in the form of a fake message and wait to see who "bites."
 
-**Статистика:**
-- 90% кибератак начинаются с фишинга
-- Средний ущерб от одной атаки — $1.6 млн
-- Каждый день отправляется 3.4 млрд фишинговых писем`,
+**Statistics:**
+- 90% of cyberattacks start with phishing
+- The average damage from a single attack is $1.6 million
+- 3.4 billion phishing emails are sent every day`,
 				},
 				{
 					lessonId: lesson4_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Типы фишинга',
-					content: `**Email-фишинг** — поддельные письма от "банков" и "служб поддержки"
+					title: 'Types of Phishing',
+					content: `**Email phishing** — fake emails from "banks" and "support teams"
 
-**Smishing (SMS-фишинг)** — мошеннические SMS: "Ваша посылка ожидает получения, перейдите по ссылке"
+**Smishing (SMS phishing)** — fraudulent texts: "Your package is waiting for pickup, follow this link"
 
-**Vishing (голосовой фишинг)** — звонки якобы от банка с требованием назвать код из SMS
+**Vishing (voice phishing)** — calls claiming to be from a bank, asking you to read out a code from an SMS
 
-**Spear phishing** — целенаправленная атака на конкретного человека (часто руководителей)
+**Spear phishing** — a targeted attack against a specific person (often executives)
 
-**Whaling** — атака на топ-менеджеров компаний`,
+**Whaling** — an attack targeting top company executives`,
 				},
 				{
 					lessonId: lesson4_1.id,
 					order: 3,
 					type: BlockType.THEORY,
-					title: 'Признаки фишинга',
-					content: `🚩 **Срочность** — "Ваш аккаунт заблокируют через 24 часа!"
+					title: 'Signs of Phishing',
+					content: `🚩 **Urgency** — "Your account will be locked in 24 hours!"
 
-🚩 **Угрозы** — "Если не подтвердите данные, счет будет закрыт"
+🚩 **Threats** — "If you don't confirm your details, your account will be closed"
 
-🚩 **Слишком хорошее предложение** — "Вы выиграли iPhone!"
+🚩 **An offer that's too good** — "You've won an iPhone!"
 
-🚩 **Ошибки в тексте** — орфографические и грамматические
+🚩 **Errors in the text** — spelling and grammar mistakes
 
-🚩 **Странный адрес отправителя** — support@amaz0n.com вместо amazon.com
+🚩 **A strange sender address** — support@amaz0n.com instead of amazon.com
 
-🚩 **Подозрительные ссылки** — gooogle.com, paypa1.com
+🚩 **Suspicious links** — gooogle.com, paypa1.com
 
-🚩 **Просьба ввести пароль** — настоящие компании никогда не просят пароль`,
+🚩 **A request to enter your password** — real companies never ask for your password`,
 				},
 			],
 		})
@@ -689,13 +689,13 @@ macOS: Системные настройки → Обновление ПО → �
 				lessonId: lesson4_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Определение фишинга',
-				question: 'Письмо с каким содержанием точно фишинговое?',
+				title: 'Recognizing Phishing',
+				question: 'Which email is definitely phishing?',
 				points: 10,
 				difficulty: Difficulty.MEDIUM,
 				correctAnswerIndex: 1,
 				explanation:
-					'Легитимные сервисы НИКОГДА не просят срочно подтвердить пароль по ссылке. Это классический признак фишинга.', // ✅
+					'Legitimate services NEVER urgently ask you to confirm your password via a link. This is a classic sign of phishing.',
 			},
 		})
 
@@ -704,25 +704,25 @@ macOS: Системные настройки → Обновление ПО → �
 				{
 					taskId: task4_1.id,
 					order: 1,
-					text: 'Уведомление о доставке посылки от курьерской службы',
+					text: 'A package delivery notice from a courier service',
 					isCorrect: false,
 				},
 				{
 					taskId: task4_1.id,
 					order: 2,
-					text: 'Требование срочно подтвердить пароль, иначе аккаунт удалят',
+					text: 'A demand to urgently confirm your password or your account will be deleted',
 					isCorrect: true,
 				},
 				{
 					taskId: task4_1.id,
 					order: 3,
-					text: 'Новостная рассылка от магазина',
+					text: 'A newsletter from a store',
 					isCorrect: false,
 				},
 				{
 					taskId: task4_1.id,
 					order: 4,
-					text: 'Подтверждение заказа с известного сайта',
+					text: 'An order confirmation from a well-known site',
 					isCorrect: false,
 				},
 			],
@@ -733,12 +733,12 @@ macOS: Системные настройки → Обновление ПО → �
 				lessonId: lesson4_1.id,
 				order: 2,
 				type: TaskType.MULTI_CHOICE,
-				title: 'Признаки фишинга',
-				question: 'Выберите ВСЕ признаки фишингового письма:',
+				title: 'Signs of Phishing',
+				question: 'Select ALL signs of a phishing email:',
 				points: 15,
 				difficulty: Difficulty.MEDIUM,
 				explanation:
-					'Срочность, ошибки и просьба ввести пароль — классические признаки фишинга. Персональное обращение может быть в легитимных письмах.', // ✅
+					'Urgency, errors, and requests to enter your password are classic signs of phishing. A personal greeting can also appear in legitimate emails.',
 			},
 		})
 
@@ -747,25 +747,25 @@ macOS: Системные настройки → Обновление ПО → �
 				{
 					taskId: task4_2.id,
 					order: 1,
-					text: 'Срочность и угрозы',
+					text: 'Urgency and threats',
 					isCorrect: true,
 				},
 				{
 					taskId: task4_2.id,
 					order: 2,
-					text: 'Ошибки в тексте',
+					text: 'Errors in the text',
 					isCorrect: true,
 				},
 				{
 					taskId: task4_2.id,
 					order: 3,
-					text: 'Персональное обращение по имени',
+					text: 'Personal greeting by name',
 					isCorrect: false,
 				},
 				{
 					taskId: task4_2.id,
 					order: 4,
-					text: 'Просьба ввести пароль по ссылке',
+					text: 'A request to enter your password via a link',
 					isCorrect: true,
 				},
 			],
@@ -773,7 +773,7 @@ macOS: Системные настройки → Обновление ПО → �
 
 		const lesson4_2 = await tx.lesson.create({
 			data: {
-				title: 'Анализ фишинговых писем',
+				title: 'Analyzing Phishing Emails',
 				order: 2,
 				courseId: course4.id,
 				estimatedDuration: calculateEstimatedDuration(3, 2),
@@ -786,38 +786,38 @@ macOS: Системные настройки → Обновление ПО → �
 					lessonId: lesson4_2.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Как проверить письмо?',
-					content: `**Шаг 1: Проверьте адрес отправителя**
-Наведите мышку на имя отправителя. Настоящий Amazon пишет с @amazon.com, а не с @amazonsupport.tk
+					title: 'How to Check an Email',
+					content: `**Step 1: Check the sender's address**
+Hover over the sender's name. A real Amazon email comes from @amazon.com, not @amazonsupport.tk
 
-**Шаг 2: Анализ ссылок**
-Наведите на ссылку (не нажимайте!). Внизу браузера появится реальный адрес. Если написано "Войти в PayPal", а ссылка ведет на странный домен — это фишинг.
+**Step 2: Analyze links**
+Hover over the link (don't click!). The real address appears at the bottom of your browser. If it says "Log in to PayPal" but the link goes to a strange domain — it's phishing.
 
-**Шаг 3: Проверьте грамматику**
-Банки и крупные компании тщательно проверяют тексты. Ошибки — признак мошенников.
+**Step 3: Check the grammar**
+Banks and large companies carefully proofread their text. Errors are a sign of scammers.
 
-**Шаг 4: Подумайте логически**
-Если вы не заказывали посылку — зачем вам уведомление? Если не регистрировались на сайте — откуда письмо?`,
+**Step 4: Think logically**
+If you didn't order a package, why would you get a notification? If you never signed up on a site, why would it email you?`,
 				},
 				{
 					lessonId: lesson4_2.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Примеры фишинга',
-					content: `**Пример 1: Поддельный банк**
-"Уважаемый клиент! Ваша карта заблокирована. Перейдите по ссылке и подтвердите данные"
-❌ Банк обращается по имени
-❌ Банк не просит подтверждать данные по ссылке
+					title: 'Phishing Examples',
+					content: `**Example 1: A fake bank**
+"Dear customer! Your card has been blocked. Follow this link and confirm your details"
+❌ The bank addresses you as "customer," not by name
+❌ Banks don't ask you to confirm details via a link
 
-**Пример 2: Налоговая служба**
-"Вам положен налоговый вычет 45 000₽. Введите данные карты для перевода"
-❌ Налоговая не запрашивает данные карт
-❌ Вычеты оформляются через личный кабинет
+**Example 2: A tax office**
+"You're entitled to a $500 tax refund. Enter your card details to receive the transfer"
+❌ Tax offices don't request card details
+❌ Refunds are processed through your personal account
 
-**Пример 3: Служба безопасности**
-"Ваш аккаунт взломан! Срочно смените пароль по ссылке"
-❌ Создание паники и срочности
-❌ Смена пароля только на официальном сайте`,
+**Example 3: A "security team"**
+"Your account has been hacked! Urgently change your password via this link"
+❌ Creating panic and urgency
+❌ Passwords should only be changed on the official site`,
 				},
 			],
 		})
@@ -827,13 +827,13 @@ macOS: Системные настройки → Обновление ПО → �
 				lessonId: lesson4_2.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Проверка ссылок',
-				question: 'Как правильно проверить ссылку в письме?',
+				title: 'Checking Links',
+				question: 'What is the correct way to check a link in an email?',
 				points: 10,
 				difficulty: Difficulty.MEDIUM,
 				correctAnswerIndex: 1,
 				explanation:
-					'При наведении курсора на ссылку внизу браузера отображается реальный URL. Нажимать не нужно — это может быть опасно.', // ✅
+					"Hovering over a link shows the real URL at the bottom of your browser. There's no need to click it — that can be dangerous.",
 			},
 		})
 
@@ -842,25 +842,25 @@ macOS: Системные настройки → Обновление ПО → �
 				{
 					taskId: task4_3.id,
 					order: 1,
-					text: 'Нажать на ссылку и посмотреть, куда ведет',
+					text: 'Click the link and see where it goes',
 					isCorrect: false,
 				},
 				{
 					taskId: task4_3.id,
 					order: 2,
-					text: 'Навести мышку на ссылку и посмотреть URL внизу',
+					text: 'Hover over the link and check the URL at the bottom',
 					isCorrect: true,
 				},
 				{
 					taskId: task4_3.id,
 					order: 3,
-					text: 'Скопировать ссылку в Google',
+					text: 'Paste the link into Google',
 					isCorrect: false,
 				},
 				{
 					taskId: task4_3.id,
 					order: 4,
-					text: 'Спросить у друзей',
+					text: 'Ask your friends',
 					isCorrect: false,
 				},
 			],
@@ -869,8 +869,8 @@ macOS: Системные настройки → Обновление ПО → �
 		const course5 = await tx.course.create({
 			data: {
 				slug: 'social-engineering',
-				title: 'Социальная инженерия',
-				description: 'Психологические методы манипуляции',
+				title: 'Social Engineering',
+				description: 'Psychological manipulation techniques',
 				difficulty: Difficulty.HARD,
 				stageId: stages[1].id,
 			},
@@ -878,7 +878,7 @@ macOS: Системные настройки → Обновление ПО → �
 
 		const lesson5_1 = await tx.lesson.create({
 			data: {
-				title: 'Методы социальной инженерии',
+				title: 'Social Engineering Methods',
 				order: 1,
 				courseId: course5.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -891,39 +891,39 @@ macOS: Системные настройки → Обновление ПО → �
 					lessonId: lesson5_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Что такое социальная инженерия?',
-					content: `Социальная инженерия — это манипуляция людьми для получения конфиденциальной информации или доступа к системам.
+					title: 'What Is Social Engineering?',
+					content: `Social engineering is manipulating people to obtain confidential information or access to systems.
 
-Хакеры используют психологию вместо технических методов:
-- Доверие
-- Страх
-- Жадность
-- Любопытство
-- Авторитет
+Hackers use psychology instead of technical methods:
+- Trust
+- Fear
+- Greed
+- Curiosity
+- Authority
 
-**Известные случаи:**
-- Кевин Митник взламывал компании, звоня сотрудникам и выдавая себя за IT-поддержку
-- В 2016 хакеры похитили $81 млн из Центробанка Бангладеш через социнженерию`,
+**Notable cases:**
+- Kevin Mitnick hacked companies by calling employees and posing as IT support
+- In 2016, hackers stole $81 million from the Central Bank of Bangladesh using social engineering`,
 				},
 				{
 					lessonId: lesson5_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Техники манипуляции',
-					content: `**Pretexting (предлог)** — создание выдуманной ситуации
-"Я из IT-отдела, нужно срочно проверить ваш пароль"
+					title: 'Manipulation Techniques',
+					content: `**Pretexting** — inventing a fabricated situation
+"I'm from the IT department, I urgently need to verify your password"
 
-**Baiting (приманка)** — предложение чего-то заманчивого
-Зараженная флешка с надписью "Зарплаты 2024"
+**Baiting** — offering something tempting
+An infected USB drive labeled "2024 Salaries"
 
-**Quid pro quo** — услуга за услугу
-"Я помогу решить проблему, но мне нужен ваш пароль"
+**Quid pro quo** — a favor for a favor
+"I'll help you fix the problem, but I need your password"
 
-**Tailgating** — физическое проникновение
-Человек с коробкой просит придержать дверь в офис
+**Tailgating** — physical intrusion
+Someone carrying a box asks you to hold the office door open
 
-**Authority (авторитет)** — выдавание себя за начальство
-"Это директор, срочно переведите деньги!"`,
+**Authority** — impersonating a superior
+"This is the director, transfer the money now!"`,
 				},
 			],
 		})
@@ -933,14 +933,14 @@ macOS: Системные настройки → Обновление ПО → �
 				lessonId: lesson5_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Социальная инженерия',
+				title: 'Social Engineering',
 				question:
-					'Звонок якобы от техподдержки с просьбой назвать код из СМС. Это:',
+					'A call claiming to be from tech support asks you to read out a code from a text message. This is:',
 				points: 15,
 				difficulty: Difficulty.HARD,
 				correctAnswerIndex: 1,
 				explanation:
-					'Это vishing (голосовой фишинг) — разновидность социальной инженерии. Настоящая техподдержка никогда не спросит код из SMS.', // ✅
+					'This is vishing (voice phishing) — a form of social engineering. Real tech support will never ask for a code from an SMS.',
 			},
 		})
 
@@ -949,25 +949,25 @@ macOS: Системные настройки → Обновление ПО → �
 				{
 					taskId: task5_1.id,
 					order: 1,
-					text: 'Стандартная процедура проверки',
+					text: 'A standard verification procedure',
 					isCorrect: false,
 				},
 				{
 					taskId: task5_1.id,
 					order: 2,
-					text: 'Социальная инженерия (vishing)',
+					text: 'Social engineering (vishing)',
 					isCorrect: true,
 				},
 				{
 					taskId: task5_1.id,
 					order: 3,
-					text: 'Законное требование банка',
+					text: 'A legitimate bank request',
 					isCorrect: false,
 				},
 				{
 					taskId: task5_1.id,
 					order: 4,
-					text: 'Техническая поддержка',
+					text: 'Technical support',
 					isCorrect: false,
 				},
 			],
@@ -976,8 +976,8 @@ macOS: Системные настройки → Обновление ПО → �
 		const course6 = await tx.course.create({
 			data: {
 				slug: 'phishing-practice',
-				title: 'Практика: Распознавание фишинга',
-				description: 'Реальные примеры и задания',
+				title: 'Practice: Recognizing Phishing',
+				description: 'Real examples and exercises',
 				difficulty: Difficulty.MEDIUM,
 				stageId: stages[1].id,
 			},
@@ -985,7 +985,7 @@ macOS: Системные настройки → Обновление ПО → �
 
 		const lesson6_1 = await tx.lesson.create({
 			data: {
-				title: 'Разбор реальных кейсов',
+				title: 'Breaking Down Real Cases',
 				order: 1,
 				courseId: course6.id,
 				estimatedDuration: calculateEstimatedDuration(1, 1),
@@ -997,22 +997,22 @@ macOS: Системные настройки → Обновление ПО → �
 				lessonId: lesson6_1.id,
 				order: 1,
 				type: BlockType.THEORY,
-				title: 'Кейс 1: Поддельный банк',
-				content: `**Полученное письмо:**
-Тема: "Срочно! Подтвердите операцию"
-От: security@sberbank-online.ru
+				title: 'Case 1: A Fake Bank',
+				content: `**Email received:**
+Subject: "Urgent! Confirm your transaction"
+From: security@yourbank-online.com
 
-"Уважаемый клиент!
-Зафиксирована подозрительная операция на сумму 15 000₽.
-Если это не вы, перейдите по ссылке и отмените транзакцию: http://sber-bank.ru.secure-check.com/cancel
+"Dear customer!
+A suspicious transaction of $500 has been detected.
+If this wasn't you, follow this link and cancel the transaction: http://your-bank.com.secure-check.com/cancel
 
-У вас 2 часа."
+You have 2 hours."
 
-**Анализ:**
-❌ Домен secure-check.com (не сбербанк)
-❌ Создание паники и срочности
-❌ Банк обращается "клиент", а не по имени
-✅ Правильный домен: sberbank.ru или online.sberbank.ru`,
+**Analysis:**
+❌ Domain secure-check.com (not the actual bank)
+❌ Creating panic and urgency
+❌ The bank addresses you as "customer," not by name
+✅ The correct domain would be something like yourbank.com or online.yourbank.com`,
 			},
 		})
 
@@ -1021,13 +1021,13 @@ macOS: Системные настройки → Обновление ПО → �
 				lessonId: lesson6_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Анализ фишинга',
-				question: 'Какой домен точно НЕ фишинговый для Сбербанка?',
+				title: 'Analyzing Phishing',
+				question: 'Which domain is definitely NOT phishing for a bank called "YourBank"?',
 				points: 10,
 				difficulty: Difficulty.MEDIUM,
 				correctAnswerIndex: 1,
 				explanation:
-					'online.sberbank.ru — официальный поддомен Сбербанка. Остальные используют дефисы и другие домены верхнего уровня.', // ✅
+					"online.yourbank.com is the bank's official subdomain. The others use hyphens and unusual top-level domains.",
 			},
 		})
 
@@ -1036,38 +1036,38 @@ macOS: Системные настройки → Обновление ПО → �
 				{
 					taskId: task6_1.id,
 					order: 1,
-					text: 'sberbank-secure.com',
+					text: 'yourbank-secure.com',
 					isCorrect: false,
 				},
 				{
 					taskId: task6_1.id,
 					order: 2,
-					text: 'online.sberbank.ru',
+					text: 'online.yourbank.com',
 					isCorrect: true,
 				},
 				{
 					taskId: task6_1.id,
 					order: 3,
-					text: 'sber-bank.ru',
+					text: 'your-bank.com',
 					isCorrect: false,
 				},
 				{
 					taskId: task6_1.id,
 					order: 4,
-					text: 'sberbank.online.com',
+					text: 'yourbank.online.com',
 					isCorrect: false,
 				},
 			],
 		})
 
 		// ========================
-		// ЭТАП 3: ОПАСНЫЕ ССЫЛКИ
+		// STAGE 3: DANGEROUS LINKS
 		// ========================
 		const course7 = await tx.course.create({
 			data: {
 				slug: 'url-analysis',
-				title: 'Анализ URL-адресов',
-				description: 'Учимся проверять безопасность ссылок',
+				title: 'URL Analysis',
+				description: 'Learning to check whether links are safe',
 				difficulty: Difficulty.MEDIUM,
 				stageId: stages[2].id,
 			},
@@ -1075,7 +1075,7 @@ macOS: Системные настройки → Обновление ПО → �
 
 		const lesson7_1 = await tx.lesson.create({
 			data: {
-				title: 'Структура URL',
+				title: 'URL Structure',
 				order: 1,
 				courseId: course7.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -1088,43 +1088,43 @@ macOS: Системные настройки → Обновление ПО → �
 					lessonId: lesson7_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Анатомия URL',
-					content: `URL (Uniform Resource Locator) — адрес ресурса в интернете.
+					title: 'Anatomy of a URL',
+					content: `A URL (Uniform Resource Locator) is the address of a resource on the internet.
 
-**Структура:**
+**Structure:**
 https://www.example.com:443/path/page?id=123#section
 
-1. **Протокол:** https:// (защищенный) или http:// (незащищенный)
-2. **Субдомен:** www
-3. **Домен:** example.com (основная часть!)
-4. **Порт:** :443 (обычно скрыт)
-5. **Путь:** /path/page
-6. **Параметры:** ?id=123
-7. **Якорь:** #section
+1. **Protocol:** https:// (secure) or http:// (insecure)
+2. **Subdomain:** www
+3. **Domain:** example.com (the main part!)
+4. **Port:** :443 (usually hidden)
+5. **Path:** /path/page
+6. **Parameters:** ?id=123
+7. **Anchor:** #section
 
-**Самое важное:** домен. Остальное может быть любым.`,
+**The most important part:** the domain. Everything else can be anything.`,
 				},
 				{
 					lessonId: lesson7_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Трюки мошенников',
-					content: `**Замена символов:**
-- gооgle.com (вместо o — кириллица о)
+					title: "Scammers' Tricks",
+					content: `**Character substitution:**
+- gооgle.com (a Cyrillic "о" instead of "o")
 - paypa1.com (l → 1)
-- αpple.com (α — греческая буква)
+- αpple.com (α is a Greek letter)
 
-**Поддомены-обманки:**
-- apple.com.fake-site.com (домен fake-site.com!)
+**Decoy subdomains:**
+- apple.com.fake-site.com (the real domain is fake-site.com!)
 - secure-paypal.phishing.net
 
-**Короткие ссылки:**
-- bit.ly/abc123 — неизвестно куда ведет
-- Могут скрывать вредоносные сайты
+**Shortened links:**
+- bit.ly/abc123 — you don't know where it leads
+- Can hide malicious sites
 
-**IP-адреса:**
+**IP addresses:**
 - http://192.168.1.1/login
-- Легальные сайты используют домены, не IP`,
+- Legitimate sites use domains, not raw IPs`,
 				},
 			],
 		})
@@ -1134,14 +1134,14 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson7_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Определение домена',
+				title: 'Identifying the Domain',
 				question:
-					'Какой реальный домен в ссылке: https://amazon.fake-store.com/products',
+					'What is the real domain in this link: https://amazon.fake-store.com/products',
 				points: 10,
 				difficulty: Difficulty.MEDIUM,
 				correctAnswerIndex: 1,
 				explanation:
-					'Домен читается справа налево. fake-store.com — настоящий домен, а amazon — просто поддомен мошенников.', // ✅
+					'A domain is read right to left. fake-store.com is the real domain, while "amazon" is just a subdomain set up by scammers.',
 			},
 		})
 
@@ -1167,8 +1167,8 @@ https://www.example.com:443/path/page?id=123#section
 		const course8 = await tx.course.create({
 			data: {
 				slug: 'link-checking-tools',
-				title: 'Инструменты проверки ссылок',
-				description: 'Сервисы для анализа безопасности',
+				title: 'Link Checking Tools',
+				description: 'Services for analyzing link safety',
 				difficulty: Difficulty.MEDIUM,
 				stageId: stages[2].id,
 			},
@@ -1176,7 +1176,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson8_1 = await tx.lesson.create({
 			data: {
-				title: 'VirusTotal и другие сервисы',
+				title: 'VirusTotal and Other Services',
 				order: 1,
 				courseId: course8.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -1190,39 +1190,39 @@ https://www.example.com:443/path/page?id=123#section
 					order: 1,
 					type: BlockType.THEORY,
 					title: 'VirusTotal',
-					content: `VirusTotal — бесплатный сервис Google для проверки файлов и ссылок на вирусы.
+					content: `VirusTotal is a free Google service for checking files and links for viruses.
 
-**Как работает:**
-1. Вставьте ссылку на virustotal.com
-2. Сервис проверит URL в 90+ антивирусах
-3. Покажет результаты через 30 секунд
+**How it works:**
+1. Paste a link at virustotal.com
+2. The service checks the URL against 90+ antivirus engines
+3. Results appear within about 30 seconds
 
-**Что проверяется:**
-- Наличие вредоносного кода
-- Фишинговые признаки
-- Репутация домена
-- История инцидентов
+**What it checks:**
+- Presence of malicious code
+- Signs of phishing
+- Domain reputation
+- History of incidents
 
-**Важно:** не вставляйте личные ссылки — они станут публичными!`,
+**Important:** don't paste in personal links — they become public!`,
 				},
 				{
 					lessonId: lesson8_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Другие инструменты',
-					content: `**URLScan.io** — анализ структуры сайта, скриншоты, технологии
+					title: 'Other Tools',
+					content: `**URLScan.io** — analyzes a site's structure, screenshots, technologies used
 
-**Google Safe Browsing** — встроен в Chrome, проверяет автоматически
+**Google Safe Browsing** — built into Chrome, checks automatically
 
-**PhishTank** — база фишинговых сайтов, сообщество пользователей
+**PhishTank** — a community-driven database of phishing sites
 
-**WHOIS** — информация о владельце домена, дате регистрации
+**WHOIS** — information about a domain's owner and registration date
 
-**Признаки подозрительного домена:**
-- Зарегистрирован недавно (< 1 месяца)
-- Приватная регистрация
-- Хостинг в странах с плохой репутацией
-- Много отчетов о фишинге`,
+**Signs of a suspicious domain:**
+- Registered recently (< 1 month ago)
+- Private registration
+- Hosted in countries with a poor reputation
+- Multiple phishing reports`,
 				},
 			],
 		})
@@ -1232,14 +1232,14 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson8_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Проверка ссылок',
+				title: 'Checking Links',
 				question:
-					'Какой сервис НЕ предназначен для проверки безопасности ссылок?',
+					'Which service is NOT meant for checking link safety?',
 				points: 10,
 				difficulty: Difficulty.MEDIUM,
 				correctAnswerIndex: 3,
 				explanation:
-					'Instagram — социальная сеть, а не инструмент для проверки безопасности ссылок.', // ✅
+					'Instagram is a social network, not a link safety checking tool.',
 			},
 		})
 
@@ -1253,13 +1253,13 @@ https://www.example.com:443/path/page?id=123#section
 		})
 
 		// ========================
-		// ЭТАП 4: ПАРОЛИ
+		// STAGE 4: PASSWORDS
 		// ========================
 		const course9 = await tx.course.create({
 			data: {
 				slug: 'strong-passwords',
-				title: 'Создание надежных паролей',
-				description: 'Как придумывать безопасные пароли',
+				title: 'Creating Strong Passwords',
+				description: 'How to come up with secure passwords',
 				difficulty: Difficulty.EASY,
 				stageId: stages[3].id,
 			},
@@ -1267,7 +1267,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson9_1 = await tx.lesson.create({
 			data: {
-				title: 'Что такое надежный пароль?',
+				title: 'What Makes a Password Strong?',
 				order: 1,
 				courseId: course9.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -1280,21 +1280,21 @@ https://www.example.com:443/path/page?id=123#section
 					lessonId: lesson9_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Критерии надежного пароля',
-					content: `**Надежный пароль должен:**
-- Быть длиной минимум 12 символов
-- Содержать буквы (A-Z, a-z), цифры (0-9) и спецсимволы (!@#$%)
-- Не содержать словарных слов
-- Быть уникальным для каждого сайта
-- Не содержать личную информацию (имя, дата рождения)
+					title: 'Criteria for a Strong Password',
+					content: `**A strong password should:**
+- Be at least 12 characters long
+- Contain letters (A-Z, a-z), digits (0-9), and special characters (!@#$%)
+- Not contain dictionary words
+- Be unique for each site
+- Not contain personal information (name, date of birth)
 
-**Плохие пароли:**
+**Weak passwords:**
 - password123
 - qwerty
 - 12345678
-- ivanov1990
+- johnsmith1990
 
-**Хорошие пароли:**
+**Strong passwords:**
 - Tr3e$Blu3#Moon!2024
 - P@ssw0rd_G3n3r@t3d!
 - My$3cur3P@ss_2024`,
@@ -1303,22 +1303,22 @@ https://www.example.com:443/path/page?id=123#section
 					lessonId: lesson9_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Как хакеры взламывают пароли',
-					content: `**Brute Force (грубая сила)** — перебор всех комбинаций
-- Пароль "12345" взламывается мгновенно
-- Пароль из 8 символов — за несколько часов
-- Пароль из 16 символов — за миллионы лет
+					title: 'How Hackers Crack Passwords',
+					content: `**Brute force** — trying every possible combination
+- The password "12345" is cracked instantly
+- An 8-character password takes a few hours
+- A 16-character password takes millions of years
 
-**Dictionary Attack (словарный)** — перебор популярных слов и комбинаций
+**Dictionary attack** — trying common words and combinations
 
-**Credential Stuffing** — использование паролей из утечек
-Если ваш пароль утек с одного сайта, хакеры попробуют его везде
+**Credential stuffing** — using passwords from data breaches
+If your password leaked from one site, hackers will try it everywhere
 
-**Social Engineering** — выманивание пароля обманом
+**Social engineering** — tricking you into revealing your password
 
-**Статистика:**
-- 81% взломов — из-за слабых паролей
-- "123456" — самый популярный пароль в мире`,
+**Statistics:**
+- 81% of breaches are due to weak passwords
+- "123456" is the most popular password in the world`,
 				},
 			],
 		})
@@ -1328,13 +1328,13 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson9_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Надежность пароля',
-				question: 'Какой пароль самый надежный?',
+				title: 'Password Strength',
+				question: 'Which password is the strongest?',
 				points: 10,
 				difficulty: Difficulty.EASY,
 				correctAnswerIndex: 3,
 				explanation:
-					'Пароль xK8#mP2$vL9@rT4! содержит буквы разного регистра, цифры и спецсимволы — это делает его очень надежным.', // ✅
+					'The password xK8#mP2$vL9@rT4! mixes uppercase and lowercase letters, digits, and special characters — making it very strong.',
 			},
 		})
 
@@ -1355,8 +1355,8 @@ https://www.example.com:443/path/page?id=123#section
 		const course10 = await tx.course.create({
 			data: {
 				slug: 'password-managers',
-				title: 'Менеджеры паролей',
-				description: 'Безопасное хранение паролей',
+				title: 'Password Managers',
+				description: 'Storing your passwords securely',
 				difficulty: Difficulty.MEDIUM,
 				stageId: stages[3].id,
 			},
@@ -1364,7 +1364,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson10_1 = await tx.lesson.create({
 			data: {
-				title: 'Зачем нужен менеджер паролей?',
+				title: 'Why Use a Password Manager?',
 				order: 1,
 				courseId: course10.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -1377,47 +1377,47 @@ https://www.example.com:443/path/page?id=123#section
 					lessonId: lesson10_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Проблема множества паролей',
-					content: `У среднего пользователя 100+ онлайн-аккаунтов. Запомнить 100 уникальных паролей невозможно.
+					title: 'The Problem of Too Many Passwords',
+					content: `The average user has 100+ online accounts. Remembering 100 unique passwords is impossible.
 
-**Плохие решения:**
-- Использовать один пароль везде (опасно!)
-- Записывать в блокнот (можно потерять)
-- Хранить в файле на компьютере (взломают — получат все)
-- Использовать простые пароли (легко взломать)
+**Bad solutions:**
+- Using one password everywhere (dangerous!)
+- Writing them down on paper (can be lost)
+- Storing them in a file on your computer (if hacked, everything is exposed)
+- Using simple passwords (easy to crack)
 
-**Хорошее решение:** менеджер паролей
+**A good solution:** a password manager
 
-Это программа, которая:
-- Генерирует сложные уникальные пароли
-- Хранит их в зашифрованном виде
-- Автоматически вводит на сайтах
-- Синхронизируется между устройствами`,
+This is software that:
+- Generates complex, unique passwords
+- Stores them encrypted
+- Automatically fills them in on websites
+- Syncs across your devices`,
 				},
 				{
 					lessonId: lesson10_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Популярные менеджеры паролей',
-					content: `**1Password** — $3/месяц, удобный интерфейс
+					title: 'Popular Password Managers',
+					content: `**1Password** — $3/month, user-friendly interface
 
-**Bitwarden** — бесплатный, open source
+**Bitwarden** — free, open source
 
-**LastPass** — популярный, есть бесплатная версия
+**LastPass** — popular, has a free tier
 
-**Dashlane** — премиум функции, VPN
+**Dashlane** — premium features, includes a VPN
 
-**KeePass** — полностью бесплатный, локальное хранение
+**KeePass** — completely free, local storage
 
-**Встроенные:**
+**Built-in options:**
 - iCloud Keychain (Apple)
 - Google Password Manager
 - Firefox Lockwise
 
-**Как работает:**
-1. Запоминаете 1 мастер-пароль
-2. Менеджер генерирует остальные
-3. Автоматически входите на сайты`,
+**How it works:**
+1. You remember 1 master password
+2. The manager generates the rest
+3. You log in to sites automatically`,
 				},
 			],
 		})
@@ -1427,13 +1427,13 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson10_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Менеджеры паролей',
-				question: 'Главное преимущество менеджера паролей:',
+				title: 'Password Managers',
+				question: "A password manager's main advantage is:",
 				points: 10,
 				difficulty: Difficulty.MEDIUM,
 				correctAnswerIndex: 1,
 				explanation:
-					'Менеджер паролей генерирует и хранит уникальные сложные пароли для каждого сайта, что критично для безопасности.', // ✅
+					'A password manager generates and stores unique, complex passwords for every site — critical for security.',
 			},
 		})
 
@@ -1442,25 +1442,25 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					taskId: task10_1.id,
 					order: 1,
-					text: 'Ускоряет работу компьютера',
+					text: 'Speeds up your computer',
 					isCorrect: false,
 				},
 				{
 					taskId: task10_1.id,
 					order: 2,
-					text: 'Позволяет использовать уникальные пароли везде',
+					text: 'Lets you use unique passwords everywhere',
 					isCorrect: true,
 				},
 				{
 					taskId: task10_1.id,
 					order: 3,
-					text: 'Защищает от вирусов',
+					text: 'Protects against viruses',
 					isCorrect: false,
 				},
 				{
 					taskId: task10_1.id,
 					order: 4,
-					text: 'Увеличивает скорость интернета',
+					text: 'Increases internet speed',
 					isCorrect: false,
 				},
 			],
@@ -1469,8 +1469,8 @@ https://www.example.com:443/path/page?id=123#section
 		const course11 = await tx.course.create({
 			data: {
 				slug: 'two-factor-auth',
-				title: 'Двухфакторная аутентификация',
-				description: 'Дополнительный уровень защиты',
+				title: 'Two-Factor Authentication',
+				description: 'An extra layer of protection',
 				difficulty: Difficulty.MEDIUM,
 				stageId: stages[3].id,
 			},
@@ -1478,7 +1478,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson11_1 = await tx.lesson.create({
 			data: {
-				title: 'Что такое 2FA?',
+				title: 'What Is 2FA?',
 				order: 1,
 				courseId: course11.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -1491,41 +1491,41 @@ https://www.example.com:443/path/page?id=123#section
 					lessonId: lesson11_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: '2FA — двойная защита',
-					content: `2FA (Two-Factor Authentication) — это когда для входа нужно два подтверждения:
-1. То, что вы знаете (пароль)
-2. То, что у вас есть (телефон, ключ)
+					title: '2FA — Double Protection',
+					content: `2FA (Two-Factor Authentication) means logging in requires two confirmations:
+1. Something you know (a password)
+2. Something you have (a phone, a security key)
 
-**Почему это важно:**
-Даже если хакер узнает ваш пароль, он не сможет войти без второго фактора.
+**Why this matters:**
+Even if a hacker learns your password, they can't log in without the second factor.
 
-**Примеры:**
-- Банковские приложения + SMS-код
-- Email + код из приложения
-- Соцсеть + биометрия
+**Examples:**
+- Banking apps + an SMS code
+- Email + a code from an app
+- Social media + biometrics
 
-**Статистика:** 2FA блокирует 99.9% автоматических атак`,
+**Statistics:** 2FA blocks 99.9% of automated attacks`,
 				},
 				{
 					lessonId: lesson11_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Типы 2FA',
-					content: `**SMS-коды** — самый простой, но наименее безопасный (SIM-swap атаки)
+					title: 'Types of 2FA',
+					content: `**SMS codes** — the simplest, but the least secure (vulnerable to SIM-swap attacks)
 
-**Приложения-аутентификаторы** — генерируют коды офлайн (Google Authenticator, Authy)
+**Authenticator apps** — generate codes offline (Google Authenticator, Authy)
 
-**Push-уведомления** — подтверждение на телефоне (удобно)
+**Push notifications** — confirm on your phone (convenient)
 
-**Аппаратные ключи** — физические устройства (YubiKey, самый безопасный)
+**Hardware keys** — physical devices (YubiKey, the most secure)
 
-**Биометрия** — отпечаток пальца, Face ID
+**Biometrics** — fingerprint, Face ID
 
-**Рекомендация порядка безопасности:**
-1. Аппаратный ключ (YubiKey)
-2. Приложение-аутентификатор
-3. Push-уведомление
-4. SMS (лучше, чем ничего)`,
+**Recommended order of security:**
+1. Hardware key (YubiKey)
+2. Authenticator app
+3. Push notification
+4. SMS (better than nothing)`,
 				},
 			],
 		})
@@ -1535,13 +1535,13 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson11_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: '2FA методы',
-				question: 'Какой метод 2FA самый безопасный?',
+				title: '2FA Methods',
+				question: 'Which 2FA method is the most secure?',
 				points: 10,
 				difficulty: Difficulty.MEDIUM,
 				correctAnswerIndex: 0,
 				explanation:
-					'Аппаратные ключи (YubiKey) — самый надежный метод 2FA, т.к. устойчивы к фишингу и не могут быть перехвачены.', // ✅
+					'Hardware keys (YubiKey) are the most reliable 2FA method since they resist phishing and cannot be intercepted.',
 			},
 		})
 
@@ -1550,33 +1550,33 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					taskId: task11_1.id,
 					order: 1,
-					text: 'Аппаратный ключ (YubiKey)',
+					text: 'Hardware key (YubiKey)',
 					isCorrect: true,
 				},
-				{ taskId: task11_1.id, order: 2, text: 'SMS-код', isCorrect: false },
+				{ taskId: task11_1.id, order: 2, text: 'SMS code', isCorrect: false },
 				{
 					taskId: task11_1.id,
 					order: 3,
-					text: 'Email с кодом',
+					text: 'Email with a code',
 					isCorrect: false,
 				},
 				{
 					taskId: task11_1.id,
 					order: 4,
-					text: 'Секретный вопрос',
+					text: 'A secret question',
 					isCorrect: false,
 				},
 			],
 		})
 
 		// ========================
-		// ЭТАП 5: ВРЕДОНОСНОЕ ПО
+		// STAGE 5: MALWARE
 		// ========================
 		const course12 = await tx.course.create({
 			data: {
 				slug: 'malware-types',
-				title: 'Типы вредоносного ПО',
-				description: 'Вирусы, трояны, ransomware',
+				title: 'Types of Malware',
+				description: 'Viruses, trojans, ransomware',
 				difficulty: Difficulty.MEDIUM,
 				stageId: stages[4].id,
 			},
@@ -1584,7 +1584,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson12_1 = await tx.lesson.create({
 			data: {
-				title: 'Классификация malware',
+				title: 'Classifying Malware',
 				order: 1,
 				courseId: course12.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -1597,35 +1597,35 @@ https://www.example.com:443/path/page?id=123#section
 					lessonId: lesson12_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Основные типы',
-					content: `**Вирусы** — заражают файлы, распространяются при копировании
+					title: 'Main Types',
+					content: `**Viruses** — infect files, spread when files are copied
 
-**Черви** — распространяются сами по сети, без участия пользователя
+**Worms** — spread by themselves across a network, without user involvement
 
-**Трояны** — маскируются под полезные программы, выполняют скрытые действия
+**Trojans** — disguise themselves as useful software, perform hidden actions
 
-**Ransomware** — шифрует файлы и требует выкуп
+**Ransomware** — encrypts files and demands a ransom
 
-**Spyware** — следит за действиями пользователя, крадет данные
+**Spyware** — tracks user activity, steals data
 
-**Adware** — показывает назойливую рекламу
+**Adware** — displays intrusive ads
 
-**Rootkit** — скрывает присутствие malware в системе`,
+**Rootkit** — hides the presence of malware on a system`,
 				},
 				{
 					lessonId: lesson12_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Известные атаки',
-					content: `**WannaCry (2017)** — ransomware, зашифровал 200 000+ компьютеров, требовал $300 в биткоинах
+					title: 'Notable Attacks',
+					content: `**WannaCry (2017)** — ransomware that encrypted 200,000+ computers, demanding $300 in bitcoin
 
-**NotPetya (2017)** — червь, нанес ущерб $10 млрд, парализовал компании по всему миру
+**NotPetya (2017)** — a worm that caused $10 billion in damage, paralyzing companies worldwide
 
-**Zeus** — троян для кражи банковских данных, украл миллионы
+**Zeus** — a trojan for stealing banking data, stole millions
 
-**Stuxnet** — кибероружие, саботировало иранские ядерные объекты
+**Stuxnet** — cyberweapon that sabotaged Iranian nuclear facilities
 
-**Emotet** — ботнет для рассылки спама и malware`,
+**Emotet** — a botnet used to distribute spam and malware`,
 				},
 			],
 		})
@@ -1635,19 +1635,19 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson12_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Типы malware',
-				question: 'Какой тип malware шифрует файлы и требует выкуп?',
+				title: 'Types of Malware',
+				question: 'Which type of malware encrypts files and demands a ransom?',
 				points: 10,
 				difficulty: Difficulty.MEDIUM,
 				correctAnswerIndex: 2,
 				explanation:
-					'Ransomware (шифровальщик) блокирует доступ к файлам и требует выкуп, обычно в криптовалюте.', // ✅
+					'Ransomware blocks access to files and demands a ransom, usually in cryptocurrency.',
 			},
 		})
 
 		await tx.taskOption.createMany({
 			data: [
-				{ taskId: task12_1.id, order: 1, text: 'Вирус', isCorrect: false },
+				{ taskId: task12_1.id, order: 1, text: 'Virus', isCorrect: false },
 				{ taskId: task12_1.id, order: 2, text: 'Spyware', isCorrect: false },
 				{ taskId: task12_1.id, order: 3, text: 'Ransomware', isCorrect: true },
 				{ taskId: task12_1.id, order: 4, text: 'Adware', isCorrect: false },
@@ -1657,8 +1657,8 @@ https://www.example.com:443/path/page?id=123#section
 		const course13 = await tx.course.create({
 			data: {
 				slug: 'malware-protection',
-				title: 'Защита от malware',
-				description: 'Профилактика и удаление',
+				title: 'Protection Against Malware',
+				description: 'Prevention and removal',
 				difficulty: Difficulty.MEDIUM,
 				stageId: stages[4].id,
 			},
@@ -1666,7 +1666,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson13_1 = await tx.lesson.create({
 			data: {
-				title: 'Как защититься от вредоносного ПО',
+				title: 'How to Protect Yourself From Malware',
 				order: 1,
 				courseId: course13.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -1679,41 +1679,41 @@ https://www.example.com:443/path/page?id=123#section
 					lessonId: lesson13_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Профилактика заражения',
-					content: `**1. Антивирус** — установите надежный антивирус с реалтайм защитой
+					title: 'Preventing Infection',
+					content: `**1. Antivirus** — install reliable antivirus software with real-time protection
 
-**2. Обновления** — всегда устанавливайте обновления системы и программ
+**2. Updates** — always install system and app updates
 
-**3. Осторожность при скачивании:**
-- Качайте только с официальных сайтов
-- Проверяйте файлы в VirusTotal
-- Не запускайте .exe из писем
+**3. Be careful when downloading:**
+- Only download from official sites
+- Check files with VirusTotal
+- Don't run .exe files from emails
 
-**4. Не открывайте подозрительные вложения** в email
+**4. Don't open suspicious attachments** in email
 
-**5. Резервные копии** — делайте бэкапы важных файлов
+**5. Backups** — back up your important files
 
-**6. Блокировщик рекламы** — защищает от malvertising`,
+**6. Ad blocker** — protects against malvertising`,
 				},
 				{
 					lessonId: lesson13_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Признаки заражения',
-					content: `**Компьютер заражен, если:**
-- Медленно работает без причины
-- Появляются странные программы
-- Браузер открывает незнакомые сайты
-- Антивирус отключился сам
-- Файлы пропали или зашифрованы
-- Много рекламы даже без браузера
-- Высокая загрузка процессора в простое
+					title: 'Signs of Infection',
+					content: `**Your computer may be infected if:**
+- It runs slowly for no reason
+- Strange programs appear
+- Your browser opens unfamiliar sites
+- Your antivirus turns off by itself
+- Files are missing or encrypted
+- You see lots of ads even outside your browser
+- High CPU usage while idle
 
-**Что делать:**
-1. Отключите интернет
-2. Запустите полное сканирование антивирусом
-3. Используйте Malwarebytes или Dr.Web CureIt
-4. В крайнем случае — переустановите систему`,
+**What to do:**
+1. Disconnect from the internet
+2. Run a full antivirus scan
+3. Use Malwarebytes or Dr.Web CureIt
+4. As a last resort — reinstall the operating system`,
 				},
 			],
 		})
@@ -1723,12 +1723,12 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson13_1.id,
 				order: 1,
 				type: TaskType.MULTI_CHOICE,
-				title: 'Защита от malware',
-				question: 'Какие действия защищают от malware? (несколько):',
+				title: 'Protection Against Malware',
+				question: 'Which actions protect against malware? (multiple):',
 				points: 15,
 				difficulty: Difficulty.MEDIUM,
 				explanation:
-					'Антивирус, обновления и бэкапы — три столпа защиты от вредоносного ПО. Отключать Defender опасно.', // ✅
+					'Antivirus, updates, and backups are the three pillars of malware protection. Disabling Defender is dangerous.',
 			},
 		})
 
@@ -1737,38 +1737,38 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					taskId: task13_1.id,
 					order: 1,
-					text: 'Установка антивируса',
+					text: 'Installing antivirus software',
 					isCorrect: true,
 				},
 				{
 					taskId: task13_1.id,
 					order: 2,
-					text: 'Регулярные обновления системы',
+					text: 'Regular system updates',
 					isCorrect: true,
 				},
 				{
 					taskId: task13_1.id,
 					order: 3,
-					text: 'Отключение Windows Defender для скорости',
+					text: 'Disabling Windows Defender for speed',
 					isCorrect: false,
 				},
 				{
 					taskId: task13_1.id,
 					order: 4,
-					text: 'Резервное копирование файлов',
+					text: 'Backing up files',
 					isCorrect: true,
 				},
 			],
 		})
 
 		// ========================
-		// ЭТАП 6: СОЦСЕТИ
+		// STAGE 6: SOCIAL MEDIA
 		// ========================
 		const course14 = await tx.course.create({
 			data: {
 				slug: 'social-media-privacy',
-				title: 'Приватность в соцсетях',
-				description: 'Настройка безопасности аккаунтов',
+				title: 'Social Media Privacy',
+				description: 'Configuring account security',
 				difficulty: Difficulty.EASY,
 				stageId: stages[5].id,
 			},
@@ -1776,7 +1776,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson14_1 = await tx.lesson.create({
 			data: {
-				title: 'Настройки приватности',
+				title: 'Privacy Settings',
 				order: 1,
 				courseId: course14.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -1789,50 +1789,50 @@ https://www.example.com:443/path/page?id=123#section
 					lessonId: lesson14_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Почему важна приватность',
-					content: `Ваши публикации в соцсетях видят:
-- Работодатели при найме
-- Мошенники для сбора данных
-- Маркетологи для таргетинга
-- Случайные незнакомцы
+					title: 'Why Privacy Matters',
+					content: `Your social media posts can be seen by:
+- Employers during hiring
+- Scammers gathering data
+- Marketers for targeting
+- Random strangers
 
-**Что могут узнать:**
-- Где вы живете (по геометкам)
-- Когда вас нет дома (посты из отпуска)
-- Место работы и учебы
-- Круг общения
-- Привычки и интересы
+**What they can learn:**
+- Where you live (from geotags)
+- When you're not home (vacation posts)
+- Where you work and study
+- Your social circle
+- Your habits and interests
 
-**Последствия:**
-- Взлом по социальной инженерии
-- Кража личности
-- Кибербуллинг
-- Преследование`,
+**Consequences:**
+- Being hacked via social engineering
+- Identity theft
+- Cyberbullying
+- Stalking`,
 				},
 				{
 					lessonId: lesson14_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Как настроить приватность',
-					content: `**Основные настройки:**
-
-**ВКонтакте:**
-Настройки → Приватность → Кто видит мой профиль → Только друзья
+					title: 'How to Configure Privacy',
+					content: `**Basic settings:**
 
 **Instagram:**
-Настройки → Конфиденциальность → Закрытый аккаунт
+Settings → Privacy → Private Account
 
 **Facebook:**
-Настройки → Конфиденциальность → Кто может видеть публикации → Друзья
+Settings → Privacy → Who can see my posts → Friends
 
 **Telegram:**
-Настройки → Конфиденциальность → Номер телефона/Фото → Никто
+Settings → Privacy → Phone Number/Photo → Nobody
 
-**Рекомендации:**
-- Отключите геолокацию
-- Скройте список друзей
-- Проверьте старые публикации
-- Не добавляйте незнакомцев`,
+**TikTok:**
+Settings → Privacy → Private Account
+
+**Recommendations:**
+- Turn off geolocation
+- Hide your friends list
+- Review old posts
+- Don't add strangers`,
 				},
 			],
 		})
@@ -1842,13 +1842,13 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson14_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Приватность в соцсетях',
-				question: 'Что безопаснее публиковать в открытом профиле?',
+				title: 'Social Media Privacy',
+				question: 'What is safer to post on a public profile?',
 				points: 10,
 				difficulty: Difficulty.EASY,
 				correctAnswerIndex: 2,
 				explanation:
-					'Мемы без геометок относительно безопасны. Документы, адрес и билеты с номерами могут использоваться мошенниками.', // ✅
+					'A meme without geotags is relatively safe. Documents, your address, and tickets with reference numbers can be used by scammers.',
 			},
 		})
 
@@ -1857,25 +1857,25 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					taskId: task14_1.id,
 					order: 1,
-					text: 'Номер паспорта',
+					text: 'Your passport number',
 					isCorrect: false,
 				},
 				{
 					taskId: task14_1.id,
 					order: 2,
-					text: 'Домашний адрес',
+					text: 'Your home address',
 					isCorrect: false,
 				},
 				{
 					taskId: task14_1.id,
 					order: 3,
-					text: 'Фото с мемом без геометок',
+					text: 'A meme photo without geotags',
 					isCorrect: true,
 				},
 				{
 					taskId: task14_1.id,
 					order: 4,
-					text: 'Фото билетов на самолет с номером бронирования',
+					text: 'A photo of plane tickets with the booking number',
 					isCorrect: false,
 				},
 			],
@@ -1884,8 +1884,8 @@ https://www.example.com:443/path/page?id=123#section
 		const course15 = await tx.course.create({
 			data: {
 				slug: 'social-media-scams',
-				title: 'Мошенничество в соцсетях',
-				description: 'Распознавание обмана',
+				title: 'Social Media Scams',
+				description: 'Recognizing deception',
 				difficulty: Difficulty.MEDIUM,
 				stageId: stages[5].id,
 			},
@@ -1893,7 +1893,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson15_1 = await tx.lesson.create({
 			data: {
-				title: 'Типы мошенничества',
+				title: 'Types of Scams',
 				order: 1,
 				courseId: course15.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -1905,24 +1905,24 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson15_1.id,
 				order: 1,
 				type: BlockType.THEORY,
-				title: 'Популярные схемы',
-				content: `**1. Взлом друга:** "Привет! Срочно нужны деньги, скинь на карту"
+				title: 'Common Schemes',
+				content: `**1. A hacked friend's account:** "Hey! I urgently need money, send it to my card"
 
-**2. Поддельные розыгрыши:** "Поделись и выиграй iPhone!" (сбор подписчиков)
+**2. Fake giveaways:** "Share and win an iPhone!" (a scheme to collect followers)
 
-**3. Фейковые благотворительные сборы**
+**3. Fake charity fundraisers**
 
-**4. Фишинг через личные сообщения:** "Перейди по ссылке, ты выиграл!"
+**4. Phishing via direct messages:** "Click this link, you won!"
 
-**5. Вакансии с предоплатой:** "Работа на дому, сначала оплати обучение"
+**5. Prepaid job offers:** "Work from home, but first pay for training"
 
-**6. Инвестиционные пирамиды:** "Вложи 10 000₽, получишь 100 000₽!"
+**6. Investment pyramids:** "Invest $100, get $1,000 back!"
 
-**Как проверить:**
-- Позвоните другу голосом
-- Проверьте профиль на подлинность
-- Не переходите по подозрительным ссылкам
-- Не отправляйте деньги незнакомцам`,
+**How to check:**
+- Call your friend directly to verify
+- Check the profile's authenticity
+- Don't click suspicious links
+- Don't send money to strangers`,
 			},
 		})
 
@@ -1931,13 +1931,13 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson15_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Мошенничество в соцсетях',
-				question: 'Друг пишет "Срочно скинь 5000₽". Что делать?',
+				title: 'Social Media Scams',
+				question: 'A friend messages "Urgently send me $50". What should you do?',
 				points: 10,
 				difficulty: Difficulty.MEDIUM,
 				correctAnswerIndex: 1,
 				explanation:
-					'Аккаунт друга могли взломать. Всегда звоните голосом для проверки таких просьб.', // ✅
+					"Your friend's account may have been hacked. Always call them directly to verify such requests.",
 			},
 		})
 
@@ -1946,38 +1946,38 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					taskId: task15_1.id,
 					order: 1,
-					text: 'Сразу отправить деньги',
+					text: 'Send the money right away',
 					isCorrect: false,
 				},
 				{
 					taskId: task15_1.id,
 					order: 2,
-					text: 'Позвонить другу и уточнить',
+					text: 'Call your friend to confirm',
 					isCorrect: true,
 				},
 				{
 					taskId: task15_1.id,
 					order: 3,
-					text: 'Спросить номер карты в чате',
+					text: 'Ask for their card number in the chat',
 					isCorrect: false,
 				},
 				{
 					taskId: task15_1.id,
 					order: 4,
-					text: 'Попросить его позвонить',
+					text: 'Ask them to call you',
 					isCorrect: false,
 				},
 			],
 		})
 
 		// ========================
-		// ЭТАП 7: ЛИЧНЫЕ ДАННЫЕ
+		// STAGE 7: PERSONAL DATA
 		// ========================
 		const course16 = await tx.course.create({
 			data: {
 				slug: 'personal-data',
-				title: 'Защита личных данных',
-				description: 'Что нельзя публиковать',
+				title: 'Protecting Personal Data',
+				description: "What you shouldn't post",
 				difficulty: Difficulty.EASY,
 				stageId: stages[6].id,
 			},
@@ -1985,7 +1985,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson16_1 = await tx.lesson.create({
 			data: {
-				title: 'Какие данные защищать',
+				title: 'What Data to Protect',
 				order: 1,
 				courseId: course16.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -1998,45 +1998,45 @@ https://www.example.com:443/path/page?id=123#section
 					lessonId: lesson16_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Критичные данные',
-					content: `**НИКОГДА не публикуйте:**
-- Номер паспорта/СНИЛС
-- Данные банковских карт (полный номер, CVV, PIN)
-- Пароли
-- Номер телефона (кроме деловых целей)
-- Домашний адрес
-- Геолокацию дома
-- Фото документов
+					title: 'Critical Data',
+					content: `**NEVER post:**
+- Your passport/ID number
+- Bank card details (full number, CVV, PIN)
+- Passwords
+- Phone number (except for business purposes)
+- Home address
+- Your home's geolocation
+- Photos of documents
 
-**С осторожностью:**
-- Дата рождения (используется для восстановления паролей)
-- ФИО полностью
+**Be cautious with:**
+- Date of birth (used for password recovery)
+- Full legal name
 - Email
-- Место работы/учебы
-- Маршруты и расписание`,
+- Workplace/school
+- Routes and schedule`,
 				},
 				{
 					lessonId: lesson16_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Что могут сделать с вашими данными',
-					content: `**Имея ФИО + дату рождения + номер телефона:**
-- Оформить микрозаем на ваше имя
-- Зарегистрировать аккаунты
-- Восстановить доступ к соцсетям
-- Позвонить и выманить деньги под видом банка
+					title: 'What Can Be Done With Your Data',
+					content: `**With your full name + date of birth + phone number:**
+- Take out a loan in your name
+- Register accounts
+- Recover access to your social media
+- Call and trick you out of money posing as your bank
 
-**Имея скан паспорта:**
-- Оформить кредит
-- Зарегистрировать фирму
-- Купить SIM-карту
-- Совершить преступление от вашего имени
+**With a scan of your ID:**
+- Take out a loan
+- Register a company
+- Buy a SIM card
+- Commit a crime under your identity
 
-**Защита:**
-- Не отправляйте сканы паспорта незнакомцам
-- Ставьте водяной знак на документы
-- Проверяйте кредитную историю раз в год
-- Не публикуйте билеты с штрихкодами`,
+**Protection:**
+- Don't send ID scans to strangers
+- Add a watermark to documents you share
+- Check your credit history once a year
+- Don't post tickets with barcodes`,
 				},
 			],
 		})
@@ -2046,12 +2046,12 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson16_1.id,
 				order: 1,
 				type: TaskType.MULTI_CHOICE,
-				title: 'Защита данных',
-				question: 'Какие данные ОПАСНО публиковать? (несколько):',
+				title: 'Data Protection',
+				question: 'Which data is DANGEROUS to post? (multiple):',
 				points: 15,
 				difficulty: Difficulty.EASY,
 				explanation:
-					'Паспорт, адрес и CVV — критичные данные, которые могут использоваться для мошенничества и кражи личности.', // ✅
+					'ID numbers, addresses, and CVV codes are critical data that can be used for fraud and identity theft.',
 			},
 		})
 
@@ -2060,25 +2060,25 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					taskId: task16_1.id,
 					order: 1,
-					text: 'Номер паспорта',
+					text: 'Your passport/ID number',
 					isCorrect: true,
 				},
 				{
 					taskId: task16_1.id,
 					order: 2,
-					text: 'Домашний адрес',
+					text: 'Your home address',
 					isCorrect: true,
 				},
 				{
 					taskId: task16_1.id,
 					order: 3,
-					text: 'Любимая книга',
+					text: 'Your favorite book',
 					isCorrect: false,
 				},
 				{
 					taskId: task16_1.id,
 					order: 4,
-					text: 'CVV код банковской карты',
+					text: 'Your bank card CVV code',
 					isCorrect: true,
 				},
 			],
@@ -2087,8 +2087,8 @@ https://www.example.com:443/path/page?id=123#section
 		const course17 = await tx.course.create({
 			data: {
 				slug: 'data-leaks',
-				title: 'Утечки данных',
-				description: 'Как проверить и что делать',
+				title: 'Data Breaches',
+				description: 'How to check and what to do',
 				difficulty: Difficulty.MEDIUM,
 				stageId: stages[6].id,
 			},
@@ -2096,7 +2096,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson17_1 = await tx.lesson.create({
 			data: {
-				title: 'Проверка утечек',
+				title: 'Checking for Breaches',
 				order: 1,
 				courseId: course17.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -2109,44 +2109,44 @@ https://www.example.com:443/path/page?id=123#section
 					lessonId: lesson17_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Что такое утечка данных',
-					content: `Утечка данных — когда хакеры взламывают сервис и публикуют базу пользователей.
+					title: 'What Is a Data Breach',
+					content: `A data breach is when hackers break into a service and leak its user database.
 
-**Крупнейшие утечки:**
-- Yahoo (2013) — 3 миллиарда аккаунтов
-- Facebook (2019) — 533 миллиона пользователей
-- LinkedIn (2021) — 700 миллионов профилей
-- VK (2016) — 100 миллионов аккаунтов
+**Biggest breaches:**
+- Yahoo (2013) — 3 billion accounts
+- Facebook (2019) — 533 million users
+- LinkedIn (2021) — 700 million profiles
+- Twitter/X (2023) — 200+ million accounts
 
-**Что попадает в утечки:**
-- Email + пароль
-- Номер телефона
-- Имя и фамилия
-- Дата рождения
-- Адрес
-- История покупок`,
+**What ends up in breaches:**
+- Email + password
+- Phone number
+- First and last name
+- Date of birth
+- Address
+- Purchase history`,
 				},
 				{
 					lessonId: lesson17_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Как проверить свои данные',
-					content: `**HaveIBeenPwned.com** — введите email, узнаете об утечках
+					title: 'How to Check Your Data',
+					content: `**HaveIBeenPwned.com** — enter your email to find out about breaches
 
-**LeakCheck.io** — проверка по email, телефону, логину (частично платно)
+**LeakCheck.io** — checks by email, phone, or username (partially paid)
 
-**2ip.ru/leak** — российский сервис проверки
+**Firefox Monitor** — a free breach-checking service by Mozilla
 
-**Что делать, если нашли утечку:**
-1. Немедленно смените пароль на этом сайте
-2. Смените пароли на других сайтах, где он совпадал
-3. Включите 2FA
-4. Проверьте активные сессии
-5. Следите за банковским счетом
+**What to do if you find a breach:**
+1. Immediately change your password on that site
+2. Change your password everywhere else you reused it
+3. Turn on 2FA
+4. Check your active sessions
+5. Watch your bank account
 
-**Профилактика:**
-- Используйте уникальные пароли везде
-- Не игнорируйте уведомления о подозрительных входах`,
+**Prevention:**
+- Use unique passwords everywhere
+- Don't ignore notifications about suspicious logins`,
 				},
 			],
 		})
@@ -2156,13 +2156,13 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson17_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Утечки данных',
-				question: 'Узнали, что ваш пароль от VK утек. Что делать первым?',
+				title: 'Data Breaches',
+				question: 'You find out your password leaked in a data breach. What should you do first?',
 				points: 10,
 				difficulty: Difficulty.MEDIUM,
 				correctAnswerIndex: 1,
 				explanation:
-					'При утечке пароля его нужно немедленно сменить, пока хакеры не успели войти в аккаунт.', // ✅
+					"If a password leaks, it needs to be changed immediately before hackers can log into your account.",
 			},
 		})
 
@@ -2171,25 +2171,25 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					taskId: task17_1.id,
 					order: 1,
-					text: 'Ничего, пусть попробуют взломать',
+					text: 'Nothing, let them try to hack it',
 					isCorrect: false,
 				},
 				{
 					taskId: task17_1.id,
 					order: 2,
-					text: 'Немедленно сменить пароль',
+					text: 'Change your password immediately',
 					isCorrect: true,
 				},
 				{
 					taskId: task17_1.id,
 					order: 3,
-					text: 'Удалить аккаунт',
+					text: 'Delete the account',
 					isCorrect: false,
 				},
 				{
 					taskId: task17_1.id,
 					order: 4,
-					text: 'Подождать неделю',
+					text: 'Wait a week',
 					isCorrect: false,
 				},
 			],
@@ -2198,8 +2198,8 @@ https://www.example.com:443/path/page?id=123#section
 		const course18 = await tx.course.create({
 			data: {
 				slug: 'vpn-encryption',
-				title: 'VPN и шифрование',
-				description: 'Анонимность и защита трафика',
+				title: 'VPN and Encryption',
+				description: 'Anonymity and traffic protection',
 				difficulty: Difficulty.HARD,
 				stageId: stages[6].id,
 			},
@@ -2207,7 +2207,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson18_1 = await tx.lesson.create({
 			data: {
-				title: 'Основы VPN',
+				title: 'VPN Basics',
 				order: 1,
 				courseId: course18.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -2220,47 +2220,47 @@ https://www.example.com:443/path/page?id=123#section
 					lessonId: lesson18_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Что такое VPN',
-					content: `VPN (Virtual Private Network) — виртуальная частная сеть. Шифрует ваш трафик и скрывает IP-адрес.
+					title: 'What Is a VPN',
+					content: `A VPN (Virtual Private Network) encrypts your traffic and hides your IP address.
 
-**Как работает:**
-1. Включаете VPN
-2. Весь трафик идет через зашифрованный туннель к VPN-серверу
-3. С точки зрения сайтов вы заходите с IP VPN-сервера
-4. Провайдер видит только VPN-соединение, не сайты
+**How it works:**
+1. You turn on the VPN
+2. All your traffic goes through an encrypted tunnel to a VPN server
+3. Websites see you connecting from the VPN server's IP
+4. Your ISP only sees the VPN connection, not the sites you visit
 
-**Зачем нужен:**
-- Обход блокировок
-- Защита в публичном Wi-Fi
-- Скрыть действия от провайдера
-- Доступ к региональному контенту`,
+**Why you'd need one:**
+- Bypassing blocks
+- Protection on public Wi-Fi
+- Hiding your activity from your ISP
+- Accessing region-locked content`,
 				},
 				{
 					lessonId: lesson18_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Выбор VPN',
-					content: `**Платные (надежные):**
+					title: 'Choosing a VPN',
+					content: `**Paid (reliable):**
 - NordVPN
 - ExpressVPN
 - ProtonVPN
 - Mullvad
 
-**Бесплатные (с ограничениями):**
+**Free (with limitations):**
 - ProtonVPN Free
-- Windscribe (10 ГБ/месяц)
+- Windscribe (10 GB/month)
 
-**НЕ используйте:**
-- VPN из подозрительных приложений
-- Бесплатные китайские VPN
-- VPN с плохими отзывами
+**DON'T use:**
+- VPNs bundled with suspicious apps
+- Random free VPNs with no reputation
+- VPNs with poor reviews
 
-**Критерии выбора:**
-- Политика no-logs (не хранят логи)
-- Скорость соединения
-- Количество серверов
-- Поддержка устройств
-- Цена`,
+**Selection criteria:**
+- A no-logs policy (they don't keep logs)
+- Connection speed
+- Number of servers
+- Device support
+- Price`,
 				},
 			],
 		})
@@ -2271,12 +2271,12 @@ https://www.example.com:443/path/page?id=123#section
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
 				title: 'VPN',
-				question: 'Главная задача VPN:',
+				question: "A VPN's main purpose is to:",
 				points: 15,
 				difficulty: Difficulty.HARD,
 				correctAnswerIndex: 1,
 				explanation:
-					'VPN шифрует весь интернет-трафик и скрывает ваш IP-адрес, защищая от слежки и перехвата данных.', // ✅
+					'A VPN encrypts all your internet traffic and hides your IP address, protecting against surveillance and data interception.',
 			},
 		})
 
@@ -2285,38 +2285,38 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					taskId: task18_1.id,
 					order: 1,
-					text: 'Ускорить интернет',
+					text: 'Speed up the internet',
 					isCorrect: false,
 				},
 				{
 					taskId: task18_1.id,
 					order: 2,
-					text: 'Зашифровать трафик и скрыть IP',
+					text: 'Encrypt traffic and hide your IP',
 					isCorrect: true,
 				},
 				{
 					taskId: task18_1.id,
 					order: 3,
-					text: 'Заблокировать рекламу',
+					text: 'Block ads',
 					isCorrect: false,
 				},
 				{
 					taskId: task18_1.id,
 					order: 4,
-					text: 'Увеличить скорость скачивания',
+					text: 'Increase download speed',
 					isCorrect: false,
 				},
 			],
 		})
 
 		// ========================
-		// ЭТАП 8: ПРОДВИНУТЫЙ
+		// STAGE 8: ADVANCED
 		// ========================
 		const course19 = await tx.course.create({
 			data: {
 				slug: 'advanced-threats',
-				title: 'Продвинутые угрозы',
-				description: 'APT, Zero-day, криптоджекинг',
+				title: 'Advanced Threats',
+				description: 'APT, zero-day exploits, cryptojacking',
 				difficulty: Difficulty.HARD,
 				stageId: stages[7].id,
 			},
@@ -2324,7 +2324,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson19_1 = await tx.lesson.create({
 			data: {
-				title: 'APT атаки',
+				title: 'APT Attacks',
 				order: 1,
 				courseId: course19.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -2337,25 +2337,25 @@ https://www.example.com:443/path/page?id=123#section
 				order: 1,
 				type: BlockType.THEORY,
 				title: 'Advanced Persistent Threats',
-				content: `APT (Advanced Persistent Threat) — целенаправленные долгосрочные кибератаки на крупные организации.
+				content: `An APT (Advanced Persistent Threat) is a targeted, long-term cyberattack against a major organization.
 
-**Характеристики:**
-- Спонсируются государствами
-- Используют zero-day уязвимости
-- Незаметны месяцами
-- Крадут стратегическую информацию
+**Characteristics:**
+- State-sponsored
+- Exploit zero-day vulnerabilities
+- Go undetected for months
+- Steal strategic information
 
-**Известные группы:**
-- APT28 (Fancy Bear) — Россия
-- APT29 (Cozy Bear) — Россия
-- APT1 — Китай
-- Lazarus Group — Северная Корея
+**Known groups:**
+- APT28 (Fancy Bear)
+- APT29 (Cozy Bear)
+- APT1
+- Lazarus Group
 
-**Примеры:**
-- Stuxnet — саботаж иранских центрифуг
-- SolarWinds (2020) — взлом через обновление ПО
+**Examples:**
+- Stuxnet — sabotage of Iranian centrifuges
+- SolarWinds (2020) — a breach via a compromised software update
 
-**Защита:** обычному пользователю не грозит, целятся на правительства и корпорации`,
+**Protection:** the average person isn't a target — these attacks target governments and corporations`,
 			},
 		})
 
@@ -2364,13 +2364,13 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson19_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'APT атаки',
-				question: 'Что характерно для APT атак?',
+				title: 'APT Attacks',
+				question: 'What is characteristic of APT attacks?',
 				points: 20,
 				difficulty: Difficulty.HARD,
 				correctAnswerIndex: 2,
 				explanation:
-					'APT (Advanced Persistent Threat) — это сложные долгосрочные атаки, которые могут длиться месяцами незамеченными.', // ✅
+					'APTs (Advanced Persistent Threats) are sophisticated, long-term attacks that can go undetected for months.',
 			},
 		})
 
@@ -2379,25 +2379,25 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					taskId: task19_1.id,
 					order: 1,
-					text: 'Массовая рассылка спама',
+					text: 'Mass spam distribution',
 					isCorrect: false,
 				},
 				{
 					taskId: task19_1.id,
 					order: 2,
-					text: 'Быстрый взлом за несколько часов',
+					text: 'A quick hack lasting a few hours',
 					isCorrect: false,
 				},
 				{
 					taskId: task19_1.id,
 					order: 3,
-					text: 'Долгосрочное скрытое проникновение в сеть',
+					text: 'Long-term, hidden infiltration of a network',
 					isCorrect: true,
 				},
 				{
 					taskId: task19_1.id,
 					order: 4,
-					text: 'Показ рекламы',
+					text: 'Displaying ads',
 					isCorrect: false,
 				},
 			],
@@ -2406,8 +2406,8 @@ https://www.example.com:443/path/page?id=123#section
 		const course20 = await tx.course.create({
 			data: {
 				slug: 'incident-response',
-				title: 'Реагирование на инциденты',
-				description: 'Что делать при взломе',
+				title: 'Incident Response',
+				description: 'What to do after being hacked',
 				difficulty: Difficulty.HARD,
 				stageId: stages[7].id,
 			},
@@ -2415,7 +2415,7 @@ https://www.example.com:443/path/page?id=123#section
 
 		const lesson20_1 = await tx.lesson.create({
 			data: {
-				title: 'План действий при взломе',
+				title: 'An Action Plan After Being Hacked',
 				order: 1,
 				courseId: course20.id,
 				estimatedDuration: calculateEstimatedDuration(2, 1),
@@ -2428,45 +2428,45 @@ https://www.example.com:443/path/page?id=123#section
 					lessonId: lesson20_1.id,
 					order: 1,
 					type: BlockType.THEORY,
-					title: 'Признаки взлома',
-					content: `**Аккаунт взломали, если:**
-- Появились публикации, которые вы не делали
-- Изменился пароль
-- Письмо "Ваш пароль изменен" (хотя вы не меняли)
-- Активные сессии из других городов
-- Друзья получают спам от вас
+					title: 'Signs of a Hack',
+					content: `**Your account was hacked if:**
+- Posts appear that you didn't make
+- Your password changed
+- You get a "Your password was changed" email you didn't request
+- Active sessions show up from other cities
+- Friends receive spam from you
 
-**Компьютер взломали, если:**
-- Файлы зашифрованы (ransomware)
-- Незнакомые программы в автозагрузке
-- Веб-камера включается сама
-- Деньги пропали со счета
-- Высокий трафик без причины`,
+**Your computer was hacked if:**
+- Files are encrypted (ransomware)
+- Unfamiliar programs are set to run at startup
+- Your webcam turns on by itself
+- Money disappeared from your account
+- High network traffic for no reason`,
 				},
 				{
 					lessonId: lesson20_1.id,
 					order: 2,
 					type: BlockType.THEORY,
-					title: 'Что делать немедленно',
-					content: `**Шаг 1:** Отключите устройство от интернета
+					title: 'What to Do Immediately',
+					content: `**Step 1:** Disconnect the device from the internet
 
-**Шаг 2:** Смените пароли с другого устройства
+**Step 2:** Change your passwords from a different device
 
-**Шаг 3:** Завершите все активные сессии
+**Step 3:** End all active sessions
 
-**Шаг 4:** Включите 2FA
+**Step 4:** Enable 2FA
 
-**Шаг 5:** Проверьте компьютер антивирусом
+**Step 5:** Scan your computer with antivirus software
 
-**Шаг 6:** Уведомите друзей, если аккаунт рассылал спам
+**Step 6:** Notify friends if your account sent them spam
 
-**Шаг 7:** Если украли деньги — заблокируйте карту, обратитесь в банк
+**Step 7:** If money was stolen — freeze your card and contact your bank
 
-**Шаг 8:** Сохраните доказательства (скриншоты)
+**Step 8:** Save evidence (screenshots)
 
-**Шаг 9:** Обратитесь в техподдержку сервиса
+**Step 9:** Contact the service's support team
 
-**Шаг 10:** Подайте заявление в полицию (при краже денег)`,
+**Step 10:** File a police report (if money was stolen)`,
 				},
 			],
 		})
@@ -2476,13 +2476,13 @@ https://www.example.com:443/path/page?id=123#section
 				lessonId: lesson20_1.id,
 				order: 1,
 				type: TaskType.SINGLE_CHOICE,
-				title: 'Действия при взломе',
-				question: 'Что делать ПЕРВЫМ, если аккаунт взломали?',
+				title: 'What to Do After a Hack',
+				question: 'What should you do FIRST if your account is hacked?',
 				points: 15,
 				difficulty: Difficulty.HARD,
 				correctAnswerIndex: 1,
 				explanation:
-					'Сначала изолируйте устройство от сети и смените пароль с чистого устройства, чтобы предотвратить дальнейший ущерб.', // ✅
+					'First, isolate the device from the network and change your password from a clean device to prevent further damage.',
 			},
 		})
 
@@ -2491,108 +2491,108 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					taskId: task20_1.id,
 					order: 1,
-					text: 'Написать в техподдержку',
+					text: 'Message support',
 					isCorrect: false,
 				},
 				{
 					taskId: task20_1.id,
 					order: 2,
-					text: 'Отключить интернет и сменить пароль с другого устройства',
+					text: 'Disconnect from the internet and change your password from another device',
 					isCorrect: true,
 				},
 				{
 					taskId: task20_1.id,
 					order: 3,
-					text: 'Удалить аккаунт',
+					text: 'Delete the account',
 					isCorrect: false,
 				},
 				{
 					taskId: task20_1.id,
 					order: 4,
-					text: 'Подождать несколько дней',
+					text: 'Wait a few days',
 					isCorrect: false,
 				},
 			],
 		})
 
 		// ========================
-		// ДОСТИЖЕНИЯ
+		// ACHIEVEMENTS
 		// ========================
 		console.log('🏆 Creating achievements...')
 		await tx.achievement.createMany({
 			data: [
 				{
 					code: 'FIRST_LOGIN',
-					title: 'Первый вход',
-					description: 'Зарегистрировались в системе',
+					title: 'First Login',
+					description: 'Registered in the system',
 					icon: 'log-in',
 				},
 				{
 					code: 'FIRST_LESSON',
-					title: 'Первый урок',
-					description: 'Завершили первый урок',
+					title: 'First Lesson',
+					description: 'Completed your first lesson',
 					icon: 'book-open',
 				},
 				{
 					code: 'PHISHING_MASTER',
-					title: 'Мастер фишинга',
-					description: 'Прошли курс по фишингу',
+					title: 'Phishing Master',
+					description: 'Completed the phishing course',
 					icon: 'fish',
 				},
 				{
 					code: 'PASSWORD_EXPERT',
-					title: 'Эксперт паролей',
-					description: 'Завершили все курсы по паролям',
+					title: 'Password Expert',
+					description: 'Completed all password courses',
 					icon: 'key',
 				},
 				{
 					code: 'SECURITY_NOVICE',
-					title: 'Новичок безопасности',
-					description: 'Прошли первый этап обучения',
+					title: 'Security Novice',
+					description: 'Completed the first learning stage',
 					icon: 'shield',
 				},
 				{
 					code: 'SECURITY_ADVANCED',
-					title: 'Продвинутый пользователь',
-					description: 'Прошли 4 этапа обучения',
+					title: 'Advanced User',
+					description: 'Completed 4 learning stages',
 					icon: 'award',
 				},
 				{
 					code: 'SECURITY_EXPERT',
-					title: 'Эксперт безопасности',
-					description: 'Прошли все 8 этапов',
+					title: 'Security Expert',
+					description: 'Completed all 8 stages',
 					icon: 'trophy',
 				},
 				{
 					code: 'PERFECT_SCORE',
-					title: 'Идеальный результат',
-					description: 'Решили 50 заданий подряд без ошибок',
+					title: 'Perfect Score',
+					description: 'Solved 50 tasks in a row without a mistake',
 					icon: 'star',
 				},
 				{
 					code: 'FAST_LEARNER',
-					title: 'Быстрый ученик',
-					description: 'Завершили курс за 1 день',
+					title: 'Fast Learner',
+					description: 'Completed a course in 1 day',
 					icon: 'zap',
 				},
 				{
 					code: 'CERTIFIED',
-					title: 'Сертифицированный',
-					description: 'Получили первый сертификат',
+					title: 'Certified',
+					description: 'Earned your first certificate',
 					icon: 'file-badge',
 				},
 			],
 		})
 
 		// ========================
-		// ТЕСТЫ
+		// TESTS
 		// ========================
 		console.log('📝 Creating tests...')
 
 		const test1 = await tx.test.create({
 			data: {
-				title: 'Итоговый тест: Основы безопасности',
-				description: 'Проверка знаний по основам цифровой безопасности',
+				title: 'Final Test: Security Basics',
+				description: 'Testing your knowledge of digital safety basics',
 				courseId: course1.id,
 				passingScore: 70,
 			},
@@ -2602,7 +2602,7 @@ https://www.example.com:443/path/page?id=123#section
 			data: {
 				testId: test1.id,
 				order: 1,
-				text: 'Что является основной функцией антивируса?',
+				text: "What is antivirus software's main function?",
 				type: TaskType.SINGLE_CHOICE,
 				correctAnswerIndex: 1,
 			},
@@ -2613,19 +2613,19 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					testQuestionId: tq1_1.id,
 					order: 1,
-					text: 'Ускорение компьютера',
+					text: 'Speeding up the computer',
 					isCorrect: false,
 				},
 				{
 					testQuestionId: tq1_1.id,
 					order: 2,
-					text: 'Защита от вредоносного ПО',
+					text: 'Protection against malware',
 					isCorrect: true,
 				},
 				{
 					testQuestionId: tq1_1.id,
 					order: 3,
-					text: 'Увеличение скорости интернета',
+					text: 'Increasing internet speed',
 					isCorrect: false,
 				},
 			],
@@ -2635,7 +2635,7 @@ https://www.example.com:443/path/page?id=123#section
 			data: {
 				testId: test1.id,
 				order: 2,
-				text: 'Как определить защищенное соединение?',
+				text: 'How do you identify a secure connection?',
 				type: TaskType.SINGLE_CHOICE,
 				correctAnswerIndex: 0,
 			},
@@ -2646,19 +2646,19 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					testQuestionId: tq1_2.id,
 					order: 1,
-					text: 'Замочек и https:// в адресной строке',
+					text: 'A lock icon and https:// in the address bar',
 					isCorrect: true,
 				},
 				{
 					testQuestionId: tq1_2.id,
 					order: 2,
-					text: 'Красивый дизайн сайта',
+					text: 'A nice-looking website design',
 					isCorrect: false,
 				},
 				{
 					testQuestionId: tq1_2.id,
 					order: 3,
-					text: 'Быстрая загрузка страницы',
+					text: 'A page that loads quickly',
 					isCorrect: false,
 				},
 			],
@@ -2666,8 +2666,8 @@ https://www.example.com:443/path/page?id=123#section
 
 		const test2 = await tx.test.create({
 			data: {
-				title: 'Итоговый тест: Фишинг',
-				description: 'Проверка навыков распознавания фишинга',
+				title: 'Final Test: Phishing',
+				description: 'Testing your phishing recognition skills',
 				courseId: course4.id,
 				passingScore: 80,
 			},
@@ -2677,7 +2677,7 @@ https://www.example.com:443/path/page?id=123#section
 			data: {
 				testId: test2.id,
 				order: 1,
-				text: 'Какой признак точно указывает на фишинговое письмо?',
+				text: 'Which sign definitely indicates a phishing email?',
 				type: TaskType.SINGLE_CHOICE,
 				correctAnswerIndex: 2,
 			},
@@ -2688,19 +2688,19 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					testQuestionId: tq2_1.id,
 					order: 1,
-					text: 'Письмо от друга',
+					text: 'An email from a friend',
 					isCorrect: false,
 				},
 				{
 					testQuestionId: tq2_1.id,
 					order: 2,
-					text: 'Персональное обращение',
+					text: 'A personal greeting',
 					isCorrect: false,
 				},
 				{
 					testQuestionId: tq2_1.id,
 					order: 3,
-					text: 'Требование срочно ввести пароль по ссылке',
+					text: 'An urgent demand to enter your password via a link',
 					isCorrect: true,
 				},
 			],
@@ -2710,7 +2710,7 @@ https://www.example.com:443/path/page?id=123#section
 			data: {
 				testId: test2.id,
 				order: 2,
-				text: 'Как правильно проверить ссылку в письме?',
+				text: 'What is the correct way to check a link in an email?',
 				type: TaskType.SINGLE_CHOICE,
 				correctAnswerIndex: 1,
 			},
@@ -2721,19 +2721,19 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					testQuestionId: tq2_2.id,
 					order: 1,
-					text: 'Сразу нажать на неё',
+					text: 'Click it right away',
 					isCorrect: false,
 				},
 				{
 					testQuestionId: tq2_2.id,
 					order: 2,
-					text: 'Навести мышкой и посмотреть URL',
+					text: 'Hover over it and check the URL',
 					isCorrect: true,
 				},
 				{
 					testQuestionId: tq2_2.id,
 					order: 3,
-					text: 'Скопировать в Google',
+					text: 'Paste it into Google',
 					isCorrect: false,
 				},
 			],
@@ -2741,8 +2741,8 @@ https://www.example.com:443/path/page?id=123#section
 
 		const test3 = await tx.test.create({
 			data: {
-				title: 'Итоговый тест: Пароли',
-				description: 'Проверка знаний о безопасности паролей',
+				title: 'Final Test: Passwords',
+				description: 'Testing your knowledge of password security',
 				courseId: course9.id,
 				passingScore: 75,
 			},
@@ -2752,7 +2752,7 @@ https://www.example.com:443/path/page?id=123#section
 			data: {
 				testId: test3.id,
 				order: 1,
-				text: 'Какой пароль самый надежный?',
+				text: 'Which password is the strongest?',
 				type: TaskType.SINGLE_CHOICE,
 				correctAnswerIndex: 3,
 			},
@@ -2791,7 +2791,7 @@ https://www.example.com:443/path/page?id=123#section
 			data: {
 				testId: test3.id,
 				order: 2,
-				text: 'Какой метод 2FA самый безопасный?',
+				text: 'Which 2FA method is the most secure?',
 				type: TaskType.SINGLE_CHOICE,
 				correctAnswerIndex: 0,
 			},
@@ -2802,19 +2802,19 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					testQuestionId: tq3_2.id,
 					order: 1,
-					text: 'Аппаратный ключ',
+					text: 'Hardware key',
 					isCorrect: true,
 				},
 				{
 					testQuestionId: tq3_2.id,
 					order: 2,
-					text: 'SMS-код',
+					text: 'SMS code',
 					isCorrect: false,
 				},
 				{
 					testQuestionId: tq3_2.id,
 					order: 3,
-					text: 'Email с кодом',
+					text: 'Email with a code',
 					isCorrect: false,
 				},
 			],
@@ -2822,8 +2822,8 @@ https://www.example.com:443/path/page?id=123#section
 
 		const test4 = await tx.test.create({
 			data: {
-				title: 'Итоговый тест: Вредоносное ПО',
-				description: 'Проверка знаний о malware',
+				title: 'Final Test: Malware',
+				description: 'Testing your knowledge of malware',
 				courseId: course12.id,
 				passingScore: 80,
 			},
@@ -2833,7 +2833,7 @@ https://www.example.com:443/path/page?id=123#section
 			data: {
 				testId: test4.id,
 				order: 1,
-				text: 'Какой тип malware шифрует файлы и требует выкуп?',
+				text: 'Which type of malware encrypts files and demands a ransom?',
 				type: TaskType.SINGLE_CHOICE,
 				correctAnswerIndex: 2,
 			},
@@ -2859,8 +2859,8 @@ https://www.example.com:443/path/page?id=123#section
 
 		const test5 = await tx.test.create({
 			data: {
-				title: 'Итоговый тест: Защита данных',
-				description: 'Проверка знаний о приватности',
+				title: 'Final Test: Data Protection',
+				description: 'Testing your knowledge of privacy',
 				courseId: course16.id,
 				passingScore: 75,
 			},
@@ -2870,7 +2870,7 @@ https://www.example.com:443/path/page?id=123#section
 			data: {
 				testId: test5.id,
 				order: 1,
-				text: 'Что ОПАСНО публиковать в соцсетях?',
+				text: 'What is DANGEROUS to post on social media?',
 				type: TaskType.SINGLE_CHOICE,
 				correctAnswerIndex: 1,
 			},
@@ -2881,30 +2881,30 @@ https://www.example.com:443/path/page?id=123#section
 				{
 					testQuestionId: tq5_1.id,
 					order: 1,
-					text: 'Фото с мемом',
+					text: 'A meme photo',
 					isCorrect: false,
 				},
 				{
 					testQuestionId: tq5_1.id,
 					order: 2,
-					text: 'Номер паспорта',
+					text: 'Your passport/ID number',
 					isCorrect: true,
 				},
 				{
 					testQuestionId: tq5_1.id,
 					order: 3,
-					text: 'Любимую книгу',
+					text: 'Your favorite book',
 					isCorrect: false,
 				},
 			],
 		})
 
 		// ========================
-		// ДЕМО ПРОГРЕСС
+		// DEMO PROGRESS
 		// ========================
 		console.log('📊 Creating demo progress for user...')
 
-		// Прогресс по курсам
+		// Course progress
 		await tx.courseProgress.createMany({
 			data: [
 				{
@@ -2934,7 +2934,7 @@ https://www.example.com:443/path/page?id=123#section
 			],
 		})
 
-		// Завершенные уроки
+		// Completed lessons
 		await tx.completedLesson.createMany({
 			data: [
 				{ userId: demoUser.id, lessonId: lesson1_1.id },
@@ -2943,7 +2943,7 @@ https://www.example.com:443/path/page?id=123#section
 			],
 		})
 
-		// Попытки выполнения заданий
+		// Task attempts
 		await tx.taskAttempt.createMany({
 			data: [
 				{
@@ -3007,7 +3007,7 @@ https://www.example.com:443/path/page?id=123#section
 			],
 		})
 
-		// Результаты тестов
+		// Test results
 		await tx.testResult.createMany({
 			data: [
 				{
@@ -3031,7 +3031,7 @@ https://www.example.com:443/path/page?id=123#section
 			],
 		})
 
-		// Выданные достижения
+		// Awarded achievements
 		const achievements = await tx.achievement.findMany()
 		await tx.userAchievement.createMany({
 			data: [
@@ -3051,7 +3051,7 @@ https://www.example.com:443/path/page?id=123#section
 			],
 		})
 
-		// Выдать сертификат за первый курс
+		// Issue a certificate for the first course
 		await tx.certificate.create({
 			data: {
 				userId: demoUser.id,
@@ -3061,40 +3061,40 @@ https://www.example.com:443/path/page?id=123#section
 		})
 
 		console.log('✅ SEED COMPLETED!')
-		console.log('\n📊 ИТОГОВАЯ СТАТИСТИКА:')
+		console.log('\n📊 FINAL STATISTICS:')
 		console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-		console.log('👥 Пользователи: 2')
-		console.log('   ├─ demo@safe.net (с прогрессом)')
+		console.log('👥 Users: 2')
+		console.log('   ├─ demo@safe.net (with progress)')
 		console.log('   └─ admin@safe.net')
 		console.log('')
-		console.log('📚 Структура обучения:')
-		console.log('   ├─ Этапов: 8')
-		console.log('   ├─ Курсов: 20')
-		console.log('   ├─ Уроков: 20')
-		console.log('   ├─ Теоретических блоков: 40+')
-		console.log('   ├─ Практических заданий: 20+')
-		console.log('   └─ Тестов: 5')
+		console.log('📚 Learning structure:')
+		console.log('   ├─ Stages: 8')
+		console.log('   ├─ Courses: 20')
+		console.log('   ├─ Lessons: 20')
+		console.log('   ├─ Theory blocks: 40+')
+		console.log('   ├─ Practice tasks: 20+')
+		console.log('   └─ Tests: 5')
 		console.log('')
-		console.log('🎯 Этапы:')
-		console.log('   1️⃣  Основы безопасности (3 курса)')
-		console.log('   2️⃣  Фишинг и мошенничество (3 курса)')
-		console.log('   3️⃣  Опасные ссылки (2 курса)')
-		console.log('   4️⃣  Пароли (3 курса)')
-		console.log('   5️⃣  Вредоносное ПО (2 курса)')
-		console.log('   6️⃣  Соцсети (2 курса)')
-		console.log('   7️⃣  Личные данные (3 курса)')
-		console.log('   8️⃣  Продвинутый уровень (2 курса)')
+		console.log('🎯 Stages:')
+		console.log('   1️⃣  Security Basics (3 courses)')
+		console.log('   2️⃣  Phishing & Fraud (3 courses)')
+		console.log('   3️⃣  Dangerous Links (2 courses)')
+		console.log('   4️⃣  Passwords (3 courses)')
+		console.log('   5️⃣  Malware (2 courses)')
+		console.log('   6️⃣  Social Media (2 courses)')
+		console.log('   7️⃣  Personal Data (3 courses)')
+		console.log('   8️⃣  Advanced Level (2 courses)')
 		console.log('')
-		console.log('🏆 Достижения: 10')
-		console.log('📜 Демо сертификат: 1')
+		console.log('🏆 Achievements: 10')
+		console.log('📜 Demo certificate: 1')
 		console.log('')
-		console.log('📊 Демо прогресс:')
-		console.log('   ├─ Основы безопасности: 100% ✅')
-		console.log('   ├─ Безопасный серфинг: 50%')
-		console.log('   ├─ Введение в фишинг: 75%')
-		console.log('   └─ Надежные пароли: 30%')
+		console.log('📊 Demo progress:')
+		console.log('   ├─ Security Basics: 100% ✅')
+		console.log('   ├─ Safe Browsing: 50%')
+		console.log('   ├─ Introduction to Phishing: 75%')
+		console.log('   └─ Strong Passwords: 30%')
 		console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-		console.log('\n🎉 База данных готова к использованию!')
+		console.log('\n🎉 Database is ready to use!')
 	})
 }
 

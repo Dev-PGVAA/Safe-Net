@@ -41,10 +41,10 @@ export default function DemoCard() {
 				<div className='flex items-center justify-between mb-4'>
 					<div>
 						<h3 className='font-semibold text-white text-lg'>
-							Уровень 1: Фишинг
+							Level 1: Phishing
 						</h3>
 						<p className='text-xs text-slate-400'>
-							Определи, безопасна ли ссылка
+							Determine whether the link is safe
 						</p>
 					</div>
 					<div className='w-12 h-12 bg-linear-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center'>
@@ -53,13 +53,13 @@ export default function DemoCard() {
 				</div>
 				<div className='bg-slate-900/50 rounded-xl p-4 mb-4 border border-slate-700'>
 					<p className='text-sm text-slate-200 mb-2'>
-						<span className='text-slate-400'>Отправитель:</span>{' '}
+						<span className='text-slate-400'>Sender:</span>{' '}
 						<a href='mailto:support@bank-pay.com' className='underline'>
 							support@bank-pay.com
 						</a>
 					</p>
 					<p className='text-sm text-slate-400'>
-						&quot;Ваш счет будет закрыт. Подтвердите личность немедленно.&quot;
+						&quot;Your account will be closed. Verify your identity immediately.&quot;
 					</p>
 				</div>
 				{isCorrect !== null && (
@@ -82,8 +82,8 @@ export default function DemoCard() {
 							className={`text-sm ${isCorrect ? 'text-emerald-200' : 'text-rose-200'}`}
 						>
 							{isCorrect
-								? 'Правильно! Это фишинг. Обратите внимание на подозрительный домен.'
-								: 'Неправильно. Это фишинговое письмо.'}
+								? 'Correct! This is phishing. Notice the suspicious domain.'
+								: 'Incorrect. This is a phishing email.'}
 						</span>
 					</m.div>
 				)}
@@ -98,7 +98,7 @@ export default function DemoCard() {
 						disabled={isCorrect !== null}
 					>
 						<CheckCircle className='w-4 h-4' />
-						Безопасно
+						Safe
 					</button>
 					<button
 						className={`${
@@ -110,7 +110,7 @@ export default function DemoCard() {
 						disabled={isCorrect !== null}
 					>
 						<XCircle className='w-4 h-4' />
-						Опасно
+						Dangerous
 					</button>
 				</div>
 				{isCorrect === null && (
@@ -122,7 +122,7 @@ export default function DemoCard() {
 					>
 						<Zap className='w-4 h-4 text-yellow-500 shrink-0 mt-0.5' />
 						<span>
-							Подсказка: Проверь адрес отправителя на наличие ошибок в домене.
+							Hint: Check the sender&apos;s address for domain misspellings.
 						</span>
 					</m.div>
 				)}
@@ -134,7 +134,7 @@ export default function DemoCard() {
 							className='w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-linear-to-r from-indigo-600 to-purple-600 text-white font-medium shadow-lg hover:scale-[1.01] transition-transform'
 						>
 							<BookOpen className='w-4 h-4' />
-							Пройти ещё — обзор по безопасности паролей
+							Try another — password security overview
 						</button>
 					</div>
 				)}
@@ -155,100 +155,100 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 		submitted: false,
 	})
 	const tasks = [
-		'Составить 3 устойчивых пароля (12+ символов) и проверить их в менеджере паролей',
-		'Включить двухфакторную аутентификацию в одном сервисе',
-		'Проверить, используются ли повторно старые пароли',
-		'Настроить автоматическую смену паролей раз в 3-6 месяцев',
-		'Проверить, есть ли у ваших аккаунтов утечки через HaveIBeenPwned',
-		'Настроить уведомления о подозрительной активности',
+		'Create 3 strong passwords (12+ characters) and check them in a password manager',
+		'Enable two-factor authentication on one service',
+		'Check whether you are reusing old passwords',
+		'Set up automatic password changes every 3-6 months',
+		'Check whether your accounts have been leaked using HaveIBeenPwned',
+		'Set up notifications for suspicious activity',
 	]
 	const quiz = [
 		{
-			q: 'Какой алгоритм хэширования сейчас считается лучшей практикой для паролей?',
+			q: 'Which hashing algorithm is currently considered best practice for passwords?',
 			options: ['MD5', 'bcrypt / Argon2', 'SHA1', 'Plain text'],
 			correct: 1,
 		},
 		{
-			q: 'Что такое "соль" (salt) в контексте хранения паролей?',
+			q: 'What is a "salt" in the context of password storage?',
 			options: [
-				'Секретный ключ, доступный только администратору',
-				'Уникальная добавка к каждому паролю перед хэшированием',
-				'Вид менеджера паролей',
-				'Алгоритм шифрования',
+				'A secret key available only to the administrator',
+				'A unique addition to each password before hashing',
+				'A type of password manager',
+				'An encryption algorithm',
 			],
 			correct: 1,
 		},
 		{
-			q: 'Какова минимальная рекомендуемая длина пароля?',
-			options: ['6 символов', '8 символов', '10 символов', '12 символов'],
+			q: 'What is the minimum recommended password length?',
+			options: ['6 characters', '8 characters', '10 characters', '12 characters'],
 			correct: 3,
 		},
 		{
-			q: 'Какой из следующих паролей наиболее безопасен?',
+			q: 'Which of the following passwords is the most secure?',
 			options: ['123456', 'password123', 'P@ssw0rd!', 'Xv2#kL9!nQz7@pR'],
 			correct: 3,
 		},
 		{
-			q: 'Что из следующего НЕ является хорошей практикой для паролей?',
+			q: 'Which of the following is NOT good password practice?',
 			options: [
-				'Использование менеджера паролей',
-				'Повторное использование одного пароля для всех аккаунтов',
-				'Использование длинных, сложных паролей',
-				'Регулярная смена паролей',
+				'Using a password manager',
+				'Reusing the same password for all accounts',
+				'Using long, complex passwords',
+				'Changing passwords regularly',
 			],
 			correct: 1,
 		},
 		{
-			q: 'Какой тип аутентификации добавляет дополнительный уровень безопасности?',
+			q: 'Which type of authentication adds an extra layer of security?',
 			options: [
-				'Только пароль',
-				'Двухфакторная аутентификация (2FA)',
-				'Запоминание пароля в браузере',
-				'Хранение паролей в текстовом файле',
+				'Password only',
+				'Two-factor authentication (2FA)',
+				'Saving the password in the browser',
+				'Storing passwords in a text file',
 			],
 			correct: 1,
 		},
 		{
-			q: 'Какой из следующих символов НЕ увеличивает сложность пароля?',
-			options: ['!', '@', '#', 'Пробел'],
+			q: 'Which of the following characters does NOT increase password complexity?',
+			options: ['!', '@', '#', 'Space'],
 			correct: 3,
 		},
 		{
-			q: 'Почему важно использовать уникальные пароли для каждого аккаунта?',
+			q: 'Why is it important to use unique passwords for each account?',
 			options: [
-				'Это делает пароли легче запоминаемыми',
-				'Это предотвращает цепочку взломов при утечке одного аккаунта',
-				'Это ускоряет вход в систему',
-				'Это снижает нагрузку на серверы',
+				'It makes passwords easier to remember',
+				'It prevents a chain of breaches if one account is leaked',
+				'It speeds up logging in',
+				'It reduces server load',
 			],
 			correct: 1,
 		},
 	]
 	const stats = [
-		{ label: 'Средняя длина паролей', value: '8.2', icon: BarChart3 },
-		{ label: 'Повторяющиеся пароли', value: '42%', icon: Activity },
-		{ label: 'Слабые пароли', value: '28%', icon: Shield },
-		{ label: 'Утечки аккаунтов', value: '7', icon: Key },
+		{ label: 'Average password length', value: '8.2', icon: BarChart3 },
+		{ label: 'Reused passwords', value: '42%', icon: Activity },
+		{ label: 'Weak passwords', value: '28%', icon: Shield },
+		{ label: 'Account leaks', value: '7', icon: Key },
 	]
 	const bestPractices = [
 		{
-			title: 'Используйте менеджер паролей',
-			desc: 'Храните уникальные, сложные пароли для каждого аккаунта без необходимости их запоминать',
+			title: 'Use a password manager',
+			desc: 'Keep unique, complex passwords for every account without needing to memorize them',
 			icon: Lock,
 		},
 		{
-			title: 'Двухфакторная аутентификация',
-			desc: 'Добавьте дополнительный уровень защиты с помощью SMS, приложений или аппаратных токенов',
+			title: 'Two-factor authentication',
+			desc: 'Add an extra layer of protection using SMS, apps, or hardware tokens',
 			icon: Shield,
 		},
 		{
-			title: 'Регулярная смена паролей',
-			desc: 'Меняйте пароли раз в 3-6 месяцев, особенно для важных аккаунтов',
+			title: 'Change passwords regularly',
+			desc: 'Change your passwords every 3-6 months, especially for important accounts',
 			icon: Activity,
 		},
 		{
-			title: 'Сложные комбинации',
-			desc: 'Используйте минимум 12 символов, включая заглавные/строчные буквы, цифры и символы',
+			title: 'Complex combinations',
+			desc: 'Use at least 12 characters, including uppercase/lowercase letters, numbers, and symbols',
 			icon: Key,
 		},
 	]
@@ -273,7 +273,7 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 		setTab(newTab)
 	}
 	const downloadCheatsheet = () => {
-		const text = `Шпаргалка по безопасности паролей:\n- Используйте Argon2/bcrypt\n- Солите + пеппер (если нужно)\n- Минимум 12 символов\n- Менеджер паролей + MFA\n- Не повторяйте пароли\n- Регулярно меняйте их\n`
+		const text = `Password security cheatsheet:\n- Use Argon2/bcrypt\n- Add salt + pepper (if needed)\n- Minimum 12 characters\n- Password manager + MFA\n- Don't reuse passwords\n- Change them regularly\n`
 		const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
 		const url = URL.createObjectURL(blob)
 		const a = document.createElement('a')
@@ -305,10 +305,10 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 						<ShieldCheck className='w-6 h-6 text-white' />
 						<div>
 							<h4 className='text-white font-semibold'>
-								Обзор: Безопасность паролей
+								Overview: Password Security
 							</h4>
 							<p className='text-xs text-indigo-100/80'>
-								Краткая теория → практика → проверка знаний
+								Brief theory → practice → knowledge check
 							</p>
 						</div>
 					</div>
@@ -316,7 +316,7 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 						<button
 							onClick={onClose}
 							className='p-2 rounded-lg bg-white/6 hover:bg-white/10 text-white'
-							aria-label='Закрыть модальное окно'
+							aria-label='Close modal window'
 						>
 							<X className='w-4 h-4' />
 						</button>
@@ -337,7 +337,7 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 							>
 								<div className='flex items-center gap-2'>
 									<BookOpen className='w-4 h-4' />
-									<span className='text-sm'>Теория</span>
+									<span className='text-sm'>Theory</span>
 								</div>
 							</button>
 							<button
@@ -350,7 +350,7 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 							>
 								<div className='flex items-center gap-2'>
 									<ClipboardList className='w-4 h-4' />
-									<span className='text-sm'>Закрепление</span>
+									<span className='text-sm'>Practice</span>
 								</div>
 							</button>
 							<button
@@ -363,13 +363,13 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 							>
 								<div className='flex items-center gap-2'>
 									<CheckCircle className='w-4 h-4' />
-									<span className='text-sm'>Тест</span>
+									<span className='text-sm'>Quiz</span>
 								</div>
 							</button>
 						</nav>
 						<div className='mt-6 text-xs text-slate-400'>
-							Рекомендуемое время:{' '}
-							<strong className='text-white'>15–30 минут</strong>
+							Recommended time:{' '}
+							<strong className='text-white'>15–30 minutes</strong>
 						</div>
 					</div>
 					{}
@@ -377,40 +377,39 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 						{}
 						{tab === 'theory' && (
 							<div className='space-y-6 text-slate-200 pb-4'>
-								<h5 className='text-xl font-semibold'>Ключевая теория</h5>
+								<h5 className='text-xl font-semibold'>Key Theory</h5>
 								<p className='text-sm leading-relaxed'>
-									Пароли — это первая линия защиты ваших данных. Основные
-									практики: использовать уникальные длинные пароли (12+
-									символов), менеджеры паролей, включать многофакторную
-									аутентификацию (MFA), и хранить пароли в виде хэшей с солью и
-									адаптивным алгоритмом (bcrypt/Argon2).
+									Passwords are the first line of defense for your data. Core
+									practices: use unique long passwords (12+ characters),
+									password managers, enable multi-factor authentication (MFA),
+									and store passwords as hashes with salt and an adaptive
+									algorithm (bcrypt/Argon2).
 								</p>
 								<div className='grid grid-cols-2 gap-4'>
 									<div className='bg-slate-800/40 p-4 rounded-xl border border-slate-700'>
 										<h6 className='font-medium text-sm flex items-center gap-2'>
-											<Lock className='w-4 h-4' /> Хэширование
+											<Lock className='w-4 h-4' /> Hashing
 										</h6>
 										<p className='text-xs text-slate-300 mt-2'>
-											Используйте медленные адаптивные функции хэширования
-											(Argon2, bcrypt). Никогда не храните пароль в открытом
-											виде. Это предотвращает утечки даже при взломе базы
-											данных.
+											Use slow, adaptive hashing functions (Argon2, bcrypt).
+											Never store passwords in plain text. This prevents leaks
+											even if the database is breached.
 										</p>
 									</div>
 									<div className='bg-slate-800/40 p-4 rounded-xl border border-slate-700'>
 										<h6 className='font-medium text-sm flex items-center gap-2'>
-											<Key className='w-4 h-4' /> Соль и Пеппер
+											<Key className='w-4 h-4' /> Salt and Pepper
 										</h6>
 										<p className='text-xs text-slate-300 mt-2'>
-											Соль — уникальная случайная строка для каждого пароля.
-											Пеппер — глобальный секрет, хранящийся отдельно (не
-											обязателен, но усиливает безопасность).
+											Salt is a unique random string added to each password.
+											Pepper is a global secret stored separately (optional, but
+											strengthens protection).
 										</p>
 									</div>
 								</div>
 								<div className='mt-6'>
 									<h6 className='font-medium text-sm mb-3'>
-										Статистика по безопасности паролей
+										Password Security Statistics
 									</h6>
 									<div className='grid grid-cols-2 gap-3'>
 										{stats.map((stat, i) => (
@@ -432,7 +431,7 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 									</div>
 								</div>
 								<div className='mt-6'>
-									<h6 className='font-medium text-sm mb-3'>Лучшие практики</h6>
+									<h6 className='font-medium text-sm mb-3'>Best Practices</h6>
 									<div className='grid grid-cols-2 gap-3'>
 										{bestPractices.map((practice, i) => (
 											<div
@@ -457,9 +456,9 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 						{}
 						{tab === 'practice' && (
 							<div className='space-y-4 text-slate-200 pb-4'>
-								<h5 className='text-xl font-semibold'>Практические задания</h5>
+								<h5 className='text-xl font-semibold'>Practical Tasks</h5>
 								<p className='text-sm text-slate-300 mb-4'>
-									Выполни задания и отмечай галочками — это улучшит навыки.
+									Complete the tasks and check them off — this will sharpen your skills.
 								</p>
 								<ul className='space-y-3'>
 									{tasks.map((t, i) => (
@@ -486,11 +485,11 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 								<div className='pt-3'>
 									<button
 										onClick={() =>
-											alert('Отлично! Продолжай в боевом проекте!')
+											alert('Great! Keep it up in a real-world project!')
 										}
 										className='px-4 py-2 rounded-xl bg-emerald-600 text-white'
 									>
-										Пометить всё как выполненное
+										Mark all as complete
 									</button>
 								</div>
 							</div>
@@ -498,9 +497,9 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 						{}
 						{tab === 'quiz' && (
 							<div className='space-y-4 text-slate-200 pb-4'>
-								<h5 className='text-xl font-semibold'>Короткий тест</h5>
+								<h5 className='text-xl font-semibold'>Quick Quiz</h5>
 								<p className='text-sm text-slate-300 mb-4'>
-									Выбери ответы и нажми &quot;Отправить&quot; для проверки.
+									Pick your answers and click &quot;Submit&quot; to check them.
 								</p>
 								<div className='space-y-6'>
 									{quiz.map((q, i) => (
@@ -553,11 +552,11 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 											disabled={quizState.submitted}
 											className='px-4 py-2 rounded-xl bg-indigo-600 text-white'
 										>
-											Отправить
+											Submit
 										</button>
 										{quizState.submitted && (
 											<div className='text-sm'>
-												Результат:{' '}
+												Result:{' '}
 												<strong>
 													{score()} / {quiz.length}
 												</strong>
@@ -572,14 +571,14 @@ function PasswordModal({ onClose }: { onClose: () => void }) {
 				{}
 				<div className='p-4 border-t border-slate-800 flex items-center justify-between'>
 					<div className='text-xs text-slate-400'>
-						Совет: после теории обязательно попробуйте задания и тест.
+						Tip: after the theory, be sure to try the tasks and the quiz.
 					</div>
 					<div className='flex items-center gap-3'>
 						<button
 							onClick={onClose}
 							className='px-4 py-2 rounded-xl bg-white/6 text-white'
 						>
-							Закрыть
+							Close
 						</button>
 					</div>
 				</div>

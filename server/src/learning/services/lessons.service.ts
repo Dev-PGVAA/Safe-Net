@@ -77,7 +77,7 @@ export class LessonsService {
 
 			if (!lesson) throw new NotFoundException('Lesson not found')
 
-			// Создаем блок
+			// Create the block
 			const block = await tx.lessonBlock.create({
 				data: {
 					lessonId: dto.lessonId,
@@ -88,7 +88,7 @@ export class LessonsService {
 				},
 			})
 
-			// Пересчитываем и обновляем время
+			// Recalculate and update duration
 			const newEstimatedDuration = this.calculateEstimatedDuration(
 				lesson.blocks.length + 1,
 				lesson.tasks.length
@@ -172,9 +172,9 @@ export class LessonsService {
 		blocksCount: number,
 		tasksCount: number
 	): number {
-		const BASE_TIME = 2 // базовое время на урок
-		const TIME_PER_BLOCK = 2 // 2 минуты на блок теории
-		const TIME_PER_TASK = 5 // 5 минут на задачу
+		const BASE_TIME = 2 // base time per lesson
+		const TIME_PER_BLOCK = 2 // 2 minutes per theory block
+		const TIME_PER_TASK = 5 // 5 minutes per task
 
 		return BASE_TIME + blocksCount * TIME_PER_BLOCK + tasksCount * TIME_PER_TASK
 	}

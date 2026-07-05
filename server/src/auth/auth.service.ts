@@ -33,7 +33,7 @@ export class AuthService {
 		const oldUserEmail = await this.UserService.getByEmail(dto.email)
 		if (oldUserEmail)
 			throw new UnauthorizedException(
-				'Пользователь с этим email уже существует'
+				'A user with this email already exists'
 			)
 
 		const { password, ...user } = await this.UserService.create(dto)
@@ -67,11 +67,11 @@ export class AuthService {
 	}
 	private async validateUser(dto: AuthLoginDto) {
 		const user = await this.UserService.getByEmail(dto.email)
-		if (!user) throw new NotFoundException('Пользователь не найден')
+		if (!user) throw new NotFoundException('User not found')
 		const isValid = await verify(user.password, dto.password)
-		if (!isValid) throw new UnauthorizedException('Не верный пароль')
+		if (!isValid) throw new UnauthorizedException('Incorrect password')
 		if (user.status === UserStatus.BLOCKED)
-			throw new UnauthorizedException('Пользователь заблокирован')
+			throw new UnauthorizedException('User is blocked')
 		return user
 	}
 	addRefreshTokenToResponse(res: Response, refreshToken: string) {
@@ -80,17 +80,16 @@ export class AuthService {
 
 		res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
 			httpOnly: true,
-			domain: 'localhost',
 			expires: expiresIn,
-			secure: false, // ← для production используй process.env.NODE_ENV === 'production'
-			sameSite: 'lax', // ← 'lax' или 'strict' для локальной разработки
+			secure: false, // ← use process.env.NODE_ENV === 'production' for production
+			sameSite: 'lax', // ← 'lax' or 'strict' for local development
 		})
 	}
 
 	async getNewTokens(refreshToken: string) {
 		const result = await this.jwt.verifyAsync(refreshToken)
 		if (!result)
-			throw new UnauthorizedException('Неправильный токен обновления')
+			throw new UnauthorizedException('Invalid refresh token')
 		const { password, ...user } = await this.UserService.getById(result.id)
 		const tokens = this.issueTokens(user.id)
 		return {
@@ -101,10 +100,9 @@ export class AuthService {
 	removeRefreshTokenFromResponse(res: Response) {
 		res.cookie(this.REFRESH_TOKEN_NAME, '', {
 			httpOnly: true,
-			domain: 'localhost',
 			expires: new Date(0),
-			secure: true,
-			sameSite: 'none',
+			secure: false,
+			sameSite: 'lax',
 		})
 	}
 }

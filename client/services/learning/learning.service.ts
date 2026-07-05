@@ -6,7 +6,7 @@ import {
     ICourseDetail,
     ILesson,
     IStage,
-    ITaskAnswerResponse, // ✅ Импортируй новый тип
+    ITaskAnswerResponse, // ✅ New type import
     ITest,
     ITestResult,
     IUserAchievement,
@@ -44,7 +44,7 @@ class LearningService {
 		return data
 	}
 
-	// ✅ Обновлён тип возврата
+	// ✅ Updated return type
 	async answerTask(
 		taskId: string,
 		payload: { selectedOptionIds: string[]; textAnswer?: string }

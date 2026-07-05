@@ -55,13 +55,11 @@ const AppleLessonCard = ({ lesson, slug, index }: AppleLessonCardProps) => {
 								</h3>
 								<div className='flex flex-wrap gap-2'>
 									<div className='font-semibold text-white/60 sm:text-sm mt-0.5'>
-										Урок {lesson.order}
+										Lesson {lesson.order}
 									</div>
 									<Badge className='bg-white/10 backdrop-blur-sm border-white/20 text-white/80 px-2 py-0.5 text-xs sm:px-3 sm:py-1 rounded-md shrink-0'>
 										{lesson.tasksCount}{' '}
-										{lesson.tasksCount >= 2 && lesson.tasksCount <= 4
-											? 'задания'
-											: 'заданий'}
+										{lesson.tasksCount === 1 ? 'task' : 'tasks'}
 									</Badge>
 								</div>
 							</div>
@@ -79,7 +77,7 @@ const AppleLessonCard = ({ lesson, slug, index }: AppleLessonCardProps) => {
 								<BookOpen className='w-3.5 h-3.5 sm:w-4 sm:h-4' />
 							</div>
 							<span className='truncate hidden sm:inline'>
-								{lesson.completed ? 'Перепройти' : 'Начать урок'}
+								{lesson.completed ? 'Retake' : 'Start lesson'}
 							</span>
 						</div>
 						<div

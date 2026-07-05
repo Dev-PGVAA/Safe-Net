@@ -50,12 +50,12 @@ export function DeleteAchievementDialog({
 										<AlertTriangle className='w-6 h-6 text-red-400' />
 									</div>
 									<AlertDialogTitle className='text-xl'>
-										Удалить достижение?
+										Delete achievement?
 									</AlertDialogTitle>
 								</div>
 								<AlertDialogDescription className='text-gray-300 space-y-3'>
 									<p>
-										Вы действительно хотите удалить достижение{' '}
+										Are you sure you want to delete the achievement{' '}
 										<span className='font-semibold text-white'>
 											"{achievementTitle}"
 										</span>
@@ -63,7 +63,7 @@ export function DeleteAchievementDialog({
 									</p>
 									<div className='p-3 rounded-lg bg-red-500/10 border border-red-500/20'>
 										<p className='text-sm text-red-300'>
-											⚠️ Это действие необратимо и не может быть отменено.
+											⚠️ This action is permanent and cannot be undone.
 										</p>
 									</div>
 								</AlertDialogDescription>
@@ -73,7 +73,7 @@ export function DeleteAchievementDialog({
 									disabled={isDeleting}
 									className='bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:text-white'
 								>
-									Отмена
+									Cancel
 								</AlertDialogCancel>
 								<AlertDialogAction
 									onClick={handleConfirm}
@@ -83,10 +83,10 @@ export function DeleteAchievementDialog({
 									{isDeleting ? (
 										<>
 											<Loader2 className='w-4 h-4 animate-spin' />
-											Удаление...
+											Deleting...
 										</>
 									) : (
-										'Удалить достижение'
+										'Delete achievement'
 									)}
 								</AlertDialogAction>
 							</AlertDialogFooter>

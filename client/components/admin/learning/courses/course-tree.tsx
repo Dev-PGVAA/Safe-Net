@@ -50,12 +50,12 @@ export default function CourseTree({ stages, onRefetch }: CourseTreeProps) {
 		if (!deleteDialog.course) return
 		try {
 			await adminService.deleteCourse(deleteDialog.course.id)
-			toast.success('Курс успешно удален')
+			toast.success('Course deleted successfully')
 			onRefetch()
 			setDeleteDialog({ open: false, course: null })
 		} catch (error) {
 			console.error('Delete error:', error)
-			toast.error('Ошибка при удалении курса')
+			toast.error('Error deleting course')
 		}
 	}
 
@@ -63,12 +63,12 @@ export default function CourseTree({ stages, onRefetch }: CourseTreeProps) {
 		if (!deleteStageDialog.stage) return
 		try {
 			await adminService.deleteStage(deleteStageDialog.stage.id)
-			toast.success('Этап успешно удален')
+			toast.success('Stage deleted successfully')
 			onRefetch()
 			setDeleteStageDialog({ open: false, stage: null })
 		} catch (error) {
 			console.error('Delete stage error:', error)
-			toast.error('Ошибка при удалении этапа')
+			toast.error('Error deleting stage')
 		}
 	}
 
@@ -86,9 +86,8 @@ export default function CourseTree({ stages, onRefetch }: CourseTreeProps) {
 	}
 
 	const getCourseWord = (count: number): string => {
-		if (count === 1) return 'курс'
-		if (count >= 2 && count <= 4) return 'курса'
-		return 'курсов'
+		if (count === 1) return 'course'
+		return 'courses'
 	}
 
 	return (
@@ -109,7 +108,7 @@ export default function CourseTree({ stages, onRefetch }: CourseTreeProps) {
 							onHoverEnd={() => setHoveredStage(null)}
 							className='rounded-[18px] overflow-hidden bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl'
 						>
-							{/* Stage Header - кнопки теперь siblings, не вложены */}
+							{/* Stage Header - buttons are now siblings, not nested */}
 							<div className='flex items-center hover:bg-white/2'>
 								{/* Toggle Button */}
 								<m.button
@@ -139,7 +138,7 @@ export default function CourseTree({ stages, onRefetch }: CourseTreeProps) {
 									</div>
 								</m.button>
 
-								{/* Actions - вне toggle button */}
+								{/* Actions - outside the toggle button */}
 								<div className='flex items-center gap-3 mr-5'>
 									{/* Delete Button */}
 									<AnimatePresence>
@@ -251,7 +250,7 @@ export default function CourseTree({ stages, onRefetch }: CourseTreeProps) {
 														<BookOpen className='w-6 h-6 text-gray-600' />
 													</div>
 													<p className='text-sm text-gray-500'>
-														Нет курсов в этом этапе
+														No courses in this stage
 													</p>
 												</m.div>
 											)}

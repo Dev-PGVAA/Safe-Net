@@ -43,7 +43,7 @@ export default function LessonDetailPage() {
 		).length
 		const totalTasks = lesson.tasks.length
 
-		// Прогресс: завершенные задачи + 50% за начатые
+		// Progress: completed tasks + 50% for started ones
 		const weightedProgress =
 			totalTasks > 0
 				? ((completedTasks + startedTasks * 0.5) / totalTasks) * 100
@@ -57,15 +57,15 @@ export default function LessonDetailPage() {
 		}
 	}, [lesson?.tasks])
 
-	// Форматирование длительности урока
+	// Format lesson duration
 	const formatDuration = (minutes?: number) => {
-		if (!minutes) return '15–20 мин'
+		if (!minutes) return '15–20 min'
 
-		if (minutes < 60) return `${minutes} мин`
+		if (minutes < 60) return `${minutes} min`
 
 		const hours = Math.floor(minutes / 60)
 		const mins = minutes % 60
-		return `${hours} ч${mins > 0 ? ` ${mins} мин` : ''}`
+		return `${hours} h${mins > 0 ? ` ${mins} min` : ''}`
 	}
 
 	if (isLoading) {
@@ -116,17 +116,17 @@ export default function LessonDetailPage() {
 								<BookOpen className='w-8 h-8 sm:w-10 sm:h-10 text-white/20' />
 							</div>
 							<h2 className='text-2xl sm:text-3xl font-black text-white mb-2 sm:mb-3'>
-								Урок не найден
+								Lesson not found
 							</h2>
 							<p className='text-base sm:text-lg text-white/60 mb-6 sm:mb-8 leading-relaxed'>
-								Проверьте ссылку или обратитесь к администратору.
+								Check the link or contact the administrator.
 							</p>
 							<Button
 								onClick={() => router.back()}
 								className='w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/80 shadow-2xl font-bold text-sm sm:text-base'
 							>
 								<ArrowLeft className='mr-2 h-4 w-4' />
-								Вернуться назад
+								Go back
 							</Button>
 						</Card>
 					</m.div>
@@ -149,7 +149,7 @@ export default function LessonDetailPage() {
 				<Breadcrumb
 					showBackButton
 					items={[
-						{ label: 'Обучение', href: ROUTES.COURSES, icon: BookOpen },
+						{ label: 'Courses', href: ROUTES.COURSES, icon: BookOpen },
 						{
 							label: lesson.courseTitle,
 							href: `${ROUTES.COURSES}/${lesson.courseSlug}`,
@@ -171,20 +171,20 @@ export default function LessonDetailPage() {
 								<div className='flex flex-wrap items-center gap-2'>
 									<Badge className='bg-white/10 backdrop-blur-sm border-white/20 text-white/80 px-3 sm:px-4 py-1 sm:py-1.5 rounded-xl text-xs sm:text-sm'>
 										<Target className='h-3 w-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2 opacity-80' />
-										Урок {lesson.order}
+										Lesson {lesson.order}
 									</Badge>
 
 									{stats.progress === 100 && (
 										<Badge className='bg-emerald-500/10 border-emerald-500/20 text-emerald-400 px-3 sm:px-4 py-1 sm:py-1.5 rounded-xl text-xs sm:text-sm backdrop-blur-sm'>
 											<CheckCircle2 className='h-3 w-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2' />
-											Завершено
+											Completed
 										</Badge>
 									)}
 
 									{stats.startedTasks > 0 && stats.progress < 100 && (
 										<Badge className='bg-yellow-500/10 border-yellow-500/20 text-yellow-400 px-3 sm:px-4 py-1 sm:py-1.5 rounded-xl text-xs sm:text-sm backdrop-blur-sm'>
 											<Clock className='h-3 w-3 sm:w-4 sm:h-4 mr-1.5 sm:mr-2' />
-											В процессе
+											In progress
 										</Badge>
 									)}
 								</div>
@@ -203,10 +203,10 @@ export default function LessonDetailPage() {
 									<div className='flex items-center gap-1.5 sm:gap-2'>
 										<BookOpen className='h-4 w-4 opacity-70' />
 										<span>
-											{lesson.blocks?.length || 0} блока теории •{' '}
+											{lesson.blocks?.length || 0} theory blocks •{' '}
 											{stats.totalTasks > 0
-												? `${stats.completedTasks}/${stats.totalTasks} задач`
-												: 'Заданий пока нет'}
+												? `${stats.completedTasks}/${stats.totalTasks} tasks`
+												: 'No tasks yet'}
 										</span>
 									</div>
 								</div>
@@ -217,10 +217,10 @@ export default function LessonDetailPage() {
 							<div className='space-y-2.5 sm:space-y-3 pt-4'>
 								<div className='flex items-center justify-between text-xs sm:text-sm'>
 									<span className='text-white/60 font-medium'>
-										Общий прогресс
+										Overall progress
 										{stats.startedTasks > 0 && (
 											<span className='ml-2 text-xs text-yellow-400'>
-												({stats.startedTasks} в процессе)
+												({stats.startedTasks} in progress)
 											</span>
 										)}
 									</span>
@@ -260,10 +260,10 @@ export default function LessonDetailPage() {
 											</m.div>
 											<div className='space-y-2'>
 												<p className='text-base sm:text-lg font-black text-white'>
-													Подготовка материалов урока
+													Preparing lesson materials
 												</p>
 												<p className='text-xs sm:text-sm text-white/60 leading-relaxed'>
-													Это займет всего несколько секунд...
+													This will only take a few seconds...
 												</p>
 											</div>
 										</div>
@@ -289,7 +289,7 @@ export default function LessonDetailPage() {
 									</div>
 									<div className='flex-1 min-w-0'>
 										<p className='text-xs font-bold text-white/50 uppercase tracking-wider mb-1'>
-											Курс
+											Course
 										</p>
 										<p className='text-sm sm:text-base font-black text-white truncate'>
 											{lesson.courseTitle}
@@ -299,13 +299,13 @@ export default function LessonDetailPage() {
 
 								<div className='space-y-3 pt-3 border-t border-white/10 text-sm'>
 									<div className='flex items-center justify-between'>
-										<span className='text-white/60'>Теория</span>
+										<span className='text-white/60'>Theory</span>
 										<span className='font-bold text-white'>
-											{lesson.blocks?.length || 0} блоков
+											{lesson.blocks?.length || 0} blocks
 										</span>
 									</div>
 									<div className='flex items-center justify-between'>
-										<span className='text-white/60'>Задачи</span>
+										<span className='text-white/60'>Tasks</span>
 										<span className='font-bold text-white'>
 											{stats.totalTasks > 0
 												? `${stats.completedTasks}/${stats.totalTasks}`
@@ -314,19 +314,15 @@ export default function LessonDetailPage() {
 									</div>
 									{stats.startedTasks > 0 && (
 										<div className='flex items-center justify-between text-xs pt-2 border-t border-white/5'>
-											<span className='text-yellow-400/60'>В работе</span>
+											<span className='text-yellow-400/60'>In progress</span>
 											<span className='font-bold text-yellow-400'>
 												{stats.startedTasks}{' '}
-												{stats.startedTasks === 1
-													? 'задача'
-													: stats.startedTasks < 5
-														? 'задачи'
-														: 'задач'}
+												{stats.startedTasks === 1 ? 'task' : 'tasks'}
 											</span>
 										</div>
 									)}
 									<div className='flex items-center justify-between'>
-										<span className='text-white/60'>Статус урока</span>
+										<span className='text-white/60'>Lesson status</span>
 										<span
 											className={cn(
 												'font-bold',
@@ -338,16 +334,16 @@ export default function LessonDetailPage() {
 											)}
 										>
 											{stats.progress === 100
-												? 'Завершён'
+												? 'Completed'
 												: stats.totalTasks === 0
-													? 'Без заданий'
+													? 'No tasks'
 													: stats.progress > 0
-														? 'В процессе'
-														: 'Не начат'}
+														? 'In progress'
+														: 'Not started'}
 										</span>
 									</div>
 									<div className='flex items-center justify-between'>
-										<span className='text-white/60'>Время</span>
+										<span className='text-white/60'>Time</span>
 										<span className='font-bold text-white'>
 											{formatDuration(lesson.estimatedDuration)}
 										</span>
@@ -373,13 +369,13 @@ export default function LessonDetailPage() {
 										</m.div>
 										<div>
 											<p className='text-base sm:text-lg font-black text-white mb-1.5 sm:mb-2 leading-tight'>
-												Продолжай в том же духе!
+												Keep up the great work!
 											</p>
 											<p className='text-xs sm:text-sm text-white/60 leading-relaxed'>
-												Ты уже прошёл {stats.completedTasks} из{' '}
-												{stats.totalTasks} заданий
+												You've completed {stats.completedTasks} of{' '}
+												{stats.totalTasks} tasks
 												{stats.startedTasks > 0 &&
-													` (${stats.startedTasks} в процессе)`}
+													` (${stats.startedTasks} in progress)`}
 											</p>
 										</div>
 									</CardContent>

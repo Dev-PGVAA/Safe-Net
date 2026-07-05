@@ -11,17 +11,17 @@ export function useLogout() {
 	const logout = async (redirectTo?: string) => {
 		try {
 			await authService.logout()
-			toast.success('Вы успешно вышли из системы')
+			toast.success('You have successfully logged out')
 
 			if (redirectTo) {
-				// Полная перезагрузка страницы при редиректе
+				// Full page reload on redirect
 				window.location.href = redirectTo
 			} else {
-				// Если редирект не указан, просто обновляем текущую страницу
+				// If no redirect is specified, just refresh the current page
 				window.location.reload()
 			}
 		} catch (error) {
-			toast.error('Ошибка при выходе из системы')
+			toast.error('Error logging out')
 			console.error('Logout error:', error)
 		}
 	}

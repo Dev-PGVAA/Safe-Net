@@ -6,16 +6,16 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const breadcrumbLabels: Record<string, string> = {
-	admin: 'Админ-панель',
-	learning: 'Обучение',
-	courses: 'Курсы',
-	lessons: 'Уроки',
-	tests: 'Тесты',
-	users: 'Пользователи',
-	stats: 'Статистика',
-	overview: 'Обзор',
-	settings: 'Настройки',
-	edit: 'Редактирование',
+	admin: 'Admin panel',
+	learning: 'Learning',
+	courses: 'Courses',
+	lessons: 'Lessons',
+	tests: 'Tests',
+	users: 'Users',
+	stats: 'Statistics',
+	overview: 'Overview',
+	settings: 'Settings',
+	edit: 'Edit',
 }
 
 export default function Breadcrumbs() {
@@ -39,7 +39,7 @@ export default function Breadcrumbs() {
 				className='flex items-center gap-1 hover:text-gray-900 dark:hover:text-white transition'
 			>
 				<Home className='w-4 h-4' />
-				<span>Главная</span>
+				<span>Home</span>
 			</Link>
 
 			{segments.map((segment, index) => {

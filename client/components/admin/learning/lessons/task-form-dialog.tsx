@@ -29,7 +29,7 @@ const taskSchema = z.object({
 	lessonId: z.string(),
 	order: z.number().int().positive(),
 	type: z.nativeEnum(TaskType),
-	title: z.string().min(3, 'Минимум 3 символа'),
+	title: z.string().min(3, 'Must be at least 3 characters'),
 	question: z.string().optional(),
 	explanation: z.string().optional(),
 	points: z.number().int().min(1).max(100).optional(),
@@ -37,7 +37,7 @@ const taskSchema = z.object({
 	options: z
 		.array(
 			z.object({
-				text: z.string().min(1, 'Вариант не может быть пустым'),
+				text: z.string().min(1, 'Option cannot be empty'),
 				isCorrect: z.boolean(),
 			})
 		)
@@ -47,18 +47,18 @@ const taskSchema = z.object({
 type TaskFormData = z.infer<typeof taskSchema>
 
 const TaskTypeLabels: Record<TaskType, string> = {
-	[TaskType.SINGLE_CHOICE]: 'Один вариант',
-	[TaskType.MULTI_CHOICE]: 'Несколько вариантов',
-	[TaskType.SHORT_ANSWER]: 'Короткий ответ',
-	[TaskType.PHISHING_EMAIL]: 'Фишинг: Email',
-	[TaskType.PHISHING_SITE]: 'Фишинг: Сайт',
-	[TaskType.TEXT_INPUT]: 'Текстовый ввод',
+	[TaskType.SINGLE_CHOICE]: 'Single choice',
+	[TaskType.MULTI_CHOICE]: 'Multiple choice',
+	[TaskType.SHORT_ANSWER]: 'Short answer',
+	[TaskType.PHISHING_EMAIL]: 'Phishing: Email',
+	[TaskType.PHISHING_SITE]: 'Phishing: Website',
+	[TaskType.TEXT_INPUT]: 'Text input',
 }
 
 const DifficultyLabels: Record<Difficulty, string> = {
-	[Difficulty.EASY]: 'Легкий',
-	[Difficulty.MEDIUM]: 'Средний',
-	[Difficulty.HARD]: 'Сложный',
+	[Difficulty.EASY]: 'Easy',
+	[Difficulty.MEDIUM]: 'Medium',
+	[Difficulty.HARD]: 'Hard',
 }
 
 interface CreateTaskDialogProps {
@@ -114,12 +114,12 @@ export default function CreateTaskDialog({
 		setIsSubmitting(true)
 		try {
 			await adminService.createTask(data)
-			toast.success('Задание создано')
+			toast.success('Task created')
 			reset()
 			onOpenChange(false)
 			onSuccess()
 		} catch (error) {
-			toast.error('Ошибка при создании задания')
+			toast.error('Error creating task')
 		} finally {
 			setIsSubmitting(false)
 		}
@@ -138,9 +138,9 @@ export default function CreateTaskDialog({
 			<div className='sticky top-0 border-b border-white/10 bg-[#0A0F1D]/95 backdrop-blur-xl z-10'>
 				<div className='mx-auto flex max-w-5xl items-center justify-between px-6 py-4'>
 					<div>
-						<h3 className='text-2xl font-bold text-white'>Добавить задание</h3>
+						<h3 className='text-2xl font-bold text-white'>Add task</h3>
 						<p className='mt-1 text-sm text-gray-500'>
-							Создайте практическое задание для урока
+							Create a practical task for the lesson
 						</p>
 					</div>
 					<button
@@ -162,14 +162,14 @@ export default function CreateTaskDialog({
 					<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 						<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 							<Sparkles className='h-5 w-5 text-blue-400' />
-							Основная информация
+							Basic information
 						</h4>
 
 						<div className='space-y-6'>
 							<div className='grid gap-6 md:grid-cols-2'>
 								<div>
 									<label className='mb-2 block text-sm font-semibold text-white'>
-										Порядковый номер
+										Order number
 									</label>
 									<input
 										{...register('order', { valueAsNumber: true })}
@@ -180,7 +180,7 @@ export default function CreateTaskDialog({
 
 								<div>
 									<label className='mb-2 block text-sm font-semibold text-white'>
-										Тип задания
+										Task type
 									</label>
 									<Controller
 										name='type'
@@ -218,7 +218,7 @@ export default function CreateTaskDialog({
 
 							<div>
 								<label className='mb-2 block text-sm font-semibold text-white'>
-									Название задания
+									Task title
 								</label>
 								<input
 									{...register('title')}
@@ -234,25 +234,25 @@ export default function CreateTaskDialog({
 
 							<div>
 								<label className='mb-2 block text-sm font-semibold text-white'>
-									Вопрос
+									Question
 								</label>
 								<textarea
 									{...register('question')}
 									rows={3}
 									className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10 resize-none'
-									placeholder='Какой метод используется для SQL-инъекций?'
+									placeholder='What method is used for SQL injection?'
 								/>
 							</div>
 
 							<div>
 								<label className='mb-2 block text-sm font-semibold text-white'>
-									Объяснение (опционально)
+									Explanation (optional)
 								</label>
 								<textarea
 									{...register('explanation')}
 									rows={3}
 									className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10 resize-none'
-									placeholder='SQL-инъекция позволяет...'
+									placeholder='SQL injection allows...'
 								/>
 							</div>
 						</div>
@@ -262,13 +262,13 @@ export default function CreateTaskDialog({
 					<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 						<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 							<Target className='h-5 w-5 text-purple-400' />
-							Настройки
+							Settings
 						</h4>
 
 						<div className='grid gap-6 md:grid-cols-2'>
 							<div>
 								<label className='mb-2 block text-sm font-semibold text-white'>
-									Баллы (XP)
+									Points (XP)
 								</label>
 								<input
 									{...register('points', { valueAsNumber: true })}
@@ -281,7 +281,7 @@ export default function CreateTaskDialog({
 
 							<div>
 								<label className='mb-2 block text-sm font-semibold text-white'>
-									Сложность
+									Difficulty
 								</label>
 								<Controller
 									name='difficulty'
@@ -324,7 +324,7 @@ export default function CreateTaskDialog({
 							<div className='mb-4 flex items-center justify-between'>
 								<h4 className='flex items-center gap-2 text-lg font-semibold text-white'>
 									<CheckCircle2 className='h-5 w-5 text-green-400' />
-									Варианты ответов
+									Answer options
 								</h4>
 								<button
 									type='button'
@@ -332,7 +332,7 @@ export default function CreateTaskDialog({
 									className='flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-white/90'
 								>
 									<Plus className='h-4 w-4' />
-									Добавить вариант
+									Add option
 								</button>
 							</div>
 
@@ -349,7 +349,7 @@ export default function CreateTaskDialog({
 													checked={checkField.value}
 													onChange={(e) => {
 														if (taskType === TaskType.SINGLE_CHOICE) {
-															// Для radio - снимаем все остальные галочки
+															// For radio buttons - uncheck all other options
 															fields.forEach((_, i) => {
 																if (i === index) {
 																	checkField.onChange(true)
@@ -358,7 +358,7 @@ export default function CreateTaskDialog({
 																}
 															})
 														} else {
-															// Для checkbox - просто переключаем
+															// For checkboxes - just toggle
 															checkField.onChange(e.target.checked)
 														}
 													}}
@@ -369,7 +369,7 @@ export default function CreateTaskDialog({
 										<input
 											{...register(`options.${index}.text`)}
 											className='flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-green-500/50 focus:bg-white/10'
-											placeholder={`Вариант ${index + 1}`}
+											placeholder={`Option ${index + 1}`}
 										/>
 										{fields.length > 2 && (
 											<button
@@ -385,8 +385,8 @@ export default function CreateTaskDialog({
 							</div>
 							<p className='mt-3 text-xs text-gray-500'>
 								{taskType === TaskType.SINGLE_CHOICE
-									? 'Выберите один правильный ответ (radio)'
-									: 'Отметьте все правильные ответы (checkbox)'}
+									? 'Select one correct answer (radio)'
+									: 'Check all correct answers (checkbox)'}
 							</p>
 						</div>
 )}
@@ -403,7 +403,7 @@ export default function CreateTaskDialog({
 							disabled={isSubmitting}
 							className='flex-1 rounded-xl border border-white/10 bg-white/5 px-6 py-4 font-semibold text-gray-300 transition-colors hover:bg-white/10 disabled:opacity-50'
 						>
-							Отмена
+							Cancel
 						</button>
 						<button
 							type='submit'
@@ -413,12 +413,12 @@ export default function CreateTaskDialog({
 							{isSubmitting ? (
 								<>
 									<Loader2 className='mr-2 inline h-5 w-5 animate-spin' />
-									Создание...
+									Creating...
 								</>
 							) : (
 								<>
 									<Plus className='mr-2 inline h-5 w-5' />
-									Добавить задание
+									Add task
 								</>
 							)}
 						</button>

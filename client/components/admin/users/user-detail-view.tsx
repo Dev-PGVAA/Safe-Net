@@ -54,39 +54,39 @@ export default function UserDetailView({
 			{/* Stats Cards */}
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4'>
 				<StatCard
-					label='Всего курсов'
+					label='Total courses'
 					value={user.statistics.totalCourses}
 					icon={<BookOpen className='w-5 h-5' />}
 					color='blue'
-					description='Записан'
+					description='Enrolled'
 				/>
 				<StatCard
-					label='Завершено'
+					label='Completed'
 					value={user.statistics.completedCourses}
 					icon={<Trophy className='w-5 h-5' />}
 					color='emerald'
-					description={`${completionRate}% от всех`}
+					description={`${completionRate}% of all`}
 				/>
 				<StatCard
-					label='В процессе'
+					label='In progress'
 					value={user.statistics.inProgressCourses}
 					icon={<TrendingUp className='w-5 h-5' />}
 					color='purple'
-					description='Активных'
+					description='Active'
 				/>
 				<StatCard
-					label='Тесты'
+					label='Tests'
 					value={user.statistics.totalTests}
 					icon={<FileText className='w-5 h-5' />}
 					color='amber'
-					description={`${user.statistics.averageTestScore}% средний`}
+					description={`${user.statistics.averageTestScore}% average`}
 				/>
 				<StatCard
-					label='Сертификаты'
+					label='Certificates'
 					value={user.statistics.certificates}
 					icon={<Award className='w-5 h-5' />}
 					color='pink'
-					description='Получено'
+					description='Received'
 				/>
 			</div>
 
@@ -100,20 +100,20 @@ export default function UserDetailView({
 				<div className='flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg'>
 					<Zap className='w-4 h-4 text-amber-400' />
 					<span className='text-sm font-semibold text-white'>
-						{user.statistics.totalLessons} уроков пройдено
+						{user.statistics.totalLessons} lessons completed
 					</span>
 				</div>
 				<div className='flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg'>
 					<Trophy className='w-4 h-4 text-purple-400' />
 					<span className='text-sm font-semibold text-white'>
-						{user.statistics.achievements} достижений
+						{user.statistics.achievements} achievements
 					</span>
 				</div>
 				{user.statistics.averageTestScore > 0 && (
 					<div className='flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg'>
 						<TrendingUp className='w-4 h-4 text-emerald-400' />
 						<span className='text-sm font-semibold text-white'>
-							{user.statistics.averageTestScore}% успеваемость
+							{user.statistics.averageTestScore}% success rate
 						</span>
 					</div>
 				)}
@@ -126,34 +126,34 @@ export default function UserDetailView({
 						active={activeTab === 'courses'}
 						onClick={() => setActiveTab('courses')}
 						icon={<BookOpen className='w-4 h-4' />}
-						label='Курсы'
+						label='Courses'
 						badge={user.statistics.totalCourses}
 					/>
 					<TabButton
 						active={activeTab === 'activity'}
 						onClick={() => setActiveTab('activity')}
 						icon={<Activity className='w-4 h-4' />}
-						label='Активность'
+						label='Activity'
 					/>
 					<TabButton
 						active={activeTab === 'tests'}
 						onClick={() => setActiveTab('tests')}
 						icon={<FileText className='w-4 h-4' />}
-						label='Тесты'
+						label='Tests'
 						badge={user.statistics.totalTests}
 					/>
 					<TabButton
 						active={activeTab === 'certificates'}
 						onClick={() => setActiveTab('certificates')}
 						icon={<Award className='w-4 h-4' />}
-						label='Сертификаты'
+						label='Certificates'
 						badge={user.statistics.certificates}
 					/>
 					<TabButton
 						active={activeTab === 'achievements'}
 						onClick={() => setActiveTab('achievements')}
 						icon={<Trophy className='w-4 h-4' />}
-						label='Достижения'
+						label='Achievements'
 						badge={user.statistics.achievements}
 					/>
 				</div>
@@ -229,7 +229,7 @@ function StatCard({
 	)
 }
 
-// TabButton component в стиле вашего файла
+// TabButton component matching the file's style
 function TabButton({
 	active,
 	onClick,

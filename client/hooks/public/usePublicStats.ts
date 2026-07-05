@@ -7,7 +7,7 @@ export function usePublicStats() {
 	const { data, isLoading, error } = useQuery({
 		queryKey: ['public-stats'],
 		queryFn: () => publicService.getStats(),
-		staleTime: 5 * 60 * 1000, // 5 минут кеш
+		staleTime: 5 * 60 * 1000, // 5 minutes cache
 		retry: 1,
 	})
 

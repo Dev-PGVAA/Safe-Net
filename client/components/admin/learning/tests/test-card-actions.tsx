@@ -18,8 +18,8 @@ interface TestCardActionsProps {
 }
 
 /**
- * Dropdown меню с действиями для карточки теста
- * Использует shadcn DropdownMenu для консистентности UI
+ * Dropdown menu with actions for a test card
+ * Uses shadcn DropdownMenu for UI consistency
  */
 export function TestCardActions({
 	testId,
@@ -33,7 +33,7 @@ export function TestCardActions({
 					variant='ghost'
 					size='icon'
 					className='h-8 w-8'
-					aria-label={`Действия для теста ${testTitle}`}
+					aria-label={`Actions for test ${testTitle}`}
 				>
 					<MoreVertical className='h-4 w-4' />
 				</Button>
@@ -45,7 +45,7 @@ export function TestCardActions({
 						className='cursor-pointer'
 					>
 						<Edit className='mr-2 h-4 w-4' />
-						Редактировать
+						Edit
 					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuItem asChild>
@@ -55,7 +55,7 @@ export function TestCardActions({
 						className='cursor-pointer'
 					>
 						<ExternalLink className='mr-2 h-4 w-4' />
-						Открыть тест
+						Open Test
 					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
@@ -64,7 +64,7 @@ export function TestCardActions({
 					className='text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400 focus:bg-red-50 dark:focus:bg-red-900/20 cursor-pointer'
 				>
 					<Trash2 className='mr-2 h-4 w-4' />
-					Удалить
+					Delete
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

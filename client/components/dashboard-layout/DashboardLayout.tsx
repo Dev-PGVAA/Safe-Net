@@ -284,7 +284,7 @@ export default function DashboardSidebar() {
 						</div>
 						<div className='flex-1 min-w-0 text-left'>
 							<p className='text-[13.5px] font-semibold text-gray-900 dark:text-white truncate leading-tight transition-colors'>
-								{user.name || 'Пользователь'}
+								{user.name || 'User'}
 							</p>
 							<p className='text-[11.5px] text-gray-500 dark:text-gray-400 truncate leading-tight mt-1'>
 								{user.email}
@@ -332,7 +332,7 @@ export default function DashboardSidebar() {
 				transition={{ type: 'spring', stiffness: 400, damping: 17 }}
 				onClick={() => setIsMobileOpen(true)}
 				className='lg:hidden fixed top-4 left-4 z-50 p-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl rounded-[14px] shadow-lg border border-gray-200/60 dark:border-gray-800/60'
-				aria-label='Открыть меню'
+				aria-label='Open menu'
 			>
 				<Menu
 					className='w-5 h-5 text-gray-700 dark:text-gray-300'
@@ -373,7 +373,7 @@ export default function DashboardSidebar() {
 							className='lg:hidden fixed top-0 left-0 z-50 w-[280px] h-screen bg-white/95 dark:bg-gray-900/95 backdrop-blur-2xl border-r border-gray-200/60 dark:border-gray-800/60 flex flex-col shadow-2xl'
 							role='dialog'
 							aria-modal='true'
-							aria-label='Мобильное меню'
+							aria-label='Mobile menu'
 						>
 							<SidebarContent />
 						</m.aside>

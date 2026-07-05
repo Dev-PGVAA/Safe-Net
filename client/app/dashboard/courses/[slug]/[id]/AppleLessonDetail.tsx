@@ -45,7 +45,7 @@ export function AppleLessonDetail({
 	return (
 		<>
 			<div className='space-y-4 sm:space-y-5'>
-				{/* ✅ ТЕОРИЯ: Блоки контента */}
+				{/* ✅ THEORY: Content blocks */}
 				{blocks.length > 0 && (
 					<m.div
 						initial={{ opacity: 0, y: 12 }}
@@ -60,16 +60,11 @@ export function AppleLessonDetail({
 									</div>
 									<div>
 										<h3 className='text-base sm:text-lg lg:text-xl font-black text-white'>
-											Теоретический материал
+											Theory material
 										</h3>
 										<p className='text-xs sm:text-sm text-white/60'>
 											{blocks.length}{' '}
-											{blocks.length === 1
-												? 'блок'
-												: blocks.length < 5
-													? 'блока'
-													: 'блоков'}{' '}
-											для изучения
+											{blocks.length === 1 ? 'block' : 'blocks'} to study
 										</p>
 									</div>
 								</div>
@@ -104,7 +99,7 @@ export function AppleLessonDetail({
 					</m.div>
 				)}
 
-				{/* ✅ ПРАКТИКА: Задания */}
+				{/* ✅ PRACTICE: Tasks */}
 				{tasks.length > 0 && (
 					<m.div
 						initial={{ opacity: 0, y: 12 }}
@@ -119,16 +114,11 @@ export function AppleLessonDetail({
 									</div>
 									<div>
 										<h3 className='text-base sm:text-lg lg:text-xl font-black text-white'>
-											Практические задания
+											Practice tasks
 										</h3>
 										<p className='text-xs sm:text-sm text-white/60'>
 											{completed}/{total}{' '}
-											{total === 1
-												? 'задание'
-												: total < 5
-													? 'задания'
-													: 'заданий'}{' '}
-											выполнено
+											{total === 1 ? 'task' : 'tasks'} completed
 										</p>
 									</div>
 								</div>
@@ -164,9 +154,9 @@ export function AppleLessonDetail({
 																	'bg-red-500/10 border-red-500/20 text-red-400'
 															)}
 														>
-															{task.difficulty === 'EASY' && 'Лёгкое'}
-															{task.difficulty === 'MEDIUM' && 'Среднее'}
-															{task.difficulty === 'HARD' && 'Сложное'}
+															{task.difficulty === 'EASY' && 'Easy'}
+															{task.difficulty === 'MEDIUM' && 'Medium'}
+															{task.difficulty === 'HARD' && 'Hard'}
 														</Badge>
 													</div>
 												</div>
@@ -186,18 +176,17 @@ export function AppleLessonDetail({
 					</m.div>
 				)}
 
-				{/* Нет контента */}
+				{/* No content */}
 				{blocks.length === 0 && tasks.length === 0 && (
 					<Card className='bg-white/3 backdrop-blur-2xl border border-white/10 rounded-2xl sm:rounded-3xl shadow-2xl text-center p-8 sm:p-10 lg:p-12'>
 						<div className='w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-5 sm:mb-6 bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl flex items-center justify-center border border-white/20 shadow-lg'>
 							<BookOpen className='w-8 h-8 sm:w-10 sm:h-10 text-white/30' />
 						</div>
 						<h3 className='text-base sm:text-lg lg:text-xl font-black text-white mb-2 sm:mb-3'>
-							Материалы урока готовятся
+							Lesson materials are being prepared
 						</h3>
 						<p className='text-xs sm:text-sm text-white/60 max-w-md mx-auto leading-relaxed'>
-							Теория и задания для этого урока будут добавлены в ближайшее
-							время.
+							Theory and tasks for this lesson will be added soon.
 						</p>
 					</Card>
 				)}

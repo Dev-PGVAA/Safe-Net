@@ -11,9 +11,9 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-// Схема валидации
+// Validation schema
 const testEditSchema = z.object({
-	title: z.string().min(3, 'Минимум 3 символа').max(255),
+	title: z.string().min(3, 'Minimum 3 characters').max(255),
 	description: z.string().optional(),
 	passingScore: z.number().min(0).max(100),
 })
@@ -47,11 +47,11 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 		setIsSubmitting(true)
 		try {
 			await adminService.updateTest(test.id, data)
-			toast.success('Тест обновлен')
+			toast.success('Test updated')
 			setIsEditing(false)
 			onUpdate()
 		} catch (error) {
-			toast.error('Ошибка при обновлении')
+			toast.error('Error updating test')
 		} finally {
 			setIsSubmitting(false)
 		}
@@ -63,7 +63,7 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 			<div className="p-6 bg-gradient-to-br from-purple-500/10 via-blue-500/5 to-transparent border-b border-white/10">
 				<div className="flex items-center gap-3">
 					<Settings className="w-6 h-6 text-purple-400" />
-					<h2 className="text-xl font-bold text-white">Параметры теста</h2>
+					<h2 className="text-xl font-bold text-white">Test Settings</h2>
 				</div>
 			</div>
 
@@ -76,26 +76,26 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 					>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 							<div className="space-y-1">
-								<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Название</p>
+								<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Title</p>
 								<p className="text-white font-medium text-lg">{test.title}</p>
 							</div>
 
 							<div className="space-y-1">
-								<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Проходной балл</p>
+								<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Passing Score</p>
 								<p className="text-white font-medium">{test.passingScore || 80}%</p>
 							</div>
 						</div>
 
 						<div className="space-y-1">
-							<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Описание</p>
+							<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Description</p>
 							<p className="text-gray-400 text-sm leading-relaxed">
-								{test.description || 'Описание отсутствует'}
+								{test.description || 'No description'}
 							</p>
 						</div>
 
 						{test.course && (
 							<div className="space-y-1">
-								<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Курс</p>
+								<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Course</p>
 								<p className="text-purple-400 text-sm">{test.course.title}</p>
 							</div>
 						)}
@@ -106,7 +106,7 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 								className="gap-2 bg-white text-black hover:bg-white/90 font-semibold px-8"
 							>
 								<Edit2 className="w-4 h-4" />
-								Редактировать параметры
+								Edit Settings
 							</Button>
 						</div>
 					</m.div>
@@ -119,7 +119,7 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 					>
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 							<div className="space-y-2">
-								<label className="text-sm font-medium text-gray-400">Название теста</label>
+								<label className="text-sm font-medium text-gray-400">Test Title</label>
 								<input
 									type="text"
 									{...register('title')}
@@ -129,7 +129,7 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 							</div>
 
 							<div className="space-y-2">
-								<label className="text-sm font-medium text-gray-400">Проходной балл (%)</label>
+								<label className="text-sm font-medium text-gray-400">Passing Score (%)</label>
 								<input
 									type="number"
 									{...register('passingScore', { valueAsNumber: true })}
@@ -140,7 +140,7 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 						</div>
 
 						<div className="space-y-2">
-							<label className="text-sm font-medium text-gray-400">Описание</label>
+							<label className="text-sm font-medium text-gray-400">Description</label>
 							<textarea
 								{...register('description')}
 								rows={4}
@@ -155,7 +155,7 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 								className="gap-2 bg-white text-black hover:bg-white/90 font-semibold px-8"
 							>
 								{isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-								Сохранить
+								Save
 							</Button>
 
 							<Button
@@ -168,7 +168,7 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 								className="gap-2 text-gray-400 hover:text-white hover:bg-white/5"
 							>
 								<X className="w-4 h-4" />
-								Отмена
+								Cancel
 							</Button>
 						</div>
 					</m.form>

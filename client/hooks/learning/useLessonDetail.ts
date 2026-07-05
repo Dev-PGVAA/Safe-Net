@@ -18,7 +18,7 @@ type LessonWithNav = ILesson & {
 	nextLessonId?: string | null
 }
 
-// ✅ Утилита для работы с localStorage
+// ✅ Utility for working with localStorage
 const getCompletedTasks = (): Set<string> => {
 	if (typeof window === 'undefined') return new Set()
 	const stored = localStorage.getItem('completedTasks')
@@ -47,7 +47,7 @@ export function useLessonDetail() {
 		queryFn: async () => {
 			const data = await learningService.getLessonDetail(lessonId)
 
-			// ✅ Применяем сохраненное состояние completed из localStorage
+			// ✅ Apply the saved completed state from localStorage
 			const completedTasks = getCompletedTasks()
 			const tasksWithCompleted = data.tasks?.map(task => ({
 				...task,
@@ -65,13 +65,13 @@ export function useLessonDetail() {
 		enabled: !!lessonId,
 	})
 
-	// Локальные вычисления прогресса
+	// Local progress calculations
 	const tasks = (lesson?.tasks || []) as ITask[]
 	const totalTasks = tasks.length
 	const completedTasks = tasks.filter(t => t.completed).length
 	const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0
 
-	// ✅ Мутация для отправки ответа на задачу
+	// ✅ Mutation for submitting an answer to a task
 	const answerMutation = useMutation({
 		mutationFn: (payload: {
 			taskId: string
@@ -83,12 +83,12 @@ export function useLessonDetail() {
 				textAnswer: payload.textAnswer,
 			}),
 		onSuccess: (res: ITaskAnswerResponse, variables) => {
-			// ✅ Сохраняем в localStorage если правильный ответ
+			// ✅ Save to localStorage if the answer is correct
 			if (res.isCorrect) {
 				saveCompletedTask(variables.taskId)
 			}
 
-			// Обновляем кэш урока
+			// Update the lesson cache
 			queryClient.setQueryData(['lesson', lessonId], (prev: any) => {
 				if (!prev || !prev.tasks) return prev
 				return {
@@ -101,37 +101,37 @@ export function useLessonDetail() {
 				}
 			})
 
-			// ✅ Показываем результат с объяснением
+			// ✅ Show the result with an explanation
 			if (res.isCorrect) {
-				toast.success(`Правильно! +${res.awardedXp} XP`)
+				toast.success(`Correct! +${res.awardedXp} XP`)
 			} else {
-				toast.error('Неправильно. Попробуйте ещё раз!')
+				toast.error('Incorrect. Try again!')
 			}
 
-			// Если урок завершён
+			// If the lesson is complete
 			if (res.lessonCompleted) {
-				toast.success('Урок завершён!')
+				toast.success('Lesson completed!')
 			}
 
-			// Если выдан сертификат
+			// If a certificate was issued
 			if (res.certificateIssued) {
-				toast.success('Получен сертификат!')
+				toast.success('Certificate earned!')
 			}
 
-			// ✅ Если есть новые достижения
+			// ✅ If there are new achievements
 			if (res.newAchievements && res.newAchievements.length > 0) {
 				res.newAchievements.forEach(achievement => {
-					toast.success(`Получено достижение: ${achievement.title}`)
+					toast.success(`Achievement unlocked: ${achievement.title}`)
 				})
 			}
 		},
 		onError: error => {
-			toast.error('Ошибка при отправке ответа')
+			toast.error('Error submitting answer')
 			console.error(error)
 		},
 	})
 
-	// ✅ Возвращаем Promise с результатом (включая explanation)
+	// ✅ Return a Promise with the result (including the explanation)
 	const answerTask = async (
 		taskId: string,
 		selectedOptionIds: string[],
@@ -145,7 +145,7 @@ export function useLessonDetail() {
 		return result
 	}
 
-	// Навигация по урокам
+	// Navigation between lessons
 	const goToPrevLesson = () => {
 		if (lesson?.previousLessonId) {
 			router.push(
@@ -167,16 +167,16 @@ export function useLessonDetail() {
 		isLoading,
 		isError,
 		error,
-		// Прогресс
+		// Progress
 		tasks,
 		totalTasks,
 		completedTasks,
 		progress,
 		estimatedDuration: lesson?.estimatedDuration || 1080,
-		// Работа с ответами
+		// Working with answers
 		answerTask,
 		isAnswering: answerMutation.isPending,
-		// Навигация
+		// Navigation
 		goToPrevLesson,
 		goToNextLesson,
 	}

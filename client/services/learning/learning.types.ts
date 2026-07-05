@@ -5,9 +5,9 @@ export enum Difficulty {
 }
 
 export const DifficultyLabel: Record<Difficulty, string> = {
-	[Difficulty.EASY]: 'Лёгкий',
-	[Difficulty.MEDIUM]: 'Средний',
-	[Difficulty.HARD]: 'Сложный',
+	[Difficulty.EASY]: 'Easy',
+	[Difficulty.MEDIUM]: 'Medium',
+	[Difficulty.HARD]: 'Hard',
 }
 
 export interface IStage {
@@ -82,7 +82,7 @@ export interface ITask {
 	question: string
 	points: number
 	difficulty: 'EASY' | 'MEDIUM' | 'HARD'
-	explanation?: string // ✅ Добавлено
+	explanation?: string // ✅ Added
 	options: Array<ITaskOption>
 	completed?: boolean
 }
@@ -92,11 +92,11 @@ export interface ITaskOption {
 	text: string
 }
 
-// ✅ Новый интерфейс для ответа на задачу
+// ✅ New interface for a task answer response
 export interface ITaskAnswerResponse {
 	taskId: string
 	isCorrect: boolean
-	explanation?: string // ✅ Добавлено
+	explanation?: string // ✅ Added
 	awardedXp: number
 	totalXp: number
 	courseProgress: number
@@ -151,7 +151,7 @@ export interface ITestResult {
 		isCorrect: boolean
 		selectedOptions?: string[]
 		correctOptions?: string[]
-		explanation?: string // ✅ Добавлено для теста
+		explanation?: string // ✅ Added for the test
 	}>
 }
 

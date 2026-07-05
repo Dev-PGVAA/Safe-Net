@@ -13,13 +13,13 @@ interface UseTestReturn {
 }
 
 /**
- * Хук для работы с отдельным тестом
- * Обеспечивает типобезопасность и инкапсуляцию логики
+ * Hook for working with a single test
+ * Provides type safety and encapsulation of the logic
  */
 export function useTest(testId: string): UseTestReturn {
 	const queryClient = useQueryClient()
 
-	// Получение деталей теста
+	// Fetching test details
 	const {
 		data: test,
 		isLoading,
@@ -28,24 +28,24 @@ export function useTest(testId: string): UseTestReturn {
 	} = useQuery<ITest, Error>({
 		queryKey: ['test', testId],
 		queryFn: () => adminService.getTest(testId),
-		enabled: Boolean(testId), // Защита от пустого ID
-		staleTime: 2 * 60 * 1000, // 2 минуты
+		enabled: Boolean(testId), // Guard against an empty ID
+		staleTime: 2 * 60 * 1000, // 2 minutes
 	})
 
-	// Мутация обновления теста
+	// Test update mutation
 	const updateMutation = useMutation({
 		mutationFn: async (data: Partial<ITest>) => {
 			await adminService.updateTest(testId, data)
 			return data
 		},
 		onMutate: async updatedData => {
-			// Отменяем предыдущие запросы для оптимистичного обновления
+			// Cancel pending queries for optimistic update
 			await queryClient.cancelQueries({ queryKey: ['test', testId] })
 
-			// Сохраняем предыдущие данные для отката
+			// Save the previous data for rollback
 			const previousTest = queryClient.getQueryData<ITest>(['test', testId])
 
-			// Оптимистичное обновление
+			// Optimistic update
 			if (previousTest) {
 				queryClient.setQueryData<ITest>(['test', testId], {
 					...previousTest,
@@ -56,20 +56,20 @@ export function useTest(testId: string): UseTestReturn {
 			return { previousTest }
 		},
 		onError: (error: Error, _variables, context) => {
-			// Откат при ошибке
+			// Roll back on error
 			if (context?.previousTest) {
 				queryClient.setQueryData(['test', testId], context.previousTest)
 			}
 
 			console.error('[useTest] Update error:', error)
-			toast.error('Ошибка при обновлении теста')
+			toast.error('Error updating test')
 		},
 		onSuccess: () => {
-			// Инвалидация связанных запросов
+			// Invalidate related queries
 			queryClient.invalidateQueries({ queryKey: ['test', testId] })
 			queryClient.invalidateQueries({ queryKey: ['tests'] })
 
-			toast.success('Тест обновлен')
+			toast.success('Test updated')
 		},
 	})
 

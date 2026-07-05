@@ -18,46 +18,46 @@ interface StatWidgetsProps {
 export default function StatWidgets({ stats }: StatWidgetsProps) {
 	const widgets = [
 		{
-			title: 'Всего пользователей',
+			title: 'Total users',
 			value: stats.users?.total || 0,
-			subtitle: `${stats.users?.active || 0} активных`,
+			subtitle: `${stats.users?.active || 0} active`,
 			icon: Users,
 			color: 'from-blue-500 to-blue-600',
 			change: stats.registrations?.week || 0,
-			changeLabel: 'за неделю',
+			changeLabel: 'this week',
 		},
 		{
-			title: 'Курсов',
+			title: 'Courses',
 			value: stats.content?.courses || 0,
-			subtitle: `${stats.content?.lessons || 0} уроков`,
+			subtitle: `${stats.content?.lessons || 0} lessons`,
 			icon: BookOpen,
 			color: 'from-purple-500 to-purple-600',
 		},
 		{
-			title: 'Успешность ответов',
+			title: 'Answer success rate',
 			value: `${stats.performance?.averageCorrectPercent || 0}%`,
 			subtitle: `${stats.performance?.correctAttempts || 0}/${stats.performance?.totalAttempts || 0}`,
 			icon: CheckCircle2,
 			color: 'from-green-500 to-green-600',
 		},
 		{
-			title: 'Выданных сертификатов',
+			title: 'Certificates issued',
 			value: stats.performance?.certificates || 0,
-			subtitle: 'Всего',
+			subtitle: 'Total',
 			icon: Award,
 			color: 'from-orange-500 to-orange-600',
 		},
 		{
-			title: 'Практических заданий',
+			title: 'Practical tasks',
 			value: stats.content?.tasks || 0,
-			subtitle: `${stats.content?.tests || 0} тестов`,
+			subtitle: `${stats.content?.tests || 0} tests`,
 			icon: FileText,
 			color: 'from-pink-500 to-pink-600',
 		},
 		{
-			title: 'Тиков обновления',
+			title: 'Update ticks',
 			value: stats.performance?.totalAttempts || 0,
-			subtitle: 'Попыток выполнения',
+			subtitle: 'Attempts made',
 			icon: TrendingUp,
 			color: 'from-cyan-500 to-cyan-600',
 		},
@@ -90,7 +90,7 @@ export default function StatWidgets({ stats }: StatWidgetsProps) {
 									<div className='flex items-baseline gap-2'>
 										<p className='text-3xl font-bold'>
 											{typeof widget.value === 'number'
-												? widget.value.toLocaleString('ru-RU')
+												? widget.value.toLocaleString('en-US')
 												: widget.value}
 										</p>
 										{widget.change !== undefined && (

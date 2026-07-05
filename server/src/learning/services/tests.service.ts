@@ -103,7 +103,7 @@ export class TestsService {
 
 		let correct = 0
 
-		// Подсчет правильных ответов
+		// Count correct answers
 		for (const answer of dto.answers) {
 			const q = questionsMap.get(answer.questionId)
 			if (!q) continue
@@ -131,7 +131,7 @@ export class TestsService {
 		const scorePercent = Math.round((correct / total) * 100)
 		const passed = scorePercent >= test.passingScore
 
-		// Создаем результат теста
+		// Create the test result
 		const result = await this.prisma.testResult.create({
 			data: {
 				userId,
@@ -144,7 +144,7 @@ export class TestsService {
 			},
 		})
 
-		// ✅ НОВОЕ: Проверяем и выдаем сертификат после прохождения теста
+		// ✅ NEW: Check and issue certificate after passing the test
 		let certificateIssued = false
 		if (passed) {
 			const certificateId = await this.checkAndIssueCertificate(
@@ -157,7 +157,7 @@ export class TestsService {
 				await this.AchievementsService.checkAndAwardAchievements(userId)
 		}
 
-		// Сохраняем детальные результаты ответов
+		// Save detailed answer results
 		const answerDetails = dto.answers.map(answer => {
 			const q = questionsMap.get(answer.questionId)
 			if (!q) return { questionId: answer.questionId, isCorrect: false }
@@ -192,11 +192,11 @@ export class TestsService {
 			totalQuestions: result.totalQuestions,
 			correctAnswers: result.correctAnswers,
 			passed: result.passed,
-			certificateIssued, // ✅ Добавляем флаг
+			certificateIssued, // ✅ Add the flag
 		}
 	}
 
-	// ✅ ИСПРАВЛЕНА ЛОГИКА: Сертификат только при 100% завершении
+	// ✅ FIXED LOGIC: Certificate only at 100% completion
 	private async checkAndIssueCertificate(
 		userId: string,
 		courseId: string
@@ -253,23 +253,23 @@ export class TestsService {
 		const totalTests = courseTests.length
 		const passedTests = passedTestResults.length
 
-		// ✅ ИСПРАВЛЕНО: Проверяем что все части курса завершены
-		// 1. Должны быть уроки И все завершены
+		// ✅ FIXED: Check that all parts of the course are completed
+		// 1. There must be lessons AND all must be completed
 		if (totalLessons === 0 || completedLessons < totalLessons) {
 			return null
 		}
 
-		// 2. Должны быть задания И все выполнены
+		// 2. There must be tasks AND all must be completed
 		if (totalTasks === 0 || solvedTasks < totalTasks) {
 			return null
 		}
 
-		// 3. Если есть тесты - все должны быть пройдены
+		// 3. If there are tests - all must be passed
 		if (totalTests > 0 && passedTests < totalTests) {
 			return null
 		}
 
-		// Проверка существующего сертификата
+		// Check for an existing certificate
 		const existingCertificate = await this.prisma.certificate.findFirst({
 			where: { userId, courseId },
 		})
@@ -278,7 +278,7 @@ export class TestsService {
 			return existingCertificate.id
 		}
 
-		// Генерация и создание нового сертификата
+		// Generate and create a new certificate
 		const certificateNumber = await this.generateCertificateNumber()
 
 		const certificate = await this.prisma.certificate.create({
@@ -292,7 +292,7 @@ export class TestsService {
 		return certificate.id
 	}
 
-	// ✅ Генерация номера сертификата
+	// ✅ Generate the certificate number
 	private async generateCertificateNumber(): Promise<string> {
 		let attempts = 0
 		const maxAttempts = 10

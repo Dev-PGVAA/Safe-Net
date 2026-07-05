@@ -43,18 +43,18 @@ const TaskTypeIcons: Record<TaskType, any> = {
 }
 
 const TaskTypeLabels: Record<TaskType, string> = {
-	[TaskType.SINGLE_CHOICE]: 'Один вариант',
-	[TaskType.MULTI_CHOICE]: 'Несколько вариантов',
-	[TaskType.SHORT_ANSWER]: 'Короткий ответ',
-	[TaskType.PHISHING_EMAIL]: 'Фишинг: Email',
-	[TaskType.PHISHING_SITE]: 'Фишинг: Сайт',
-	[TaskType.TEXT_INPUT]: 'Текстовый ввод',
+	[TaskType.SINGLE_CHOICE]: 'Single choice',
+	[TaskType.MULTI_CHOICE]: 'Multiple choice',
+	[TaskType.SHORT_ANSWER]: 'Short answer',
+	[TaskType.PHISHING_EMAIL]: 'Phishing: Email',
+	[TaskType.PHISHING_SITE]: 'Phishing: Website',
+	[TaskType.TEXT_INPUT]: 'Text input',
 }
 
 const DifficultyLabels = {
-	EASY: 'Легкий',
-	MEDIUM: 'Средний',
-	HARD: 'Сложный',
+	EASY: 'Easy',
+	MEDIUM: 'Medium',
+	HARD: 'Hard',
 }
 
 export default function TasksList({ lesson, onRefetch }: TasksListProps) {
@@ -76,11 +76,11 @@ export default function TasksList({ lesson, onRefetch }: TasksListProps) {
 		setIsDeleting(true)
 		try {
 			await adminService.deleteTask(deleteDialog.task.id)
-			toast.success('Задание удалено')
+			toast.success('Task deleted')
 			setDeleteDialog({ open: false, task: null })
 			onRefetch()
 		} catch (error) {
-			toast.error('Ошибка при удалении')
+			toast.error('Error deleting task')
 		} finally {
 			setIsDeleting(false)
 		}
@@ -91,11 +91,11 @@ export default function TasksList({ lesson, onRefetch }: TasksListProps) {
 
 		try {
 			await adminService.updateTask(editDialog.task.id, data)
-			toast.success('Задание обновлено')
+			toast.success('Task updated')
 			setEditDialog({ open: false, task: null })
 			onRefetch()
 		} catch (error) {
-			toast.error('Ошибка при обновлении')
+			toast.error('Error updating task')
 		}
 	}
 
@@ -106,7 +106,7 @@ export default function TasksList({ lesson, onRefetch }: TasksListProps) {
 					<FileQuestion className='h-8 w-8 text-gray-500' />
 				</div>
 				<p className='text-sm text-gray-500'>
-					Заданий пока нет. Добавьте первое!
+					No tasks yet. Add the first one!
 				</p>
 			</div>
 		)
@@ -163,14 +163,14 @@ export default function TasksList({ lesson, onRefetch }: TasksListProps) {
 										<button
 											onClick={() => setEditDialog({ open: true, task })}
 											className='rounded-lg bg-blue-500/10 p-2 text-blue-400 transition-colors hover:bg-blue-500/20'
-											title='Редактировать'
+											title='Edit'
 										>
 											<Edit2 className='h-4 w-4' />
 										</button>
 										<button
 											onClick={() => setDeleteDialog({ open: true, task })}
 											className='rounded-lg bg-red-500/10 p-2 text-red-400 transition-colors hover:bg-red-500/20'
-											title='Удалить'
+											title='Delete'
 										>
 											<Trash2 className='h-4 w-4' />
 										</button>
@@ -206,17 +206,17 @@ export default function TasksList({ lesson, onRefetch }: TasksListProps) {
 
 							<div className='text-center'>
 								<h3 className='mb-2 text-2xl font-bold text-white'>
-									Удалить задание?
+									Delete task?
 								</h3>
 								<p className='mb-2 text-gray-400'>
-									Вы уверены, что хотите удалить задание{' '}
+									Are you sure you want to delete the task{' '}
 									<span className='font-semibold text-white'>
 										"{deleteDialog.task.title}"
 									</span>
 									?
 								</p>
 								<p className='text-sm text-red-400'>
-									Это действие нельзя отменить
+									This action cannot be undone
 								</p>
 							</div>
 
@@ -226,7 +226,7 @@ export default function TasksList({ lesson, onRefetch }: TasksListProps) {
 									disabled={isDeleting}
 									className='flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 font-semibold text-gray-300 transition-colors hover:bg-white/10 disabled:opacity-50'
 								>
-									Отмена
+									Cancel
 								</button>
 								<button
 									onClick={handleDelete}
@@ -236,10 +236,10 @@ export default function TasksList({ lesson, onRefetch }: TasksListProps) {
 									{isDeleting ? (
 										<>
 											<Loader2 className='mr-2 inline h-4 w-4 animate-spin' />
-											Удаление...
+											Deleting...
 										</>
 									) : (
-										'Удалить'
+										'Delete'
 									)}
 								</button>
 							</div>
@@ -321,10 +321,10 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 				<div className='mx-auto flex max-w-5xl items-center justify-between px-6 py-4'>
 					<div>
 						<h3 className='text-2xl font-bold text-white'>
-							Редактировать задание
+							Edit task
 						</h3>
 						<p className='mt-1 text-sm text-gray-500'>
-							Измените параметры практического задания
+							Update the settings of this practical task
 						</p>
 					</div>
 					<button
@@ -343,14 +343,14 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 					<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 						<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 							<Sparkles className='h-5 w-5 text-blue-400' />
-							Основная информация
+							Basic information
 						</h4>
 
 						<div className='space-y-6'>
 							<div className='grid gap-6 md:grid-cols-2'>
 								<div>
 									<label className='mb-2 block text-sm font-semibold text-white'>
-										Порядковый номер
+										Order number
 									</label>
 									<input
 										{...register('order', { valueAsNumber: true })}
@@ -361,7 +361,7 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 
 								<div>
 									<label className='mb-2 block text-sm font-semibold text-white'>
-										Тип задания
+										Task type
 									</label>
 									<Controller
 										name='type'
@@ -399,10 +399,10 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 
 							<div>
 								<label className='mb-2 block text-sm font-semibold text-white'>
-									Название задания
+									Task title
 								</label>
 								<input
-									{...register('title', { required: 'Название обязательно' })}
+									{...register('title', { required: 'Title is required' })}
 									className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10'
 									placeholder='SQL Injection'
 								/>
@@ -415,25 +415,25 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 
 							<div>
 								<label className='mb-2 block text-sm font-semibold text-white'>
-									Вопрос
+									Question
 								</label>
 								<textarea
 									{...register('question')}
 									rows={3}
 									className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10 resize-none'
-									placeholder='Какой метод используется для SQL-инъекций?'
+									placeholder='What method is used for SQL injection?'
 								/>
 							</div>
 
 							<div>
 								<label className='mb-2 block text-sm font-semibold text-white'>
-									Объяснение (опционально)
+									Explanation (optional)
 								</label>
 								<textarea
 									{...register('explanation')}
 									rows={3}
 									className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10 resize-none'
-									placeholder='SQL-инъекция позволяет...'
+									placeholder='SQL injection allows...'
 								/>
 							</div>
 						</div>
@@ -443,13 +443,13 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 					<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 						<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 							<Target className='h-5 w-5 text-purple-400' />
-							Настройки
+							Settings
 						</h4>
 
 						<div className='grid gap-6 md:grid-cols-2'>
 							<div>
 								<label className='mb-2 block text-sm font-semibold text-white'>
-									Баллы (XP)
+									Points (XP)
 								</label>
 								<input
 									{...register('points', { valueAsNumber: true })}
@@ -462,7 +462,7 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 
 							<div>
 								<label className='mb-2 block text-sm font-semibold text-white'>
-									Сложность
+									Difficulty
 								</label>
 								<Controller
 									name='difficulty'
@@ -505,7 +505,7 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 												<div className='mb-4 flex items-center justify-between'>
 													<h4 className='flex items-center gap-2 text-lg font-semibold text-white'>
 														<CheckCircle2 className='h-5 w-5 text-green-400' />
-														Варианты ответов
+														Answer options
 													</h4>
 													<button
 														type='button'
@@ -513,7 +513,7 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 														className='flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-white/90'
 													>
 														<Plus className='h-4 w-4' />
-														Добавить вариант
+														Add option
 													</button>
 												</div>
 
@@ -530,7 +530,7 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 																		checked={checkField.value}
 																		onChange={(e) => {
 																			if (taskType === TaskType.SINGLE_CHOICE) {
-																				// Для radio - снимаем все остальные галочки
+																				// For radio buttons - uncheck all other options
 																				fields.forEach((_, i) => {
 																					if (i === index) {
 																						checkField.onChange(true)
@@ -539,7 +539,7 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 																					}
 																				})
 																			} else {
-																				// Для checkbox - просто переключаем
+																				// For checkboxes - just toggle
 																				checkField.onChange(e.target.checked)
 																			}
 																		}}
@@ -550,7 +550,7 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 															<input
 																{...register(`options.${index}.text`)}
 																className='flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-green-500/50 focus:bg-white/10'
-																placeholder={`Вариант ${index + 1}`}
+																placeholder={`Option ${index + 1}`}
 															/>
 															{fields.length > 2 && (
 																<button
@@ -566,8 +566,8 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 												</div>
 												<p className='mt-3 text-xs text-gray-500'>
 													{taskType === TaskType.SINGLE_CHOICE
-														? 'Выберите один правильный ответ (radio)'
-														: 'Отметьте все правильные ответы (checkbox)'}
+														? 'Select one correct answer (radio)'
+														: 'Check all correct answers (checkbox)'}
 												</p>
 											</div>
 					)}
@@ -581,7 +581,7 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 							disabled={isSubmitting}
 							className='flex-1 rounded-xl border border-white/10 bg-white/5 px-6 py-4 font-semibold text-gray-300 transition-colors hover:bg-white/10 disabled:opacity-50'
 						>
-							Отмена
+							Cancel
 						</button>
 						<button
 							type='submit'
@@ -591,10 +591,10 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 							{isSubmitting ? (
 								<>
 									<Loader2 className='mr-2 inline h-5 w-5 animate-spin' />
-									Сохранение...
+									Saving...
 								</>
 							) : (
-								'Сохранить изменения'
+								'Save changes'
 							)}
 						</button>
 					</div>

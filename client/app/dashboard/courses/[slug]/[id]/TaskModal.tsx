@@ -35,7 +35,7 @@ interface TaskModalProps {
 	onPrevLesson?: () => void
 	answerTask: (taskId: string, selectedOptionIds: string[]) => Promise<{
   	isCorrect: boolean;
-  	explanation?: string  // ✅ Добавь это
+  	explanation?: string  // ✅ Add this
 		awardedXp: number
 	}>
 	isAnswering: boolean
@@ -69,7 +69,7 @@ export function TaskModal({
 	const isLastTask = currentTaskIndex >= tasks.length - 1
 	const isFirstTask = currentTaskIndex === 0
 
-	// ✅ Сбрасываем состояние при смене задачи
+	// ✅ Reset state when the task changes
 	useEffect(() => {
 		setSelectedOptions([])
 		setHasSubmitted(false)
@@ -127,19 +127,19 @@ export function TaskModal({
 
 	const handleSubmit = async () => {
 		if (selectedOptions.length === 0) {
-			toast.error('Выберите хотя бы один вариант')
+			toast.error('Select at least one option')
 			return
 		}
 
 		try {
-			// ✅ Получаем результат из API
+			// ✅ Get result from the API
 			const result = await answerTask(currentTask.id, selectedOptions)
 
-			// ✅ Сразу сохраняем результат в локальное состояние
+			// ✅ Immediately store the result in local state
 			setAnswerResult(result)
 			setHasSubmitted(true)
 		} catch (error) {
-			toast.error('Ошибка при отправке ответа')
+			toast.error('Error submitting answer')
 		}
 	}
 
@@ -201,7 +201,7 @@ export function TaskModal({
 						<div className='mb-6 flex items-center justify-between'>
 							<div>
 								<h3 className='text-2xl font-bold text-white'>
-									Задание {currentTaskIndex + 1}/{tasks.length}
+									Task {currentTaskIndex + 1}/{tasks.length}
 								</h3>
 								<Badge className='mt-2 bg-blue-500/20 text-blue-400'>
 									{currentTask.points} XP
@@ -233,13 +233,13 @@ export function TaskModal({
 											currentTask.difficulty === 'HARD' && 'border-red-500/40 text-red-400'
 										)}
 									>
-										{currentTask.difficulty === 'EASY' && 'Лёгкое'}
-										{currentTask.difficulty === 'MEDIUM' && 'Среднее'}
-										{currentTask.difficulty === 'HARD' && 'Сложное'}
+										{currentTask.difficulty === 'EASY' && 'Easy'}
+										{currentTask.difficulty === 'MEDIUM' && 'Medium'}
+										{currentTask.difficulty === 'HARD' && 'Hard'}
 									</Badge>
 									{isMultiChoice && (
 										<Badge variant='outline' className='border-purple-500/40 text-purple-400'>
-											Выберите несколько
+											Select multiple
 										</Badge>
 									)}
 								</div>
@@ -298,10 +298,10 @@ export function TaskModal({
 										)}
 										<div>
 											<p className='font-semibold text-white'>
-												{isCorrect ? 'Правильно!' : 'Неправильно'}
+												{isCorrect ? 'Correct!' : 'Incorrect'}
 											</p>
 											<p className='text-sm text-gray-400'>
-												{isCorrect && `Вы получили ${currentTask.points} опыта`}
+												{isCorrect && `You earned ${currentTask.points} XP`}
 												{answerResult.explanation && (
 												  <>{answerResult.explanation}</>
 												)}
@@ -320,7 +320,7 @@ export function TaskModal({
 									disabled={selectedOptions.length === 0 || isAnswering}
 									className='w-full rounded-xl bg-white py-6 text-base font-semibold text-black transition-colors hover:bg-white/90 disabled:opacity-50'
 								>
-									{isAnswering ? 'Отправка...' : 'Проверить ответ'}
+									{isAnswering ? 'Submitting...' : 'Check answer'}
 								</Button>
 							) : (
 								<>
@@ -331,7 +331,7 @@ export function TaskModal({
 											className='flex-1 rounded-xl border-white/10 py-6 text-base font-semibold'
 										>
 											<RotateCcw className='mr-2 h-5 w-5' />
-											Повторить
+											Retry
 										</Button>
 									)}
 									{!isLastTask && (
@@ -339,7 +339,7 @@ export function TaskModal({
 											onClick={handleNext}
 											className='flex-1 rounded-xl bg-white py-6 text-base font-semibold text-black hover:bg-white/90'
 										>
-											Далее
+											Next
 											<ChevronRight className='ml-2 h-5 w-5' />
 										</Button>
 									)}

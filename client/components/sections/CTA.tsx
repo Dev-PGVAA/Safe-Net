@@ -13,14 +13,14 @@ export default function CTA() {
 					</div>
 					<div className='relative z-10'>
 						<h3 className='text-3xl sm:text-4xl font-bold text-white mb-4'>
-							Готов проверить себя?
+							Ready to test yourself?
 						</h3>
 						<p className='text-xl text-white/90 mb-8 max-w-2xl mx-auto'>
-							Пройди первый уровень и узнай, насколько ты защищён в интернете
+							Complete the first level and find out how safe you really are online
 						</p>
 						<AuthDialog
 							triggerButton={{
-								text: 'Начать обучение',
+								text: 'Start Learning',
 								className:
 									'inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-indigo-600 px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-xl group',
 								icon: (

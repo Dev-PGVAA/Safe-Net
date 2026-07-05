@@ -98,11 +98,11 @@ export default function NotFound() {
 							404
 						</h1>
 						<h2 className='text-[28px] sm:text-[32px] font-semibold text-white mb-3 tracking-tight'>
-							Защита не обнаружена
+							Protection Not Found
 						</h2>
 						<p className='text-[17px] text-slate-400 max-w-md mx-auto mb-10 leading-relaxed'>
-							Похоже, эта страница ушла в безопасное хранилище. Давайте вернем
-							вас в безопасную зону.
+							Looks like this page went into secure storage. Let&apos;s get
+							you back to a safe zone.
 						</p>
 					</m.div>
 					{}
@@ -119,7 +119,7 @@ export default function NotFound() {
 							className='inline-flex items-center gap-2 px-6 py-3.5 bg-slate-900 border border-slate-800 text-white rounded-[12px] text-[15px] font-medium hover:bg-slate-800 transition-colors min-w-[140px] justify-center'
 						>
 							<ArrowLeft className='w-4 h-4' strokeWidth={2} />
-							<span>Назад</span>
+							<span>Back</span>
 						</m.button>
 						<m.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
 							<Link
@@ -127,7 +127,7 @@ export default function NotFound() {
 								className='inline-flex items-center gap-2 px-6 py-3.5 bg-white text-slate-900 rounded-[12px] text-[15px] font-medium hover:bg-slate-100 transition-colors shadow-sm min-w-[140px] justify-center'
 							>
 								<Home className='w-4 h-4' strokeWidth={2} />
-								<span>На главную</span>
+								<span>Go Home</span>
 							</Link>
 						</m.div>
 					</m.div>
@@ -141,7 +141,7 @@ export default function NotFound() {
 						<div className='flex items-center justify-center gap-2 text-slate-500'>
 							<Shield className='w-4 h-4' strokeWidth={2} />
 							<span className='text-[13px] font-medium'>
-								SafeNet – Ваша безопасность важна
+								SafeNet – Your safety matters
 							</span>
 						</div>
 					</m.div>

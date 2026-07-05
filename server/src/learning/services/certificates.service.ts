@@ -35,7 +35,7 @@ export class CertificatesService {
 			throw new NotFoundException('Certificate not found')
 		}
 
-		// Проверяем, есть ли у пользователя права администратора
+		// Check whether the user has admin rights
 		const isAdmin =
 			userRights?.includes('ADMIN') || userRights?.includes('admin')
 

@@ -23,8 +23,8 @@ function BlockFormModal({
 
 	const content = watch('content') as string
 
-	// Функция для вставки markdown синтаксиса
-	const insertMarkdown = (before: string, after: string = '', placeholder: string = 'текст') => {
+	// Function to insert markdown syntax
+	const insertMarkdown = (before: string, after: string = '', placeholder: string = 'text') => {
 		const textarea = textareaRef.current
 		if (!textarea) return
 
@@ -35,7 +35,7 @@ function BlockFormModal({
 
 		setValue('content', newText)
 
-		// Возвращаем фокус и выделяем вставленный текст
+		// Return focus and select the inserted text
 		setTimeout(() => {
 			textarea.focus()
 			textarea.setSelectionRange(
@@ -48,63 +48,63 @@ function BlockFormModal({
 	const toolbarButtons = [
 		{
 			icon: <span className="font-bold text-lg">H1</span>,
-			label: 'Заголовок 1',
-			action: () => insertMarkdown('# ', '', 'Заголовок'),
+			label: 'Heading 1',
+			action: () => insertMarkdown('# ', '', 'Heading'),
 		},
 		{
 			icon: <span className="font-bold">H2</span>,
-			label: 'Заголовок 2',
-			action: () => insertMarkdown('## ', '', 'Заголовок'),
+			label: 'Heading 2',
+			action: () => insertMarkdown('## ', '', 'Heading'),
 		},
 		{
 			icon: <span className="font-bold text-sm">H3</span>,
-			label: 'Заголовок 3',
-			action: () => insertMarkdown('### ', '', 'Заголовок'),
+			label: 'Heading 3',
+			action: () => insertMarkdown('### ', '', 'Heading'),
 		},
 		{
 			icon: <span className="font-bold">B</span>,
-			label: 'Жирный',
-			action: () => insertMarkdown('**', '**', 'жирный текст'),
+			label: 'Bold',
+			action: () => insertMarkdown('**', '**', 'bold text'),
 		},
 		{
 			icon: <span className="italic">I</span>,
-			label: 'Курсив',
-			action: () => insertMarkdown('*', '*', 'курсив'),
+			label: 'Italic',
+			action: () => insertMarkdown('*', '*', 'italic'),
 		},
 		{
 			icon: <span className="line-through">S</span>,
-			label: 'Зачеркнутый',
-			action: () => insertMarkdown('~~', '~~', 'зачеркнутый'),
+			label: 'Strikethrough',
+			action: () => insertMarkdown('~~', '~~', 'strikethrough'),
 		},
 		{
 			icon: <span className="font-mono text-sm">&lt;/&gt;</span>,
-			label: 'Код',
-			action: () => insertMarkdown('`', '`', 'код'),
+			label: 'Code',
+			action: () => insertMarkdown('`', '`', 'code'),
 		},
 		{
 			icon: <span className="font-mono text-xs">```</span>,
-			label: 'Блок кода',
-			action: () => insertMarkdown('```\n', '\n```', 'код'),
+			label: 'Code block',
+			action: () => insertMarkdown('```\n', '\n```', 'code'),
 		},
 		{
 			icon: <span>•</span>,
-			label: 'Список',
-			action: () => insertMarkdown('- ', '', 'элемент списка'),
+			label: 'List',
+			action: () => insertMarkdown('- ', '', 'list item'),
 		},
 		{
 			icon: <span>1.</span>,
-			label: 'Нумерованный список',
-			action: () => insertMarkdown('1. ', '', 'элемент списка'),
+			label: 'Numbered list',
+			action: () => insertMarkdown('1. ', '', 'list item'),
 		},
 		{
 			icon: <span>"</span>,
-			label: 'Цитата',
-			action: () => insertMarkdown('> ', '', 'цитата'),
+			label: 'Quote',
+			action: () => insertMarkdown('> ', '', 'quote'),
 		},
 		{
 			icon: <span>🔗</span>,
-			label: 'Ссылка',
-			action: () => insertMarkdown('[', '](url)', 'текст ссылки'),
+			label: 'Link',
+			action: () => insertMarkdown('[', '](url)', 'link text'),
 		},
 	]
 
@@ -120,12 +120,12 @@ function BlockFormModal({
 				<div className='mx-auto flex max-w-7xl items-center justify-between px-6 py-4'>
 					<div>
 						<h3 className='text-2xl font-bold text-white'>
-							{isEditing ? 'Редактировать блок теории' : 'Добавить блок теории'}
+							{isEditing ? 'Edit theory block' : 'Add theory block'}
 						</h3>
 						<p className='mt-1 text-sm text-gray-500'>
 							{isEditing
-								? 'Измените параметры блока'
-								: 'Создайте теоретический материал для урока'}
+								? 'Change block parameters'
+								: 'Create theoretical material for the lesson'}
 						</p>
 					</div>
 					<button
@@ -143,7 +143,7 @@ function BlockFormModal({
 					<div className='grid gap-6 md:grid-cols-2'>
 						<div>
 							<label className='mb-2 block text-sm font-semibold text-white'>
-								Порядковый номер
+								Order number
 							</label>
 							<input
 								{...register('order', { valueAsNumber: true })}
@@ -155,19 +155,19 @@ function BlockFormModal({
 
 						<div>
 							<label className='mb-2 block text-sm font-semibold text-white'>
-								Заголовок блока
+								Block title
 							</label>
 							<input
 								{...register('title')}
 								className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-purple-500/50 focus:bg-white/10'
-								placeholder='Введение в кибербезопасность'
+								placeholder='Introduction to cybersecurity'
 							/>
 						</div>
 					</div>
 
 					<div className='space-y-3'>
 						<label className='mb-2 block text-sm font-semibold text-white'>
-							Содержание (Markdown)
+							Content (Markdown)
 						</label>
 
 						<div className='grid gap-4 md:grid-cols-2'>
@@ -190,7 +190,7 @@ function BlockFormModal({
 
 								{/* Editor header */}
 								<div className='flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-gray-400'>
-									<span>Редактор</span>
+									<span>Editor</span>
 									<span className='text-[10px] text-gray-500'>
 										Markdown
 									</span>
@@ -198,7 +198,7 @@ function BlockFormModal({
 
 								<textarea
 									{...register('content', {
-										required: 'Содержание обязательно',
+										required: 'Content is required',
 									})}
 									ref={(e) => {
 										register('content').ref(e)
@@ -207,16 +207,16 @@ function BlockFormModal({
 									}}
 									rows={24}
 									className='min-h-[500px] w-full resize-none rounded-b-2xl bg-transparent px-4 py-3 font-mono text-sm text-white outline-none scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20'
-									placeholder={'# Заголовок\n\nОсновной текст с **важными** моментами.\n\n## Подзаголовок\n\n- Пункт 1\n- Пункт 2\n\n```js\nconst code = "example";\n```'}
+									placeholder={'# Heading\n\nMain text with **important** points.\n\n## Subheading\n\n- Item 1\n- Item 2\n\n```js\nconst code = "example";\n```'}
 								/>
 							</div>
 
 							{/* Preview */}
 							<div className='flex flex-col rounded-2xl border border-white/10 bg-white/5 overflow-hidden'>
 								<div className='flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-gray-400'>
-									<span>Превью</span>
+									<span>Preview</span>
 									<span className='text-[10px] text-gray-500'>
-										Рендер
+										Render
 									</span>
 								</div>
 								<div className='min-h-[500px] overflow-y-auto px-4 py-3 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20'>
@@ -340,7 +340,7 @@ function BlockFormModal({
 										</div>
 									) : (
 										<p className='text-xs text-gray-500'>
-											Начните вводить текст слева или используйте кнопки форматирования
+											Start typing text on the left or use the formatting buttons
 										</p>
 									)}
 								</div>
@@ -361,7 +361,7 @@ function BlockFormModal({
 							onClick={onClose}
 							className='flex-1 rounded-xl border border-white/10 bg-white/5 px-6 py-4 font-semibold text-gray-300 transition-colors hover:bg-white/10'
 						>
-							Отмена
+							Cancel
 						</button>
 						<button
 							type='submit'
@@ -370,12 +370,12 @@ function BlockFormModal({
 							{isEditing ? (
 								<>
 									<Save className='mr-2 inline h-5 w-5' />
-									Сохранить изменения
+									Save changes
 								</>
 							) : (
 								<>
 									<Plus className='mr-2 inline h-5 w-5' />
-									Добавить блок
+									Add block
 								</>
 							)}
 						</button>

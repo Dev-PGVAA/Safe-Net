@@ -14,7 +14,7 @@ type TestState = 'loading' | 'not-started' | 'active' | 'completed' | 'error'
 export function useTestDetail() {
 	const params = useParams()
 	const router = useRouter()
-	const queryClient = useQueryClient() // ✅ Добавлено
+	const queryClient = useQueryClient() // ✅ Added
 	const testId = params.id as string
 
 	// State
@@ -43,7 +43,7 @@ export function useTestDetail() {
 		onSuccess: result => {
 			setTestState('completed')
 
-			// ✅ КЛЮЧЕВОЕ: Инвалидируем кэш курса для обновления прогресса
+			// ✅ KEY: Invalidate the course cache to refresh progress
 			if (test?.courseSlug) {
 				queryClient.invalidateQueries({
 					queryKey: ['course', test.courseSlug],
@@ -54,19 +54,19 @@ export function useTestDetail() {
 			}
 
 			if (result.passed) {
-				toast.success('Тест пройден!')
+				toast.success('Test passed!')
 				if (result.certificateIssued) {
-					toast.success('Получен сертификат!', {
+					toast.success('Certificate earned!', {
 						duration: 5000,
-						description: 'Поздравляем с завершением курса!',
+						description: 'Congratulations on completing the course!',
 					})
 				}
 			} else {
-				toast.error(`Набрано ${result.score}/${result.totalPoints} баллов`)
+				toast.error(`Scored ${result.score}/${result.totalPoints} points`)
 			}
 		},
 		onError: () => {
-			toast.error('Ошибка при отправке теста')
+			toast.error('Error submitting test')
 			isSubmittingRef.current = false
 		},
 	})
@@ -170,7 +170,7 @@ export function useTestDetail() {
 
 		if (answeredCount < totalQuestions) {
 			toast.error(
-				`Ответьте на все вопросы (${answeredCount}/${totalQuestions})`
+				`Please answer all questions (${answeredCount}/${totalQuestions})`
 			)
 			return
 		}

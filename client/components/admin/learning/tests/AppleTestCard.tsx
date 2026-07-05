@@ -60,7 +60,7 @@ export function AppleTestCard({ test, index, onDelete }: AppleTestCardProps) {
 
           {/* Content */}
           <div className='relative flex flex-col flex-1'>
-            {/* Header - dropdown справа сверху */}
+            {/* Header - dropdown top right */}
             <div className='absolute top-0 right-0 z-10'>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild onClick={e => e.preventDefault()}>
@@ -94,13 +94,13 @@ export function AppleTestCard({ test, index, onDelete }: AppleTestCardProps) {
                     className='gap-2 text-red-400 focus:bg-red-500/10 focus:text-red-400 cursor-pointer'
                   >
                     <Trash2 className='w-4 h-4' />
-                    Удалить
+                    Delete
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
 
-            {/* Title & Description - занимает доступное пространство */}
+            {/* Title & Description - fills available space */}
             <div className='flex-1 pr-8'>
               <h3 className='text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-blue-400 transition-colors'>
                 {test.title}
@@ -113,7 +113,7 @@ export function AppleTestCard({ test, index, onDelete }: AppleTestCardProps) {
               )}
             </div>
 
-            {/* Meta Footer - mt-auto прибивает к низу */}
+            {/* Meta Footer - mt-auto pins it to the bottom */}
             <div className='mt-auto space-y-2.5 pt-4'>
               <div className='flex items-center gap-3'>
                 <m.div
@@ -125,7 +125,7 @@ export function AppleTestCard({ test, index, onDelete }: AppleTestCardProps) {
                     <FileQuestion className='w-3.5 h-3.5 text-blue-400' />
                   </div>
                   <span className='text-sm text-gray-300 font-medium'>
-                    {questionsCount} вопрос{questionsCount <= 4 ? (questionsCount == 1 ? '' : 'а') : 'ов'}
+                    {questionsCount} question{questionsCount === 1 ? '' : 's'}
                   </span>
                 </m.div>
 
@@ -148,7 +148,7 @@ export function AppleTestCard({ test, index, onDelete }: AppleTestCardProps) {
               {/* Arrow indicator */}
               <div className='flex items-center justify-between pt-2.5 border-t border-white/10'>
                 <span className='text-xs text-gray-500 font-medium'>
-                  Редактировать
+                  Edit
                 </span>
                 <m.div
                   animate={{

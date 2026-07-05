@@ -13,7 +13,7 @@ interface TestResult {
 	totalQuestions: number
 	correctAnswers: number
 	passed: boolean
-	time: number // ← время в секундах
+	time: number // ← time in seconds
 	completedAt: string
 }
 
@@ -21,16 +21,16 @@ interface UserTestsBlockProps {
 	testResults: TestResult[]
 }
 
-// Функция для форматирования времени
+// Function to format time
 function formatTime(seconds: number): string {
 	const minutes = Math.floor(seconds / 60)
 	const remainingSeconds = seconds % 60
 
 	if (minutes === 0) {
-		return `${remainingSeconds}с`
+		return `${remainingSeconds}s`
 	}
 
-	return `${minutes}м ${remainingSeconds}с`
+	return `${minutes}m ${remainingSeconds}s`
 }
 
 export default function UserTestsBlock({ testResults }: UserTestsBlockProps) {
@@ -42,7 +42,7 @@ export default function UserTestsBlock({ testResults }: UserTestsBlockProps) {
 				className='flex flex-col items-center justify-center py-16 bg-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/5'
 			>
 				<FileText className='w-12 h-12 text-white/20 mb-4' />
-				<p className='text-white/50'>Пользователь не проходил тесты</p>
+				<p className='text-white/50'>User has not taken any tests</p>
 			</m.div>
 		)
 	}
@@ -51,7 +51,7 @@ export default function UserTestsBlock({ testResults }: UserTestsBlockProps) {
 	const averageScore =
 		testResults.reduce((sum, t) => sum + t.score, 0) / testResults.length
 
-	// Средее время выполнения
+	// Average completion time
 	const averageTime =
 		testResults.length > 0
 			? Math.round(
@@ -68,7 +68,7 @@ export default function UserTestsBlock({ testResults }: UserTestsBlockProps) {
 					<div className='text-2xl font-bold text-white mb-1'>
 						{testResults.length}
 					</div>
-					<div className='text-white/60 text-xs'>Всего тестов</div>
+					<div className='text-white/60 text-xs'>Total tests</div>
 				</div>
 
 				<div className='bg-linear-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20 rounded-xl p-4'>
@@ -76,7 +76,7 @@ export default function UserTestsBlock({ testResults }: UserTestsBlockProps) {
 					<div className='text-2xl font-bold text-white mb-1'>
 						{passedTests}
 					</div>
-					<div className='text-white/60 text-xs'>Пройдено</div>
+					<div className='text-white/60 text-xs'>Passed</div>
 				</div>
 
 				<div className='bg-linear-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl p-4'>
@@ -84,7 +84,7 @@ export default function UserTestsBlock({ testResults }: UserTestsBlockProps) {
 					<div className='text-2xl font-bold text-white mb-1'>
 						{Math.round(averageScore)}%
 					</div>
-					<div className='text-white/60 text-xs'>Средний балл</div>
+					<div className='text-white/60 text-xs'>Average score</div>
 				</div>
 
 				<div className='bg-linear-to-br from-cyan-500/10 to-cyan-600/5 border border-cyan-500/20 rounded-xl p-4'>
@@ -92,7 +92,7 @@ export default function UserTestsBlock({ testResults }: UserTestsBlockProps) {
 					<div className='text-2xl font-bold text-white mb-1'>
 						{formatTime(averageTime)}
 					</div>
-					<div className='text-white/60 text-xs'>Среднее время</div>
+					<div className='text-white/60 text-xs'>Average time</div>
 				</div>
 			</div>
 
@@ -102,13 +102,13 @@ export default function UserTestsBlock({ testResults }: UserTestsBlockProps) {
 					<thead>
 						<tr className='border-b border-white/10'>
 							{[
-								'Тест',
-								'Курс',
-								'Балл',
-								'Ответы',
-								'Время',
-								'Статус',
-								'Дата',
+								'Test',
+								'Course',
+								'Score',
+								'Answers',
+								'Time',
+								'Status',
+								'Date',
 							].map(h => (
 								<th
 									key={h}
@@ -123,9 +123,9 @@ export default function UserTestsBlock({ testResults }: UserTestsBlockProps) {
 						{testResults.map((result, idx) => {
 							const formattedDate =
 								formatDate(result.completedAt, {
-									locale: 'ru-RU',
+									locale: 'en-US',
 									gracefulFail: true,
-								}) || 'Дата неизвестна'
+								}) || 'Date unknown'
 
 							return (
 								<m.tr

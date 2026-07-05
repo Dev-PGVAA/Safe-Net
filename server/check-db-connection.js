@@ -6,66 +6,66 @@ const pool = new Pool({
 })
 
 async function checkConnection() {
-  console.log('🔍 Проверка подключения к базе данных...')
-  console.log('DATABASE_URL:', process.env.DATABASE_URL ? 'установлен' : 'НЕ УСТАНОВЛЕН')
+  console.log('🔍 Checking database connection...')
+  console.log('DATABASE_URL:', process.env.DATABASE_URL ? 'set' : 'NOT SET')
 
   if (!process.env.DATABASE_URL) {
-    console.error('❌ DATABASE_URL не установлен в переменных окружения')
-    console.log('\nСоздайте файл .env в папке server со следующим содержимым:')
+    console.error('❌ DATABASE_URL is not set in environment variables')
+    console.log('\nCreate a .env file in the server folder with the following content:')
     console.log('DATABASE_URL=postgresql://postgres:postgres@localhost:5433/safenet?schema=public')
     process.exit(1)
   }
 
-  // Парсим DATABASE_URL для отображения
+  // Parse DATABASE_URL for display
   try {
     const url = new URL(process.env.DATABASE_URL.replace('postgresql://', 'http://'))
-    console.log('📋 Параметры подключения:')
-    console.log('   Хост:', url.hostname)
-    console.log('   Порт:', url.port)
-    console.log('   База данных:', url.pathname.replace('/', ''))
-    console.log('   Пользователь:', url.username)
+    console.log('📋 Connection parameters:')
+    console.log('   Host:', url.hostname)
+    console.log('   Port:', url.port)
+    console.log('   Database:', url.pathname.replace('/', ''))
+    console.log('   User:', url.username)
   } catch (e) {
-    console.log('⚠️  Не удалось распарсить DATABASE_URL')
+    console.log('⚠️  Failed to parse DATABASE_URL')
   }
 
   try {
-    console.log('\n🔄 Попытка подключения...')
+    console.log('\n🔄 Connecting...')
     const client = await pool.connect()
     const result = await client.query('SELECT NOW(), version()')
-    console.log('✅ Подключение успешно!')
-    console.log('   Время сервера:', result.rows[0].now)
-    console.log('   Версия PostgreSQL:', result.rows[0].version.split(' ')[0] + ' ' + result.rows[0].version.split(' ')[1])
+    console.log('✅ Connection successful!')
+    console.log('   Server time:', result.rows[0].now)
+    console.log('   PostgreSQL version:', result.rows[0].version.split(' ')[0] + ' ' + result.rows[0].version.split(' ')[1])
     client.release()
     await pool.end()
   } catch (error) {
-    console.error('\n❌ Ошибка подключения:', error.message)
-    console.error('   Код ошибки:', error.code)
+    console.error('\n❌ Connection error:', error.message)
+    console.error('   Error code:', error.code)
 
     if (error.code === 'ECONNREFUSED') {
-      console.log('\n🔧 Решение:')
-      console.log('1. Убедитесь, что контейнер запущен:')
+      console.log('\n🔧 Fix:')
+      console.log('1. Make sure the container is running:')
       console.log('   docker-compose ps')
-      console.log('2. Если контейнер не запущен, выполните:')
+      console.log('2. If the container is not running, run:')
       console.log('   docker-compose up -d')
-      console.log('3. Проверьте логи контейнера:')
+      console.log('3. Check the container logs:')
       console.log('   docker-compose logs postgres')
     } else if (error.code === 'ENOTFOUND') {
-      console.log('\n🔧 Решение:')
-      console.log('Проверьте правильность хоста в DATABASE_URL (должен быть localhost)')
+      console.log('\n🔧 Fix:')
+      console.log('Check the host in DATABASE_URL (should be localhost)')
     } else if (error.message.includes('password authentication failed')) {
-      console.log('\n🔧 Решение:')
-      console.log('Проверьте правильность пароля в DATABASE_URL')
+      console.log('\n🔧 Fix:')
+      console.log('Check the password in DATABASE_URL')
     } else if (error.message.includes('database') && error.message.includes('does not exist')) {
-      console.log('\n🔧 Решение:')
-      console.log('База данных не создана. Выполните:')
+      console.log('\n🔧 Fix:')
+      console.log('The database has not been created. Run:')
       console.log('   docker-compose exec postgres psql -U postgres -c "CREATE DATABASE safenet;"')
     } else {
-      console.log('\n🔧 Возможные причины:')
-      console.log('1. Контейнер PostgreSQL не запущен: docker-compose up -d')
-      console.log('2. Неправильный DATABASE_URL в .env файле')
-      console.log('3. Порт 5433 занят другим процессом')
-      console.log('4. Неверные учетные данные')
-      console.log('5. База данных не создана')
+      console.log('\n🔧 Possible causes:')
+      console.log('1. The PostgreSQL container is not running: docker-compose up -d')
+      console.log('2. Wrong DATABASE_URL in the .env file')
+      console.log('3. Port 5433 is taken by another process')
+      console.log('4. Invalid credentials')
+      console.log('5. The database has not been created')
     }
     process.exit(1)
   }

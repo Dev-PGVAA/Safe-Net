@@ -17,104 +17,104 @@ import {
 export const features = [
 	{
 		icon: Gamepad2,
-		title: 'Игровой формат',
+		title: 'Game Format',
 		description:
-			'8 этапов сложности и 300+ интерактивных заданий. Каждый уровень — это новый вызов с уникальными сценариями',
-		stats: '8 этапов • 300+ заданий',
+			'8 difficulty levels and 300+ interactive tasks. Every level is a new challenge with unique scenarios',
+		stats: '8 levels • 300+ tasks',
 		color: 'from-purple-500 to-pink-500',
-		highlight: 'Геймификация'
+		highlight: 'Gamification'
 	},
 	{
 		icon: Eye,
-		title: 'Реальные кейсы',
+		title: 'Real Cases',
 		description:
-			'Все задания созданы на основе реальных фишинговых атак, утечек данных и случаев мошенничества 2024-2025 года',
-		stats: '100% реальные угрозы',
+			'All tasks are based on real phishing attacks, data breaches, and fraud cases from 2024-2025',
+		stats: '100% real threats',
 		color: 'from-orange-500 to-red-500',
-		highlight: 'Актуально'
+		highlight: 'Up to date'
 	},
 	{
 		icon: TrendingUp,
-		title: 'Трекинг прогресса',
+		title: 'Progress Tracking',
 		description:
-			'Детальная аналитика твоих достижений: точность ответов, время прохождения, слабые места и рекомендации',
-		stats: '15+ метрик прогресса',
+			'Detailed analytics of your achievements: answer accuracy, completion time, weak spots and recommendations',
+		stats: '15+ progress metrics',
 		color: 'from-cyan-500 to-blue-500',
-		highlight: 'Аналитика'
+		highlight: 'Analytics'
 	},
 	{
 		icon: BookOpen,
-		title: 'База знаний',
+		title: 'Knowledge Base',
 		description:
-			'Подробная библиотека статей, видео-разборов и чек-листов безопасности. Всегда под рукой',
-		stats: '50+ статей и гайдов',
+			'An extensive library of articles, video reviews, and security checklists. Always at hand',
+		stats: '50+ articles and guides',
 		color: 'from-indigo-500 to-purple-500',
-		highlight: 'Обучение'
+		highlight: 'Education'
 	},
 	{
 		icon: Trophy,
-		title: 'Система достижений',
+		title: 'Achievement System',
 		description:
-			'Открывай значки, получай титулы и уникальные награды. От новичка до киберзащитника-эксперта',
-		stats: '30+ уникальных наград',
+			'Unlock badges, earn titles and unique rewards. From beginner to cybersecurity expert',
+		stats: '30+ unique rewards',
 		color: 'from-yellow-500 to-orange-500',
-		highlight: 'Мотивация'
+		highlight: 'Motivation'
 	},
 	{
 		icon: Lock,
-		title: '100% безопасно',
+		title: '100% Safe',
 		description:
-			'Все данные защищены шифрованием. Мы не продаём информацию и не показываем рекламу',
-		stats: 'Без рекламы',
+			'All data is encrypted. We never sell your information or show ads',
+		stats: 'No ads',
 		color: 'from-slate-500 to-slate-600',
-		highlight: 'Приватность'
+		highlight: 'Privacy'
 	}
 ]
 export const topics = [
 	{
-		name: 'Основы безопасности',
+		name: 'Security Basics',
 		icon: Shield,
 		tasks: 24,
 		strokeColor: '#10B981'
 	},
 	{
-		name: 'Фишинг',
+		name: 'Phishing',
 		icon: FishingHook,
 		tasks: 48,
 		strokeColor: '#F59E0B'
 	},
 	{
-		name: 'Опасные ссылки и сайты',
+		name: 'Dangerous Links & Websites',
 		icon: Globe,
 		tasks: 40,
 		strokeColor: '#3B82F6'
 	},
 	{
-		name: 'Пароли',
+		name: 'Passwords',
 		icon: Lock,
 		tasks: 36,
 		strokeColor: '#8B5CF6'
 	},
 	{
-		name: 'Соцсети',
+		name: 'Social Media',
 		icon: MessageCircle,
 		tasks: 40,
 		strokeColor: '#EC4899'
 	},
 	{
-		name: 'Покупки',
+		name: 'Online Shopping',
 		icon: ShoppingCart,
 		tasks: 32,
 		strokeColor: '#F97316'
 	},
 	{
-		name: 'Социальная инженерия',
+		name: 'Social Engineering',
 		icon: Users,
 		tasks: 44,
 		strokeColor: '#06B6D4'
 	},
 	{
-		name: 'Итоговая миссия',
+		name: 'Final Mission',
 		icon: Flag,
 		tasks: 28,
 		strokeColor: '#EF4444'
@@ -122,18 +122,18 @@ export const topics = [
 ]
 export const testimonials = [
 	{
-		text: 'SafeNet помог мне распознать фишинговое письмо на работе. Теперь чувствую себя увереннее!',
-		author: 'Анна, 10 класс',
+		text: 'SafeNet helped me spot a phishing email at work. I feel a lot more confident now!',
+		author: 'Anna, 10th grade',
 		rating: 5
 	},
 	{
-		text: 'Очень крутой формат! Учиться кибербезопасности стало интересно, как играть в игру.',
-		author: 'Максим, 11 класс',
+		text: 'Such a cool format! Learning cybersecurity became as fun as playing a game.',
+		author: 'Maxim, 11th grade',
 		rating: 5
 	},
 	{
-		text: 'Благодаря SafeNet научил родителей не переходить по подозрительным ссылкам.',
-		author: 'Дарья, 9 класс',
+		text: 'Thanks to SafeNet, I taught my parents not to click on suspicious links.',
+		author: 'Daria, 9th grade',
 		rating: 5
 	}
 ]

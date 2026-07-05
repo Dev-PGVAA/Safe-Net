@@ -18,23 +18,23 @@ export default function TestsList({ onTestsChange }: TestsListProps) {
 	})
 
 	const handleDeleteTest = async (testId: string, testTitle: string) => {
-		if (window.confirm(`Удалить тест "${testTitle}"?`)) {
+		if (window.confirm(`Delete test "${testTitle}"?`)) {
 			try {
 				await adminService.deleteTest(testId)
-				toast.success('Тест удален')
+				toast.success('Test deleted')
 				onTestsChange()
 			} catch (error) {
-				toast.error('Ошибка при удалении')
+				toast.error('Error deleting test')
 			}
 		}
 	}
 
-	if (isLoading) return <div className='text-center py-4'>Загрузка...</div>
+	if (isLoading) return <div className='text-center py-4'>Loading...</div>
 
 	if (!tests || tests.length === 0) {
 		return (
 			<div className='text-center py-8 text-gray-500 dark:text-gray-400'>
-				Тестов не найдено
+				No tests found
 			</div>
 		)
 	}
@@ -64,7 +64,7 @@ export default function TestsList({ onTestsChange }: TestsListProps) {
 								<div className='flex items-center gap-4 mt-2 text-xs text-gray-500 dark:text-gray-400'>
 									<span className='flex items-center gap-1'>
 										<HelpCircle className='w-3 h-3' />
-										{test.questions?.length || 0} вопросов
+										{test.questions?.length || 0} questions
 									</span>
 									{test.course && <span>{test.course.title}</span>}
 								</div>
@@ -75,14 +75,14 @@ export default function TestsList({ onTestsChange }: TestsListProps) {
 							<Link
 								href={`/dashboard/admin/learning/tests/${test.id}/edit`}
 								className='p-2 hover:bg-blue-100 dark:hover:bg-blue-900 rounded transition text-blue-600'
-								title='Редактировать'
+								title='Edit'
 							>
 								<Edit className='w-4 h-4' />
 							</Link>
 							<button
 								onClick={() => handleDeleteTest(test.id, test.title)}
 								className='p-2 hover:bg-red-100 dark:hover:bg-red-900 rounded transition text-red-600'
-								title='Удалить'
+								title='Delete'
 							>
 								<Trash2 className='w-4 h-4' />
 							</button>

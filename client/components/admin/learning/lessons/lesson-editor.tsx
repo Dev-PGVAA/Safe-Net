@@ -43,11 +43,11 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 		setIsSaving(true)
 		try {
 			await adminService.updateLesson(lesson.id, data)
-			toast.success('Урок обновлен')
+			toast.success('Lesson updated')
 			setIsEditingTitle(false)
 			onSuccess()
 		} catch (error) {
-			toast.error('Ошибка при обновлении')
+			toast.error('Error updating lesson')
 		} finally {
 			setIsSaving(false)
 		}
@@ -60,11 +60,11 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 				...blockData,
 			})
 			setBlocks([...blocks, newBlock])
-			toast.success('Блок добавлен')
+			toast.success('Block added')
 			setShowAddBlock(false)
 			onSuccess()
 		} catch (error) {
-			toast.error('Ошибка при добавлении блока')
+			toast.error('Error adding block')
 		}
 	}
 
@@ -77,11 +77,11 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 					b.id === editingBlockId ? { ...b, ...blockData } : b
 				)
 			)
-			toast.success('Блок обновлен')
+			toast.success('Block updated')
 			setEditingBlockId(null)
 			onSuccess()
 		} catch (error) {
-			toast.error('Ошибка при обновлении блока')
+			toast.error('Error updating block')
 		}
 	}
 
@@ -92,11 +92,11 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 		try {
 			await adminService.deleteBlock(deleteDialog.block.id)
 			setBlocks(blocks.filter((b) => b.id !== deleteDialog.block?.id))
-			toast.success('Блок удален')
+			toast.success('Block deleted')
 			setDeleteDialog({ open: false, block: null })
 			onSuccess()
 		} catch (error) {
-			toast.error('Ошибка при удалении')
+			toast.error('Error deleting block')
 		} finally {
 			setIsDeleting(false)
 		}
@@ -117,14 +117,14 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 					>
 						<h3 className='text-xl font-bold text-white'>{lesson.title}</h3>
 						<p className='mt-1 text-sm text-gray-500'>
-							{lesson.estimatedDuration} минут
+							{lesson.estimatedDuration} minutes
 						</p>
 						<button
 							onClick={() => setIsEditingTitle(true)}
 							className='mt-4 flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-white/90'
 						>
 							<Edit2 className='h-4 w-4' />
-							Редактировать
+							Edit
 						</button>
 					</m.div>
 				) : (
@@ -137,7 +137,7 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 					>
 						<div>
 							<label className='mb-2 block text-sm font-medium text-gray-400'>
-								Название
+								Title
 							</label>
 							<input
 								{...register('title')}
@@ -146,7 +146,7 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 						</div>
 						<div>
 							<label className='mb-2 block text-sm font-medium text-gray-400'>
-								Время (мин)
+								Duration (min)
 							</label>
 							<input
 								{...register('estimatedDuration')}
@@ -163,7 +163,7 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 								}}
 								className='flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-white/10'
 							>
-								Отмена
+								Cancel
 							</button>
 							<button
 								type='submit'
@@ -171,7 +171,7 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 								className='flex-1 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-white/90 disabled:opacity-50'
 							>
 								<Save className='mr-2 inline h-4 w-4' />
-								Сохранить
+								Save
 							</button>
 						</div>
 					</m.form>
@@ -181,21 +181,21 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 				<div className='space-y-4'>
 					<div className='flex items-center justify-between'>
 						<h4 className='text-lg font-semibold text-white'>
-							Теоретические блоки
+							Theory blocks
 						</h4>
 						<button
 							onClick={() => setShowAddBlock(true)}
 							className='flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-white/90'
 						>
 							<Plus className='h-4 w-4' />
-							Добавить блок
+							Add block
 						</button>
 					</div>
 
 					{blocks.length === 0 ? (
 						<div className='rounded-xl border border-dashed border-white/20 bg-white/5 p-8 text-center'>
 							<p className='text-sm text-gray-500'>
-								Нет блоков. Добавьте первый!
+								No blocks yet. Add the first one!
 							</p>
 						</div>
 					) : (
@@ -212,7 +212,7 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 													{block.order}
 												</span>
 												<h5 className='font-semibold text-white'>
-													{block.title || 'Без названия'}
+													{block.title || 'Untitled'}
 												</h5>
 											</div>
 											<p className='text-sm text-gray-400 line-clamp-2'>
@@ -223,14 +223,14 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 											<button
 												onClick={() => setEditingBlockId(block.id)}
 												className='rounded-lg bg-blue-500/10 p-2 text-blue-400 transition-colors hover:bg-blue-500/20'
-												title='Редактировать'
+												title='Edit'
 											>
 												<Edit2 className='h-4 w-4' />
 											</button>
 											<button
 												onClick={() => setDeleteDialog({ open: true, block })}
 												className='rounded-lg bg-red-500/10 p-2 text-red-400 transition-colors hover:bg-red-500/20'
-												title='Удалить'
+												title='Delete'
 											>
 												<Trash2 className='h-4 w-4' />
 											</button>
@@ -267,17 +267,17 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 
 							<div className='text-center'>
 								<h3 className='mb-2 text-2xl font-bold text-white'>
-									Удалить блок теории?
+									Delete theory block?
 								</h3>
 								<p className='mb-2 text-gray-400'>
-									Вы уверены, что хотите удалить блок{' '}
+									Are you sure you want to delete the block{' '}
 									<span className='font-semibold text-white'>
-										"{deleteDialog.block.title || 'Без названия'}"
+										"{deleteDialog.block.title || 'Untitled'}"
 									</span>
 									?
 								</p>
 								<p className='text-sm text-red-400'>
-									Это действие нельзя отменить
+									This action cannot be undone
 								</p>
 							</div>
 
@@ -287,7 +287,7 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 									disabled={isDeleting}
 									className='flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 font-semibold text-gray-300 transition-colors hover:bg-white/10 disabled:opacity-50'
 								>
-									Отмена
+									Cancel
 								</button>
 								<button
 									onClick={handleDeleteBlock}
@@ -297,10 +297,10 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 									{isDeleting ? (
 										<>
 											<Loader2 className='mr-2 inline h-4 w-4 animate-spin' />
-											Удаление...
+											Deleting...
 										</>
 									) : (
-										'Удалить'
+										'Delete'
 									)}
 								</button>
 							</div>
@@ -370,8 +370,8 @@ function BlockFormModal({
 
 	const content = watch('content') as string
 
-	// Функция для вставки markdown синтаксиса
-	const insertMarkdown = (before: string, after: string = '', placeholder: string = 'текст') => {
+	// Inserts markdown syntax at the cursor position
+	const insertMarkdown = (before: string, after: string = '', placeholder: string = 'text') => {
 		const textarea = textareaRef.current
 		if (!textarea) return
 
@@ -382,7 +382,7 @@ function BlockFormModal({
 
 		setValue('content', newText)
 
-		// Возвращаем фокус и выделяем вставленный текст
+		// Restore focus and select the inserted text
 		setTimeout(() => {
 			textarea.focus()
 			textarea.setSelectionRange(
@@ -395,63 +395,63 @@ function BlockFormModal({
 	const toolbarButtons = [
 		{
 			icon: <span className="font-bold text-lg">H1</span>,
-			label: 'Заголовок 1',
-			action: () => insertMarkdown('# ', '', 'Заголовок'),
+			label: 'Heading 1',
+			action: () => insertMarkdown('# ', '', 'Heading'),
 		},
 		{
 			icon: <span className="font-bold">H2</span>,
-			label: 'Заголовок 2',
-			action: () => insertMarkdown('## ', '', 'Заголовок'),
+			label: 'Heading 2',
+			action: () => insertMarkdown('## ', '', 'Heading'),
 		},
 		{
 			icon: <span className="font-bold text-sm">H3</span>,
-			label: 'Заголовок 3',
-			action: () => insertMarkdown('### ', '', 'Заголовок'),
+			label: 'Heading 3',
+			action: () => insertMarkdown('### ', '', 'Heading'),
 		},
 		{
 			icon: <span className="font-bold">B</span>,
-			label: 'Жирный',
-			action: () => insertMarkdown('**', '**', 'жирный текст'),
+			label: 'Bold',
+			action: () => insertMarkdown('**', '**', 'bold text'),
 		},
 		{
 			icon: <span className="italic">I</span>,
-			label: 'Курсив',
-			action: () => insertMarkdown('*', '*', 'курсив'),
+			label: 'Italic',
+			action: () => insertMarkdown('*', '*', 'italic'),
 		},
 		{
 			icon: <span className="line-through">S</span>,
-			label: 'Зачеркнутый',
-			action: () => insertMarkdown('~~', '~~', 'зачеркнутый'),
+			label: 'Strikethrough',
+			action: () => insertMarkdown('~~', '~~', 'strikethrough'),
 		},
 		{
 			icon: <span className="font-mono text-sm">&lt;/&gt;</span>,
-			label: 'Код',
-			action: () => insertMarkdown('`', '`', 'код'),
+			label: 'Code',
+			action: () => insertMarkdown('`', '`', 'code'),
 		},
 		{
 			icon: <span className="font-mono text-xs">```</span>,
-			label: 'Блок кода',
-			action: () => insertMarkdown('```\n', '\n```', 'код'),
+			label: 'Code block',
+			action: () => insertMarkdown('```\n', '\n```', 'code'),
 		},
 		{
 			icon: <span>•</span>,
-			label: 'Список',
-			action: () => insertMarkdown('- ', '', 'элемент списка'),
+			label: 'List',
+			action: () => insertMarkdown('- ', '', 'list item'),
 		},
 		{
 			icon: <span>1.</span>,
-			label: 'Нумерованный список',
-			action: () => insertMarkdown('1. ', '', 'элемент списка'),
+			label: 'Numbered list',
+			action: () => insertMarkdown('1. ', '', 'list item'),
 		},
 		{
 			icon: <span>"</span>,
-			label: 'Цитата',
-			action: () => insertMarkdown('> ', '', 'цитата'),
+			label: 'Quote',
+			action: () => insertMarkdown('> ', '', 'quote'),
 		},
 		{
 			icon: <span>🔗</span>,
-			label: 'Ссылка',
-			action: () => insertMarkdown('[', '](url)', 'текст ссылки'),
+			label: 'Link',
+			action: () => insertMarkdown('[', '](url)', 'link text'),
 		},
 	]
 
@@ -467,12 +467,12 @@ function BlockFormModal({
 				<div className='mx-auto flex max-w-7xl items-center justify-between px-6 py-4'>
 					<div>
 						<h3 className='text-2xl font-bold text-white'>
-							{isEditing ? 'Редактировать блок теории' : 'Добавить блок теории'}
+							{isEditing ? 'Edit theory block' : 'Add theory block'}
 						</h3>
 						<p className='mt-1 text-sm text-gray-500'>
 							{isEditing
-								? 'Измените параметры блока'
-								: 'Создайте теоретический материал для урока'}
+								? 'Update the block settings'
+								: 'Create theoretical content for the lesson'}
 						</p>
 					</div>
 					<button
@@ -490,7 +490,7 @@ function BlockFormModal({
 					<div className='grid gap-6 md:grid-cols-2'>
 						<div>
 							<label className='mb-2 block text-sm font-semibold text-white'>
-								Порядковый номер
+								Order number
 							</label>
 							<input
 								{...register('order', { valueAsNumber: true })}
@@ -502,19 +502,19 @@ function BlockFormModal({
 
 						<div>
 							<label className='mb-2 block text-sm font-semibold text-white'>
-								Заголовок блока
+								Block title
 							</label>
 							<input
 								{...register('title')}
 								className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-purple-500/50 focus:bg-white/10'
-								placeholder='Введение в кибербезопасность'
+								placeholder='Introduction to cybersecurity'
 							/>
 						</div>
 					</div>
 
 					<div className='space-y-3'>
 						<label className='mb-2 block text-sm font-semibold text-white'>
-							Содержание (Markdown)
+							Content (Markdown)
 						</label>
 
 						<div className='grid gap-4 md:grid-cols-2'>
@@ -537,7 +537,7 @@ function BlockFormModal({
 
 								{/* Editor header */}
 								<div className='flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-gray-400'>
-									<span>Редактор</span>
+									<span>Editor</span>
 									<span className='text-[10px] text-gray-500'>
 										Markdown
 									</span>
@@ -545,7 +545,7 @@ function BlockFormModal({
 
 								<textarea
 									{...register('content', {
-										required: 'Содержание обязательно',
+										required: 'Content is required',
 									})}
 									ref={(e) => {
 										register('content').ref(e)
@@ -554,16 +554,16 @@ function BlockFormModal({
 									}}
 									rows={24}
 									className='min-h-[500px] w-full resize-none rounded-b-2xl bg-transparent px-4 py-3 font-mono text-sm text-white outline-none scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20'
-									placeholder={'# Заголовок\n\nОсновной текст с **важными** моментами.\n\n## Подзаголовок\n\n- Пункт 1\n- Пункт 2\n\n```js\nconst code = "example";\n```'}
+									placeholder={'# Heading\n\nMain text with **important** points.\n\n## Subheading\n\n- Item 1\n- Item 2\n\n```js\nconst code = "example";\n```'}
 								/>
 							</div>
 
 							{/* Preview */}
 							<div className='flex flex-col rounded-2xl border border-white/10 bg-white/5 overflow-hidden'>
 								<div className='flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-gray-400'>
-									<span>Превью</span>
+									<span>Preview</span>
 									<span className='text-[10px] text-gray-500'>
-										Рендер
+										Render
 									</span>
 								</div>
 								<div className='min-h-[500px] overflow-y-auto px-4 py-3 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20'>
@@ -687,7 +687,7 @@ function BlockFormModal({
 										</div>
 									) : (
 										<p className='text-xs text-gray-500'>
-											Начните вводить текст слева или используйте кнопки форматирования
+											Start typing on the left or use the formatting buttons
 										</p>
 									)}
 								</div>
@@ -708,7 +708,7 @@ function BlockFormModal({
 							onClick={onClose}
 							className='flex-1 rounded-xl border border-white/10 bg-white/5 px-6 py-4 font-semibold text-gray-300 transition-colors hover:bg-white/10'
 						>
-							Отмена
+							Cancel
 						</button>
 						<button
 							type='submit'
@@ -717,12 +717,12 @@ function BlockFormModal({
 							{isEditing ? (
 								<>
 									<Save className='mr-2 inline h-5 w-5' />
-									Сохранить изменения
+									Save changes
 								</>
 							) : (
 								<>
 									<Plus className='mr-2 inline h-5 w-5' />
-									Добавить блок
+									Add block
 								</>
 							)}
 						</button>

@@ -20,23 +20,23 @@ export default function Hero() {
 						<div className='inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-4 py-2 mb-6'>
 							<Sparkles className='w-4 h-4 text-indigo-400' />
 							<span className='text-sm text-indigo-300 font-medium'>
-								Проект учеников ГБОУ Школа № 1560 «Лидер»
+								A modern cybersecurity training platform
 							</span>
 						</div>
 						<h2 className='text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6'>
 							<span className='bg-linear-to-r from-white to-slate-300 bg-clip-text text-transparent'>
-								Тренажёр по кибербезопасности
+								Cybersecurity Simulator
 							</span>
 						</h2>
 						<p className='text-lg sm:text-xl text-slate-300 mb-8 leading-relaxed'>
-							Учись отличать фишинг, вредоносные сайты и опасные ссылки в
-							интерактивной игре. Пройди уровни, заработай очки и стань
-							защитником своих данных.
+							Learn to spot phishing, malicious sites, and dangerous links in
+							an interactive game. Complete levels, earn points, and become
+							the guardian of your own data.
 						</p>
 						<div className='flex flex-wrap gap-4 mb-8'>
 							<AuthDialog
 								triggerButton={{
-									text: 'Начать обучение',
+									text: 'Start Learning',
 									className:
 										'bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-xl shadow-indigo-500/30 flex items-center gap-2 group text-normal',
 									icon: (
@@ -49,7 +49,7 @@ export default function Hero() {
 								href='#features'
 								className='bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-xl font-semibold transition-all border border-slate-700 flex items-center gap-2'
 							>
-								Узнать больше
+								Learn More
 								<ArrowRight className='w-5 h-5' />
 							</a>
 						</div>

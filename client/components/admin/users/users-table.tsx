@@ -19,16 +19,16 @@ interface UsersTableProps {
 export default function UsersTable({ users, onUserUpdated }: UsersTableProps) {
 	const handleDelete = async (userId: string, userName: string) => {
 		const confirmed = window.confirm(
-			`Вы уверены? Введите "DELETE" для подтверждения удаления ${userName}`
+			`Are you sure? Enter "DELETE" to confirm deleting ${userName}`
 		)
 
 		if (confirmed) {
 			try {
 				await adminService.deleteUser(userId)
-				toast.success('Пользователь удален')
+				toast.success('User deleted')
 				onUserUpdated()
 			} catch (error) {
-				toast.error('Ошибка при удалении')
+				toast.error('Error deleting user')
 			}
 		}
 	}
@@ -39,12 +39,12 @@ export default function UsersTable({ users, onUserUpdated }: UsersTableProps) {
 				<thead>
 					<tr className='border-b border-white/10'>
 						{[
-							'Имя',
-							'Роли',
-							'Статус',
-							'Курсы',
-							'Дата регистрации',
-							'Действия',
+							'Name',
+							'Roles',
+							'Status',
+							'Courses',
+							'Registration date',
+							'Actions',
 						].map(h => (
 							<th
 								key={h}
@@ -60,7 +60,7 @@ export default function UsersTable({ users, onUserUpdated }: UsersTableProps) {
 						const createdDate =
 							formatDate(user.createdAt, {
 								format: 'date-medium',
-								locale: 'ru-RU',
+								locale: 'en-US',
 								gracefulFail: true,
 							}) || '—'
 
@@ -100,7 +100,7 @@ export default function UsersTable({ users, onUserUpdated }: UsersTableProps) {
 								<td className='py-4 px-4'>
 									<div className='text-white/80 text-sm'>
 										{user.stats
-											? `${user.stats.coursesCompleted} завершено`
+											? `${user.stats.coursesCompleted} completed`
 											: '—'}
 									</div>
 								</td>

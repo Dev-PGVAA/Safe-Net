@@ -85,16 +85,16 @@ export default function TestPage() {
 					<Card className='bg-white/5 border-red-500/20 backdrop-blur-xl'>
 						<CardContent className='p-8 text-center space-y-4'>
 							<AlertCircle className='w-16 h-16 mx-auto text-red-400' />
-							<h2 className='text-2xl font-bold text-white'>Тест не найден</h2>
+							<h2 className='text-2xl font-bold text-white'>Test not found</h2>
 							<p className='text-white/60'>
-								Проверьте ссылку или обратитесь к администратору
+								Check the link or contact the administrator
 							</p>
 							<Button
 								onClick={() => router.push(ROUTES.HOME)}
 								className='w-full'
 							>
 								<ArrowLeft className='w-4 h-4 mr-2' />
-								На главную
+								Go home
 							</Button>
 						</CardContent>
 					</Card>
@@ -114,7 +114,7 @@ export default function TestPage() {
 						className='p-0 rounded-xl bg-white/5 backdrop-blur-sm border border-white/5 hover:bg-white/5 group shadow-sm shrink-0 transition-all duration-300'
 					>
 						<ArrowLeft className='w-4 h-4 mr-2' />
-						Вернуться к курсу
+						Back to course
 					</Button>
 
 					<m.div
@@ -141,12 +141,12 @@ export default function TestPage() {
 
 								<div>
 									<h1 className='text-4xl sm:text-5xl font-bold text-white mb-3'>
-										{result.passed ? 'Поздравляем!' : 'Попробуйте ещё раз'}
+										{result.passed ? 'Congratulations!' : 'Try again'}
 									</h1>
 									<p className='text-xl text-white/60'>
-										Набрано{' '}
+										Scored{' '}
 										<span className='font-bold text-white'>{result.score}</span>{' '}
-										из {result.totalPoints} баллов
+										out of {result.totalPoints} points
 									</p>
 								</div>
 
@@ -159,7 +159,7 @@ export default function TestPage() {
 											)}
 											%
 										</p>
-										<p className='text-sm text-white/60'>Точность</p>
+										<p className='text-sm text-white/60'>Accuracy</p>
 									</div>
 
 									<div className='p-4 rounded-2xl bg-white/5 border border-white/5'>
@@ -167,7 +167,7 @@ export default function TestPage() {
 										<p className='text-3xl font-bold text-white'>
 											{result.correctAnswers}/{result.totalQuestions}
 										</p>
-										<p className='text-sm text-white/60'>Правильных</p>
+										<p className='text-sm text-white/60'>Correct</p>
 									</div>
 								</div>
 							</CardContent>
@@ -179,7 +179,7 @@ export default function TestPage() {
 								<CardContent className='p-6 space-y-4'>
 									<h3 className='text-lg font-semibold text-white flex items-center gap-2'>
 										<FileQuestion className='w-5 h-5' />
-										Результаты по вопросам
+										Results by question
 									</h3>
 
 									<div className='space-y-3'>
@@ -208,7 +208,7 @@ export default function TestPage() {
 															)}
 															<div className='flex-1'>
 																<p className='text-white/60 text-sm mb-1'>
-																	Вопрос {idx + 1}
+																	Question {idx + 1}
 																</p>
 																<p className='text-white font-medium'>
 																	{question?.text}
@@ -230,7 +230,7 @@ export default function TestPage() {
 								size='lg'
 								className='flex-1 w-full h-11 sm:h-12 rounded-xl sm:rounded-2xl bg-white text-black hover:bg-white/80 shadow-2xl shadow-white/15 font-bold text-sm sm:text-base'
 							>
-								Вернуться к курсу
+								Back to course
 							</Button>
 							{!result.passed && (
 								<Button
@@ -239,7 +239,7 @@ export default function TestPage() {
 									variant='outline'
 									className='flex-1 h-11 rounded-xl'
 								>
-									Пройти заново
+									Retake
 								</Button>
 							)}
 						</div>
@@ -256,7 +256,7 @@ export default function TestPage() {
 				<Breadcrumb
 					showBackButton
 					items={[
-						{ label: 'Обучение', href: ROUTES.COURSES, icon: BookOpen },
+						{ label: 'Courses', href: ROUTES.COURSES, icon: BookOpen },
 						{
 							label: test.courseTitle,
 							href: `${ROUTES.COURSES}/${test.courseSlug}`,
@@ -276,7 +276,7 @@ export default function TestPage() {
 						<CardContent className='p-8 sm:p-12 space-y-8 relative z-10'>
 							<div className='space-y-3'>
 								<Badge variant='secondary' className='text-sm'>
-									Тест
+									Test
 								</Badge>
 								<h1 className='text-4xl sm:text-5xl font-bold text-white'>
 									{test.title}
@@ -295,7 +295,7 @@ export default function TestPage() {
 										<p className='text-3xl font-bold text-white'>
 											{test.questions.length}
 										</p>
-										<p className='text-sm text-white/60'>вопросов</p>
+										<p className='text-sm text-white/60'>questions</p>
 									</div>
 								</div>
 
@@ -307,7 +307,7 @@ export default function TestPage() {
 										<p className='text-3xl font-bold text-white'>
 											{test.passingScore}%
 										</p>
-										<p className='text-sm text-white/60'>проходной</p>
+										<p className='text-sm text-white/60'>passing score</p>
 									</div>
 								</div>
 							</div>
@@ -318,7 +318,7 @@ export default function TestPage() {
 								className='w-full h-12 rounded-xl bg-white hover:bg-white/90 text-black font-bold disabled:opacity-50 shadow-lg'
 							>
 								<Sparkles className='w-5 h-5 mr-2' />
-								Начать тест
+								Start test
 							</Button>
 						</CardContent>
 					</Card>
@@ -363,7 +363,7 @@ export default function TestPage() {
 						<div className='flex items-center justify-between mb-3'>
 							<div className='flex items-center gap-2'>
 								<Award className='w-5 h-5 text-blue-400' />
-								<span className='text-white/60 font-medium'>Прогресс</span>
+								<span className='text-white/60 font-medium'>Progress</span>
 							</div>
 							<div className='flex items-center gap-3'>
 								<span className='text-sm text-white/60'>
@@ -395,14 +395,14 @@ export default function TestPage() {
 										<div className='space-y-4'>
 											<div className='flex items-center justify-between flex-wrap gap-3'>
 												<Badge variant='secondary'>
-													Вопрос {currentQuestionIndex + 1} / {totalQuestions}
+													Question {currentQuestionIndex + 1} / {totalQuestions}
 												</Badge>
 												{isMultiChoice && (
 													<Badge
 														variant='outline'
 														className='border-purple-400/40 text-purple-300'
 													>
-														Множественный выбор
+														Multiple choice
 													</Badge>
 												)}
 											</div>
@@ -414,7 +414,7 @@ export default function TestPage() {
 											{isMultiChoice && (
 												<p className='text-white/60 text-sm flex items-center gap-2'>
 													<CheckCircle2 className='w-4 h-4' />
-													Можно выбрать несколько вариантов
+													You can select multiple options
 												</p>
 											)}
 										</div>
@@ -483,7 +483,7 @@ export default function TestPage() {
 												className='flex-1 rounded-xl'
 											>
 												<ChevronLeft className='w-4 h-4 mr-2' />
-												Назад
+												Back
 											</Button>
 
 											{currentQuestionIndex === totalQuestions - 1 ? (
@@ -498,12 +498,12 @@ export default function TestPage() {
 													{isSubmitting ? (
 														<>
 															<Loader2 className='w-4 h-4 mr-2 animate-spin' />
-															Отправка...
+															Submitting...
 														</>
 													) : (
 														<>
 															<Send className='w-4 h-4 mr-2' />
-															Завершить
+															Complete
 														</>
 													)}
 												</Button>
@@ -513,7 +513,7 @@ export default function TestPage() {
 													size='lg'
 													className='flex-1 w-full rounded-xl bg-white hover:bg-white/90 text-black font-bold disabled:opacity-50 shadow-lg'
 												>
-													Далее
+													Next
 													<ChevronRight className='w-4 h-4 ml-2' />
 												</Button>
 											)}
