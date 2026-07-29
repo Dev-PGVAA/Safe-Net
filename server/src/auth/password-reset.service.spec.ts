@@ -90,6 +90,7 @@ describe('PasswordResetService reset-link logging', () => {
 		process.env.NODE_ENV = 'development'
 		process.env.PASSWORD_RESET_DEBUG_LOG = 'true'
 		const warn = jest.spyOn(Logger.prototype, 'warn').mockImplementation()
+		const log = jest.spyOn(Logger.prototype, 'log').mockImplementation()
 		const { service, mailer } = createService(true)
 
 		await service.requestReset(' USER@Example.COM ')
@@ -102,6 +103,31 @@ describe('PasswordResetService reset-link logging', () => {
 			'en'
 		)
 		expect(warn).not.toHaveBeenCalled()
+		expect(log).toHaveBeenCalledWith(
+			'Password reset email accepted by delivery provider'
+		)
+	})
+
+	it('logs safe SMTP diagnostics without exposing recipient or reset details', async () => {
+		const error = jest
+			.spyOn(Logger.prototype, 'error')
+			.mockImplementation()
+		const { service, mailer } = createService()
+		mailer.sendResetLink.mockRejectedValue({
+			code: 'EAUTH',
+			command: 'AUTH PLAIN',
+			responseCode: 535,
+			message:
+				'Authentication failed for user@example.com token=secret-reset-token',
+		})
+
+		await service.requestReset('user@example.com')
+
+		expect(error).toHaveBeenCalledWith(
+			'Password reset email delivery failed (code=EAUTH, command=AUTH PLAIN, responseCode=535)'
+		)
+		expect(error.mock.calls.join(' ')).not.toContain('user@example.com')
+		expect(error.mock.calls.join(' ')).not.toContain('secret-reset-token')
 	})
 
 	it('builds localized HTML and plaintext reset messages', () => {
@@ -124,6 +150,19 @@ describe('PasswordResetService reset-link logging', () => {
 		).toThrow(
 			'RESEND_API_KEY and RESEND_FROM, or SMTP_HOST and SMTP_FROM, are required in production'
 		)
+	})
+
+	it('uses SMTP_FROM when optional Resend values are blank', () => {
+		const mailer = new PasswordResetMailer(
+			new ConfigService({
+				RESEND_API_KEY: '',
+				RESEND_FROM: '',
+				SMTP_HOST: 'smtp.example.com',
+				SMTP_FROM: 'Safe Net <no-reply@example.com>',
+			})
+		)
+
+		expect(mailer.isConfigured()).toBe(true)
 	})
 
 	it('uses the Resend API when configured', async () => {

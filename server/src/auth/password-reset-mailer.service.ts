@@ -112,12 +112,12 @@ export class PasswordResetMailer {
 				'RESEND_API_KEY and RESEND_FROM, or SMTP_HOST and SMTP_FROM, are required in production'
 			)
 		}
-		if (resendApiKey && !(resendFrom ?? from)) {
+		if (resendApiKey && !(resendFrom || from)) {
 			throw new Error('RESEND_FROM or SMTP_FROM is required with RESEND_API_KEY')
 		}
 
 		this.resend = resendApiKey ? new Resend(resendApiKey) : null
-		this.from = resendFrom ?? from ?? null
+		this.from = resendFrom || from || null
 		if (this.resend) {
 			this.transporter = null
 			return

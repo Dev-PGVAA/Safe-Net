@@ -9,6 +9,36 @@ const TOKEN_BYTES = 32
 const EXPIRY_MINUTES = 30
 const MS_PER_MINUTE = 60_000
 
+function getDeliveryErrorContext(error: unknown): string {
+	if (!error || typeof error !== 'object') return ''
+
+	const smtpError = error as {
+		code?: unknown
+		command?: unknown
+		responseCode?: unknown
+	}
+	const details: string[] = []
+	const addSafeString = (key: string, value: unknown) => {
+		if (
+			typeof value === 'string' &&
+			/^[a-zA-Z0-9_. -]{1,40}$/.test(value)
+		) {
+			details.push(`${key}=${value}`)
+		}
+	}
+
+	addSafeString('code', smtpError.code)
+	addSafeString('command', smtpError.command)
+	if (
+		typeof smtpError.responseCode === 'number' &&
+		Number.isInteger(smtpError.responseCode)
+	) {
+		details.push(`responseCode=${smtpError.responseCode}`)
+	}
+
+	return details.length > 0 ? ` (${details.join(', ')})` : ''
+}
+
 /**
  * Token-based password reset. Replaces the removed `newPassword`, which changed
  * any account's password given only an email — no token, no proof of ownership.
@@ -63,11 +93,16 @@ export class PasswordResetService {
 					link,
 					user.legalLocale === 'ru' ? 'ru' : 'en'
 				)
-			} catch {
+				if (delivered) {
+					this.logger.log('Password reset email accepted by delivery provider')
+				}
+			} catch (error) {
 				// Keep the public response indistinguishable from the
 				// nonexistent-account case. The raw token, link and recipient are
 				// intentionally excluded from operational logs.
-				this.logger.error('Password reset email delivery failed')
+				this.logger.error(
+					`Password reset email delivery failed${getDeliveryErrorContext(error)}`
+				)
 			}
 
 			// Raw reset details are opt-in for local development only. They must

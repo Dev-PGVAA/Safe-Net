@@ -8,6 +8,12 @@ const DEFAULT_PORT = 4200
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule)
+	const frontendOrigins = [
+		process.env.FRONTEND_URL,
+		...(process.env.NODE_ENV === 'production'
+			? []
+			: ['http://localhost:3000', 'http://127.0.0.1:3000']),
+	].filter((origin): origin is string => Boolean(origin))
 
 	app.setGlobalPrefix('api')
 	app.use(helmet())
@@ -25,7 +31,7 @@ async function bootstrap() {
 	)
 
 	app.enableCors({
-		origin: [process.env.FRONTEND_URL],
+		origin: [...new Set(frontendOrigins)],
 		credentials: true,
 		exposedHeaders: 'set-cookie',
 	})
