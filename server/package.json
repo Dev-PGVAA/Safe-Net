@@ -9,7 +9,7 @@
 		"start": "nest start",
 		"dev": "nest start --watch",
 		"debug": "nest start --debug --watch",
-		"prod": "node dist/main",
+		"prod": "node dist/src/main",
 		"check-db": "node check-db-connection.js",
 		"typecheck": "tsc --noEmit -p tsconfig.json",
 		"validate:content": "tsx src/content/validate-content.ts",
