@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/prisma.service'
+import { Locale, pickLocalized } from '../../i18n/locale'
 
 @Injectable()
 export class AdminStatsService {
 	constructor(private prisma: PrismaService) {}
 
-	async getOverviewStats() {
+	async getOverviewStats(locale: Locale) {
 		const now = new Date()
 		const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 		const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
@@ -59,7 +60,7 @@ export class AdminStatsService {
 		const registrationsData = await this.getRegistrationsChartData()
 
 		// Top courses
-		const topCourses = await this.getTopCourses()
+		const topCourses = await this.getTopCourses(locale)
 
 		// Recent activity
 		const recentActivity = await this.getRecentActivity()
@@ -137,7 +138,7 @@ export class AdminStatsService {
 		return result
 	}
 
-	private async getTopCourses() {
+	private async getTopCourses(locale: Locale) {
 		// Get courses with progress counts
 		const courses = await this.prisma.course.findMany({
 			include: {
@@ -180,7 +181,7 @@ export class AdminStatsService {
 
 			return {
 				id: course.id,
-				title: course.title,
+				title: pickLocalized(locale, course.title, course.titleRu),
 				enrolledUsers,
 				completionRate,
 				avgScore,

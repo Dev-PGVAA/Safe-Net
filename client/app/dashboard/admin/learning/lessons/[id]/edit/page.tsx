@@ -92,6 +92,8 @@ export default function LessonEditPage() {
 		)
 	}
 
+	const lessonTitle = locale === 'ru' ? lesson.titleRu || lesson.title : lesson.title
+
 	return (
 		<div className='min-h-screen'>
 			<div className='relative mx-auto max-w-7xl'>
@@ -109,7 +111,7 @@ export default function LessonEditPage() {
 								href: ROUTES.ADMIN.LEARNING.COURSES,
 							},
 							{
-								label: lesson.title,
+								label: lessonTitle,
 								href: '#',
 							},
 						]}
@@ -147,7 +149,7 @@ export default function LessonEditPage() {
 								</div>
 							</div>
 							<h1 className='mb-2 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-5xl font-bold tracking-tight text-transparent'>
-								{lesson.title}
+								{lessonTitle}
 							</h1>
 						</div>
 					</div>

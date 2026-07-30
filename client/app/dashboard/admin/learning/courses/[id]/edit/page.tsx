@@ -86,13 +86,16 @@ export default function CourseEditPage() {
 	)
 
 	const difficulty = getDifficultyConfig(course.difficulty || 'MEDIUM')
+	const courseTitle = locale === 'ru' ? course.titleRu || course.title : course.title
+	const courseDescription =
+		locale === 'ru' ? course.descriptionRu || course.description : course.description
 
 	return (
 		<>
 			<div className='max-w-7xl mx-auto space-y-6'>
 				<Breadcrumb
 					showBackButton
-					items={[{ label: c.breadcrumbCourses, href: ROUTES.ADMIN.LEARNING.COURSES }, { label: course.title }]}
+					items={[{ label: c.breadcrumbCourses, href: ROUTES.ADMIN.LEARNING.COURSES }, { label: courseTitle }]}
 				/>
 
 				{/* Header Card */}
@@ -103,12 +106,12 @@ export default function CourseEditPage() {
 					<div className='flex flex-col sm:flex-row sm:items-start justify-between gap-6'>
 						<div className='flex-1 space-y-4'>
 							<div className='flex items-center gap-3 flex-wrap'>
-								<h1 className='text-3xl font-bold text-white'>{course.title}</h1>
+								<h1 className='text-3xl font-bold text-white'>{courseTitle}</h1>
 								<span className={`text-xs px-3 py-1.5 rounded-full font-semibold border ${difficulty.color}`}>
 									{difficulty.label}
 								</span>
 							</div>
-							<p className='text-gray-400 leading-relaxed max-w-2xl'>{course.description}</p>
+							<p className='text-gray-400 leading-relaxed max-w-2xl'>{courseDescription}</p>
 							<div className='flex items-center gap-2 text-sm text-gray-400'>
 								<div className='w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center'>
 									<GraduationCap className='w-4 h-4 text-blue-400' />
@@ -184,7 +187,7 @@ export default function CourseEditPage() {
 			<DeleteCourseDialog
 				open={showDeleteDialog}
 				onOpenChange={setShowDeleteDialog}
-				courseTitle={course.title}
+				courseTitle={courseTitle}
 				lessonsCount={stats.lessonsCount}
 				onConfirm={handleDeleteCourse}
 			/>

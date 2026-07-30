@@ -13,6 +13,12 @@ export class CreateCourseDto {
 	@IsString()
 	@IsNotEmpty()
 	description: string
+	@IsOptional()
+	@IsString()
+	titleRu?: string
+	@IsOptional()
+	@IsString()
+	descriptionRu?: string
 	@IsEnum(Difficulty)
 	@IsOptional()
 	difficulty?: Difficulty

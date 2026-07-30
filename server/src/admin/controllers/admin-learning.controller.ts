@@ -17,6 +17,7 @@ import { CreateLessonDto } from '../dto/create-lesson.dto'
 import { CreateStageDto } from '../dto/create-stage.dto'
 import { CreateTaskDto } from '../dto/create-task.dto'
 import { CreateTestDto } from '../dto/create-test.dto'
+import { CreateTestQuestionDto } from '../dto/create-test-question.dto'
 import { AdminLearningService } from '../services/admin-learning.service'
 
 @Controller('admin/learning')
@@ -125,7 +126,7 @@ export class AdminLearningController {
 	}
 
 	@Put('tests/:id')
-	async updateTest(@Param('id') id: string, @Body() dto: any) {
+	async updateTest(@Param('id') id: string, @Body() dto: Partial<CreateTestDto>) {
 		return this.adminLearningService.updateTest(id, dto)
 	}
 
@@ -137,12 +138,15 @@ export class AdminLearningController {
 	// ==================== TEST QUESTIONS ====================
 	@HttpCode(200)
 	@Post('tests/questions')
-	async createTestQuestion(@Body() dto: any) {
+	async createTestQuestion(@Body() dto: CreateTestQuestionDto) {
 		return this.adminLearningService.createTestQuestion(dto)
 	}
 
 	@Put('tests/questions/:id')
-	async updateTestQuestion(@Param('id') id: string, @Body() dto: any) {
+	async updateTestQuestion(
+		@Param('id') id: string,
+		@Body() dto: Partial<CreateTestQuestionDto>
+	) {
 		return this.adminLearningService.updateTestQuestion(id, dto)
 	}
 

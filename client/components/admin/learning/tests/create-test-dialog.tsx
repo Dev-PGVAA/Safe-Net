@@ -6,6 +6,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ContentLanguageToggle } from '@/components/admin/learning/content-language-toggle'
+import type { ContentLanguage } from '@/config/content-language.config'
 import { useI18n } from '@/i18n/LocaleProvider'
 import { adminService } from '@/services/admin/admin.service'
 import { ICourse } from '@/services/admin/admin.types'
@@ -22,12 +24,15 @@ import {
 } from '@/components/ui/icons'
 import { useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { createPortal } from 'react-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
 interface TestFormData {
 	title: string
 	description?: string
+	titleRu?: string
+	descriptionRu?: string
 	courseId?: string
 	passingScore?: number
 }
@@ -48,12 +53,16 @@ export default function CreateTestDialog({
 	const { t } = useI18n()
 	const c = t.adminTestComponents.createTestDialog
 	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [contentLanguage, setContentLanguage] = useState<ContentLanguage>('en')
+	const isRussian = contentLanguage === 'ru'
 
 	const testSchema = useMemo(
 		() =>
 			z.object({
 				title: z.string().min(3, c.validation.titleMin).max(255),
 				description: z.string().min(10, c.validation.descriptionMin).optional(),
+				titleRu: z.string().max(255).optional(),
+				descriptionRu: z.string().optional(),
 				courseId: z.string().optional(),
 				passingScore: z.number().min(0).max(100).optional(),
 			}),
@@ -71,6 +80,8 @@ export default function CreateTestDialog({
 		defaultValues: {
 			title: '',
 			description: '',
+			titleRu: '',
+			descriptionRu: '',
 			courseId: '',
 			passingScore: 80,
 		},
@@ -92,7 +103,9 @@ export default function CreateTestDialog({
 		}
 	}
 
-	return (
+	if (typeof document === 'undefined') return null
+
+	return createPortal(
 		<AnimatePresence>
 			{open && (
 				<m.div
@@ -100,7 +113,7 @@ export default function CreateTestDialog({
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
-					className='fixed inset-0 z-[100] bg-overlay overflow-y-scroll'
+					className='fixed inset-0 z-[9999] bg-overlay overflow-y-scroll'
 				>
 					{/* Header */}
 					<div className='border-b border-white/10 bg-overlay/80 backdrop-blur-xl'>
@@ -140,9 +153,13 @@ export default function CreateTestDialog({
 									<Sparkles className='h-5 w-5 text-blue-400' />
 									{c.basicInfo.heading}
 								</h4>
+								<ContentLanguageToggle
+									value={contentLanguage}
+									onChange={setContentLanguage}
+								/>
 
 								<div className='space-y-6'>
-									<div>
+									<div className={isRussian ? 'hidden' : undefined}>
 										<label className='mb-2 block text-sm font-semibold text-white'>
 											{c.basicInfo.titleLabel}
 										</label>
@@ -158,7 +175,7 @@ export default function CreateTestDialog({
 										)}
 									</div>
 
-									<div>
+									<div className={isRussian ? 'hidden' : undefined}>
 										<label className='mb-2 block text-sm font-semibold text-white'>
 											{c.basicInfo.descriptionLabel}
 										</label>
@@ -173,6 +190,29 @@ export default function CreateTestDialog({
 												{errors.description.message}
 											</p>
 										)}
+									</div>
+
+									<div className={isRussian ? undefined : 'hidden'}>
+										<label className='mb-2 block text-sm font-semibold text-white'>
+											Название теста (русский)
+										</label>
+										<input
+											{...register('titleRu')}
+											className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
+											placeholder='Название теста на русском'
+										/>
+									</div>
+
+									<div className={isRussian ? undefined : 'hidden'}>
+										<label className='mb-2 block text-sm font-semibold text-white'>
+											Описание (русский)
+										</label>
+										<textarea
+											{...register('descriptionRu')}
+											rows={4}
+											className='w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
+											placeholder='Описание теста на русском'
+										/>
 									</div>
 								</div>
 							</div>
@@ -301,6 +341,7 @@ export default function CreateTestDialog({
 					</div>
 				</m.div>
 			)}
-		</AnimatePresence>
+		</AnimatePresence>,
+		document.body
 	)
 }

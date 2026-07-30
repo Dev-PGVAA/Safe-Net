@@ -15,6 +15,9 @@ class TestQuestionOptionDto {
 	@IsNotEmpty()
 	text: string
 	@IsOptional()
+	@IsString()
+	textRu?: string
+	@IsOptional()
 	isCorrect?: boolean
 }
 export class CreateTestQuestionDto {
@@ -27,6 +30,9 @@ export class CreateTestQuestionDto {
 	@IsString()
 	@IsNotEmpty()
 	text: string
+	@IsOptional()
+	@IsString()
+	textRu?: string
 	@IsEnum(TaskType)
 	type: TaskType
 	@IsArray()

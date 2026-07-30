@@ -13,7 +13,7 @@ interface TestsListProps {
 }
 
 export default function TestsList({ onTestsChange }: TestsListProps) {
-	const { t } = useI18n()
+	const { locale, t } = useI18n()
 	const c = t.adminTestComponents.testsList
 	const { data: tests, isLoading } = useQuery({
 		queryKey: ['tests-list'],
@@ -44,7 +44,18 @@ export default function TestsList({ onTestsChange }: TestsListProps) {
 
 	return (
 		<div className='space-y-3'>
-			{tests.map((test, i) => (
+			{tests.map((test, i) => {
+				const title = locale === 'ru' ? test.titleRu || test.title : test.title
+				const description =
+					locale === 'ru'
+						? test.descriptionRu || test.description
+						: test.description
+				const courseTitle =
+					locale === 'ru'
+						? test.course?.titleRu || test.course?.title
+						: test.course?.title
+
+				return (
 				<m.div
 					key={test.id}
 					initial={{ opacity: 0, x: -20 }}
@@ -57,11 +68,11 @@ export default function TestsList({ onTestsChange }: TestsListProps) {
 							<FileText className='w-5 h-5 text-blue-600 mt-1 shrink-0' />
 							<div className='flex-1 min-w-0'>
 								<p className='font-semibold text-gray-900 dark:text-white'>
-									{test.title}
+									{title}
 								</p>
-								{test.description && (
+								{description && (
 									<p className='text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2'>
-										{test.description}
+										{description}
 									</p>
 								)}
 								<div className='flex items-center gap-4 mt-2 text-xs text-gray-500 dark:text-gray-400'>
@@ -72,7 +83,7 @@ export default function TestsList({ onTestsChange }: TestsListProps) {
 											String(test.questions?.length || 0)
 										)}
 									</span>
-									{test.course && <span>{test.course.title}</span>}
+									{courseTitle && <span>{courseTitle}</span>}
 								</div>
 							</div>
 						</div>
@@ -86,7 +97,7 @@ export default function TestsList({ onTestsChange }: TestsListProps) {
 								<Edit className='w-4 h-4' />
 							</Link>
 							<button
-								onClick={() => handleDeleteTest(test.id, test.title)}
+								onClick={() => handleDeleteTest(test.id, title)}
 								className='p-2 hover:bg-red-100 dark:hover:bg-red-900 rounded transition text-red-600'
 								title={c.deleteTitle}
 							>
@@ -95,7 +106,8 @@ export default function TestsList({ onTestsChange }: TestsListProps) {
 						</div>
 					</div>
 				</m.div>
-			))}
+				)
+			})}
 		</div>
 	)
 }

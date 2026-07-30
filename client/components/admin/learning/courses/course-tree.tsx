@@ -11,7 +11,7 @@ import {
 } from '@/services/admin/admin.types'
 import { getDifficultyLabel } from '@/services/learning/learning.types'
 import { useI18n } from '@/i18n/LocaleProvider'
-import { translateStageTitle } from '@/i18n/content-translations'
+import { translateCourseCopy, translateStageTitle } from '@/i18n/content-translations'
 import { selectPlural } from '@/i18n/plural'
 import { AnimatePresence, m } from 'framer-motion'
 import { BookOpen, ChevronRight, Trash2 } from '@/components/ui/icons'
@@ -192,8 +192,13 @@ export default function CourseTree({ stages, onRefetch }: CourseTreeProps) {
 									>
 										<div className="px-5 pb-5 pt-2 space-y-2">
 											{stage.courses.length > 0 ? (
-												stage.courses.map((course, courseIndex) => {
+											stage.courses.map((course, courseIndex) => {
 													const isHovered = hoveredCourse === course.id
+													const courseCopy = translateCourseCopy(
+														locale,
+														course.title,
+														course.description
+													)
 
 													return (
 														<m.div
@@ -230,7 +235,7 @@ export default function CourseTree({ stages, onRefetch }: CourseTreeProps) {
 
 																		<div className="flex-1 min-w-0">
 																			<h4 className="mb-1 truncate text-[15px] font-semibold text-foreground">
-																				{course.title}
+																				{courseCopy.title}
 																			</h4>
 																			<div className="flex items-center gap-2 text-xs">
 																				<span

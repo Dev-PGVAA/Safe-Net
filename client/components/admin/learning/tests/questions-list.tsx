@@ -21,7 +21,7 @@ export default function QuestionsList({
   testId,
   onUpdate,
 }: QuestionsListProps) {
-  const { t } = useI18n()
+  const { locale, t } = useI18n()
   const c = t.adminTestComponents.questionsList
   const [deleteDialog, setDeleteDialog] = useState<{
     open: boolean
@@ -98,7 +98,9 @@ export default function QuestionsList({
                       : c.typeLabels.phishingWebsite}
                   </span>
                 </div>
-                <p className='text-white font-medium mb-2'>{question.text}</p>
+                <p className='text-white font-medium mb-2'>
+                  {locale === 'ru' ? question.textRu || question.text : question.text}
+                </p>
                 {question.options && question.options.length > 0 && (
                   <p className='text-sm text-gray-400'>
                     {c.optionsCountTemplate.replace(
@@ -150,7 +152,11 @@ export default function QuestionsList({
         onOpenChange={open =>
           !open && setDeleteDialog({ open: false, question: null })
         }
-        questionText={deleteDialog.question?.text ?? ''}
+        questionText={
+          locale === 'ru'
+            ? deleteDialog.question?.textRu || deleteDialog.question?.text || ''
+            : deleteDialog.question?.text || ''
+        }
         onConfirm={handleDelete}
         isDeleting={isDeleting}
       />

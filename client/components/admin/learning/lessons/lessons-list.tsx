@@ -65,7 +65,10 @@ export default function LessonsList({ lessons, onUpdate }: LessonsListProps) {
 			<div className='space-y-3'>
 				{lessons
 					?.sort((a, b) => (a.order || 0) - (b.order || 0))
-					.map((lesson, i) => (
+					.map((lesson, i) => {
+						const lessonTitle = locale === 'ru' ? lesson.titleRu || lesson.title : lesson.title
+
+						return (
 						<m.div
 							key={lesson.id}
 							initial={{ opacity: 0, y: 10 }}
@@ -78,7 +81,7 @@ export default function LessonsList({ lessons, onUpdate }: LessonsListProps) {
 									<span className='text-xs font-medium text-blue-400/80 uppercase tracking-wider'>
 										№{lesson.order || i + 1}
 									</span>
-									<h4 className='text-white font-medium truncate'>{lesson.title}</h4>
+									<h4 className='text-white font-medium truncate'>{lessonTitle}</h4>
 								</div>
 
 								<div className='flex items-center gap-4 mt-1.5'>
@@ -115,14 +118,15 @@ export default function LessonsList({ lessons, onUpdate }: LessonsListProps) {
 								<Button
 									variant='ghost'
 									size='icon'
-									onClick={() => handleDeleteClick(lesson.id, lesson.title, lesson.blocks?.length || 0)}
+									onClick={() => handleDeleteClick(lesson.id, lessonTitle, lesson.blocks?.length || 0)}
 									className='h-9 w-9 text-gray-500 hover:text-red-400 hover:bg-red-500/10'
 								>
 									<Trash2 className='w-4 h-4' />
 								</Button>
 							</div>
 						</m.div>
-					))}
+						)
+					})}
 			</div>
 
 			{/* Delete Confirmation Dialog */}

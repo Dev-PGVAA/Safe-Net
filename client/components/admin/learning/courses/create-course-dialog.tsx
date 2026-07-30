@@ -6,6 +6,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ContentLanguageToggle } from '@/components/admin/learning/content-language-toggle'
+import type { ContentLanguage } from '@/config/content-language.config'
 import { adminService } from '@/services/admin/admin.service'
 import { IStageWithCourses } from '@/services/admin/admin.types'
 import { getDifficultyLabel } from '@/services/learning/learning.types'
@@ -33,6 +35,8 @@ interface CourseFormData {
 	slug: string
 	title: string
 	description: string
+	titleRu?: string
+	descriptionRu?: string
 	difficulty: 'EASY' | 'MEDIUM' | 'HARD'
 }
 
@@ -52,6 +56,8 @@ export default function CreateCourseDialog({
 	const { locale, t } = useI18n()
 	const c = t.adminCourseComponents.createCourseDialog
 	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [contentLanguage, setContentLanguage] = useState<ContentLanguage>('en')
+	const isRussian = contentLanguage === 'ru'
 
 	const courseSchema = useMemo(
 		() =>
@@ -63,6 +69,8 @@ export default function CreateCourseDialog({
 					.regex(/^[a-z0-9-]+$/, c.validation.slugPattern),
 				title: z.string().min(3, c.validation.titleMin).max(255),
 				description: z.string().min(10, c.validation.descriptionMin),
+				titleRu: z.string().max(255).optional(),
+				descriptionRu: z.string().optional(),
 				difficulty: z.enum(['EASY', 'MEDIUM', 'HARD'] as const),
 			}),
 		[c]
@@ -82,6 +90,8 @@ export default function CreateCourseDialog({
 			title: '',
 			slug: '',
 			description: '',
+			titleRu: '',
+			descriptionRu: '',
 			stageId: '',
 		},
 	})
@@ -161,9 +171,13 @@ export default function CreateCourseDialog({
 									<Sparkles className='h-5 w-5 text-blue-400' />
 									{c.basicInfo.heading}
 								</h4>
+								<ContentLanguageToggle
+									value={contentLanguage}
+									onChange={setContentLanguage}
+								/>
 
 								<div className='space-y-6'>
-									<div>
+									<div className={isRussian ? 'hidden' : undefined}>
 										<label className='mb-2 block text-sm font-semibold text-white'>
 											{c.basicInfo.titleLabel}
 										</label>
@@ -172,14 +186,25 @@ export default function CreateCourseDialog({
 											className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
 											placeholder={c.basicInfo.titlePlaceholder}
 										/>
-										{errors.title && (
+									{errors.title && (
 											<p className='mt-2 text-sm text-red-400'>
 												{errors.title.message}
 											</p>
-										)}
-									</div>
+									)}
+								</div>
 
-									<div>
+								<div className={isRussian ? undefined : 'hidden'}>
+									<label className='mb-2 block text-sm font-semibold text-white'>
+										Название (русский)
+									</label>
+									<input
+										{...register('titleRu')}
+										className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
+										placeholder='Название курса на русском'
+									/>
+								</div>
+
+									<div className={isRussian ? 'hidden' : undefined}>
 										<label className='mb-2 flex items-center gap-2 text-sm font-semibold text-white'>
 											{c.basicInfo.slugLabel}
 											<span className='text-xs font-normal text-gray-500'>
@@ -198,7 +223,7 @@ export default function CreateCourseDialog({
 										)}
 									</div>
 
-									<div>
+									<div className={isRussian ? 'hidden' : undefined}>
 										<label className='mb-2 block text-sm font-semibold text-white'>
 											{c.basicInfo.descriptionLabel}
 										</label>
@@ -208,12 +233,24 @@ export default function CreateCourseDialog({
 											className='w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
 											placeholder={c.basicInfo.descriptionPlaceholder}
 										/>
-										{errors.description && (
+									{errors.description && (
 											<p className='mt-2 text-sm text-red-400'>
 												{errors.description.message}
 											</p>
-										)}
-									</div>
+									)}
+								</div>
+
+								<div className={isRussian ? undefined : 'hidden'}>
+									<label className='mb-2 block text-sm font-semibold text-white'>
+										Описание (русский)
+									</label>
+									<textarea
+										{...register('descriptionRu')}
+										rows={4}
+										className='w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
+										placeholder='Описание курса на русском'
+									/>
+								</div>
 								</div>
 							</div>
 

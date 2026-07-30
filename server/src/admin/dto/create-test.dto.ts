@@ -9,4 +9,10 @@ export class CreateTestDto {
 	@IsOptional()
 	@IsString()
 	description?: string
+	@IsOptional()
+	@IsString()
+	titleRu?: string
+	@IsOptional()
+	@IsString()
+	descriptionRu?: string
 }

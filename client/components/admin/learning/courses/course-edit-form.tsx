@@ -1,6 +1,8 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { ContentLanguageToggle } from '@/components/admin/learning/content-language-toggle'
+import type { ContentLanguage } from '@/config/content-language.config'
 // Import DropdownMenu components
 import {
     DropdownMenu,
@@ -23,6 +25,8 @@ import { z } from 'zod'
 interface CourseEditData {
 	title: string
 	description: string
+	titleRu?: string
+	descriptionRu?: string
 	difficulty: 'EASY' | 'MEDIUM' | 'HARD'
 }
 
@@ -32,10 +36,15 @@ interface CourseEditFormProps {
 }
 
 export default function CourseEditForm({ course, onSuccess }: CourseEditFormProps) {
-	const { t } = useI18n()
+	const { locale, t } = useI18n()
 	const c = t.adminCourseComponents.courseEditForm
+	const courseTitle = locale === 'ru' ? course.titleRu || course.title : course.title
+	const courseDescription =
+		locale === 'ru' ? course.descriptionRu || course.description : course.description
 	const [isEditing, setIsEditing] = useState(false)
 	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [contentLanguage, setContentLanguage] = useState<ContentLanguage>('en')
+	const isRussian = contentLanguage === 'ru'
 
 	const courseEditSchema = useMemo(
 		() =>
@@ -43,6 +52,8 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 				title: z.string().min(3, c.validation.titleMin).max(255),
 				description: z.string().min(10, c.validation.descriptionMin),
 				difficulty: z.enum(['EASY', 'MEDIUM', 'HARD']),
+				titleRu: z.string().max(255).optional(),
+				descriptionRu: z.string().optional(),
 			}),
 		[c]
 	)
@@ -59,6 +70,8 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 		defaultValues: {
 			title: course.title,
 			description: course.description,
+			titleRu: course.titleRu || '',
+			descriptionRu: course.descriptionRu || '',
 			difficulty: (course.difficulty as 'EASY' | 'MEDIUM' | 'HARD') || 'MEDIUM',
 		},
 	})
@@ -86,7 +99,7 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 						<div className="space-y-1">
 							<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">{c.viewLabels.title}</p>
-							<p className="text-white font-medium text-lg">{course.title}</p>
+							<p className="text-white font-medium text-lg">{courseTitle}</p>
 						</div>
 
 						<div className="space-y-1">
@@ -102,7 +115,7 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 
 					<div className="space-y-1">
 						<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">{c.viewLabels.description}</p>
-						<p className="text-gray-400 text-sm leading-relaxed">{course.description}</p>
+						<p className="text-gray-400 text-sm leading-relaxed">{courseDescription}</p>
 					</div>
 
 					<div className="pt-4">
@@ -117,8 +130,9 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 				</div>
 			) : (
 				<form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+					<ContentLanguageToggle value={contentLanguage} onChange={setContentLanguage} />
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-						<div className="space-y-2">
+						<div className={isRussian ? 'hidden' : 'space-y-2'}>
 							<label className="text-sm font-medium text-gray-400">{c.form.titleLabel}</label>
 							<input
 								type="text"
@@ -126,6 +140,15 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 								className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 outline-none transition"
 							/>
 							{errors.title && <p className="text-xs text-red-400">{errors.title.message}</p>}
+						</div>
+
+						<div className={isRussian ? 'space-y-2' : 'hidden'}>
+							<label className="text-sm font-medium text-gray-400">Название (русский)</label>
+							<input
+								type="text"
+								{...register('titleRu')}
+								className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 outline-none transition"
+							/>
 						</div>
 
 						<div className="space-y-2">
@@ -173,7 +196,7 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 						</div>
 					</div>
 
-					<div className="space-y-2">
+					<div className={isRussian ? 'hidden' : 'space-y-2'}>
 						<label className="text-sm font-medium text-gray-400">{c.form.descriptionLabel}</label>
 						<textarea
 							{...register('description')}
@@ -181,6 +204,15 @@ export default function CourseEditForm({ course, onSuccess }: CourseEditFormProp
 							className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 outline-none transition resize-none"
 						/>
 						{errors.description && <p className="text-xs text-red-400">{errors.description.message}</p>}
+					</div>
+
+					<div className={isRussian ? 'space-y-2' : 'hidden'}>
+						<label className="text-sm font-medium text-gray-400">Описание (русский)</label>
+						<textarea
+							{...register('descriptionRu')}
+							rows={4}
+							className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 outline-none transition resize-none"
+						/>
 					</div>
 
 					<div className="flex items-center gap-3 pt-4">
