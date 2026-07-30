@@ -23,6 +23,12 @@ const categories: Category[] = [
 		accent: [74, 211, 238],
 		commands: [
 			{
+				label: 'Production stack',
+				script: 'start',
+				description: 'Build and run the production API and web app with PostgreSQL.',
+				meta: 'api · web · production',
+			},
+			{
 				label: 'Development stack',
 				script: 'dev',
 				description: 'Start PostgreSQL, API, web app, and the optional ML service.',
