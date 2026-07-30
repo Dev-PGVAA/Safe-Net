@@ -254,6 +254,8 @@ export interface ICourse {
 	slug: string
 	title: string
 	description: string
+	titleRu?: string | null
+	descriptionRu?: string | null
 	difficulty?: Difficulty
 	lessons: ILesson[]
 	tests?: ITest[]
@@ -264,6 +266,7 @@ export interface ILesson {
 	courseId: string
 	order: number
 	title: string
+	titleRu?: string | null
 	estimatedDuration?: number
 	blocks?: IBlock[]
 	tasks?: ITask[]
@@ -276,6 +279,8 @@ export interface IBlock {
 	type: BlockType
 	title?: string
 	content: string
+	titleRu?: string | null
+	contentRu?: string | null
 }
 
 export interface ITask {
@@ -286,6 +291,9 @@ export interface ITask {
 	title: string
 	question?: string
 	explanation?: string
+	titleRu?: string | null
+	questionRu?: string | null
+	explanationRu?: string | null
 	points?: number
 	difficulty?: Difficulty
 	meta?: Record<string, unknown>
@@ -295,6 +303,7 @@ export interface ITask {
 export interface ITaskOption {
 	id?: string
 	text: string
+	textRu?: string | null
 	isCorrect: boolean
 }
 
@@ -302,9 +311,11 @@ export interface ITest {
 	id: string
 	title: string
 	description?: string
+	titleRu?: string | null
+	descriptionRu?: string | null
 	courseId?: string
 	/** Included by both admin test endpoints via `include: { course }`. */
-	course?: { id?: string; title: string; slug?: string }
+	course?: { id?: string; title: string; titleRu?: string | null; slug?: string }
 	passingScore: number
 	questions?: ITestQuestion[]
 }
@@ -314,6 +325,7 @@ export interface ITestQuestion {
 	testId: string
 	order: number
 	text: string
+	textRu?: string | null
 	type: TaskType
 	options?: ITaskOption[]
 }
@@ -332,6 +344,8 @@ export interface CreateCourseDto {
 	slug: string
 	title: string
 	description: string
+	titleRu?: string | null
+	descriptionRu?: string | null
 	difficulty?: Difficulty
 }
 
@@ -339,6 +353,7 @@ export interface CreateLessonDto {
 	courseId: string
 	order: number
 	title: string
+	titleRu?: string
 	estimatedDuration?: number
 }
 
@@ -348,6 +363,8 @@ export interface CreateBlockDto {
 	type: BlockType
 	title?: string
 	content: string
+	titleRu?: string
+	contentRu?: string
 }
 
 export interface CreateTaskDto {
@@ -355,8 +372,11 @@ export interface CreateTaskDto {
 	order: number
 	type: TaskType
 	title: string
+	titleRu?: string
 	question?: string
+	questionRu?: string
 	explanation?: string
+	explanationRu?: string
 	points?: number
 	difficulty?: Difficulty
 	meta?: Record<string, unknown>
@@ -366,6 +386,8 @@ export interface CreateTaskDto {
 export interface CreateTestDto {
 	title: string
 	description?: string
+	titleRu?: string | null
+	descriptionRu?: string | null
 	courseId?: string
 }
 
@@ -373,6 +395,7 @@ export interface CreateTestQuestionDto {
 	testId: string
 	order: number
 	text: string
+	textRu?: string | null
 	type: TaskType
 	options?: Omit<ITaskOption, 'id'>[]
 }

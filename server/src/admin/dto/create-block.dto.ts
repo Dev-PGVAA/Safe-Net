@@ -14,7 +14,13 @@ export class CreateBlockDto {
 	@IsOptional()
 	@IsString()
 	title?: string
+	@IsOptional()
+	@IsString()
+	titleRu?: string
 
 	@IsString()
 	content: string
+	@IsOptional()
+	@IsString()
+	contentRu?: string
 }

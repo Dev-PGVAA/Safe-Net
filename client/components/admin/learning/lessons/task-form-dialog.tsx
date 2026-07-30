@@ -6,6 +6,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ContentLanguageToggle } from '@/components/admin/learning/content-language-toggle'
+import type { ContentLanguage } from '@/config/content-language.config'
 import { useI18n } from '@/i18n/LocaleProvider'
 import { adminService } from '@/services/admin/admin.service'
 import { Difficulty, TaskType } from '@/services/admin/admin.types'
@@ -32,14 +34,18 @@ function makeTaskSchema(v: { titleMin: string; optionRequired: string }) {
 		order: z.number().int().positive(),
 		type: z.nativeEnum(TaskType),
 		title: z.string().min(3, v.titleMin),
+		titleRu: z.string().optional(),
 		question: z.string().optional(),
+		questionRu: z.string().optional(),
 		explanation: z.string().optional(),
+		explanationRu: z.string().optional(),
 		points: z.number().int().min(1).max(100).optional(),
 		difficulty: z.nativeEnum(Difficulty).optional(),
 		options: z
 			.array(
 				z.object({
 					text: z.string().min(1, v.optionRequired),
+					textRu: z.string().optional(),
 					isCorrect: z.boolean(),
 				})
 			)
@@ -65,6 +71,8 @@ export default function CreateTaskDialog({
 	const { t } = useI18n()
 	const c = t.adminLessonComponents.taskFormDialog
 	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [contentLanguage, setContentLanguage] = useState<ContentLanguage>('en')
+	const isRussian = contentLanguage === 'ru'
 
 	const TaskTypeLabels: Record<TaskType, string> = {
 		[TaskType.SINGLE_CHOICE]: c.taskTypeLabels.singleChoice,
@@ -103,13 +111,16 @@ export default function CreateTaskDialog({
 			order: 1,
 			type: TaskType.SINGLE_CHOICE,
 			title: '',
+			titleRu: '',
 			question: '',
+			questionRu: '',
 			explanation: '',
+			explanationRu: '',
 			points: 10,
 			difficulty: Difficulty.MEDIUM,
 			options: [
-				{ text: '', isCorrect: false },
-				{ text: '', isCorrect: false },
+				{ text: '', textRu: '', isCorrect: false },
+				{ text: '', textRu: '', isCorrect: false },
 			],
 		},
 	})
@@ -175,8 +186,9 @@ export default function CreateTaskDialog({
 					<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 						<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
 							<Sparkles className='h-5 w-5 text-blue-400' />
-							{c.basicInfoHeading}
-						</h4>
+								{c.basicInfoHeading}
+							</h4>
+							<ContentLanguageToggle value={contentLanguage} onChange={setContentLanguage} />
 
 						<div className='space-y-6'>
 							<div className='grid gap-6 md:grid-cols-2'>
@@ -229,7 +241,7 @@ export default function CreateTaskDialog({
 								</div>
 							</div>
 
-							<div>
+							<div className={isRussian ? 'hidden' : undefined}>
 								<label className='mb-2 block text-sm font-semibold text-white'>
 									{c.titleLabel}
 								</label>
@@ -242,11 +254,22 @@ export default function CreateTaskDialog({
 									<p className='mt-2 text-sm text-red-400'>
 										{errors.title.message}
 									</p>
-								)}
-							</div>
+									)}
+								</div>
 
-							<div>
-								<label className='mb-2 block text-sm font-semibold text-white'>
+								<div className={isRussian ? undefined : 'hidden'}>
+									<label className='mb-2 block text-sm font-semibold text-white'>
+										Название задания (русский)
+									</label>
+									<input
+										{...register('titleRu')}
+										className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10'
+										placeholder='Название задания на русском'
+									/>
+								</div>
+
+								<div className={isRussian ? 'hidden' : undefined}>
+									<label className='mb-2 block text-sm font-semibold text-white'>
 									{c.questionLabel}
 								</label>
 								<textarea
@@ -254,10 +277,22 @@ export default function CreateTaskDialog({
 									rows={3}
 									className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10 resize-none'
 									placeholder={c.questionPlaceholder}
-								/>
-							</div>
+									/>
+								</div>
 
-							<div>
+								<div className={isRussian ? undefined : 'hidden'}>
+									<label className='mb-2 block text-sm font-semibold text-white'>
+										Вопрос (русский)
+									</label>
+									<textarea
+										{...register('questionRu')}
+										rows={3}
+										className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10 resize-none'
+										placeholder='Вопрос на русском'
+									/>
+								</div>
+
+								<div className={isRussian ? 'hidden' : undefined}>
 								<label className='mb-2 block text-sm font-semibold text-white'>
 									{c.explanationLabel}
 								</label>
@@ -266,8 +301,20 @@ export default function CreateTaskDialog({
 									rows={3}
 									className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10 resize-none'
 									placeholder={c.explanationPlaceholder}
-								/>
-							</div>
+									/>
+								</div>
+
+								<div className={isRussian ? undefined : 'hidden'}>
+									<label className='mb-2 block text-sm font-semibold text-white'>
+										Пояснение (русский)
+									</label>
+									<textarea
+										{...register('explanationRu')}
+										rows={3}
+										className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10 resize-none'
+										placeholder='Пояснение на русском'
+									/>
+								</div>
 						</div>
 					</div>
 
@@ -345,7 +392,7 @@ export default function CreateTaskDialog({
 								</h4>
 								<button
 									type='button'
-									onClick={() => append({ text: '', isCorrect: false })}
+								onClick={() => append({ text: '', textRu: '', isCorrect: false })}
 									className='flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-white/90'
 								>
 									<Plus className='h-4 w-4' />
@@ -355,7 +402,7 @@ export default function CreateTaskDialog({
 
 							<div className='space-y-3'>
 								{fields.map((field, index) => (
-									<div key={field.id} className='flex items-center gap-3'>
+									<div key={field.id} className='grid grid-cols-[auto_1fr_auto] items-center gap-3'>
 										<Controller
 											name={`options.${index}.isCorrect`}
 											control={control}
@@ -385,8 +432,13 @@ export default function CreateTaskDialog({
 										/>
 										<input
 											{...register(`options.${index}.text`)}
-											className='flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-green-500/50 focus:bg-white/10'
+											className={isRussian ? 'hidden' : 'flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-green-500/50 focus:bg-white/10'}
 											placeholder={c.optionPlaceholderTemplate.replace('{index}', String(index + 1))}
+										/>
+										<input
+											{...register(`options.${index}.textRu`)}
+											className={isRussian ? 'col-start-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-green-500/50 focus:bg-white/10' : 'hidden'}
+											placeholder={`Вариант ${index + 1} (русский)`}
 										/>
 										{fields.length > 2 && (
 											<button

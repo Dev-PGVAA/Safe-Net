@@ -1,6 +1,8 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { ContentLanguageToggle } from '@/components/admin/learning/content-language-toggle'
+import type { ContentLanguage } from '@/config/content-language.config'
 import { useI18n } from '@/i18n/LocaleProvider'
 import { adminService } from '@/services/admin/admin.service'
 import { ITest } from '@/services/admin/admin.types'
@@ -9,12 +11,15 @@ import { m } from 'framer-motion'
 import { Edit2, Loader2, Save, Settings, X } from '@/components/ui/icons'
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { createPortal } from 'react-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
 interface TestEditData {
 	title: string
 	description?: string
+	titleRu?: string
+	descriptionRu?: string
 	passingScore: number
 }
 
@@ -24,16 +29,28 @@ interface TestEditorProps {
 }
 
 export default function TestEditor({ test, onUpdate }: TestEditorProps) {
-	const { t } = useI18n()
+	const { locale, t } = useI18n()
 	const c = t.adminTestComponents.testEditor
 	const [isEditing, setIsEditing] = useState(false)
 	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [contentLanguage, setContentLanguage] = useState<ContentLanguage>('en')
+	const isRussian = contentLanguage === 'ru'
+	const localizedTitle =
+		locale === 'ru' ? test.titleRu || test.title : test.title
+	const localizedDescription =
+		locale === 'ru'
+			? test.descriptionRu || test.description
+			: test.description
+	const localizedCourseTitle =
+		locale === 'ru' ? test.course?.titleRu || test.course?.title : test.course?.title
 
 	const testEditSchema = useMemo(
 		() =>
 			z.object({
 				title: z.string().min(3, c.validation.titleMin).max(255),
 				description: z.string().optional(),
+				titleRu: z.string().max(255).optional(),
+				descriptionRu: z.string().optional(),
 				passingScore: z.number().min(0).max(100),
 			}),
 		[c]
@@ -49,6 +66,8 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 		defaultValues: {
 			title: test.title,
 			description: test.description || '',
+			titleRu: test.titleRu || '',
+			descriptionRu: test.descriptionRu || '',
 			passingScore: test.passingScore || 80,
 		},
 	})
@@ -87,7 +106,7 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 							<div className="space-y-1">
 								<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">{c.fields.title}</p>
-								<p className="text-white font-medium text-lg">{test.title}</p>
+								<p className="text-white font-medium text-lg">{localizedTitle}</p>
 							</div>
 
 							<div className="space-y-1">
@@ -99,14 +118,14 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 						<div className="space-y-1">
 							<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">{c.fields.description}</p>
 							<p className="text-gray-400 text-sm leading-relaxed">
-								{test.description || c.fields.noDescription}
+								{localizedDescription || c.fields.noDescription}
 							</p>
 						</div>
 
 						{test.course && (
 							<div className="space-y-1">
 								<p className="text-xs font-medium text-gray-500 uppercase tracking-wider">{c.fields.course}</p>
-								<p className="text-purple-400 text-sm">{test.course.title}</p>
+								<p className="text-purple-400 text-sm">{localizedCourseTitle}</p>
 							</div>
 						)}
 
@@ -120,15 +139,37 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 							</Button>
 						</div>
 					</m.div>
-				) : (
+				) : typeof document !== 'undefined' ? createPortal(
 					<m.form
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						onSubmit={handleSubmit(onSubmit)}
-						className="space-y-5"
+						className="fixed inset-0 z-[9999] overflow-y-auto bg-overlay"
 					>
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-							<div className="space-y-2">
+						<div className="sticky top-0 z-10 border-b border-white/10 bg-overlay/95 backdrop-blur-xl">
+							<div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
+								<div className="flex items-center gap-3">
+									<Settings className="h-6 w-6 text-purple-400" />
+									<h2 className="text-xl font-bold text-white">{c.header}</h2>
+								</div>
+								<Button
+									type="button"
+									variant="ghost"
+									onClick={() => {
+										setIsEditing(false)
+										reset()
+									}}
+									className="h-11 w-11 rounded-xl bg-white/5 p-0 text-gray-400 hover:bg-white/10 hover:text-white"
+								>
+									<X className="h-5 w-5" />
+								</Button>
+							</div>
+						</div>
+						<div className="mx-auto max-w-4xl space-y-6 px-6 py-8">
+						<ContentLanguageToggle value={contentLanguage} onChange={setContentLanguage} />
+						<div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-5">
+						<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+							<div className={isRussian ? 'hidden' : 'space-y-2'}>
 								<label className="text-sm font-medium text-gray-400">{c.form.testTitleLabel}</label>
 								<input
 									type="text"
@@ -149,10 +190,28 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 							</div>
 						</div>
 
-						<div className="space-y-2">
+						<div className={isRussian ? 'hidden' : 'space-y-2'}>
 							<label className="text-sm font-medium text-gray-400">{c.form.descriptionLabel}</label>
 							<textarea
 								{...register('description')}
+								rows={4}
+								className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 outline-none transition resize-none"
+							/>
+						</div>
+
+						<div className={isRussian ? 'space-y-2' : 'hidden'}>
+							<label className="text-sm font-medium text-gray-400">Название теста (русский)</label>
+							<input
+								type="text"
+								{...register('titleRu')}
+								className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 outline-none transition"
+							/>
+						</div>
+
+						<div className={isRussian ? 'space-y-2' : 'hidden'}>
+							<label className="text-sm font-medium text-gray-400">Описание (русский)</label>
+							<textarea
+								{...register('descriptionRu')}
 								rows={4}
 								className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 outline-none transition resize-none"
 							/>
@@ -181,8 +240,11 @@ export default function TestEditor({ test, onUpdate }: TestEditorProps) {
 								{c.buttons.cancel}
 							</Button>
 						</div>
-					</m.form>
-				)}
+						</div>
+						</div>
+					</m.form>,
+					document.body
+				) : null}
 			</div>
 		</div>
 	)

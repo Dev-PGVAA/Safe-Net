@@ -6,6 +6,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ContentLanguageToggle } from '@/components/admin/learning/content-language-toggle'
+import type { ContentLanguage } from '@/config/content-language.config'
 import { useI18n } from '@/i18n/LocaleProvider'
 import { adminService } from '@/services/admin/admin.service'
 import {
@@ -52,8 +54,12 @@ const TaskTypeIcons: Record<TaskType, AppIcon> = {
 }
 
 export default function TasksList({ lesson, onRefetch }: TasksListProps) {
-	const { t } = useI18n()
+	const { locale, t } = useI18n()
 	const c = t.adminLessonComponents.tasksList
+	const getTaskTitle = (task: ITask) =>
+		locale === 'ru' ? task.titleRu || task.title : task.title
+	const getTaskQuestion = (task: ITask) =>
+		locale === 'ru' ? task.questionRu || task.question : task.question
 
 	const TaskTypeLabels: Record<TaskType, string> = {
 		[TaskType.SINGLE_CHOICE]: c.taskTypeLabels.singleChoice,
@@ -130,6 +136,8 @@ export default function TasksList({ lesson, onRefetch }: TasksListProps) {
 				<div className='space-y-3'>
 					{tasks.map(task => {
 						const Icon = TaskTypeIcons[task.type] || FileQuestion
+						const taskTitle = getTaskTitle(task)
+						const taskQuestion = getTaskQuestion(task)
 						return (
 							<div
 								key={task.id}
@@ -146,12 +154,12 @@ export default function TasksList({ lesson, onRefetch }: TasksListProps) {
 													{task.order}
 												</span>
 												<h5 className='font-semibold text-white truncate'>
-													{task.title}
+											{taskTitle}
 												</h5>
 											</div>
-											{task.question && (
-												<p className='text-sm text-gray-400 line-clamp-2 mb-2'>
-													{task.question}
+										{taskQuestion && (
+											<p className='text-sm text-gray-400 line-clamp-2 mb-2'>
+												{taskQuestion}
 												</p>
 											)}
 											<div className='flex flex-wrap items-center gap-2 text-xs'>
@@ -302,6 +310,8 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 	}
 
 	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [contentLanguage, setContentLanguage] = useState<ContentLanguage>('en')
+	const isRussian = contentLanguage === 'ru'
 
 	const {
 		register,
@@ -312,8 +322,11 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 		defaultValues: {
 			order: task.order,
 			title: task.title,
+			titleRu: task.titleRu || '',
 			question: task.question || '',
+			questionRu: task.questionRu || '',
 			explanation: task.explanation || '',
+			explanationRu: task.explanationRu || '',
 			points: task.points || 10,
 			difficulty: task.difficulty || 'MEDIUM',
 			type: task.type,
@@ -369,6 +382,7 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 			{/* Content */}
 			<div className='mx-auto max-w-5xl px-6 py-8'>
 				<form onSubmit={handleSubmit(onSubmitForm)} className='space-y-8'>
+					<ContentLanguageToggle value={contentLanguage} onChange={setContentLanguage} />
 					{/* Basic Info */}
 					<div className='rounded-2xl border border-white/10 bg-white/5 p-6'>
 						<h4 className='mb-4 flex items-center gap-2 text-lg font-semibold text-white'>
@@ -427,7 +441,7 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 								</div>
 							</div>
 
-							<div>
+							<div className={isRussian ? 'hidden' : undefined}>
 								<label className='mb-2 block text-sm font-semibold text-white'>
 									{em.titleLabel}
 								</label>
@@ -443,7 +457,18 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 								)}
 							</div>
 
-							<div>
+							<div className={isRussian ? undefined : 'hidden'}>
+								<label className='mb-2 block text-sm font-semibold text-white'>
+									Название задания (русский)
+								</label>
+								<input
+									{...register('titleRu')}
+									className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10'
+									placeholder='Название задания на русском'
+								/>
+							</div>
+
+							<div className={isRussian ? 'hidden' : undefined}>
 								<label className='mb-2 block text-sm font-semibold text-white'>
 									{em.questionLabel}
 								</label>
@@ -455,7 +480,19 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 								/>
 							</div>
 
-							<div>
+							<div className={isRussian ? undefined : 'hidden'}>
+								<label className='mb-2 block text-sm font-semibold text-white'>
+									Вопрос (русский)
+								</label>
+								<textarea
+									{...register('questionRu')}
+									rows={3}
+									className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10 resize-none'
+									placeholder='Вопрос на русском'
+								/>
+							</div>
+
+							<div className={isRussian ? 'hidden' : undefined}>
 								<label className='mb-2 block text-sm font-semibold text-white'>
 									{em.explanationLabel}
 								</label>
@@ -464,6 +501,18 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 									rows={3}
 									className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10 resize-none'
 									placeholder={em.explanationPlaceholder}
+								/>
+							</div>
+
+							<div className={isRussian ? undefined : 'hidden'}>
+								<label className='mb-2 block text-sm font-semibold text-white'>
+									Пояснение (русский)
+								</label>
+								<textarea
+									{...register('explanationRu')}
+									rows={3}
+									className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-blue-500/50 focus:bg-white/10 resize-none'
+									placeholder='Пояснение на русском'
 								/>
 							</div>
 						</div>
@@ -541,7 +590,7 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 													</h4>
 													<button
 														type='button'
-														onClick={() => append({ text: '', isCorrect: false })}
+								onClick={() => append({ text: '', textRu: '', isCorrect: false })}
 														className='flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-white/90'
 													>
 														<Plus className='h-4 w-4' />
@@ -551,12 +600,12 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 
 												<div className='space-y-3'>
 													{fields.map((field, index) => (
-														<div key={field.id} className='flex items-center gap-3'>
+									<div key={field.id} className='grid grid-cols-[auto_1fr_auto] items-center gap-3'>
 															<Controller
 																name={`options.${index}.isCorrect`}
 																control={control}
 																render={({ field: checkField }) => (
-																	<input
+										<input
 																		type={taskType === TaskType.SINGLE_CHOICE ? 'radio' : 'checkbox'}
 																		name={taskType === TaskType.SINGLE_CHOICE ? 'correctAnswer' : undefined}
 																		checked={checkField.value}
@@ -579,11 +628,16 @@ function EditTaskModal({ task, onClose, onSubmit }: EditTaskModalProps) {
 																	/>
 																)}
 															/>
-															<input
-																{...register(`options.${index}.text`)}
-																className='flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-green-500/50 focus:bg-white/10'
-																placeholder={em.optionPlaceholderTemplate.replace('{index}', String(index + 1))}
-															/>
+										<input
+											{...register(`options.${index}.text`)}
+											className={isRussian ? 'hidden' : 'flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-green-500/50 focus:bg-white/10'}
+											placeholder={em.optionPlaceholderTemplate.replace('{index}', String(index + 1))}
+										/>
+										<input
+											{...register(`options.${index}.textRu`)}
+											className={isRussian ? 'col-start-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-green-500/50 focus:bg-white/10' : 'hidden'}
+											placeholder={`Вариант ${index + 1} (русский)`}
+										/>
 															{fields.length > 2 && (
 																<button
 																	type='button'

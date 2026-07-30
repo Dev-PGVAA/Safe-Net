@@ -34,6 +34,8 @@ export function AppleTestCard({ test, index, onDelete }: AppleTestCardProps) {
   const c = t.adminTestComponents.appleTestCard
   const [isHovered, setIsHovered] = useState(false)
   const questionsCount = test.questions?.length ?? 0
+	const courseTitle =
+		locale === 'ru' ? test.course?.titleRu || test.course?.title : test.course?.title
   const questionWord = selectPlural(locale, questionsCount, {
     one: c.questionWordOne,
     few: c.questionWordFew,
@@ -140,7 +142,7 @@ export function AppleTestCard({ test, index, onDelete }: AppleTestCardProps) {
                   </span>
                 </m.div>
 
-                {test.course && (
+				{test.course && (
                   <m.div
                     className='flex items-center gap-2 flex-1 min-w-0'
                     whileHover={{ scale: 1.02 }}
@@ -150,7 +152,7 @@ export function AppleTestCard({ test, index, onDelete }: AppleTestCardProps) {
                       <BookOpen className='w-3.5 h-3.5 text-purple-400' />
                     </div>
                     <span className='text-sm text-gray-300 truncate font-medium'>
-                      {test.course.title}
+						{courseTitle}
                     </span>
                   </m.div>
                 )}

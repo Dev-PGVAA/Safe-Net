@@ -1,6 +1,8 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { ContentLanguageToggle } from '@/components/admin/learning/content-language-toggle'
+import type { ContentLanguage } from '@/config/content-language.config'
 import {
 	Dialog,
 	DialogContent,
@@ -23,6 +25,7 @@ function makeLessonSchema(v: { orderPositive: string; titleMin: string }) {
   return z.object({
     order: z.number().int().positive(v.orderPositive),
     title: z.string().min(3, v.titleMin).max(255),
+    titleRu: z.string().max(255).optional(),
     estimatedDuration: z.number().int().positive().optional(),
   })
 }
@@ -47,6 +50,8 @@ export default function CreateLessonDialog({
   const { t } = useI18n()
   const c = t.adminLessonComponents.createLessonDialog
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [contentLanguage, setContentLanguage] = useState<ContentLanguage>('en')
+  const isRussian = contentLanguage === 'ru'
 
   const nextLessonOrder = existingLessonsCount + 1
 
@@ -70,6 +75,7 @@ export default function CreateLessonDialog({
     defaultValues: {
       order: nextLessonOrder,
       title: '',
+      titleRu: '',
       estimatedDuration: undefined,
     },
   })
@@ -122,6 +128,7 @@ export default function CreateLessonDialog({
                 onSubmit={handleSubmit(onSubmit)}
                 className='space-y-5 mt-6'
               >
+				<ContentLanguageToggle value={contentLanguage} onChange={setContentLanguage} />
                 {/* Order */}
                 <div className='space-y-2'>
                   <Label htmlFor='order' className='text-sm font-medium text-gray-300'>
@@ -143,7 +150,7 @@ export default function CreateLessonDialog({
                 </div>
 
                 {/* Title */}
-                <div className='space-y-2'>
+                <div className={isRussian ? 'hidden' : 'space-y-2'}>
                   <Label htmlFor='title' className='text-sm font-medium text-gray-300'>
                     {c.titleLabel}
                   </Label>
@@ -163,6 +170,20 @@ export default function CreateLessonDialog({
                 </div>
 
                 {/* Duration */}
+				<div className={isRussian ? 'space-y-2' : 'hidden'}>
+					<Label htmlFor='titleRu' className='text-sm font-medium text-gray-300'>
+						Название урока (русский)
+					</Label>
+					<Input
+						id='titleRu'
+						type='text'
+						placeholder='Название урока на русском'
+						{...register('titleRu')}
+						className='bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20'
+					/>
+				</div>
+
+				{/* Duration */}
                 <div className='space-y-2'>
                   <Label htmlFor='duration' className='text-sm font-medium text-gray-300'>
                     {c.durationLabel}{' '}

@@ -14,7 +14,7 @@ import { FileQuestion, Plus, Search, X } from '@/components/ui/icons'
 import { useMemo, useState } from 'react'
 
 export default function TestsPage() {
-  const { t } = useI18n()
+  const { locale, t } = useI18n()
   const c = t.adminTests.list
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const [deleteDialog, setDeleteDialog] = useState<{
@@ -26,20 +26,42 @@ export default function TestsPage() {
   const { tests, isLoading, deleteTest, isDeleting } = useTests()
   const { courses } = useCoursesList()
 
+  const localizedTests = useMemo(
+    () =>
+      tests?.map(test => ({
+        ...test,
+        title: locale === 'ru' ? test.titleRu || test.title : test.title,
+        description:
+          locale === 'ru'
+            ? test.descriptionRu || test.description
+            : test.description,
+		course: test.course
+			? {
+					...test.course,
+					title:
+						locale === 'ru'
+							? test.course.titleRu || test.course.title
+							: test.course.title,
+				}
+			: undefined,
+      })),
+    [locale, tests]
+  )
+
   // Filtering
   const filteredTests = useMemo(() => {
-    if (!tests) return []
+    if (!localizedTests) return []
 
-    if (!searchQuery) return tests
+    if (!searchQuery) return localizedTests
 
     const query = searchQuery.toLowerCase()
-    return tests.filter(
+    return localizedTests.filter(
       test =>
         test.title.toLowerCase().includes(query) ||
         test.description?.toLowerCase().includes(query) ||
         test.course?.title.toLowerCase().includes(query)
     )
-  }, [tests, searchQuery])
+  }, [localizedTests, searchQuery])
 
   const handleDelete = async () => {
     if (!deleteDialog.test) return

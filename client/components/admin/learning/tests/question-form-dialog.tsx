@@ -6,6 +6,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ContentLanguageToggle } from '@/components/admin/learning/content-language-toggle'
+import type { ContentLanguage } from '@/config/content-language.config'
 import { useI18n } from '@/i18n/LocaleProvider'
 import { adminService } from '@/services/admin/admin.service'
 import { ITestQuestion, TaskType } from '@/services/admin/admin.types'
@@ -22,6 +24,7 @@ import {
 } from '@/components/ui/icons'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form'
+import { createPortal } from 'react-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -29,8 +32,9 @@ interface QuestionFormData {
 	testId: string
 	order: number
 	text: string
+	textRu?: string
 	type: TaskType
-	options?: Array<{ text: string; isCorrect: boolean }>
+	options?: Array<{ text: string; textRu?: string; isCorrect: boolean }>
 }
 
 interface CreateQuestionDialogProps {
@@ -58,6 +62,8 @@ export default function CreateQuestionDialog({
 	const { t } = useI18n()
 	const c = t.adminTestComponents.questionFormDialog
 	const [isSubmitting, setIsSubmitting] = useState(false)
+	const [contentLanguage, setContentLanguage] = useState<ContentLanguage>('en')
+	const isRussian = contentLanguage === 'ru'
 	const isEditing = Boolean(editQuestion)
 	const scrollContainerRef = useRef<HTMLDivElement>(null)
 
@@ -79,11 +85,13 @@ export default function CreateQuestionDialog({
 				testId: z.string(),
 				order: z.number().int().positive(),
 				text: z.string().min(5, c.validation.textMin),
+				textRu: z.string().optional(),
 				type: z.nativeEnum(TaskType),
 				options: z
 					.array(
 						z.object({
 							text: z.string().min(1, c.validation.optionEmpty),
+							textRu: z.string().optional(),
 							isCorrect: z.boolean(),
 						})
 					)
@@ -105,10 +113,11 @@ export default function CreateQuestionDialog({
 			testId,
 			order: nextOrder,
 			text: '',
+			textRu: '',
 			type: TaskType.SINGLE_CHOICE,
 			options: [
-				{ text: '', isCorrect: false },
-				{ text: '', isCorrect: false },
+				{ text: '', textRu: '', isCorrect: false },
+				{ text: '', textRu: '', isCorrect: false },
 			],
 		},
 	})
@@ -133,23 +142,26 @@ export default function CreateQuestionDialog({
 						testId,
 						order: editQuestion.order,
 						text: editQuestion.text,
+						textRu: editQuestion.textRu || '',
 						type: editQuestion.type,
 						options: editQuestion.options?.map(option => ({
 							text: option.text,
+							textRu: option.textRu || '',
 							isCorrect: option.isCorrect ?? false,
 						})) ?? [
-							{ text: '', isCorrect: false },
-							{ text: '', isCorrect: false },
+							{ text: '', textRu: '', isCorrect: false },
+							{ text: '', textRu: '', isCorrect: false },
 						],
 					}
 				: {
 						testId,
 						order: nextOrder,
 						text: '',
+						textRu: '',
 						type: TaskType.SINGLE_CHOICE,
 						options: [
-							{ text: '', isCorrect: false },
-							{ text: '', isCorrect: false },
+							{ text: '', textRu: '', isCorrect: false },
+							{ text: '', textRu: '', isCorrect: false },
 						],
 					}
 		)
@@ -189,7 +201,9 @@ export default function CreateQuestionDialog({
 		}
 	}
 
-	return (
+	if (typeof document === 'undefined') return null
+
+	return createPortal(
 		<AnimatePresence>
 			{open && (
 				<m.div
@@ -198,7 +212,7 @@ export default function CreateQuestionDialog({
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
-					className='fixed inset-0 z-[100] bg-overlay overflow-y-scroll'
+					className='fixed inset-0 z-[9999] bg-overlay overflow-y-scroll'
 				>
 					{/* Header */}
 					<div className='border-b border-white/10 bg-overlay/80 backdrop-blur-xl'>
@@ -242,6 +256,7 @@ export default function CreateQuestionDialog({
 									<Sparkles className='h-5 w-5 text-blue-400' />
 									{c.info.heading}
 								</h4>
+								<ContentLanguageToggle value={contentLanguage} onChange={setContentLanguage} />
 
 								<div className='space-y-6'>
 									<div>
@@ -278,6 +293,18 @@ export default function CreateQuestionDialog({
 										/>
 									</div>
 
+									<div className={isRussian ? undefined : 'hidden'}>
+										<label className='mb-2 block text-sm font-semibold text-white'>
+											Вопрос (русский)
+										</label>
+										<textarea
+											{...register('textRu')}
+											rows={3}
+											className='w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
+											placeholder='Вопрос на русском'
+										/>
+									</div>
+
 									<div>
 										<label className='mb-2 block text-sm font-semibold text-white'>
 											{c.info.orderLabel}
@@ -290,7 +317,7 @@ export default function CreateQuestionDialog({
 										/>
 									</div>
 
-									<div>
+									<div className={isRussian ? 'hidden' : undefined}>
 										<label className='mb-2 block text-sm font-semibold text-white'>
 											{c.info.textLabel}
 										</label>
@@ -321,7 +348,7 @@ export default function CreateQuestionDialog({
 											type='button'
 											whileHover={{ scale: 1.05 }}
 											whileTap={{ scale: 0.95 }}
-											onClick={() => append({ text: '', isCorrect: false })}
+											onClick={() => append({ text: '', textRu: '', isCorrect: false })}
 											className='flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black transition-all hover:bg-white/90'
 										>
 											<Plus className='h-4 w-4' />
@@ -364,12 +391,17 @@ export default function CreateQuestionDialog({
 												/>
 
 												<input
-													{...register(`options.${index}.text`)}
+													key={`${contentLanguage}-${field.id}`}
+													{...register(isRussian ? `options.${index}.textRu` : `options.${index}.text`)}
 													className='flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white outline-none transition-all focus:border-blue-500/50 focus:bg-white/10'
-													placeholder={c.options.optionPlaceholderTemplate.replace(
-														'{index}',
-														String(index + 1)
-													)}
+													placeholder={
+														isRussian
+															? `Вариант ${index + 1} на русском`
+															: c.options.optionPlaceholderTemplate.replace(
+																	'{index}',
+																	String(index + 1)
+																)
+													}
 												/>
 
 												{fields.length > 2 && (
@@ -433,6 +465,7 @@ export default function CreateQuestionDialog({
 					</div>
 				</m.div>
 			)}
-		</AnimatePresence>
+		</AnimatePresence>,
+		document.body
 	)
 }

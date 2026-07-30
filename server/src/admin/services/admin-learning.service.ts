@@ -6,6 +6,7 @@ import { CreateLessonDto } from '../dto/create-lesson.dto'
 import { CreateStageDto } from '../dto/create-stage.dto'
 import { CreateTaskDto } from '../dto/create-task.dto'
 import { CreateTestDto } from '../dto/create-test.dto'
+import { CreateTestQuestionDto } from '../dto/create-test-question.dto'
 
 @Injectable()
 export class AdminLearningService {
@@ -155,6 +156,7 @@ export class AdminLearningService {
 		// If there are options, add order to each
 		const formattedOptions = options?.map((option, index) => ({
 			text: option.text,
+			textRu: option.textRu,
 			isCorrect: option.isCorrect || false,
 			order: index + 1, // ✅ Add order
 		}))
@@ -189,6 +191,7 @@ export class AdminLearningService {
 		// If there are new options, add order
 		const formattedOptions = options?.map((option: any, index: number) => ({
 			text: option.text,
+			textRu: option.textRu,
 			isCorrect: option.isCorrect || false,
 			order: index + 1, // ✅ Add order
 		}))
@@ -226,6 +229,7 @@ export class AdminLearningService {
 				course: {
 					select: {
 						title: true,
+						titleRu: true,
 					},
 				},
 				questions: {
@@ -259,7 +263,7 @@ export class AdminLearningService {
 		})
 	}
 
-	async updateTest(id: string, dto: any) {
+	async updateTest(id: string, dto: Partial<CreateTestDto>) {
 		return this.prisma.test.update({
 			where: { id },
 			data: dto,
@@ -273,12 +277,13 @@ export class AdminLearningService {
 	}
 
 	// ==================== TEST QUESTIONS ====================
-	async createTestQuestion(dto: any) {
+	async createTestQuestion(dto: CreateTestQuestionDto) {
 		const { options, ...questionData } = dto
 
 		// If there are options, add order to each
 		const formattedOptions = options?.map((option: any, index: number) => ({
 			text: option.text,
+			textRu: option.textRu,
 			isCorrect: option.isCorrect || false,
 			order: index + 1, // ✅ Add order
 		}))
@@ -302,7 +307,7 @@ export class AdminLearningService {
 		})
 	}
 
-	async updateTestQuestion(id: string, dto: any) {
+	async updateTestQuestion(id: string, dto: Partial<CreateTestQuestionDto>) {
 		const { options, ...questionData } = dto
 
 		// Remove old options
@@ -313,6 +318,7 @@ export class AdminLearningService {
 		// Add order to new options
 		const formattedOptions = options?.map((option: any, index: number) => ({
 			text: option.text,
+			textRu: option.textRu,
 			isCorrect: option.isCorrect || false,
 			order: index + 1, // ✅ Add order
 		}))

@@ -1,6 +1,8 @@
 'use client'
 
 import { useI18n } from '@/i18n/LocaleProvider'
+import { ContentLanguageToggle } from '@/components/admin/learning/content-language-toggle'
+import type { ContentLanguage } from '@/config/content-language.config'
 import { adminService } from '@/services/admin/admin.service'
 import {
 	CreateBlockDto,
@@ -22,13 +24,20 @@ interface LessonEditorProps {
 	onSuccess: () => void
 }
 
-type LessonTitleFormData = Pick<CreateLessonDto, 'title' | 'estimatedDuration'>
+type LessonTitleFormData = Pick<CreateLessonDto, 'title' | 'titleRu' | 'estimatedDuration'>
 type BlockFormData = Omit<CreateBlockDto, 'lessonId' | 'type'>
 
 export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
-	const { t } = useI18n()
+	const { locale, t } = useI18n()
 	const c = t.adminLessonComponents.lessonEditor
+	const lessonTitle = locale === 'ru' ? lesson.titleRu || lesson.title : lesson.title
+	const getBlockTitle = (block: IBlock) =>
+		locale === 'ru' ? block.titleRu || block.title || c.untitled : block.title || c.untitled
+	const getBlockContent = (block: IBlock) =>
+		locale === 'ru' ? block.contentRu || block.content : block.content
 	const [isEditingTitle, setIsEditingTitle] = useState(false)
+	const [contentLanguage, setContentLanguage] = useState<ContentLanguage>('en')
+	const isRussian = contentLanguage === 'ru'
 	const [blocks, setBlocks] = useState(lesson.blocks || [])
 	const [editingBlockId, setEditingBlockId] = useState<string | null>(null)
 	const [showAddBlock, setShowAddBlock] = useState(false)
@@ -46,6 +55,7 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 	} = useForm<LessonTitleFormData>({
 		defaultValues: {
 			title: lesson.title,
+			titleRu: lesson.titleRu || '',
 			estimatedDuration: lesson.estimatedDuration,
 		},
 	})
@@ -127,7 +137,7 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 						exit={{ opacity: 0 }}
 						className='mb-6'
 					>
-						<h3 className='text-xl font-bold text-white'>{lesson.title}</h3>
+						<h3 className='text-xl font-bold text-white'>{lessonTitle}</h3>
 						<p className='mt-1 text-sm text-gray-500'>
 							{c.durationTemplate.replace('{minutes}', String(lesson.estimatedDuration))}
 						</p>
@@ -147,12 +157,24 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 						onSubmit={handleTitleSubmit(onTitleSubmit)}
 						className='mb-6 space-y-4'
 					>
+						<ContentLanguageToggle value={contentLanguage} onChange={setContentLanguage} />
 						<div>
+							<div className={isRussian ? 'hidden' : undefined}>
 							<label className='mb-2 block text-sm font-medium text-gray-400'>
 								{c.titleFieldLabel}
 							</label>
 							<input
 								{...register('title')}
+								className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-white outline-none transition-colors focus:border-purple-500/50 focus:bg-white/10'
+							/>
+							</div>
+						</div>
+						<div className={isRussian ? undefined : 'hidden'}>
+							<label className='mb-2 block text-sm font-medium text-gray-400'>
+								Название урока (русский)
+							</label>
+							<input
+								{...register('titleRu')}
 								className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-white outline-none transition-colors focus:border-purple-500/50 focus:bg-white/10'
 							/>
 						</div>
@@ -224,11 +246,11 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 													{block.order}
 												</span>
 												<h5 className='font-semibold text-white'>
-													{block.title || c.untitled}
+											{getBlockTitle(block)}
 												</h5>
 											</div>
 											<p className='text-sm text-gray-400 line-clamp-2'>
-												{block.content}
+											{getBlockContent(block)}
 											</p>
 										</div>
 										<div className='flex gap-2 opacity-0 transition-opacity group-hover:opacity-100'>
@@ -284,7 +306,7 @@ export default function LessonEditor({ lesson, onSuccess }: LessonEditorProps) {
 								<p className='mb-2 text-gray-400'>
 									{c.deleteBlockDialog.descriptionPrefix}{' '}
 									<span className='font-semibold text-white'>
-										&ldquo;{deleteDialog.block.title || c.untitled}&rdquo;
+										&ldquo;{getBlockTitle(deleteDialog.block)}&rdquo;
 									</span>
 									?
 								</p>
@@ -363,6 +385,8 @@ function BlockFormModal({
 	const { t } = useI18n()
 	const m2 = t.adminLessonComponents.lessonEditor.blockModal
 	const textareaRef = React.useRef<HTMLTextAreaElement>(null)
+	const [contentLanguage, setContentLanguage] = useState<ContentLanguage>('en')
+	const isRussian = contentLanguage === 'ru'
 
 	const {
 		register,
@@ -375,10 +399,13 @@ function BlockFormModal({
 			order: block?.order || 1,
 			title: block?.title || '',
 			content: block?.content || '',
+			titleRu: block?.titleRu || '',
+			contentRu: block?.contentRu || '',
 		},
 	})
 
 	const content = useWatch({ control, name: 'content' }) ?? ''
+	const contentRu = useWatch({ control, name: 'contentRu' }) ?? ''
 
 	// Inserts markdown syntax at the cursor position
 	const insertMarkdown = (before: string, after: string = '', placeholder: string = 'text') => {
@@ -472,7 +499,7 @@ function BlockFormModal({
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
-			className='fixed inset-0 z- bg-overlay overflow-y-auto'
+			className='fixed inset-0 z-[9999] bg-overlay overflow-y-auto'
 		>
 			{/* Header */}
 			<div className='sticky top-0 border-b border-white/10 bg-overlay/95 backdrop-blur-xl z-10'>
@@ -487,12 +514,15 @@ function BlockFormModal({
 								: m2.addSubtitle}
 						</p>
 					</div>
-					<button
-						onClick={onClose}
-						className='rounded-xl bg-white/5 p-3 text-gray-400 transition-colors hover:bg-white/10 hover:text-white'
-					>
-						<X className='h-5 w-5' />
-					</button>
+					<div className='flex items-center gap-3'>
+						<ContentLanguageToggle value={contentLanguage} onChange={setContentLanguage} />
+						<button
+							onClick={onClose}
+							className='rounded-xl bg-white/5 p-3 text-gray-400 transition-colors hover:bg-white/10 hover:text-white'
+						>
+							<X className='h-5 w-5' />
+						</button>
+					</div>
 				</div>
 			</div>
 
@@ -512,7 +542,7 @@ function BlockFormModal({
 							/>
 						</div>
 
-						<div>
+						<div className={isRussian ? 'hidden' : undefined}>
 							<label className='mb-2 block text-sm font-semibold text-white'>
 								{m2.titleLabel}
 							</label>
@@ -522,9 +552,20 @@ function BlockFormModal({
 								placeholder={m2.titlePlaceholder}
 							/>
 						</div>
+
+						<div className={isRussian ? undefined : 'hidden'}>
+							<label className='mb-2 block text-sm font-semibold text-white'>
+								Название блока (русский)
+							</label>
+							<input
+								{...register('titleRu')}
+								className='w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-purple-500/50 focus:bg-white/10'
+								placeholder='Название блока на русском'
+							/>
+						</div>
 					</div>
 
-					<div className='space-y-3'>
+					<div className={isRussian ? 'hidden' : 'space-y-3'}>
 						<label className='mb-2 block text-sm font-semibold text-white'>
 							{m2.contentLabel}
 						</label>
@@ -713,6 +754,41 @@ function BlockFormModal({
 								{errors.content.message as string}
 							</p>
 						)}
+					</div>
+
+					<div className={isRussian ? 'space-y-3' : 'hidden'}>
+						<label className='mb-2 block text-sm font-semibold text-white'>
+							Текст блока (русский, Markdown)
+						</label>
+						<div className='grid gap-4 md:grid-cols-2'>
+							<div className='flex flex-col rounded-2xl border border-white/10 bg-white/5'>
+								<div className='flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-gray-400'>
+									<span>{m2.editorLabel}</span>
+									<span className='text-[10px] text-gray-500'>{m2.markdownLabel}</span>
+								</div>
+								<textarea
+									{...register('contentRu')}
+									rows={24}
+									className='min-h-[500px] w-full resize-none rounded-b-2xl bg-transparent px-4 py-3 font-mono text-sm text-white outline-none scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20'
+									placeholder='Русская версия теоретического материала'
+								/>
+							</div>
+							<div className='flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5'>
+								<div className='flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-gray-400'>
+									<span>{m2.previewLabel}</span>
+									<span className='text-[10px] text-gray-500'>{m2.renderLabel}</span>
+								</div>
+								<div className='min-h-[500px] overflow-y-auto px-4 py-3 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20'>
+									{contentRu.trim() ? (
+										<div className='markdown-preview text-sm'>
+											<ReactMarkdown>{contentRu}</ReactMarkdown>
+										</div>
+									) : (
+										<p className='text-xs text-gray-500'>{m2.previewEmptyHint}</p>
+									)}
+								</div>
+							</div>
+						</div>
 					</div>
 
 					{/* Actions */}

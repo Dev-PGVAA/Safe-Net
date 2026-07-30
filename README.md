@@ -118,7 +118,6 @@ tests, `prisma validate`, content validation, and all three production builds.
 
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — how the pieces fit together
 - [docs/EMAIL_DELIVERY.md](docs/EMAIL_DELIVERY.md) — free SMTP setup for password resets
-- [docs/DECISIONS.md](docs/DECISIONS.md) — why the load-bearing choices were made
 - [packages/guard-core/README.md](packages/guard-core/README.md) — the engine
 - [server/content/README.md](server/content/README.md) — the content format
 

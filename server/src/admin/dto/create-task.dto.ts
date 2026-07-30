@@ -16,6 +16,9 @@ class TaskOptionInput {
 	text: string
 	@IsOptional()
 	isCorrect?: boolean
+	@IsOptional()
+	@IsString()
+	textRu?: string
 }
 export class CreateTaskDto {
 	@IsString()
@@ -31,12 +34,21 @@ export class CreateTaskDto {
 	title: string
 	@IsOptional()
 	@IsString()
+	titleRu?: string
+	@IsOptional()
+	@IsString()
 	question?: string
+	@IsOptional()
+	@IsString()
+	questionRu?: string
 	@IsOptional()
 	meta?: any
 	@IsOptional()
 	@IsString()
 	explanation?: string
+	@IsOptional()
+	@IsString()
+	explanationRu?: string
 	@IsInt()
 	@Min(0)
 	@IsOptional()

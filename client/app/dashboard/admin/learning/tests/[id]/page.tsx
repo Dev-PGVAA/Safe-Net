@@ -27,7 +27,7 @@ import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
 
 export default function TestEditPage() {
-	const { t } = useI18n()
+	const { locale, t } = useI18n()
 	const c = t.adminTests.detail
 	const params = useParams()
 	const router = useRouter()
@@ -97,6 +97,15 @@ export default function TestEditPage() {
 		)
 	}
 
+	const localizedTitle =
+		locale === 'ru' ? test.titleRu || test.title : test.title
+	const localizedDescription =
+		locale === 'ru'
+			? test.descriptionRu || test.description
+			: test.description
+	const localizedCourseTitle =
+		locale === 'ru' ? test.course?.titleRu || test.course?.title : test.course?.title
+
 	return (
 		<>
 			<div className='min-h-screen'>
@@ -111,7 +120,7 @@ export default function TestEditPage() {
 							showBackButton
 							items={[
 								{ label: c.breadcrumbTests, href: ROUTES.ADMIN.LEARNING.TESTS },
-								{ label: test.title },
+								{ label: localizedTitle },
 							]}
 						/>
 					</m.div>
@@ -125,17 +134,17 @@ export default function TestEditPage() {
 					>
 						<div className='flex-1'>
 							<h1 className='text-4xl font-bold text-white mb-3'>
-								{test.title}
+								{localizedTitle}
 							</h1>
-							{test.description && (
+							{localizedDescription && (
 								<p className='text-gray-400 mb-4 leading-relaxed'>
-									{test.description}
+									{localizedDescription}
 								</p>
 							)}
 							{test.course && (
 								<Badge className='gap-2 bg-purple-500/10 text-purple-400 border-purple-500/20 hover:bg-purple-500/15'>
 									<BookOpen className='w-3.5 h-3.5' />
-									{test.course.title}
+									{localizedCourseTitle}
 								</Badge>
 							)}
 						</div>
@@ -330,7 +339,7 @@ export default function TestEditPage() {
 			<DeleteTestDialog
 				open={showDeleteDialog}
 				onOpenChange={setShowDeleteDialog}
-				testTitle={test.title}
+				testTitle={localizedTitle}
 				questionsCount={stats.questionsCount}
 				onConfirm={handleDeleteTest}
 			/>

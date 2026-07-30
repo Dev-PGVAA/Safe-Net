@@ -62,6 +62,7 @@
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
+		"baseline-browser-mapping": "^2.11.7",
 		"eslint": "^9.39.2",
 		"eslint-config-next": "16.0.1",
 		"prettier": "^3.7.4",

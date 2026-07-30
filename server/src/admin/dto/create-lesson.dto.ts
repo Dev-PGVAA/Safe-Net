@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsString, Min } from 'class-validator'
+import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator'
 export class CreateLessonDto {
 	@IsString()
 	@IsNotEmpty()
@@ -11,6 +11,9 @@ export class CreateLessonDto {
 	@IsString()
 	@IsNotEmpty()
 	title: string
+	@IsOptional()
+	@IsString()
+	titleRu?: string
 
 	@IsString()
 	@IsNotEmpty()
