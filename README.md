@@ -91,14 +91,20 @@ mirrored in [Python](ml-service/app/model.py) and covered by tests on both sides
 ```bash
 bun run dev            # web + API + ML + database
 bun run dev:no-ml      # skip the ML layer
+bun run build          # create all production artifacts, including the extension
+bun run start          # build and run production web + API + database (no hot reload)
 bun run test           # server, guard engine, and ML scoring tests
 bun run typecheck      # web + API + extension
 bun run check:i18n     # English/Russian catalog parity
 bun run check:colors   # no color literals outside the theme config
 bun run validate:content   # fail on unsourced claims or malformed tasks
-bun run build          # production build of web, API, extension
 bun run db:reset       # wipe and re-seed the database
 ```
+
+Before `bun run start`, set production values in `server/.env` (including
+`FRONTEND_URL`, JWT secrets, and mail delivery) and set the client's production
+`NEXT_PUBLIC_*` values. The command builds the API and client before starting;
+the ML service remains optional.
 
 CI runs client lint/theme/localization checks, type checks, privacy and scoring
 tests, `prisma validate`, content validation, and all three production builds.
