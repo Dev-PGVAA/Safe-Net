@@ -410,7 +410,9 @@ const AppleTestCard = ({ test }: { test: CourseTest }) => {
 									{t.dashboardCourseDetail.testListCard.dateLabel}
 								</p>
 								<p className='text-xs sm:text-base text-white'>
-									{formatDate(test.lastAttemptDate)}
+									{formatDate(test.lastAttemptDate, {
+										locale: locale === 'ru' ? 'ru-RU' : 'en-US',
+									})}
 								</p>
 							</div>
 						</div>

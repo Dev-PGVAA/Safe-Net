@@ -42,7 +42,7 @@ export const AppleCourseCard = memo(({ course, index }: AppleCourseCardProps) =>
 								</div>
 							)}
 							{}
-							<h3 className='text-xl md:text-2xl font-bold leading-tight group-hover:text-slate-200 group-hover:drop-shadow-sm transition-all duration-400'>
+							<h3 className='text-xl md:text-2xl font-bold leading-tight text-foreground group-hover:text-foreground group-hover:drop-shadow-sm transition-all duration-400'>
 								{courseCopy.title}
 							</h3>
 						</div>

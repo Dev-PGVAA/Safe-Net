@@ -21,7 +21,7 @@ import {
 import { useRouter } from 'next/navigation'
 
 export default function CertificatePage() {
-	const { t } = useI18n()
+	const { locale, t } = useI18n()
 	const { certificate, isLoading, isError } = useCertificateDetail()
 
 	if (isLoading) return <CertificateSkeleton />
@@ -92,7 +92,7 @@ export default function CertificatePage() {
 						className='text-center space-y-4 sm:space-y-5'
 					>
 						<div className='space-y-2'>
-							<h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-white via-white to-white/80 tracking-tight leading-tight'>
+							<h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-foreground tracking-tight leading-tight'>
 								CERTIFICATE
 							</h1>
 							<div className='flex justify-center'>
@@ -171,7 +171,11 @@ export default function CertificatePage() {
 						<DetailCard
 							icon={Calendar}
 							label={t.dashboardCertificateDetail.details.issueDate}
-							value={formatDate(certificate.issuedAt) ?? '—'}
+							value={
+								formatDate(certificate.issuedAt, {
+									locale: locale === 'ru' ? 'ru-RU' : 'en-US',
+								}) ?? '—'
+							}
 						/>
 						<DetailCard
 							icon={CheckCircle2}
