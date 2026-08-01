@@ -4,7 +4,6 @@
     "": {
       "name": "safe-net",
       "devDependencies": {
-        "@ivy-apps/deslop": "^0.8.1",
         "concurrently": "^9.1.0",
       },
     },
@@ -414,14 +413,6 @@
     "@istanbuljs/load-nyc-config": ["@istanbuljs/load-nyc-config@1.1.0", "", { "dependencies": { "camelcase": "^5.3.1", "find-up": "^4.1.0", "get-package-type": "^0.1.0", "js-yaml": "^3.13.1", "resolve-from": "^5.0.0" } }, "sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ=="],
 
     "@istanbuljs/schema": ["@istanbuljs/schema@0.1.6", "", {}, "sha512-+Sg6GCR/wy1oSmQDFq4LQDAhm3ETKnorxN+y5nbLULOR3P0c14f2Wurzj3/xqPXtasLFfHd5iRFQ7AJt4KH2cw=="],
-
-    "@ivy-apps/deslop": ["@ivy-apps/deslop@0.8.1", "", { "optionalDependencies": { "@ivy-apps/deslop-darwin-arm64": "0.8.1", "@ivy-apps/deslop-linux-arm64": "0.8.1", "@ivy-apps/deslop-linux-x64": "0.8.1" }, "bin": { "deslop": "wrapper.js" } }, "sha512-poIFem0VwLxJ9YCGcAT72v0w7nkKSXqKXCVqNNMDqI8BsJHlUE3Rv3OQme2Ti+Mq4VElqnoqlL1R+2RubW/hqw=="],
-
-    "@ivy-apps/deslop-darwin-arm64": ["@ivy-apps/deslop-darwin-arm64@0.8.1", "", { "os": "darwin", "cpu": "arm64" }, "sha512-eVlKSyFf/RxkPnlrtLklNcr2brOS+oRZDNBw/TFnke/iqCCcRxXw9EYtdpgWz+gHQAMtIO1RxZTqgJqoiSkNsA=="],
-
-    "@ivy-apps/deslop-linux-arm64": ["@ivy-apps/deslop-linux-arm64@0.8.1", "", { "os": "linux", "cpu": "arm64" }, "sha512-6F4Gh4a78Pn725Dh33PCb+M/mnujv/88lDaw9ytADWBmsgqmUY2jSXZ3NclyCXhDtWcs3DP2XyhfKk7eLZE0XA=="],
-
-    "@ivy-apps/deslop-linux-x64": ["@ivy-apps/deslop-linux-x64@0.8.1", "", { "os": "linux", "cpu": "x64" }, "sha512-eQ1+lvVfc9tW1CMZDyLsXZ3EpUaCCgzZvUwgqi0P2VupIltGjiJX86qF/kQ3hxEdWfOykMubg0AsLDcDe+yfdw=="],
 
     "@jest/console": ["@jest/console@29.7.0", "", { "dependencies": { "@jest/types": "^29.6.3", "@types/node": "*", "chalk": "^4.0.0", "jest-message-util": "^29.7.0", "jest-util": "^29.7.0", "slash": "^3.0.0" } }, "sha512-5Ni4CU7XHQi32IJ398EEP4RrB8eV09sXP2ROqD4bksHrnTree52PsxvX8tpL8LvTZ3pFzXyPbNQReSN41CAhOg=="],
 
