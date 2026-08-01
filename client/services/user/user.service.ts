@@ -1,5 +1,5 @@
 import { instance } from '@/api/axios'
-import { IUser } from '../auth/auth.types'
+import { IUser } from '@/services/auth/auth.types'
 
 
 class UserService {

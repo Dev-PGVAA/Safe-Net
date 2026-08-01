@@ -19,9 +19,9 @@ import {
 import Link from 'next/link'
 import { PreferencesControls } from '@/components/preferences/PreferencesControls'
 import { useI18n } from '@/i18n/LocaleProvider'
-import { GuardComparison } from './GuardComparison'
-import { HomographReveal } from './HomographReveal'
-import { UrlScanner } from './UrlScanner'
+import { GuardComparison } from '@/app/guard/GuardComparison'
+import { HomographReveal } from '@/app/guard/HomographReveal'
+import { UrlScanner } from '@/app/guard/UrlScanner'
 
 function Kbd({ children }: { children: React.ReactNode }) {
 	return (

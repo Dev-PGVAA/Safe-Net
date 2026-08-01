@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/icons'
 import { useRouter } from 'next/navigation'
 import { Suspense } from 'react'
-import { AppleLessonDetail } from './AppleLessonDetail'
+import { AppleLessonDetail } from '@/app/dashboard/courses/[slug]/[id]/AppleLessonDetail'
 
 export default function LessonDetailPage() {
 	const router = useRouter()

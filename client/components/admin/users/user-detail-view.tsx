@@ -14,12 +14,12 @@ import {
 	Zap,
 } from '@/components/ui/icons'
 import { useState } from 'react'
-import UserAchievementsBlock from './user-achievements-block'
-import UserActivityBlock from './user-activity-block'
-import UserCertificatesBlock from './user-certificates-block'
-import UserCoursesBlock from './user-courses-block'
-import UserInfoBlock from './user-info-block'
-import UserTestsBlock from './user-tests-block'
+import UserAchievementsBlock from '@/components/admin/users/user-achievements-block'
+import UserActivityBlock from '@/components/admin/users/user-activity-block'
+import UserCertificatesBlock from '@/components/admin/users/user-certificates-block'
+import UserCoursesBlock from '@/components/admin/users/user-courses-block'
+import UserInfoBlock from '@/components/admin/users/user-info-block'
+import UserTestsBlock from '@/components/admin/users/user-tests-block'
 
 interface UserDetailViewProps {
 	user: IUserDetail

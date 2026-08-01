@@ -14,7 +14,7 @@ import {
 	PhishingSimulator,
 	RedFlagFeedback,
 	SelectedSpan,
-} from './PhishingSimulator'
+} from '@/app/dashboard/courses/[slug]/[id]/PhishingSimulator'
 
 type TaskType =
 	| 'SINGLE_CHOICE'

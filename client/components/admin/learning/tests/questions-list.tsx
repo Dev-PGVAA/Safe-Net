@@ -7,8 +7,8 @@ import { m } from 'framer-motion'
 import { Edit2, Trash2 } from '@/components/ui/icons'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { DeleteQuestionDialog } from './DeleteQuestionDialog'
-import CreateQuestionDialog from './question-form-dialog'
+import { DeleteQuestionDialog } from '@/components/admin/learning/tests/DeleteQuestionDialog'
+import CreateQuestionDialog from '@/components/admin/learning/tests/question-form-dialog'
 
 interface QuestionsListProps {
   questions: ITestQuestion[]

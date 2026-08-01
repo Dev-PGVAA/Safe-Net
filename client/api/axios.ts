@@ -3,7 +3,7 @@ import { getAccessToken, removeFromStorage } from '@/services/auth/auth.helper'
 import authService from '@/services/auth/auth.service'
 import { LOCALE_COOKIE } from '@/i18n/messages'
 import axios, { CreateAxiosDefaults } from 'axios'
-import { errorCatch, getContentType } from './api.helper'
+import { errorCatch, getContentType } from '@/api/api.helper'
 
 const axiosOptions: CreateAxiosDefaults = {
 	baseURL: API_URL,

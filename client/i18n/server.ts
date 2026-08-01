@@ -1,6 +1,6 @@
 import { cookies, headers } from 'next/headers'
 
-import { LOCALE_COOKIE, LOCALES, messages, type Locale, type Messages } from './messages'
+import { LOCALE_COOKIE, LOCALES, messages, type Locale, type Messages } from '@/i18n/messages'
 
 function parseAcceptLanguage(header: string | null): Locale {
 	const first = header?.split(',')[0]?.trim().slice(0, 2).toLowerCase()

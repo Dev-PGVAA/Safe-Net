@@ -1,4 +1,4 @@
-import type { Locale } from './messages'
+import type { Locale } from '@/i18n/messages'
 
 export interface LegalSection {
 	heading: string

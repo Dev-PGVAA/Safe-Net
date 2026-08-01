@@ -5,8 +5,8 @@ import { messages } from '@/i18n/messages'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import type { Metadata } from 'next'
-import { Providers } from './Providers'
-import './globals.css'
+import { Providers } from '@/app/Providers'
+import '@/app/globals.css'
 
 export async function generateMetadata(): Promise<Metadata> {
 	const locale = await getServerLocale()

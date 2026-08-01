@@ -2,8 +2,8 @@
 import { ArrowRight, Play, ShieldCheck, Sparkles } from '@/components/ui/icons'
 
 import { useI18n } from '@/i18n/LocaleProvider'
-import { AuthDialog } from '../Auth/AuthDialog'
-import DemoCard from './DemoCard'
+import { AuthDialog } from '@/components/Auth/AuthDialog'
+import DemoCard from '@/components/sections/DemoCard'
 
 export default function Hero() {
 	const { t } = useI18n()

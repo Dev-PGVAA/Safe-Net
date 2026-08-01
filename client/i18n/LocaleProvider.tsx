@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
-import { LOCALE_COOKIE, messages, type Locale, type Messages } from './messages'
+import { LOCALE_COOKIE, messages, type Locale, type Messages } from '@/i18n/messages'
 
 const STORAGE_KEY = 'safenet-locale'
 const COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 365

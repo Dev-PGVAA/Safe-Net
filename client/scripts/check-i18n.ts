@@ -1,6 +1,6 @@
-import { legalMessages } from '../i18n/legal-messages'
-import { guardSignalMessages } from '../i18n/guard-signal-messages'
-import { messages } from '../i18n/messages'
+import { legalMessages } from '@/i18n/legal-messages'
+import { guardSignalMessages } from '@/i18n/guard-signal-messages'
+import { messages } from '@/i18n/messages'
 
 type Catalog = Record<string, unknown>
 

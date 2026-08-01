@@ -18,7 +18,7 @@ import {
     IUserDetail,
     IUserListItem,
     UpdateUserDto,
-} from './admin.types'
+} from '@/services/admin/admin.types'
 
 class AdminService {
 	// ============================================

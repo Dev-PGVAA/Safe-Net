@@ -5,7 +5,7 @@ import { useI18n } from '@/i18n/LocaleProvider'
 import { animate, m, useInView, useMotionValue, useReducedMotion } from 'framer-motion'
 import { BookOpen, CheckCircle, Info, Target, Users } from '@/components/ui/icons'
 import { useEffect, useRef, useState } from 'react'
-import { IStatItem } from './stats.interface'
+import { IStatItem } from '@/components/sections/Stats/stats.interface'
 import { MOTION } from '@/config/motion.config'
 
 function AnimatedNumber({

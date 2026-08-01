@@ -35,7 +35,7 @@ import {
 import { formatDate } from '@/utils/date-time/dateFormatter'
 import { secondsToHMS } from '@/utils/date-time/secondsToHMS'
 import { type ReactNode, useMemo, useState } from 'react'
-import AppleLessonCard from './AppleLessonCard'
+import AppleLessonCard from '@/app/dashboard/courses/[slug]/AppleLessonCard'
 
 type CourseTest = ICourseDetail['tests'][number]
 
