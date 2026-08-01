@@ -1,132 +1,152 @@
 # Safe-Net
 
-A cybersecurity platform built around one idea: **the course teaches a rule, the
-simulator tests whether you learned it, and a browser extension enforces it while
-you browse — all three running the same detection engine.**
+> **One cybersecurity rule, three places to use it:** learn it in a course,
+> practise it in a simulation, and apply it while browsing.
 
-It has three parts:
+Safe-Net is an independent, full-stack cybersecurity education project. It
+combines a bilingual learning platform, a phishing simulator, a live URL scanner,
+and a Chrome extension around one shared phishing-detection engine.
 
-- **An LMS** — 8 stages, 21 courses, 27 lessons, 163 tasks on phishing, dangerous links,
-  passwords, malware, privacy and more. Every lesson cites a real-world case
-  (WannaCry, the Google/Facebook invoice fraud, the Twitter 2020 takeover) with
-  a source.
-- **A phishing simulator** — realistic emails and sites where you highlight what
-  looks wrong. The answer key never leaves the server, and flagging everything
-  fails: recognising what is *normal* matters as much as spotting what is not.
-- **SafeNet Guard** — a local-first Chrome extension that scores URLs with a
-  deterministic rule engine and can add domain intelligence or a fine-tuned
-  BERT opinion only after the user enables those network layers.
+The central design decision is simple: a learner should never be taught one rule
+and protected by another. The same open TypeScript engine powers the lesson
+examples, the scanner, and the extension.
 
-The detection logic is a single package, [`@safe-net/guard-core`](packages/guard-core),
-imported by the extension, by the web app's live scanner at `/guard`, and mirrored
-in the Python ML service. When the courses teach that `paypa1.com` is phishing,
-the detector agrees — because it is the same rules, and tests assert it.
+## Why it is different
+
+- **Learning is testable.** The LMS has 8 stages, 21 courses, 27 lessons, 163
+  practical tasks, and 21 tests. Content is validated before it can be seeded.
+- **Practice is realistic.** In phishing tasks, learners identify suspicious
+  elements in simulated messages and sites. The answer key stays on the server;
+  marking everything as suspicious does not pass the task.
+- **Protection is explainable and local-first.** Guard begins with deterministic,
+  offline URL analysis. Threat intelligence and ML are optional layers rather than
+  hidden data flows.
+- **One rule engine, multiple surfaces.** `@safe-net/guard-core` is shared by the
+  web scanner and the Chrome extension, and mirrored in Python for the optional
+  ML service.
+
+## Reviewer path
+
+Start here depending on what you want to evaluate:
+
+| If you want to see… | Start with… |
+| --- | --- |
+| The product and local demo | [Quick start](#quick-start) |
+| System boundaries and data flows | [Architecture](docs/ARCHITECTURE.md) |
+| The shared scoring logic | [`guard-core`](packages/guard-core/README.md) |
+| How course content is structured and validated | [Content format](server/content/README.md) |
+| Security, privacy, and product trade-offs | [Hardening plan](docs/PRODUCT_HARDENING_PLAN.md) |
+| A concise project narrative for an academic or portfolio reviewer | [Project story](docs/PROJECT_STORY.md) |
+
+## Architecture at a glance
+
+```text
+                  @safe-net/guard-core
+                  pure TypeScript rule engine
+                    /        |        \
+                   /         |         \
+      Chrome extension    Web /guard    Python ML mirror
+            |                  |              |
+            +------------------+--------------+
+                               |
+                    Next.js client + NestJS API
+                               |
+                           PostgreSQL
+```
+
+The complete component map and the important data flows are documented in
+[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ## Quick start
 
-Prerequisites: [Bun](https://bun.sh), Docker, and Python 3.12 (only for the
-optional ML layer).
+**Prerequisites:** [Bun](https://bun.sh), Docker, and Python 3.12 only if you
+want to run the optional ML layer.
 
 ```bash
-bun run setup      # install deps, start Postgres, migrate, seed
-bun run dev        # start everything: web, API, ML, database
+bun run setup      # install dependencies, start PostgreSQL, migrate, and seed
+bun run dev        # start web, API, database, and optional ML service
 ```
 
-| Service     | URL                     | What it is                     |
-| :---------- | :---------------------- | :----------------------------- |
-| Web         | http://localhost:3000   | Next.js — LMS, simulator, /guard |
-| API         | http://localhost:4200   | NestJS + Prisma                |
-| ML service  | http://localhost:8000   | FastAPI + BERT (optional)      |
-| PostgreSQL  | localhost:5433          | Docker                         |
+| Service | Local URL | Purpose |
+| --- | --- | --- |
+| Web | <http://localhost:3000> | LMS, simulator, and `/guard` scanner |
+| API | <http://localhost:4200> | NestJS API and learning domain |
+| ML | <http://localhost:8000> | Optional FastAPI/BERT opinion |
+| PostgreSQL | `localhost:5433` | Local Docker database |
 
-No Python? `bun run dev:no-ml` runs everything except the ML layer — the
-extension and scanner fall back to local rules, which need no server at all.
+Without Python, run `bun run dev:no-ml`. The local rule engine continues to work
+without the ML service.
 
-**Demo accounts** (password `password123`): `demo@safe.net` (learner),
-`admin@safe.net` (admin).
+**Demo accounts** (development only; password `password123`):
 
-The browser extension ships pre-built: grab the zip from the `/guard` page
-(or [`client/public/downloads/safenet-guard-chrome.zip`](client/public/downloads/safenet-guard-chrome.zip)),
-unzip it, and load the folder as an unpacked extension in `chrome://extensions` —
-no toolchain needed. To build from source instead: `bun run build:ext`, then load
-`extension/.output/chrome-mv3`. After changing extension code, `bun run package:ext`
-refreshes the downloadable zip.
+- Learner: `demo@safe.net`
+- Administrator: `admin@safe.net`
 
-## Repository layout
+## SafeNet Guard extension
 
-```
-safe-net/
-├── client/            Next.js frontend — LMS, phishing simulator, /guard
-├── server/            NestJS API + Prisma; content pipeline; seed
-│   └── content/       Every lesson as Markdown/YAML, validated in CI
-├── packages/
-│   └── guard-core/    The shared phishing-detection rule engine
-├── extension/         SafeNet Guard — the Chrome extension (WXT)
-├── ml-service/        FastAPI + fine-tuned BERT, blended with the rules
-└── docs/              Architecture and design decisions
-```
+The extension is a Manifest V3 Chrome extension built with WXT. It scores URLs
+locally first and can enrich the result only when the user enables the relevant
+network options.
 
-## The detection engine
+1. Open `/guard` in the local web app and download the packaged extension, or use
+   [`client/public/downloads/safenet-guard-chrome.zip`](client/public/downloads/safenet-guard-chrome.zip).
+2. Unzip the archive.
+3. In Chrome, open `chrome://extensions`, enable **Developer mode**, then choose
+   **Load unpacked** and select the unzipped folder.
 
-Guard scores a URL in four layers; only the first is required, and each degrades
-gracefully if the next is unavailable.
+To build it from source, run `bun run build:ext`; the unpacked build is written to
+`extension/.output/chrome-mv3`. Run `bun run package:ext` to refresh the download.
 
-| Layer | What it does | Cost |
-| :---- | :----------- | :--- |
-| **1 · Local rules** | IDN homographs, typosquatting, leet-squatting, brand impersonation, URL structure | offline, zero data sent |
-| **2 · Threat intel** | RDAP/WHOIS age, DNS blocklists, URLhaus, Certificate Transparency | network, opt-in |
-| **3 · Neural network** | fine-tuned BERT, blended with layer 1 | optional |
-| **4 · Page analysis** | login forms on HTTP, credential harvesting, wallet drainers | extension only |
+## Detection model
 
-The neural net alone is noisy — it rates `mail.google.com` at 0.98 phishing. So
-the score is a **blend**: the deterministic rules floor it when they are certain
-it is phishing (a homograph can't be argued down) and cap it when the domain is a
-known brand with no red flags (a jumpy net can't block Gmail). The net decides the
-uncertain middle, where it catches novel phishing the rules have never seen. This
-blend is one function ([`blendWithMl`](packages/guard-core/src/model/blend.ts)),
-mirrored in [Python](ml-service/app/model.py) and covered by tests on both sides.
+| Layer | What it checks | Default |
+| --- | --- | --- |
+| 1. Local rules | IDN homographs, typosquatting, leet-squatting, brand impersonation, URL structure | On; offline |
+| 2. Threat intelligence | Domain age, DNS blocklists, URLhaus, Certificate Transparency | Opt-in |
+| 3. ML opinion | Fine-tuned BERT blended with the rule score | Optional |
+| 4. Page analysis | Login forms on HTTP, credential harvesting, wallet-drainer signals | Extension only |
 
-## Development
+The neural model is not presented as a source of truth. The blend preserves
+high-confidence deterministic signals and uses ML in uncertain cases. The blend
+is implemented in [`packages/guard-core`](packages/guard-core) and mirrored in
+[`ml-service/app/model.py`](ml-service/app/model.py).
+
+## Repository map
+
+| Path | Responsibility |
+| --- | --- |
+| [`client/`](client) | Next.js application: LMS, simulations, dashboard, and `/guard` |
+| [`server/`](server) | NestJS API, Prisma models, authentication, content pipeline |
+| [`server/content/`](server/content) | Source lessons and tests, validated before seeding |
+| [`packages/guard-core/`](packages/guard-core) | Shared, dependency-free phishing rule engine |
+| [`extension/`](extension) | SafeNet Guard Chrome extension |
+| [`ml-service/`](ml-service) | Optional FastAPI/BERT service and parity tests |
+| [`docs/`](docs) | Architecture, operational notes, and project narrative |
+
+## Verification
+
+Run the checks independently or use the full local matrix:
 
 ```bash
-bun run dev            # web + API + ML + database
-bun run dev:no-ml      # skip the ML layer
-bun run build          # create all production artifacts, including the extension
-bun run start          # build and run production web + API + database (no hot reload)
-bun run test           # server, guard engine, and ML scoring tests
-bun run typecheck      # web + API + extension
-bun run check:i18n     # English/Russian catalog parity
-bun run check:colors   # no color literals outside the theme config
-bun run validate:content   # fail on unsourced claims or malformed tasks
-bun run db:reset       # wipe and re-seed the database
+bun run typecheck         # API, web, extension, and shared engine
+bun run check             # typecheck, lint, and EN/RU parity
+bun run test              # API, rule-engine, and ML scoring/parity tests
+bun run validate:content  # validates lesson and test source material
+bun run build             # production builds for API, web, and extension
 ```
 
-Before `bun run start`, set production values in `server/.env` (including
-`FRONTEND_URL`, JWT secrets, and mail delivery) and set the client's production
-`NEXT_PUBLIC_*` values. The command builds the API and client before starting;
-the ML service remains optional.
+The repository also includes CI checks for content structure, localization parity,
+theme constraints, type safety, and scoring parity.
 
-CI runs client lint/theme/localization checks, type checks, privacy and scoring
-tests, `prisma validate`, content validation, and all three production builds.
+## Safety and scope
 
-## Tech stack
-
-| Area | Technologies |
-| :--- | :----------- |
-| Frontend | Next.js 16, React 19, Tailwind CSS 4, Radix UI, TanStack Query, Framer Motion |
-| Backend | NestJS 10, Prisma 7, PostgreSQL, Passport JWT, Argon2, Helmet, rate limiting |
-| Engine | TypeScript, zero dependencies, pure functions |
-| ML | FastAPI, PyTorch, HuggingFace Transformers (BERT), tldextract |
-| Extension | WXT, React, Manifest V3 |
-| Tooling | Bun, Docker, Zod, gray-matter |
-
-## Documentation
-
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — how the pieces fit together
-- [docs/EMAIL_DELIVERY.md](docs/EMAIL_DELIVERY.md) — free SMTP setup for password resets
-- [packages/guard-core/README.md](packages/guard-core/README.md) — the engine
-- [server/content/README.md](server/content/README.md) — the content format
+Safe-Net is an educational project and a browser-side warning tool, **not** a
+replacement for enterprise security software or professional incident response.
+The project deliberately documents its privacy and operational limits rather than
+claiming certification or protection it has not earned. See the
+[hardening plan](docs/PRODUCT_HARDENING_PLAN.md) and the in-product
+[security information](client/app/legal/security/page.tsx).
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+[MIT](LICENSE)

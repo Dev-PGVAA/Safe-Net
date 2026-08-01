@@ -60,7 +60,7 @@ export class ProgressService {
 
 		return {
 			id: lesson.id,
-			courseTitle: course.title,
+			courseTitle: pickLocalized(locale, course.title, course.titleRu),
 			courseSlug: course.slug,
 			order: lesson.order,
 			title: pickLocalized(locale, lesson.title, lesson.titleRu),
@@ -281,14 +281,17 @@ export class ProgressService {
 		return {
 			taskId: task.id,
 			isCorrect,
-			explanation: task.explanation,
+			explanation: pickLocalized(locale, task.explanation, task.explanationRu),
 			awardedXp,
 			totalXp,
 			courseProgress: progressPercent,
 			lessonCompleted,
 			certificateIssued,
 			newAchievements,
-			...this.buildPhishingFeedback(task.meta, phishingEvaluation),
+			...this.buildPhishingFeedback(
+				pickLocalized(locale, task.meta, task.metaRu),
+				phishingEvaluation
+			),
 		}
 	}
 
