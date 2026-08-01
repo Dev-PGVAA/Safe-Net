@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getServerLocale } from '@/i18n/server'
 import { messages } from '@/i18n/messages'
-import { GuardPageContent } from './GuardPageContent'
+import { GuardPageContent } from '@/app/guard/GuardPageContent'
 
 export async function generateMetadata(): Promise<Metadata> {
 	const locale = await getServerLocale()

@@ -54,6 +54,7 @@
 		"clean:ports": "lsof -ti:3000,4200,8000 2>/dev/null | xargs kill -9 2>/dev/null || true"
 	},
 	"devDependencies": {
+		"@ivy-apps/deslop": "^0.8.1",
 		"concurrently": "^9.1.0"
 	}
 }

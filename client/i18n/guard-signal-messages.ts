@@ -1,6 +1,6 @@
 import type { RiskSignal, UrlFeatures } from '@safe-net/guard-core'
 
-import type { Locale } from './messages'
+import type { Locale } from '@/i18n/messages'
 
 export const guardSignalMessages = {
 	en: {

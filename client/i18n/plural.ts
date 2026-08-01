@@ -1,4 +1,4 @@
-import type { Locale } from './messages'
+import type { Locale } from '@/i18n/messages'
 
 interface PluralForms {
 	one: string

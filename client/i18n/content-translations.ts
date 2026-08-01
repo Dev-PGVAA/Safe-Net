@@ -1,4 +1,4 @@
-import type { Locale } from './messages'
+import type { Locale } from '@/i18n/messages'
 
 /**
  * Stage/course titles and descriptions come from the backend (seeded from

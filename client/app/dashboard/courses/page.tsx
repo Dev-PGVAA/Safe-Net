@@ -6,12 +6,12 @@ import { useCourses } from '@/hooks/learning/useCourses'
 import { useProfile } from '@/hooks/user/useProfile'
 import { useI18n } from '@/i18n/LocaleProvider'
 import { useMemo, useState } from 'react'
-import { AppleButton } from '../components/AppleButton'
-import { AppleCourseCard } from '../components/AppleCourseCard'
-import { AppleLoadingGrid } from '../components/AppleLoadingGrid'
-import { AppleStatCard } from '../components/AppleStatCard'
-import { EmptyState } from '../components/EmptyState'
-import { TabButton } from '../components/TabButton'
+import { AppleButton } from '@/app/dashboard/components/AppleButton'
+import { AppleCourseCard } from '@/app/dashboard/components/AppleCourseCard'
+import { AppleLoadingGrid } from '@/app/dashboard/components/AppleLoadingGrid'
+import { AppleStatCard } from '@/app/dashboard/components/AppleStatCard'
+import { EmptyState } from '@/app/dashboard/components/EmptyState'
+import { TabButton } from '@/app/dashboard/components/TabButton'
 
 export default function CoursesPage() {
 	const { t } = useI18n()

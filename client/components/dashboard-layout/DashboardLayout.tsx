@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react'
 import { PreferencesControls } from '@/components/preferences/PreferencesControls'
 import { useLogout } from '@/hooks/user/useLogout'
 import { useI18n } from '@/i18n/LocaleProvider'
-import { getAdminNavItems, getNavItems } from './navigation.data'
+import { getAdminNavItems, getNavItems } from '@/components/dashboard-layout/navigation.data'
 
 interface NavItem {
 	label: string

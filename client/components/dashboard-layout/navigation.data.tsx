@@ -2,7 +2,7 @@ import { BookOpen, ChartLine, FileText, Home, MessageSquareText, Shield, Trophy,
 
 import { ROUTES } from '@/config/pages-url.config'
 import type { Messages } from '@/i18n/messages'
-import { NavItem } from './navigation.types'
+import { NavItem } from '@/components/dashboard-layout/navigation.types'
 
 // Admin Menu Items. Labels come from the shared dashboard shell's translations
 // so the sidebar reads correctly for admins too, even though the admin pages

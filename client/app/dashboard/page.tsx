@@ -22,12 +22,12 @@ import {
 	type AppIcon,
 } from '@/components/ui/icons'
 import { useMemo } from 'react'
-import { AppleCourseCard } from './components/AppleCourseCard'
-import { AppleStatCard } from './components/AppleStatCard'
-import { EmptyState } from './components/EmptyState'
-import { SectionHeader } from './components/SectionHeader'
-import { ShimmerSkeleton } from './components/ShimmerSkeleton'
-import { WelcomeCard } from './components/WelcomeCard'
+import { AppleCourseCard } from '@/app/dashboard/components/AppleCourseCard'
+import { AppleStatCard } from '@/app/dashboard/components/AppleStatCard'
+import { EmptyState } from '@/app/dashboard/components/EmptyState'
+import { SectionHeader } from '@/app/dashboard/components/SectionHeader'
+import { ShimmerSkeleton } from '@/app/dashboard/components/ShimmerSkeleton'
+import { WelcomeCard } from '@/app/dashboard/components/WelcomeCard'
 
 const getIconBySlug = (slug: string): AppIcon => {
 	const pascalCase = slug

@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import { EnumTokens } from './auth.service'
+import { EnumTokens } from '@/services/auth/auth.service'
 
 export const getAccessToken = () => {
 	const accessToken = Cookies.get(EnumTokens.ACCESS_TOKEN)

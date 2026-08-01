@@ -11,7 +11,7 @@ import {
     ITestResult,
     IUserAchievement,
     IUserCourse,
-} from './learning.types'
+} from '@/services/learning/learning.types'
 
 class LearningService {
 	async getStages(): Promise<IStage[]> {
@@ -108,4 +108,4 @@ class LearningService {
 }
 
 export const learningService = new LearningService()
-export * from './learning.types'
+export * from '@/services/learning/learning.types'

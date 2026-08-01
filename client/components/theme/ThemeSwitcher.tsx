@@ -4,7 +4,7 @@ import { Monitor, Moon, Sun } from '@/components/ui/icons'
 
 import { useI18n } from '@/i18n/LocaleProvider'
 import { cn } from '@/lib/utils'
-import { useTheme, type ThemePreference } from './ThemeProvider'
+import { useTheme, type ThemePreference } from '@/components/theme/ThemeProvider'
 
 export function ThemeSwitcher({ className }: { className?: string }) {
 	const { theme, setTheme } = useTheme()

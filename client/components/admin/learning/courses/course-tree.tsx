@@ -18,7 +18,7 @@ import { BookOpen, ChevronRight, Trash2 } from '@/components/ui/icons'
 import Link from 'next/link'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { DeleteStageDialog } from './delete-stage-dialog'
+import { DeleteStageDialog } from '@/components/admin/learning/courses/delete-stage-dialog'
 
 interface CourseTreeProps {
 	stages: IStageWithCourses[]

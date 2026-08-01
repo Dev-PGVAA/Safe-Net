@@ -32,7 +32,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { IFormData } from '@/services/auth/auth.types'
 import { toast } from 'sonner'
-import { IAuthDialog } from './AuthDialog.interface'
+import { IAuthDialog } from '@/components/Auth/AuthDialog.interface'
 
 export function AuthDialog({
 	triggerButton: triggerButtonProp,

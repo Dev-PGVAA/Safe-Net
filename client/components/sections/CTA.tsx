@@ -2,7 +2,7 @@
 import { Play } from '@/components/ui/icons'
 
 import { useI18n } from '@/i18n/LocaleProvider'
-import { AuthDialog } from '../Auth/AuthDialog'
+import { AuthDialog } from '@/components/Auth/AuthDialog'
 
 export default function CTA() {
 	const { t } = useI18n()

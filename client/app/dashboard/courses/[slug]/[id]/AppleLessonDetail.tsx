@@ -14,7 +14,7 @@ import {
 import { m } from 'framer-motion'
 import { BookOpen, CheckCircle2, PlayCircle, Target } from '@/components/ui/icons'
 import { useState } from 'react'
-import { AnswerPayload, TaskModal } from './TaskModal'
+import { AnswerPayload, TaskModal } from '@/app/dashboard/courses/[slug]/[id]/TaskModal'
 
 interface AppleLessonDetailProps {
 	lesson: ILesson & { courseTitle: string }
