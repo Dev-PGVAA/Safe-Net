@@ -85,7 +85,7 @@ export class PasswordResetService {
 			})
 
 			const frontendUrl = process.env.FRONTEND_URL ?? 'http://localhost:3000'
-			const link = `${frontendUrl}/reset-password?token=${token}`
+			const link = `${frontendUrl}/?auth=reset&token=${token}`
 			let delivered = false
 			try {
 				delivered = await this.mailer.sendResetLink(
@@ -128,37 +128,43 @@ export class PasswordResetService {
 		token: string,
 		newPassword: string
 	): Promise<{ message: string }> {
-		const record = await this.prisma.passwordResetToken.findUnique({
-			where: { tokenHash: this.hashToken(token) },
-		})
+		const tokenHash = this.hashToken(token)
+		const now = new Date()
+		const passwordHash = await hash(newPassword)
 
-		if (!record || record.usedAt || record.expiresAt < new Date()) {
-			throw new BadRequestException('Invalid or expired reset link')
-		}
+		// Claim the token with a conditional write before changing the password.
+		// Only one concurrent request can update a token whose usedAt is still
+		// null, making its single-use guarantee database-enforced.
+		await this.prisma.$transaction(async tx => {
+			const consumed = await tx.passwordResetToken.updateMany({
+				where: { tokenHash, usedAt: null, expiresAt: { gt: now } },
+				data: { usedAt: now },
+			})
+			if (consumed.count !== 1) {
+				throw new BadRequestException('Invalid or expired reset link')
+			}
 
-		// Mark used and update the password together, so a token can never be
-		// replayed even if two requests race.
-		await this.prisma.$transaction([
-			this.prisma.user.update({
+			const record = await tx.passwordResetToken.findUnique({
+				where: { tokenHash },
+				select: { userId: true },
+			})
+			if (!record) {
+				throw new BadRequestException('Invalid or expired reset link')
+			}
+
+			await tx.user.update({
 				where: { id: record.userId },
-				data: { password: await hash(newPassword) },
-			}),
-			this.prisma.passwordResetToken.update({
-				where: { id: record.id },
-				data: { usedAt: new Date() },
-			}),
-			// Invalidate any other outstanding tokens for this user.
-			this.prisma.passwordResetToken.updateMany({
+				data: { password: passwordHash },
+			})
+			await tx.passwordResetToken.updateMany({
 				where: { userId: record.userId, usedAt: null },
-				data: { usedAt: new Date() },
-			}),
-			// Password changes are a security boundary: every signed-in device
-			// must authenticate again with the new password.
-			this.prisma.refreshSession.updateMany({
+				data: { usedAt: now },
+			})
+			await tx.refreshSession.updateMany({
 				where: { userId: record.userId, revokedAt: null },
-				data: { revokedAt: new Date() },
-			}),
-		])
+				data: { revokedAt: now },
+			})
+		})
 
 		return { message: 'Password has been reset. You can now sign in.' }
 	}

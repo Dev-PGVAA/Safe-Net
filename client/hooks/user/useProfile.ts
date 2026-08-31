@@ -1,9 +1,7 @@
-import { saveTokenStorage } from '@/services/auth/auth.helper'
 import authService from '@/services/auth/auth.service'
 import userService from '@/services/user/user.service'
 import { transformUserToState } from '@/utils/transform-user-to-state'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
 
 
 export function useProfile() {
@@ -12,15 +10,11 @@ export function useProfile() {
 		queryFn: () => userService.fetchProfile(),
 		refetchInterval: 1800000
 	})
-	const { isSuccess, data: dataTokens } = useQuery({
+	useQuery({
 		queryKey: ['new tokens'],
 		queryFn: () => authService.getNewTokens(),
 		enabled: !data?.data
 	})
-	useEffect(() => {
-		if (!isSuccess) return
-		if (dataTokens.data.accessToken) saveTokenStorage(dataTokens.data.accessToken)
-	}, [dataTokens, isSuccess])
 	const profile = data?.data
 	const userState = profile ? transformUserToState(profile) : null
 	return {

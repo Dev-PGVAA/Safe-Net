@@ -84,7 +84,7 @@ export class UserService {
 			data.password = await hash(dto.password)
 		}
 
-		return this.prisma.user.update({
+		const updatedUser = await this.prisma.user.update({
 			where: { id },
 			data,
 			select: {
@@ -92,5 +92,17 @@ export class UserService {
 				email: true,
 			},
 		})
+
+		// A password change is an account-security event. Existing refresh
+		// sessions may belong to a lost device or an attacker and must not stay
+		// usable after the account owner changes their credential.
+		if (dto.password !== undefined) {
+			await this.prisma.refreshSession.updateMany({
+				where: { userId: id, revokedAt: null },
+				data: { revokedAt: new Date() },
+			})
+		}
+
+		return updatedUser
 	}
 }

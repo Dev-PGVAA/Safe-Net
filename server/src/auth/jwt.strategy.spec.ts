@@ -24,6 +24,7 @@ function userFixture(overrides: Record<string, unknown> = {}) {
 		password: 'password-hash',
 		rights: [],
 		status: UserStatus.ACTIVE,
+		emailVerifiedAt: new Date(),
 		...overrides,
 	}
 }

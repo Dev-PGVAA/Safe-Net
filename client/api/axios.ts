@@ -1,5 +1,5 @@
 import { API_URL } from '@/constants/constants'
-import { getAccessToken, removeFromStorage } from '@/services/auth/auth.helper'
+import { removeFromStorage } from '@/services/auth/auth.helper'
 import authService from '@/services/auth/auth.service'
 import { LOCALE_COOKIE } from '@/i18n/messages'
 import axios, { CreateAxiosDefaults } from 'axios'
@@ -22,8 +22,6 @@ function getCurrentLocaleCookie(): string | undefined {
 export const axiosClassic = axios.create(axiosOptions)
 export const instance = axios.create(axiosOptions)
 instance.interceptors.request.use((config) => {
-	const accessToken = getAccessToken()
-	if (config?.headers && accessToken) config.headers.Authorization = `Bearer ${accessToken}`
 	const locale = getCurrentLocaleCookie()
 	if (config?.headers && locale) config.headers['Accept-Language'] = locale
 	return config

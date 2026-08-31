@@ -89,6 +89,32 @@ export function buildPasswordResetEmail(link: string, locale: MailLocale) {
 	return { subject: copy.subject, text, html }
 }
 
+export function buildEmailVerificationEmail(link: string, locale: MailLocale) {
+	const safeLink = escapeHtml(link)
+	const copy =
+		locale === 'ru'
+			? {
+					subject: 'Подтвердите email в SafeNet',
+					title: 'Подтвердите email',
+					intro: 'Подтвердите адрес электронной почты, чтобы активировать аккаунт SafeNet.',
+					action: 'Подтвердить email',
+					expiry: 'Ссылка одноразовая и действует 30 минут.',
+				}
+			: {
+					subject: 'Verify your SafeNet email',
+					title: 'Verify your email',
+					intro: 'Verify your email address to activate your SafeNet account.',
+					action: 'Verify email',
+					expiry: 'This single-use link expires in 30 minutes.',
+				}
+
+	return {
+		subject: copy.subject,
+		text: `${copy.title}\n\n${copy.intro}\n\n${copy.action}: ${link}\n\n${copy.expiry}`,
+		html: `<!doctype html><html lang="${locale}"><body><h1>${copy.title}</h1><p>${copy.intro}</p><p><a href="${safeLink}">${copy.action}</a></p><p>${copy.expiry}</p><p>${safeLink}</p></body></html>`,
+	}
+}
+
 @Injectable()
 export class PasswordResetMailer {
 	private readonly resend: Resend | null
@@ -156,9 +182,18 @@ export class PasswordResetMailer {
 	}
 
 	async sendResetLink(to: string, link: string, locale: MailLocale = 'en') {
-		if (!this.from) return false
+		return this.send(to, buildPasswordResetEmail(link, locale))
+	}
 
-		const message = buildPasswordResetEmail(link, locale)
+	async sendVerificationLink(to: string, link: string, locale: MailLocale = 'en') {
+		return this.send(to, buildEmailVerificationEmail(link, locale))
+	}
+
+	private async send(
+		to: string,
+		message: ReturnType<typeof buildPasswordResetEmail>
+	) {
+		if (!this.from) return false
 		if (this.resend) {
 			const { error } = await this.resend.emails.send({
 				from: this.from,

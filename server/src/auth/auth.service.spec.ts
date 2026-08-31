@@ -88,17 +88,19 @@ describe('AuthService token and credential hardening', () => {
 			...userOverrides,
 		}
 		const achievementsService = { awardAchievement: jest.fn() }
+		const emailVerificationService = { sendForUser: jest.fn().mockResolvedValue(undefined) }
 		const service = new AuthService(
 			jwt,
 			userService as unknown as UserService,
 			achievementsService as unknown as AchievementsService,
 			prisma as unknown as PrismaService,
+			emailVerificationService as never,
 			new ConfigService({
 				JWT_SECRET: ACCESS_SECRET,
 				JWT_REFRESH_SECRET: REFRESH_SECRET,
 			})
 		)
-		return { service, userService, achievementsService, prisma, sessions }
+		return { service, userService, achievementsService, emailVerificationService, prisma, sessions }
 	}
 
 	function userFixture(
@@ -112,6 +114,7 @@ describe('AuthService token and credential hardening', () => {
 			password,
 			rights: [],
 			status,
+			emailVerifiedAt: new Date(),
 		}
 	}
 
@@ -259,5 +262,49 @@ describe('AuthService token and credential hardening', () => {
 		await expect(service.getNewTokens(refreshToken)).rejects.toBeInstanceOf(
 			UnauthorizedException
 		)
+	})
+
+	it('creates a session immediately after a verified-email callback', async () => {
+		const { service, userService } = createService()
+		userService.getById.mockResolvedValue(userFixture('password-hash'))
+
+		const result = await service.createVerifiedSession('user-1')
+
+		expect(result).toMatchObject({
+			user: expect.objectContaining({ id: 'user-1' }),
+			accessToken: expect.any(String),
+			refreshToken: expect.any(String),
+		})
+		expect(result.user).not.toHaveProperty('password')
+	})
+
+	it('allows exactly one of 100 simultaneous registrations for the same email', async () => {
+		const { service, userService, emailVerificationService } = createService()
+		const user = userFixture('password-hash')
+		let created = false
+		userService.create.mockImplementation(async () => {
+			if (created) {
+				throw Object.assign(new Error('unique constraint'), { code: 'P2002' })
+			}
+			created = true
+			return user
+		})
+		const dto = {
+			name: 'User',
+			email: 'user@example.com',
+			password: 'password123',
+			termsAccepted: true as const,
+			privacyAccepted: true as const,
+			legalVersion: '2026-07-26' as const,
+			legalLocale: 'en' as const,
+		}
+
+		const results = await Promise.allSettled(
+			Array.from({ length: 100 }, () => service.register(dto))
+		)
+
+		expect(results.filter(result => result.status === 'fulfilled')).toHaveLength(1)
+		expect(results.filter(result => result.status === 'rejected')).toHaveLength(99)
+		expect(emailVerificationService.sendForUser).toHaveBeenCalledTimes(1)
 	})
 })

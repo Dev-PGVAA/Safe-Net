@@ -68,6 +68,7 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   email    String     @unique
+  emailVerifiedAt DateTime? @map("email_verified_at")
   name     String
   password String?
   rights   Role[]     @default([USER])
@@ -92,6 +93,7 @@ model User {
   testResults      TestResult[]
   completedLessons CompletedLesson[]
   passwordResets   PasswordResetToken[]
+  emailVerifications EmailVerificationToken[]
   refreshSessions  RefreshSession[]
   feedback         Feedback[]
 
@@ -156,6 +158,23 @@ model PasswordResetToken {
 
   @@index([userId])
   @@map("password_reset_tokens")
+}
+
+/// A single-use, expiring proof that the account owner controls the email
+/// address. As with password resets, only a SHA-256 hash is persisted.
+model EmailVerificationToken {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tokenHash String    @unique @map("token_hash")
+  expiresAt DateTime  @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+
+  @@index([userId])
+  @@map("email_verification_tokens")
 }
 
 /// Learning structure: stages → courses → lessons → tasks

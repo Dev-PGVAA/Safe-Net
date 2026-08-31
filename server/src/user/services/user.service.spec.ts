@@ -19,6 +19,9 @@ describe('UserService security-sensitive writes', () => {
 			courseProgress: {
 				createMany: jest.fn().mockResolvedValue({ count: 0 }),
 			},
+			refreshSession: {
+				updateMany: jest.fn().mockResolvedValue({ count: 1 }),
+			},
 		}
 		return {
 			service: new UserService(prisma as unknown as PrismaService),
@@ -96,5 +99,10 @@ describe('UserService security-sensitive writes', () => {
 		expect(data.password).not.toBe('new-password')
 		expect(await verify(data.password, 'new-password')).toBe(true)
 		expect(data).not.toHaveProperty('currentPassword')
+		expect(prisma.refreshSession.updateMany).toHaveBeenCalledWith(
+			expect.objectContaining({
+				where: { userId: 'user-1', revokedAt: null },
+			})
+		)
 	})
 })
